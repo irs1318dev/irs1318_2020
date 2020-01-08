@@ -20,17 +20,17 @@ public class RawColorRGBIR
         return this.red;
     }
 
-    int getGreen()
+    public int getGreen()
     {
         return this.green;
     }
 
-    int getBlue()
+    public int getBlue()
     {
         return this.blue;
     }
 
-    int getIR()
+    public int getIR()
     {
         return this.ir;
     }
