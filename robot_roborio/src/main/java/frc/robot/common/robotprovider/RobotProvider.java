@@ -134,9 +134,9 @@ public class RobotProvider implements IRobotProvider
     }
 
     @Override
-    public IColorSensor getColorSensor()
+    public IColorSensorV3 getColorSensor()
     {
-        return new ColorSensorWrapper();
+        return new ColorSensorV3Wrapper();
     }
 
     @Override

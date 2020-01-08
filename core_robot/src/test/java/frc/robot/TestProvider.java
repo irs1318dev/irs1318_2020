@@ -233,7 +233,7 @@ public class TestProvider implements IRobotProvider
     }
 
     @Override
-    public IColorSensor getColorSensor()
+    public IColorSensorV3 getColorSensor()
     {
         return null;
     }
