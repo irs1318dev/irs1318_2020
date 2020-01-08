@@ -141,6 +141,12 @@ public class FauxbotProvider implements IRobotProvider
     }
 
     @Override
+    public IColorSensor getColorSensor()
+    {
+        return null;
+    }
+
+    @Override
     public IVideoStream getMJPEGStream(String name, int width, int height)
     {
         return new FauxbotVideoStream();
