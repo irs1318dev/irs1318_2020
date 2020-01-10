@@ -24,10 +24,8 @@ public class OffboardVisionManager implements IMechanism
 
     private Driver driver;
 
-    private double ballCenterX;
-    private double ballCenterY;
-    private double ballDistance;
-    private String ballDirection;
+    private double centerX;
+    private double centerY;
 
     /**
      * Initializes a new OffboardVisionManager
@@ -40,30 +38,18 @@ public class OffboardVisionManager implements IMechanism
         this.networkTable = provider.getNetworkTableProvider();
         this.logger = logger;
 
-        this.ballCenterX = 0.0;
-        this.ballCenterY = 0.0;
-        this.ballDistance = 0.0;
-        this.ballDirection = "";
+        this.centerX = 0.0;
+        this.centerY = 0.0;
     }
 
-    public double getBallCenterX()
+    public double getCenterX()
     {
-        return this.ballCenterX;
+        return this.centerX;
     }
 
-    public double getBallCenterY()
+    public double getCenterY()
     {
-        return this.ballCenterY;
-    }
-
-    public double getBallDistance()
-    {
-        return this.ballDistance;
-    }
-
-    public String getBallDirection()
-    {
-        return this.ballDirection;
+        return this.centerY;
     }
 
     /**
@@ -72,10 +58,11 @@ public class OffboardVisionManager implements IMechanism
     @Override
     public void readSensors()
     {
-        this.ballCenterX = this.networkTable.getSmartDashboardNumber("rpi.BallcenterX");
-        this.ballCenterY = this.networkTable.getSmartDashboardNumber("rpi.BallcenterY");
-        this.ballDistance = this.networkTable.getSmartDashboardNumber("rpi.BallDistance");
-        this.ballDirection = this.networkTable.getSmartDashboardString("rpi.BallDirection");
+        this.centerX = this.networkTable.getSmartDashboardNumber("v.x");
+        this.centerY = this.networkTable.getSmartDashboardNumber("v.y");
+
+        this.logger.logNumber(OffboardVisionManager.logName, "x_read", this.centerX);
+        this.logger.logNumber(OffboardVisionManager.logName, "y_read", this.centerY);
     }
 
     @Override

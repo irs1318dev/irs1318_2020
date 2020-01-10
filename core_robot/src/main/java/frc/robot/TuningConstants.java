@@ -22,12 +22,12 @@ public class TuningConstants
     public static List<IMechanism> GetActiveMechanisms(Injector injector)
     {
         List<IMechanism> mechanismList = new ArrayList<IMechanism>();
-        mechanismList.add(injector.getInstance(DriveTrainMechanism.class));
+        //mechanismList.add(injector.getInstance(DriveTrainMechanism.class));
         //mechanismList.add(injector.getInstance(PowerManager.class));
         //mechanismList.add(injector.getInstance(PositionManager.class));
         //mechanismList.add(injector.getInstance(CompressorMechanism.class));
         //mechanismList.add(injector.getInstance(VisionManager.class));
-        //mechanismList.add(injector.getInstance(OffboardVisionManager.class));
+        mechanismList.add(injector.getInstance(OffboardVisionManager.class));
         //mechanismList.add(injector.getInstance(IndicatorLightManager.class));
         //mechanismList.add(injector.getInstance(SomeMechanism.class));
         return mechanismList;
