@@ -19,7 +19,7 @@ public class ColorMatchWrapper implements IColorMatch
     }
 
     @Override
-    public void addColorMatch​(String name, double red, double green, double blue)
+    public void addColorMatch(String name, double red, double green, double blue)
     {
         Color color = ColorMatch.makeColor(red, green, blue);
         this.map.put(name, color);
