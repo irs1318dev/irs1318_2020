@@ -28,6 +28,7 @@ public interface IRobotProvider
     public IVideoStream getMJPEGStream(String name, int width, int height);
     public IUsbCamera getUsbCamera(String name, int dev);
     public IColorSensorV3 getColorSensor();
+    public IColorMatch getColorMatch();
     public IDriverStation getDriverStation();
     public IOpenCVProvider getOpenCVProvider();
     public INetworkTableProvider getNetworkTableProvider();
