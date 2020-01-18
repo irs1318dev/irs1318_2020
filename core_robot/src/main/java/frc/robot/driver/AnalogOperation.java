@@ -11,4 +11,7 @@ public enum AnalogOperation implements IOperation
     DriveTrainRightVelocity,
     DriveTrainHeadingCorrection,
     PositionStartingAngle,
+
+    // Control Panel Operations
+    ControlPanelMotorSpeed;
 }

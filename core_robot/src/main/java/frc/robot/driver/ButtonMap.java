@@ -38,10 +38,21 @@ public class ButtonMap implements IButtonMap
             AnalogAxis.JOYSTICK_X,
             ElectronicsConstants.INVERT_X_AXIS,
             TuningConstants.DRIVETRAIN_X_DEAD_ZONE),
+        new AnalogOperationDescription(
+            AnalogOperation.ControlPanelMotorSpeed,
+            UserInputDevice.Driver,
+            AnalogAxis.JOYSTICK_THROTTLE,
+            ElectronicsConstants.INVERT_THROTTLE_AXIS,
+            .25),
     };
 
     public static DigitalOperationDescription[] DigitalOperationSchema = new DigitalOperationDescription[]
     {
+        new DigitalOperationDescription(
+            DigitalOperation.ControlPanelEnable,
+            UserInputDevice.Driver,
+            UserInputDeviceButton.JOYSTICK_BASE_BOTTOM_LEFT_BUTTON,
+            ButtonType.Simple)
     };
 
     public static MacroOperationDescription[] MacroSchema = new MacroOperationDescription[]

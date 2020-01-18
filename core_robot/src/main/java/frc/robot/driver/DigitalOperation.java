@@ -21,4 +21,7 @@ public enum DigitalOperation implements IOperation
     DriveTrainUseSimplePathMode,
     DriveTrainUsePathMode,
     DriveTrainSwapFrontOrientation,
+
+    //Control Panel Operations
+    ControlPanelEnable;
 }
