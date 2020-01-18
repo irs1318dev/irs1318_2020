@@ -25,7 +25,7 @@ public class ColorMechanism implements IMechanism
     private Driver driver;
 
     @Inject
-    public ColorMechanism(IDashboardLogger logger, IRobotProvider provider, IColorMatch color)
+    public ColorMechanism(IDashboardLogger logger, IRobotProvider provider)
     {
         this.logger = logger;
         this.sensor = provider.getColorSensor();
@@ -46,7 +46,10 @@ public class ColorMechanism implements IMechanism
         double green = (double)rawColor.getGreen()/((double) rawColor.getRed() + (double)rawColor.getGreen() + (double)rawColor.getBlue());
         double blue = (double)rawColor.getBlue()/((double) rawColor.getRed() + (double)rawColor.getGreen() + (double)rawColor.getBlue());
 
-        color.matchClosestColor(red, green, blue);
+        ColorMatchResult result = color.matchClosestColor(red, green, blue);
+        logger.logString(ColorMechanism.logName,"name",result.getName());
+        logger.logNumber(ColorMechanism.logName,"confidence",result.getConfidence());
+
 
         int proximity = sensor.getProximity();
         logger.logInteger(ColorMechanism.logName, "proximity", proximity);
