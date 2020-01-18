@@ -6,6 +6,7 @@ public interface IRobotProvider
 {
     public IAnalogInput getAnalogInput(int channel);
     public ITalonSRX getTalonSRX(int deviceNumber);
+    public ITalonFX getTalonFX(int deviceNumber);
     public IVictorSPX getVictorSPX(int deviceNumber);
     public ISparkMax getSparkMax(int deviceID, SparkMaxMotorType motorType);
     public ICompressor getCompressor();

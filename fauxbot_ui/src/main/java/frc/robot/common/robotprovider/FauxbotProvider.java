@@ -27,6 +27,12 @@ public class FauxbotProvider implements IRobotProvider
     }
 
     @Override
+    public ITalonFX getTalonFX(int deviceNumber)
+    {
+        return new FauxbotTalonFX(deviceNumber);
+    }
+
+    @Override
     public IVictorSPX getVictorSPX(int deviceNumber)
     {
         return new FauxbotVictorSPX(deviceNumber);

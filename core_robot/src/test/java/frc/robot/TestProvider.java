@@ -11,6 +11,7 @@ public class TestProvider implements IRobotProvider
 {
     private HashMap<Integer, IAnalogInput> analogInputMap = new HashMap<Integer, IAnalogInput>();
     private HashMap<Integer, ITalonSRX> talonSrxMap = new HashMap<Integer, ITalonSRX>();
+    private HashMap<Integer, ITalonFX> talonFxMap = new HashMap<Integer, ITalonFX>();
     private HashMap<Integer, IVictorSPX> victorSpxMap = new HashMap<Integer, IVictorSPX>();
     private HashMap<Integer, ISparkMax> sparkMaxMap = new HashMap<Integer, ISparkMax>();
     private HashMap<Integer, ICompressor> compressorMap = new HashMap<Integer, ICompressor>();
@@ -44,6 +45,17 @@ public class TestProvider implements IRobotProvider
         }
 
         return this.talonSrxMap.get(deviceNumber);
+    }
+
+    @Override
+    public ITalonFX getTalonFX(int deviceNumber)
+    {
+        if (!this.talonFxMap.containsKey(deviceNumber))
+        {
+            this.talonFxMap.put(deviceNumber, mock(ITalonFX.class));
+        }
+
+        return this.talonFxMap.get(deviceNumber);
     }
 
     @Override

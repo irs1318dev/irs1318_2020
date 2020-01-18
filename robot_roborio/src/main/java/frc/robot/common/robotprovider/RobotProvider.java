@@ -20,6 +20,12 @@ public class RobotProvider implements IRobotProvider
     }
 
     @Override
+    public ITalonFX getTalonFX(int deviceNumber)
+    {
+        return new TalonFXWrapper(deviceNumber);
+    }
+
+    @Override
     public IVictorSPX getVictorSPX(int deviceNumber)
     {
         return new VictorSPXWrapper(deviceNumber);
