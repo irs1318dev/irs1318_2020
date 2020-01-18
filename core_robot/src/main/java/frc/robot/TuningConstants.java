@@ -108,6 +108,20 @@ public class TuningConstants
 
     public static final boolean VISION_ENABLE_DURING_TELEOP = true;
 
+    //Settings for Color Matching
+    public static final double COLOR_MATCH_BLUE_TARGET_RED_PERCENTAGE = 0.143;
+    public static final double COLOR_MATCH_BLUE_TARGET_GREEN_PERCENTAGE = 0.427;
+    public static final double COLOR_MATCH_BLUE_TARGET_BLUE_PERCENTAGE = 0.429;
+    public static final double COLOR_MATCH_RED_TARGET_RED_PERCENTAGE = 0.197;
+    public static final double COLOR_MATCH_RED_TARGET_GREEN_PERCENTAGE = 0.561;
+    public static final double COLOR_MATCH_RED_TARGET_BLUE_PERCENTAGE = 0.240;
+    public static final double COLOR_MATCH_GREEN_TARGET_RED_PERCENTAGE = 0.561;
+    public static final double COLOR_MATCH_GREEN_TARGET_GREEN_PERCENTAGE = 0.232;
+    public static final double COLOR_MATCH_GREEN_TARGET_BLUE_PERCENTAGE = 0.114;
+    public static final double COLOR_MATCH_YELLOW_TARGET_RED_PERCENTAGE = 0.361;
+    public static final double COLOR_MATCH_YELLOW_TARGET_GREEN_PERCENTAGE = 0.524;
+    public static final double COLOR_MATCH_YELLOW_TARGET_BLUE_PERCENTAGE = 0.113;
+
     //================================================== Indicator Lights ==============================================================
 
     public static final double INDICATOR_LIGHT_VISION_CONSIDERATION_DISTANCE_RANGE = VisionConstants.VISION_CONSIDERATION_DISTANCE_RANGE;
