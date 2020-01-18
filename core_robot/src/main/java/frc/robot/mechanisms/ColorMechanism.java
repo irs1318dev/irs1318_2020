@@ -22,6 +22,7 @@ public class ColorMechanism implements IMechanism
     private final IColorSensorV3 sensor;
     private final IColorMatch color;
 
+
     private Driver driver;
 
     @Inject
@@ -30,11 +31,16 @@ public class ColorMechanism implements IMechanism
         this.logger = logger;
         this.sensor = provider.getColorSensor();
         this.color = provider.getColorMatch();
+
+        this.color.addColorMatch("red", TuningConstants.COLOR_MATCH_RED_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_RED_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_RED_TARGET_BLUE_PERCENTAGE);
+        this.color.addColorMatch("green", TuningConstants.COLOR_MATCH_GREEN_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_GREEN_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_GREEN_TARGET_BLUE_PERCENTAGE);
+        this.color.addColorMatch("blue",TuningConstants.COLOR_MATCH_BLUE_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_BLUE_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_BLUE_TARGET_BLUE_PERCENTAGE);
+        this.color.addColorMatch("yellow", TuningConstants.COLOR_MATCH_YELLOW_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_YELLOW_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_YELLOW_TARGET_BLUE_PERCENTAGE);
     }
 
     @Override
     public void readSensors()
-    {
+    {        
         RawColorRGBIR rawColor = sensor.getRawColor();
         int red = rawColor.getRed();
         int green = rawColor.getGreen();
