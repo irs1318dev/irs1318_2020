@@ -20,8 +20,7 @@ public class ColorMechanism implements IMechanism
 
     private final IDashboardLogger logger;
     private final IColorSensorV3 sensor;
-    private final IColorMatch color;
-
+    private final IColorMatch colorMatch;
 
     private Driver driver;
 
@@ -30,12 +29,12 @@ public class ColorMechanism implements IMechanism
     {
         this.logger = logger;
         this.sensor = provider.getColorSensor();
-        this.color = provider.getColorMatch();
+        this.colorMatch = provider.getColorMatch();
 
-        this.color.addColorMatch("red", TuningConstants.COLOR_MATCH_RED_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_RED_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_RED_TARGET_BLUE_PERCENTAGE);
-        this.color.addColorMatch("green", TuningConstants.COLOR_MATCH_GREEN_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_GREEN_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_GREEN_TARGET_BLUE_PERCENTAGE);
-        this.color.addColorMatch("blue",TuningConstants.COLOR_MATCH_BLUE_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_BLUE_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_BLUE_TARGET_BLUE_PERCENTAGE);
-        this.color.addColorMatch("yellow", TuningConstants.COLOR_MATCH_YELLOW_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_YELLOW_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_YELLOW_TARGET_BLUE_PERCENTAGE);
+        this.colorMatch.addColorMatch("red", TuningConstants.COLOR_MATCH_RED_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_RED_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_RED_TARGET_BLUE_PERCENTAGE);
+        this.colorMatch.addColorMatch("green", TuningConstants.COLOR_MATCH_GREEN_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_GREEN_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_GREEN_TARGET_BLUE_PERCENTAGE);
+        this.colorMatch.addColorMatch("blue",TuningConstants.COLOR_MATCH_BLUE_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_BLUE_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_BLUE_TARGET_BLUE_PERCENTAGE);
+        this.colorMatch.addColorMatch("yellow", TuningConstants.COLOR_MATCH_YELLOW_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_YELLOW_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_YELLOW_TARGET_BLUE_PERCENTAGE);
     }
 
     @Override
@@ -56,7 +55,7 @@ public class ColorMechanism implements IMechanism
         double greenPercent = (double)green / total;
         double bluePercent = (double)blue / total;
 
-        ColorMatchResult result = color.matchClosestColor(redPercent, greenPercent, bluePercent);
+        ColorMatchResult result = colorMatch.matchClosestColor(redPercent, greenPercent, bluePercent);
         this.logger.logString(ColorMechanism.logName, "name", result.getName());
         this.logger.logNumber(ColorMechanism.logName, "confidence", result.getConfidence());
 

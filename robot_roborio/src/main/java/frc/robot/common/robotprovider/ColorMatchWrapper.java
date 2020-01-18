@@ -35,7 +35,7 @@ public class ColorMatchWrapper implements IColorMatch
         Color color = ColorMatch.makeColor(result.color.red, result.color.green, result.color.blue);
         for (String key : this.map.keySet())
         {
-            if (color == this.map.get(key))
+            if (color.equals(this.map.get(key)))
             {
                 match = key;
                 break;
