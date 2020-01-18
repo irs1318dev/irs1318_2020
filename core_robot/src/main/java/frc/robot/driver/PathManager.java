@@ -1,8 +1,10 @@
 package frc.robot.driver;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +15,8 @@ import com.google.inject.Singleton;
 import de.siegmar.fastcsv.reader.CsvParser;
 import de.siegmar.fastcsv.reader.CsvReader;
 import de.siegmar.fastcsv.reader.CsvRow;
-
+import de.siegmar.fastcsv.writer.CsvAppender;
+import de.siegmar.fastcsv.writer.CsvWriter;
 import frc.robot.driver.common.PathStep;
 
 @Singleton
@@ -27,12 +30,15 @@ public class PathManager
             "/Paths/Straight 4 feet.csv",
             "/Paths/Turn left 4 feet.csv",
             "/Paths/Turn right 4 feet.csv",
+            "/Paths/path.csv"
         };
 
     private static final String LEFT_POSITION_NAME = "LeftPosition";
     private static final String RIGHT_POSITION_NAME = "RightPosition";
     private static final String LEFT_VELOCITY_NAME = "LeftVelocity";
     private static final String RIGHT_VELOCITY_NAME = "RightVelocity";
+    private static final String LEFT_ACCELERATION_NAME = "LeftAcceleration";
+    private static final String RIGHT_ACCELERATION_NAME = "RightAcceleration";
     private static final String HEADING_NAME = "Heading";
 
     private HashMap<String, List<PathStep>> map;
@@ -98,5 +104,47 @@ public class PathManager
     public List<PathStep> getPath(String name)
     {
         return map.getOrDefault(name, null);
+    }
+
+    public void addPath(String name, List<PathStep> path)
+    {
+        map.put(name, path);
+    }
+
+    public static void writePathToFile(String filePath, List<PathStep> pathSteps)
+    {
+        File file = new File(filePath);
+        if (file.exists())
+        {
+            file.delete();
+        }
+
+        CsvWriter csvWriter = new CsvWriter();
+        try (CsvAppender csvAppender = csvWriter.append(file, StandardCharsets.UTF_8))
+        {
+            csvAppender.appendLine(
+                PathManager.LEFT_POSITION_NAME,
+                PathManager.RIGHT_POSITION_NAME,
+                PathManager.LEFT_VELOCITY_NAME,
+                PathManager.RIGHT_VELOCITY_NAME,
+                PathManager.LEFT_ACCELERATION_NAME,
+                PathManager.RIGHT_ACCELERATION_NAME,
+                PathManager.HEADING_NAME);
+
+            for (PathStep step : pathSteps)
+            {
+                csvAppender.appendLine(
+                    "" + step.getLeftPosition(),
+                    "" + step.getRightPosition(),
+                    "" + step.getLeftVelocity(),
+                    "" + step.getRightVelocity(),
+                    "" + step.getLeftAcceleration(),
+                    "" + step.getRightAcceleration(),
+                    "" + step.getHeading());
+            }
+        }
+        catch (IOException e)
+        {
+        }
     }
 }

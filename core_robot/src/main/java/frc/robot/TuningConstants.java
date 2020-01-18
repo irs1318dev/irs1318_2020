@@ -122,6 +122,15 @@ public class TuningConstants
     public static final double COLOR_MATCH_YELLOW_TARGET_GREEN_PERCENTAGE = 0.554; //0.524;
     public static final double COLOR_MATCH_YELLOW_TARGET_BLUE_PERCENTAGE = 0.124; //0.113;
 
+    // Kinodynamic constraints for driving with roadrunner
+    public static final double ROADRUNNER_TIME_STEP = 0.01;
+    public static final double ROADRUNNER_MAX_VELOCITY = 10;
+    public static final double ROADRUNNER_MAX_ACCELERATION = 10;
+    public static final double ROADRUNNER_MAX_JERK = 80;
+    public static final double ROADRUNNER_MAX_ANGULAR_VELOCITY = 1;
+    public static final double ROADRUNNER_MAX_ANGULAR_ACCELERATION = 2;
+    public static final double ROADRUNNER_MAX_ANGULAR_JERK = 4;
+
     //================================================== Indicator Lights ==============================================================
 
     public static final double INDICATOR_LIGHT_VISION_CONSIDERATION_DISTANCE_RANGE = VisionConstants.VISION_CONSIDERATION_DISTANCE_RANGE;
@@ -156,7 +165,12 @@ public class TuningConstants
     public static final double DRIVETRAIN_PATH_PID_RIGHT_KV = 1.0;
     public static final double DRIVETRAIN_PATH_PID_RIGHT_KCC = 0.0;
     public static final double DRIVETRAIN_PATH_RIGHT_HEADING_CORRECTION = 0.0;
-    public static final double DRIVETRAIN_PATH_RIGHT_MAX_VELOCITY_INCHES_PER_SECOND = 10.0 * TuningConstants.DRIVETRAIN_VELOCITY_PID_RIGHT_KS * HardwareConstants.DRIVETRAIN_RIGHT_PULSE_DISTANCE; // gets the max speed in inches per second (ticks per 100ms times inches per tick times 10)
+
+    // gets the max speed in inches per second
+    // (TalonSRX: 10 * (ticks per 100ms) * (inches per tick) * (10) == in / s)
+    // (SparkMAX: (rotations per second) * (inches per rotation) == in / s)
+    public static final double DRIVETRAIN_PATH_RIGHT_MAX_VELOCITY_INCHES_PER_SECOND = 10.0 * TuningConstants.DRIVETRAIN_VELOCITY_PID_RIGHT_KS * HardwareConstants.DRIVETRAIN_RIGHT_PULSE_DISTANCE;
+    // public static final double DRIVETRAIN_PATH_RIGHT_MAX_VELOCITY_INCHES_PER_SECOND = TuningConstants.DRIVETRAIN_VELOCITY_PID_LEFT_KS * HardwareConstants.DRIVETRAIN_LEFT_PULSE_DISTANCE;
 
     // Path PID (left)
     public static final double DRIVETRAIN_PATH_PID_LEFT_KP = 0.0002;
@@ -166,7 +180,11 @@ public class TuningConstants
     public static final double DRIVETRAIN_PATH_PID_LEFT_KV = 1.0;
     public static final double DRIVETRAIN_PATH_PID_LEFT_KCC = 0.0;
     public static final double DRIVETRAIN_PATH_LEFT_HEADING_CORRECTION = 0.0;
-    public static final double DRIVETRAIN_PATH_LEFT_MAX_VELOCITY_INCHES_PER_SECOND = 10.0 * TuningConstants.DRIVETRAIN_VELOCITY_PID_LEFT_KS * HardwareConstants.DRIVETRAIN_LEFT_PULSE_DISTANCE; // gets the max speed in inches per second (ticks per 100ms times inches per tick times 10)
+
+    // gets the max speed in inches per second
+    // (TalonSRX: 10 * (ticks per 100ms) * (inches per tick) * (10) == in / s)
+    public static final double DRIVETRAIN_PATH_LEFT_MAX_VELOCITY_INCHES_PER_SECOND = 10.0 * TuningConstants.DRIVETRAIN_VELOCITY_PID_LEFT_KS * HardwareConstants.DRIVETRAIN_LEFT_PULSE_DISTANCE;
+    // public static final double DRIVETRAIN_PATH_LEFT_MAX_VELOCITY_INCHES_PER_SECOND = TuningConstants.DRIVETRAIN_VELOCITY_PID_LEFT_KS * HardwareConstants.DRIVETRAIN_LEFT_PULSE_DISTANCE;
 
     // Position PID (right)
     public static final double DRIVETRAIN_POSITION_PID_RIGHT_KP = 0.0002;
