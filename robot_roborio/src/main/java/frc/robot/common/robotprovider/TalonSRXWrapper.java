@@ -35,6 +35,11 @@ public class TalonSRXWrapper implements ITalonSRX
         this.wrappedObject.follow(((TalonSRXWrapper)talonSRX).wrappedObject);
     }
 
+    public void follow(ITalonFX talonFX)
+    {
+        this.wrappedObject.follow(((TalonFXWrapper)talonFX).wrappedObject);
+    }
+
     public void follow(IVictorSPX victorSPX)
     {
         this.wrappedObject.follow(((VictorSPXWrapper)victorSPX).wrappedObject);
