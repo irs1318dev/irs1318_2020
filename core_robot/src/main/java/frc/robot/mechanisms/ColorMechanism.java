@@ -36,25 +36,26 @@ public class ColorMechanism implements IMechanism
     public void readSensors()
     {
         RawColorRGBIR rawColor = sensor.getRawColor();
-        logger.logNumber(ColorMechanism.logName,"blue",rawColor.getBlue());
-        logger.logNumber(ColorMechanism.logName,"red",rawColor.getRed());
-        logger.logNumber(ColorMechanism.logName,"green",rawColor.getGreen());
-        logger.logNumber(ColorMechanism.logName,"IR", rawColor.getIR());
+        int red = rawColor.getRed();
+        int green = rawColor.getGreen();
+        int blue = rawColor.getBlue();
 
-        //percentages of color
-        double red = (double)rawColor.getRed()/((double) rawColor.getRed() + (double)rawColor.getGreen() + (double)rawColor.getBlue());
-        double green = (double)rawColor.getGreen()/((double) rawColor.getRed() + (double)rawColor.getGreen() + (double)rawColor.getBlue());
-        double blue = (double)rawColor.getBlue()/((double) rawColor.getRed() + (double)rawColor.getGreen() + (double)rawColor.getBlue());
+        this.logger.logNumber(ColorMechanism.logName, "red", red);
+        this.logger.logNumber(ColorMechanism.logName, "green", green);
+        this.logger.logNumber(ColorMechanism.logName, "blue", blue);
+        this.logger.logNumber(ColorMechanism.logName, "IR", rawColor.getIR());
 
-        ColorMatchResult result = color.matchClosestColor(red, green, blue);
-        logger.logString(ColorMechanism.logName,"name",result.getName());
-        logger.logNumber(ColorMechanism.logName,"confidence",result.getConfidence());
+        double total = red + green + blue;
+        double redPercent = (double)red / total;
+        double greenPercent = (double)green / total;
+        double bluePercent = (double)blue / total;
 
+        ColorMatchResult result = color.matchClosestColor(redPercent, greenPercent, bluePercent);
+        this.logger.logString(ColorMechanism.logName, "name", result.getName());
+        this.logger.logNumber(ColorMechanism.logName, "confidence", result.getConfidence());
 
         int proximity = sensor.getProximity();
-        logger.logInteger(ColorMechanism.logName, "proximity", proximity);
-
-
+        this.logger.logInteger(ColorMechanism.logName, "proximity", proximity);
     }
 
     @Override
