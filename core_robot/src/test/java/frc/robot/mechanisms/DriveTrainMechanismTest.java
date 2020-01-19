@@ -22,12 +22,12 @@ public class DriveTrainMechanismTest
         IDashboardLogger logger = mock(IDashboardLogger.class);
         ITimer timer = mock(ITimer.class);
         TestProvider testProvider = new TestProvider();
-        ITalonSRX leftMotor = testProvider.getTalonSRX(ElectronicsConstants.DRIVETRAIN_LEFT_MASTER_CAN_ID);
-        ITalonSRX rightMotor = testProvider.getTalonSRX(ElectronicsConstants.DRIVETRAIN_RIGHT_MASTER_CAN_ID);
-        IVictorSPX leftFollowerMotor1 = testProvider.getVictorSPX(ElectronicsConstants.DRIVETRAIN_LEFT_FOLLOWER1_CAN_ID);
-        IVictorSPX rightFollowerMotor1 = testProvider.getVictorSPX(ElectronicsConstants.DRIVETRAIN_RIGHT_FOLLOWER1_CAN_ID);
-        ITalonSRX leftFollowerMotor2 = testProvider.getTalonSRX(ElectronicsConstants.DRIVETRAIN_LEFT_FOLLOWER2_CAN_ID);
-        ITalonSRX rightFollowerMotor2 = testProvider.getTalonSRX(ElectronicsConstants.DRIVETRAIN_RIGHT_FOLLOWER2_CAN_ID);
+        ITalonFX leftMotor = testProvider.getTalonFX(ElectronicsConstants.DRIVETRAIN_LEFT_MASTER_CAN_ID);
+        ITalonFX rightMotor = testProvider.getTalonFX(ElectronicsConstants.DRIVETRAIN_RIGHT_MASTER_CAN_ID);
+        ITalonFX leftFollowerMotor1 = testProvider.getTalonFX(ElectronicsConstants.DRIVETRAIN_LEFT_FOLLOWER1_CAN_ID);
+        ITalonFX rightFollowerMotor1 = testProvider.getTalonFX(ElectronicsConstants.DRIVETRAIN_RIGHT_FOLLOWER1_CAN_ID);
+        ITalonFX leftFollowerMotor2 = testProvider.getTalonFX(ElectronicsConstants.DRIVETRAIN_LEFT_FOLLOWER2_CAN_ID);
+        ITalonFX rightFollowerMotor2 = testProvider.getTalonFX(ElectronicsConstants.DRIVETRAIN_RIGHT_FOLLOWER2_CAN_ID);
 
         Driver driver = mock(Driver.class);
 
@@ -124,12 +124,12 @@ public class DriveTrainMechanismTest
         IDashboardLogger logger = mock(IDashboardLogger.class);
         ITimer timer = mock(ITimer.class);
         TestProvider testProvider = new TestProvider();
-        ITalonSRX leftMotor = testProvider.getTalonSRX(ElectronicsConstants.DRIVETRAIN_LEFT_MASTER_CAN_ID);
-        ITalonSRX rightMotor = testProvider.getTalonSRX(ElectronicsConstants.DRIVETRAIN_RIGHT_MASTER_CAN_ID);
-        IVictorSPX leftFollowerMotor1 = testProvider.getVictorSPX(ElectronicsConstants.DRIVETRAIN_LEFT_FOLLOWER1_CAN_ID);
-        IVictorSPX rightFollowerMotor1 = testProvider.getVictorSPX(ElectronicsConstants.DRIVETRAIN_RIGHT_FOLLOWER1_CAN_ID);
-        ITalonSRX leftFollowerMotor2 = testProvider.getTalonSRX(ElectronicsConstants.DRIVETRAIN_LEFT_FOLLOWER2_CAN_ID);
-        ITalonSRX rightFollowerMotor2 = testProvider.getTalonSRX(ElectronicsConstants.DRIVETRAIN_RIGHT_FOLLOWER2_CAN_ID);
+        ITalonFX leftMotor = testProvider.getTalonFX(ElectronicsConstants.DRIVETRAIN_LEFT_MASTER_CAN_ID);
+        ITalonFX rightMotor = testProvider.getTalonFX(ElectronicsConstants.DRIVETRAIN_RIGHT_MASTER_CAN_ID);
+        ITalonFX leftFollowerMotor1 = testProvider.getTalonFX(ElectronicsConstants.DRIVETRAIN_LEFT_FOLLOWER1_CAN_ID);
+        ITalonFX rightFollowerMotor1 = testProvider.getTalonFX(ElectronicsConstants.DRIVETRAIN_RIGHT_FOLLOWER1_CAN_ID);
+        ITalonFX leftFollowerMotor2 = testProvider.getTalonFX(ElectronicsConstants.DRIVETRAIN_LEFT_FOLLOWER2_CAN_ID);
+        ITalonFX rightFollowerMotor2 = testProvider.getTalonFX(ElectronicsConstants.DRIVETRAIN_RIGHT_FOLLOWER2_CAN_ID);
 
         Driver driver = mock(Driver.class);
 
