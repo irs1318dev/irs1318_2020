@@ -70,7 +70,7 @@ public class DriveTrainMechanism implements IMechanism
         this.leftMotor.setNeutralMode(MotorNeutralMode.Brake);
         this.leftMotor.setInvertOutput(HardwareConstants.DRIVETRAIN_LEFT_MASTER_INVERT_OUTPUT);
         this.leftMotor.setInvertSensor(HardwareConstants.DRIVETRAIN_LEFT_INVERT_SENSOR);
-        this.leftMotor.setSensorType(TalonSRXFeedbackDevice.QuadEncoder);
+        this.leftMotor.setSensorType(TalonXFeedbackDevice.IntegratedSensor);
         this.leftMotor.setFeedbackFramePeriod(DriveTrainMechanism.FRAME_PERIOD_MS);
         this.leftMotor.setPIDFFramePeriod(DriveTrainMechanism.FRAME_PERIOD_MS);
         this.leftMotor.configureVelocityMeasurements(10, 32);
@@ -86,16 +86,16 @@ public class DriveTrainMechanism implements IMechanism
         leftFollowerMotor1.setInvertOutput(HardwareConstants.DRIVETRAIN_LEFT_FOLLOWER1_INVERT_OUTPUT);
         leftFollowerMotor1.follow(this.leftMotor);
 
-        ITalonFX leftFollowerMotor2 = provider.getTalonFX(ElectronicsConstants.DRIVETRAIN_LEFT_FOLLOWER2_CAN_ID);
-        leftFollowerMotor2.setNeutralMode(MotorNeutralMode.Brake);
-        leftFollowerMotor2.setInvertOutput(HardwareConstants.DRIVETRAIN_LEFT_FOLLOWER2_INVERT_OUTPUT);
-        leftFollowerMotor2.follow(this.leftMotor);
+        // ITalonFX leftFollowerMotor2 = provider.getTalonFX(ElectronicsConstants.DRIVETRAIN_LEFT_FOLLOWER2_CAN_ID);
+        // leftFollowerMotor2.setNeutralMode(MotorNeutralMode.Brake);
+        // leftFollowerMotor2.setInvertOutput(HardwareConstants.DRIVETRAIN_LEFT_FOLLOWER2_INVERT_OUTPUT);
+        // leftFollowerMotor2.follow(this.leftMotor);
 
         this.rightMotor = provider.getTalonFX(ElectronicsConstants.DRIVETRAIN_RIGHT_MASTER_CAN_ID);
         this.rightMotor.setNeutralMode(MotorNeutralMode.Brake);
         this.rightMotor.setInvertOutput(HardwareConstants.DRIVETRAIN_RIGHT_MASTER_INVERT_OUTPUT);
         this.rightMotor.setInvertSensor(HardwareConstants.DRIVETRAIN_RIGHT_INVERT_SENSOR);
-        this.rightMotor.setSensorType(TalonSRXFeedbackDevice.QuadEncoder);
+        this.rightMotor.setSensorType(TalonXFeedbackDevice.IntegratedSensor);
         this.rightMotor.setFeedbackFramePeriod(DriveTrainMechanism.FRAME_PERIOD_MS);
         this.rightMotor.setPIDFFramePeriod(DriveTrainMechanism.FRAME_PERIOD_MS);
         this.rightMotor.configureVelocityMeasurements(10, 32);
@@ -111,10 +111,10 @@ public class DriveTrainMechanism implements IMechanism
         rightFollowerMotor1.setInvertOutput(HardwareConstants.DRIVETRAIN_RIGHT_FOLLOWER1_INVERT_OUTPUT);
         rightFollowerMotor1.follow(this.rightMotor);
 
-        ITalonFX rightFollowerMotor2 = provider.getTalonFX(ElectronicsConstants.DRIVETRAIN_RIGHT_FOLLOWER2_CAN_ID);
-        rightFollowerMotor2.setNeutralMode(MotorNeutralMode.Brake);
-        rightFollowerMotor2.setInvertOutput(HardwareConstants.DRIVETRAIN_RIGHT_FOLLOWER2_INVERT_OUTPUT);
-        rightFollowerMotor2.follow(this.rightMotor);
+        // ITalonFX rightFollowerMotor2 = provider.getTalonFX(ElectronicsConstants.DRIVETRAIN_RIGHT_FOLLOWER2_CAN_ID);
+        // rightFollowerMotor2.setNeutralMode(MotorNeutralMode.Brake);
+        // rightFollowerMotor2.setInvertOutput(HardwareConstants.DRIVETRAIN_RIGHT_FOLLOWER2_INVERT_OUTPUT);
+        // rightFollowerMotor2.follow(this.rightMotor);
 
         this.leftPID = null;
         this.rightPID = null;

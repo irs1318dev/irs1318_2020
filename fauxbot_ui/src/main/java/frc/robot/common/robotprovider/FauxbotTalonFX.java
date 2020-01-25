@@ -6,4 +6,9 @@ public class FauxbotTalonFX extends FauxbotTalonXBase implements ITalonFX
     {
         super(deviceNumber);
     }
+
+    @Override
+    public void setSupplyCurrentLimit(boolean enabled, double currentLimit, double triggerThresholdCurrent, double triggerThresholdTime)
+    {
+    }
 }

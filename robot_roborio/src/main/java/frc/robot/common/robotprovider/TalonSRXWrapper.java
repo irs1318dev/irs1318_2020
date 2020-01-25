@@ -73,10 +73,10 @@ public class TalonSRXWrapper implements ITalonSRX
         }
     }
 
-    public void setSensorType(TalonSRXFeedbackDevice feedbackDevice)
+    public void setSensorType(TalonXFeedbackDevice feedbackDevice)
     {
         FeedbackDevice device;
-        if (feedbackDevice == TalonSRXFeedbackDevice.QuadEncoder)
+        if (feedbackDevice == TalonXFeedbackDevice.QuadEncoder)
         {
             device = FeedbackDevice.QuadEncoder;
             this.wrappedObject.configSelectedFeedbackSensor(device, TalonSRXWrapper.pidIdx, 0);

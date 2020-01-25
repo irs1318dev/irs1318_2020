@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
 import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -73,12 +74,17 @@ public class TalonFXWrapper implements ITalonFX
         }
     }
 
-    public void setSensorType(TalonSRXFeedbackDevice feedbackDevice)
+    public void setSensorType(TalonXFeedbackDevice feedbackDevice)
     {
         FeedbackDevice device;
-        if (feedbackDevice == TalonSRXFeedbackDevice.QuadEncoder)
+        if (feedbackDevice == TalonXFeedbackDevice.QuadEncoder)
         {
             device = FeedbackDevice.QuadEncoder;
+            this.wrappedObject.configSelectedFeedbackSensor(device, TalonFXWrapper.pidIdx, 0);
+        }
+        else if (feedbackDevice == TalonXFeedbackDevice.IntegratedSensor)
+        {
+            device = FeedbackDevice.IntegratedSensor;
             this.wrappedObject.configSelectedFeedbackSensor(device, TalonFXWrapper.pidIdx, 0);
         }
     }
@@ -206,6 +212,12 @@ public class TalonFXWrapper implements ITalonFX
     {
         this.wrappedObject.configVoltageCompSaturation(maxVoltage, TalonFXWrapper.timeoutMS);
         this.wrappedObject.enableVoltageCompensation(enabled);
+    }
+
+    public void setSupplyCurrentLimit(boolean enabled, double currentLimit, double triggerThresholdCurrent, double triggerThresholdTime)
+    {
+        SupplyCurrentLimitConfiguration config = new SupplyCurrentLimitConfiguration(enabled, currentLimit, triggerThresholdCurrent, triggerThresholdTime);
+        this.wrappedObject.configGetSupplyCurrentLimit(config);
     }
 
     public void stop()

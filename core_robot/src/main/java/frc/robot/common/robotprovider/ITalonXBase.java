@@ -6,7 +6,7 @@ public interface ITalonXBase extends IMotor
     void follow(ITalonFX talonFX);
     void follow(IVictorSPX victorSPX);
     void setControlMode(TalonSRXControlMode mode);
-    void setSensorType(TalonSRXFeedbackDevice feedbackDevice);
+    void setSensorType(TalonXFeedbackDevice feedbackDevice);
     void setFeedbackFramePeriod(int periodMS);
     void setPIDFFramePeriod(int periodMS);
     void configureVelocityMeasurements(int periodMS, int windowSize);
