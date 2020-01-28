@@ -144,18 +144,18 @@ public class TuningConstants
     public static final boolean DRIVETRAIN_USE_HEADING_CORRECTION = true;
 
     // Velocity PID (right)
-    public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KP = 0.3;
+    public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KP = 0.09;
     public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KI = 0.0;
     public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KD = 0.0;
-    public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KF = 0.227; // .227 ==> ~ 1023 / 4500 (100% control authority)
-    public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KS = 4500.0;
+    public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KF = 0.0478; // .0478 ==> ~ 1023 / 21400 (100% control authority)
+    public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KS = 17000.0;
 
     // Velocity PID (left)
-    public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KP = 0.3;
+    public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KP = 0.09;
     public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KI = 0.0;
     public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KD = 0.0;
-    public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KF = 0.227; // .227 ==> ~ 1023 / 4500 (100% control authority)
-    public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KS = 4500.0;
+    public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KF = 0.0478; // .0478 ==> ~ 1023 / 21400 (100% control authority)
+    public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KS = 17000.0;
 
     // Path PID (right)
     public static final double DRIVETRAIN_PATH_PID_RIGHT_KP = 0.0002;
