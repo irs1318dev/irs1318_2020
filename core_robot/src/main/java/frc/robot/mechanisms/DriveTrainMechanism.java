@@ -80,11 +80,27 @@ public class DriveTrainMechanism implements IMechanism
             TuningConstants.DRIVETRAIN_VELOCITY_PID_LEFT_KD,
             TuningConstants.DRIVETRAIN_VELOCITY_PID_LEFT_KF,
             DriveTrainMechanism.pidSlotId);
+        this.leftMotor.setVoltageCompensation(
+            TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION_ENABLED,
+            TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION);
+        this.leftMotor.setSupplyCurrentLimit(
+            TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_LIMITING_ENABLED,
+            TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_MAX,
+            TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_CURRENT,
+            TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_DURATION);
 
         ITalonFX leftFollowerMotor1 = provider.getTalonFX(ElectronicsConstants.DRIVETRAIN_LEFT_FOLLOWER1_CAN_ID);
         leftFollowerMotor1.setNeutralMode(MotorNeutralMode.Brake);
         leftFollowerMotor1.setInvertOutput(HardwareConstants.DRIVETRAIN_LEFT_FOLLOWER1_INVERT_OUTPUT);
         leftFollowerMotor1.follow(this.leftMotor);
+        leftFollowerMotor1.setVoltageCompensation(
+            TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION_ENABLED,
+            TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION);
+        leftFollowerMotor1.setSupplyCurrentLimit(
+            TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_LIMITING_ENABLED,
+            TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_MAX,
+            TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_CURRENT,
+            TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_DURATION);
 
         // ITalonFX leftFollowerMotor2 = provider.getTalonFX(ElectronicsConstants.DRIVETRAIN_LEFT_FOLLOWER2_CAN_ID);
         // leftFollowerMotor2.setNeutralMode(MotorNeutralMode.Brake);
@@ -105,11 +121,27 @@ public class DriveTrainMechanism implements IMechanism
             TuningConstants.DRIVETRAIN_VELOCITY_PID_RIGHT_KD,
             TuningConstants.DRIVETRAIN_VELOCITY_PID_RIGHT_KF,
             DriveTrainMechanism.pidSlotId);
+        this.rightMotor.setVoltageCompensation(
+            TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION_ENABLED,
+            TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION);
+        this.rightMotor.setSupplyCurrentLimit(
+            TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_LIMITING_ENABLED,
+            TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_MAX,
+            TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_CURRENT,
+            TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_DURATION);
 
         ITalonFX rightFollowerMotor1 = provider.getTalonFX(ElectronicsConstants.DRIVETRAIN_RIGHT_FOLLOWER1_CAN_ID);
         rightFollowerMotor1.setNeutralMode(MotorNeutralMode.Brake);
         rightFollowerMotor1.setInvertOutput(HardwareConstants.DRIVETRAIN_RIGHT_FOLLOWER1_INVERT_OUTPUT);
         rightFollowerMotor1.follow(this.rightMotor);
+        rightFollowerMotor1.setVoltageCompensation(
+            TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION_ENABLED,
+            TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION);
+        rightFollowerMotor1.setSupplyCurrentLimit(
+            TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_LIMITING_ENABLED,
+            TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_MAX,
+            TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_CURRENT,
+            TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_DURATION);
 
         // ITalonFX rightFollowerMotor2 = provider.getTalonFX(ElectronicsConstants.DRIVETRAIN_RIGHT_FOLLOWER2_CAN_ID);
         // rightFollowerMotor2.setNeutralMode(MotorNeutralMode.Brake);

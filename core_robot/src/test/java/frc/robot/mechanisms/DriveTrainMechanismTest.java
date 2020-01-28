@@ -57,6 +57,8 @@ public class DriveTrainMechanismTest
         verify(leftMotor).setInvertOutput(eq(HardwareConstants.DRIVETRAIN_LEFT_MASTER_INVERT_OUTPUT));
         verify(leftMotor).setInvertSensor(eq(HardwareConstants.DRIVETRAIN_LEFT_INVERT_SENSOR));
         verify(leftMotor).setSensorType(TalonXFeedbackDevice.IntegratedSensor);
+        verify(leftMotor).setVoltageCompensation(TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION_ENABLED, TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION);
+        verify(leftMotor).setSupplyCurrentLimit(TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_LIMITING_ENABLED, TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_MAX, TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_CURRENT, TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_DURATION);
         verify(leftMotor).setFeedbackFramePeriod(5);
         verify(leftMotor).setPIDFFramePeriod(5);
         verify(leftMotor).configureVelocityMeasurements(eq(10), eq(32));
@@ -64,13 +66,19 @@ public class DriveTrainMechanismTest
         verify(leftFollowerMotor1).setNeutralMode(eq(MotorNeutralMode.Brake));
         verify(leftFollowerMotor1).setInvertOutput(eq(HardwareConstants.DRIVETRAIN_LEFT_FOLLOWER1_INVERT_OUTPUT));
         verify(leftFollowerMotor1).follow(eq(leftMotor));
+        verify(leftFollowerMotor1).setVoltageCompensation(TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION_ENABLED, TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION);
+        verify(leftFollowerMotor1).setSupplyCurrentLimit(TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_LIMITING_ENABLED, TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_MAX, TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_CURRENT, TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_DURATION);
         // verify(leftFollowerMotor2).setNeutralMode(eq(MotorNeutralMode.Brake));
         // verify(leftFollowerMotor2).setInvertOutput(eq(HardwareConstants.DRIVETRAIN_LEFT_FOLLOWER2_INVERT_OUTPUT));
         // verify(leftFollowerMotor2).follow(eq(leftMotor));
+        // verify(leftFollowerMotor2).setVoltageCompensation(TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION_ENABLED, TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION);
+        // verify(leftFollowerMotor2).setSupplyCurrentLimit(TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_LIMITING_ENABLED, TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_MAX, TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_CURRENT, TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_DURATION);
         verify(rightMotor).setNeutralMode(eq(MotorNeutralMode.Brake));
         verify(rightMotor).setInvertOutput(eq(HardwareConstants.DRIVETRAIN_RIGHT_MASTER_INVERT_OUTPUT));
         verify(rightMotor).setInvertSensor(eq(HardwareConstants.DRIVETRAIN_RIGHT_INVERT_SENSOR));
         verify(rightMotor).setSensorType(TalonXFeedbackDevice.IntegratedSensor);
+        verify(rightMotor).setVoltageCompensation(TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION_ENABLED, TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION);
+        verify(rightMotor).setSupplyCurrentLimit(TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_LIMITING_ENABLED, TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_MAX, TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_CURRENT, TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_DURATION);
         verify(rightMotor).setFeedbackFramePeriod(5);
         verify(rightMotor).setPIDFFramePeriod(5);
         verify(rightMotor).configureVelocityMeasurements(eq(10), eq(32));
@@ -78,9 +86,13 @@ public class DriveTrainMechanismTest
         verify(rightFollowerMotor1).setNeutralMode(eq(MotorNeutralMode.Brake));
         verify(rightFollowerMotor1).setInvertOutput(eq(HardwareConstants.DRIVETRAIN_RIGHT_FOLLOWER1_INVERT_OUTPUT));
         verify(rightFollowerMotor1).follow(eq(rightMotor));
+        verify(rightFollowerMotor1).setVoltageCompensation(TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION_ENABLED, TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION);
+        verify(rightFollowerMotor1).setSupplyCurrentLimit(TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_LIMITING_ENABLED, TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_MAX, TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_CURRENT, TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_DURATION);
         // verify(rightFollowerMotor2).setNeutralMode(eq(MotorNeutralMode.Brake));
         // verify(rightFollowerMotor2).setInvertOutput(eq(HardwareConstants.DRIVETRAIN_RIGHT_FOLLOWER2_INVERT_OUTPUT));
         // verify(rightFollowerMotor2).follow(eq(rightMotor));
+        // verify(rightFollowerMotor2).setVoltageCompensation(TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION_ENABLED, TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION);
+        // verify(rightFollowerMotor1).setSupplyCurrentLimit(TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_LIMITING_ENABLED, TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_MAX, TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_CURRENT, TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_DURATION);
 
         // from setDriver:
         verify(leftMotor).setPIDF(
@@ -158,6 +170,8 @@ public class DriveTrainMechanismTest
         verify(leftMotor).setInvertOutput(eq(HardwareConstants.DRIVETRAIN_LEFT_MASTER_INVERT_OUTPUT));
         verify(leftMotor).setInvertSensor(eq(HardwareConstants.DRIVETRAIN_LEFT_INVERT_SENSOR));
         verify(leftMotor).setSensorType(TalonXFeedbackDevice.IntegratedSensor);
+        verify(leftMotor).setVoltageCompensation(TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION_ENABLED, TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION);
+        verify(leftMotor).setSupplyCurrentLimit(TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_LIMITING_ENABLED, TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_MAX, TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_CURRENT, TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_DURATION);
         verify(leftMotor).setFeedbackFramePeriod(5);
         verify(leftMotor).setPIDFFramePeriod(5);
         verify(leftMotor).configureVelocityMeasurements(eq(10), eq(32));
@@ -165,13 +179,19 @@ public class DriveTrainMechanismTest
         verify(leftFollowerMotor1).setNeutralMode(eq(MotorNeutralMode.Brake));
         verify(leftFollowerMotor1).setInvertOutput(eq(HardwareConstants.DRIVETRAIN_LEFT_FOLLOWER1_INVERT_OUTPUT));
         verify(leftFollowerMotor1).follow(eq(leftMotor));
+        verify(leftFollowerMotor1).setVoltageCompensation(TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION_ENABLED, TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION);
+        verify(leftFollowerMotor1).setSupplyCurrentLimit(TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_LIMITING_ENABLED, TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_MAX, TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_CURRENT, TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_DURATION);
         // verify(leftFollowerMotor2).setNeutralMode(eq(MotorNeutralMode.Brake));
         // verify(leftFollowerMotor2).setInvertOutput(eq(HardwareConstants.DRIVETRAIN_LEFT_FOLLOWER2_INVERT_OUTPUT));
         // verify(leftFollowerMotor2).follow(eq(leftMotor));
+        // verify(leftFollowerMotor2).setVoltageCompensation(TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION_ENABLED, TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION);
+        // verify(leftFollowerMotor2).setSupplyCurrentLimit(TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_LIMITING_ENABLED, TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_MAX, TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_CURRENT, TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_DURATION);
         verify(rightMotor).setNeutralMode(eq(MotorNeutralMode.Brake));
         verify(rightMotor).setInvertOutput(eq(HardwareConstants.DRIVETRAIN_RIGHT_MASTER_INVERT_OUTPUT));
         verify(rightMotor).setInvertSensor(eq(HardwareConstants.DRIVETRAIN_RIGHT_INVERT_SENSOR));
         verify(rightMotor).setSensorType(TalonXFeedbackDevice.IntegratedSensor);
+        verify(rightMotor).setVoltageCompensation(TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION_ENABLED, TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION);
+        verify(rightMotor).setSupplyCurrentLimit(TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_LIMITING_ENABLED, TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_MAX, TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_CURRENT, TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_DURATION);
         verify(rightMotor).setFeedbackFramePeriod(5);
         verify(rightMotor).setPIDFFramePeriod(5);
         verify(rightMotor).configureVelocityMeasurements(eq(10), eq(32));
@@ -179,9 +199,13 @@ public class DriveTrainMechanismTest
         verify(rightFollowerMotor1).setNeutralMode(eq(MotorNeutralMode.Brake));
         verify(rightFollowerMotor1).setInvertOutput(eq(HardwareConstants.DRIVETRAIN_RIGHT_FOLLOWER1_INVERT_OUTPUT));
         verify(rightFollowerMotor1).follow(eq(rightMotor));
+        verify(rightFollowerMotor1).setVoltageCompensation(TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION_ENABLED, TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION);
+        verify(rightFollowerMotor1).setSupplyCurrentLimit(TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_LIMITING_ENABLED, TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_MAX, TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_CURRENT, TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_DURATION);
         // verify(rightFollowerMotor2).setNeutralMode(eq(MotorNeutralMode.Brake));
         // verify(rightFollowerMotor2).setInvertOutput(eq(HardwareConstants.DRIVETRAIN_RIGHT_FOLLOWER2_INVERT_OUTPUT));
         // verify(rightFollowerMotor2).follow(eq(rightMotor));
+        // verify(rightFollowerMotor2).setVoltageCompensation(TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION_ENABLED, TuningConstants.DRIVETRAIN_VOLTAGE_COMPENSATION);
+        // verify(rightFollowerMotor1).setSupplyCurrentLimit(TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_LIMITING_ENABLED, TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_MAX, TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_CURRENT, TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_DURATION);
 
         // from setDriver:
         verify(leftMotor).setPIDF(

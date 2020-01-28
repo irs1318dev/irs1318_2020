@@ -217,7 +217,7 @@ public class TalonFXWrapper implements ITalonFX
     public void setSupplyCurrentLimit(boolean enabled, double currentLimit, double triggerThresholdCurrent, double triggerThresholdTime)
     {
         SupplyCurrentLimitConfiguration config = new SupplyCurrentLimitConfiguration(enabled, currentLimit, triggerThresholdCurrent, triggerThresholdTime);
-        this.wrappedObject.configGetSupplyCurrentLimit(config);
+        this.wrappedObject.configGetSupplyCurrentLimit(config, 50); // TODO: remove once TalonFX API is fixed to not have infinite loop
     }
 
     public void stop()

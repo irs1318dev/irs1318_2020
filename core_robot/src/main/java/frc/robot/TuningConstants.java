@@ -217,6 +217,12 @@ public class TuningConstants
     public static final double DRIVETRAIN_K2 = 0.5;
 
     // Drivetrain deadzone/max power levels
+    public static final boolean DRIVETRAIN_VOLTAGE_COMPENSATION_ENABLED = true;
+    public static final double DRIVETRAIN_VOLTAGE_COMPENSATION = 12.0;
+    public static final boolean DRIVETRAIN_SUPPLY_CURRENT_LIMITING_ENABLED = true;
+    public static final double DRIVETRAIN_SUPPLY_CURRENT_MAX = 40.0;
+    public static final double DRIVETRAIN_SUPPLY_TRIGGER_CURRENT = 100.0;
+    public static final double DRIVETRAIN_SUPPLY_TRIGGER_DURATION = 0.25;
     public static final double DRIVETRAIN_X_DEAD_ZONE = .05;
     public static final double DRIVETRAIN_Y_DEAD_ZONE = .1;
     public static final double DRIVETRAIN_MAX_POWER_LEVEL = 1.0;// max power level (velocity)
