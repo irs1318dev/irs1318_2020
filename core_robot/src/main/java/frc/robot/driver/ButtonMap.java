@@ -19,7 +19,7 @@ public class ButtonMap implements IButtonMap
             UserInputDeviceButton.JOYSTICK_STICK_TRIGGER_BUTTON),
 /*        new ShiftDescription(
             Shift.ButtonPadDebug,
-            UserInputDevice.CoDriver,
+            UserInputDevice.Operator,
             UserInputDeviceButton.BUTTON_PAD_BUTTON_16)),*/
     };
 
@@ -174,7 +174,7 @@ public class ButtonMap implements IButtonMap
             }),
 /*      new MacroOperationDescription(
             MacroOperation.VisionFastCenterAndAdvance,
-            UserInputDevice.CoDriver,
+            UserInputDevice.Operator,
             UserInputDeviceButton.BUTTON_PAD_BUTTON_7,
             Shift.Debug,
             Shift.None,

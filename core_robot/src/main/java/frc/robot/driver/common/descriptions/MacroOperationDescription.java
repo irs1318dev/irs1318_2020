@@ -27,7 +27,7 @@ public class MacroOperationDescription extends OperationDescription
     /**
      * Initializes a new MacroOperationDescription based on a user interaction
      * @param operation the macro operation being described
-     * @param userInputDevice which device will perform the macro operation (driver or codriver joystick)
+     * @param userInputDevice which device will perform the macro operation (driver or operator joystick)
      * @param userInputDeviceButton the button on the device that performs the macro operation
      * @param buttonType the behavior type to use for the macro operation
      * @param taskSupplier the function that creates the tasks that should be performed by the macro
@@ -62,7 +62,7 @@ public class MacroOperationDescription extends OperationDescription
     /**
      * Initializes a new MacroOperationDescription based on a user interaction
      * @param operation the macro operation being described
-     * @param userInputDevice which device will perform the macro operation (driver or codriver joystick)
+     * @param userInputDevice which device will perform the macro operation (driver or operator joystick)
      * @param userInputDeviceButton the button on the device that performs the macro operation
      * @param relevantShifts the shifts that should be considered when checking if we should perform the macro
      * @param requiredShifts the shift button(s) that must be applied to perform macro
@@ -101,7 +101,7 @@ public class MacroOperationDescription extends OperationDescription
     /**
      * Initializes a new MacroOperationDescription based on a user interaction
      * @param operation the macro operation being described
-     * @param userInputDevice which device will perform the macro operation (driver or codriver joystick)
+     * @param userInputDevice which device will perform the macro operation (driver or operator joystick)
      * @param userInputDeviceButton the button on the device that performs the macro operation
      * @param buttonType the behavior type to use for the macro operation
      * @param taskSupplier the function that creates the tasks that should be performed by the macro
@@ -138,7 +138,7 @@ public class MacroOperationDescription extends OperationDescription
     /**
      * Initializes a new MacroOperationDescription based on a user interaction
      * @param operation the macro operation being described
-     * @param userInputDevice which device will perform the macro operation (driver or codriver joystick)
+     * @param userInputDevice which device will perform the macro operation (driver or operator joystick)
      * @param userInputDeviceButton the button on the device that performs the macro operation
      * @param relevantShifts the shifts that should be considered when checking if we should perform the macro
      * @param requiredShifts the shift button(s) that must be applied to perform macro
@@ -179,7 +179,7 @@ public class MacroOperationDescription extends OperationDescription
     /**
      * Initializes a new MacroOperationDescription based on a user interaction on the POV
      * @param operation the macro operation being described
-     * @param userInputDevice which device will perform the macro operation (driver or codriver joystick)
+     * @param userInputDevice which device will perform the macro operation (driver or operator joystick)
      * @param povValue the value of the POV (hat) used to perform the macro operation
      * @param buttonType the behavior type to use for the macro operation
      * @param taskSupplier the function that creates the tasks that should be performed by the macro
@@ -214,7 +214,7 @@ public class MacroOperationDescription extends OperationDescription
     /**
      * Initializes a new MacroOperationDescription based on a user interaction on the POV
      * @param operation the macro operation being described
-     * @param userInputDevice which device will perform the macro operation (driver or codriver joystick)
+     * @param userInputDevice which device will perform the macro operation (driver or operator joystick)
      * @param povValue the value of the POV (hat) used to perform the macro operation
      * @param relevantShifts the shifts that should be considered when checking if we should perform the macro
      * @param requiredShifts the shift button(s) that must be applied to perform macro
@@ -253,7 +253,7 @@ public class MacroOperationDescription extends OperationDescription
     /**
      * Initializes a new MacroOperationDescription based on a user interaction on the POV
      * @param operation the macro operation being described
-     * @param userInputDevice which device will perform the macro operation (driver or codriver joystick)
+     * @param userInputDevice which device will perform the macro operation (driver or operator joystick)
      * @param povValue the value of the POV (hat) used to perform the macro operation
      * @param relevantShifts the shifts that should be considered when checking if we should perform the macro
      * @param requiredShifts the shift button(s) that must be applied to perform macro
@@ -294,7 +294,7 @@ public class MacroOperationDescription extends OperationDescription
     /**
      * Initializes a new MacroOperationDescription based on a user interaction on an axis
      * @param operation the macro operation being described
-     * @param userInputDevice which device will indicate the operation (driver or codriver joystick)
+     * @param userInputDevice which device will indicate the operation (driver or operator joystick)
      * @param analogAxis the analog axis used to perform the operation
      * @param axisRangeMinValue the min value of the range that triggers the operation
      * @param axisRangeMaxValue the max value of the range that triggers the operation
@@ -333,7 +333,7 @@ public class MacroOperationDescription extends OperationDescription
     /**
      * Initializes a new MacroOperationDescription based on a user interaction on an axis
      * @param operation the macro operation being described
-     * @param userInputDevice which device will indicate the operation (driver or codriver joystick)
+     * @param userInputDevice which device will indicate the operation (driver or operator joystick)
      * @param analogAxis the analog axis used to perform the operation
      * @param axisRangeMinValue the min value of the range that triggers the operation
      * @param axisRangeMaxValue the max value of the range that triggers the operation
@@ -374,7 +374,7 @@ public class MacroOperationDescription extends OperationDescription
     /**
      * Initializes a new MacroOperationDescription based on a user interaction on an axis
      * @param operation the macro operation being described
-     * @param userInputDevice which device will indicate the operation (driver or codriver joystick)
+     * @param userInputDevice which device will indicate the operation (driver or operator joystick)
      * @param analogAxis the analog axis used to perform the operation
      * @param axisRangeMinValue the min value of the range that triggers the operation
      * @param axisRangeMaxValue the max value of the range that triggers the operation
@@ -417,7 +417,7 @@ public class MacroOperationDescription extends OperationDescription
     /**
      * Initializes a new MacroOperationDescription based on a user interaction on an axis
      * @param operation the macro operation being described
-     * @param userInputDevice which device will indicate the operation (driver or codriver joystick)
+     * @param userInputDevice which device will indicate the operation (driver or operator joystick)
      * @param analogAxis the analog axis used to perform the operation
      * @param axisRangeMinValue the min value of the range that triggers the operation
      * @param axisRangeMaxValue the max value of the range that triggers the operation
@@ -496,7 +496,7 @@ public class MacroOperationDescription extends OperationDescription
      * Initializes a new MacroOperationDescription based on a user interaction on the POV
      * @param clearInterrupt whether to clear the interruption of the operations when the macro completes
      * @param operation the macro operation being described
-     * @param userInputDevice which device will perform the macro operation (driver or codriver joystick)
+     * @param userInputDevice which device will perform the macro operation (driver or operator joystick)
      * @param userInputDeviceButton the button on the device that performs the macro operation
      * @param povValue the value of the POV (hat) used to perform the macro operation
      * @param sensor the sensor that triggers the macro operation

@@ -220,7 +220,7 @@ public class FauxbotApplication extends Application
                     {
                         joystickPort = ElectronicsConstants.JOYSTICK_DRIVER_PORT;
                     }
-                    else if (description.getUserInputDevice() == UserInputDevice.CoDriver)
+                    else if (description.getUserInputDevice() == UserInputDevice.Operator)
                     {
                         joystickPort = ElectronicsConstants.JOYSTICK_CO_DRIVER_PORT;
                     }
@@ -458,7 +458,7 @@ public class FauxbotApplication extends Application
         {
             joystickPort = ElectronicsConstants.JOYSTICK_DRIVER_PORT;
         }
-        else if (description.getUserInputDevice() == UserInputDevice.CoDriver)
+        else if (description.getUserInputDevice() == UserInputDevice.Operator)
         {
             joystickPort = ElectronicsConstants.JOYSTICK_CO_DRIVER_PORT;
         }
