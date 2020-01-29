@@ -16,7 +16,7 @@ public class ButtonMap implements IButtonMap
         new ShiftDescription(
             Shift.Debug,
             UserInputDevice.Driver,
-            UserInputDeviceButton.JOYSTICK_STICK_TRIGGER_BUTTON),
+            UserInputDeviceButton.XBONE_LEFT_BUTTON),
 /*        new ShiftDescription(
             Shift.ButtonPadDebug,
             UserInputDevice.Operator,
@@ -29,13 +29,13 @@ public class ButtonMap implements IButtonMap
         new AnalogOperationDescription(
             AnalogOperation.DriveTrainMoveForward,
             UserInputDevice.Driver,
-            AnalogAxis.JOYSTICK_Y,
+            AnalogAxis.XBONE_LSY,
             ElectronicsConstants.INVERT_Y_AXIS,
             TuningConstants.DRIVETRAIN_Y_DEAD_ZONE),
         new AnalogOperationDescription(
             AnalogOperation.DriveTrainTurn,
             UserInputDevice.Driver,
-            AnalogAxis.JOYSTICK_X,
+            AnalogAxis.XBONE_RSX,
             ElectronicsConstants.INVERT_X_AXIS,
             TuningConstants.DRIVETRAIN_X_DEAD_ZONE),
         new AnalogOperationDescription(
@@ -61,7 +61,9 @@ public class ButtonMap implements IButtonMap
         new MacroOperationDescription(
             MacroOperation.PIDBrake,
             UserInputDevice.Driver,
-            UserInputDeviceButton.JOYSTICK_STICK_THUMB_BUTTON,
+            AnalogAxis.XBONE_LT,
+            0.5,
+            1.0,
             ButtonType.Simple,
             () -> new PIDBrakeTask(),
             new IOperation[]
