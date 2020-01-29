@@ -26,7 +26,7 @@ public class HardwareConstants
     public static final double DRIVETRAIN_RIGHT_TICKS_PER_INCH = (HardwareConstants.DRIVETRAIN_RIGHT_GEAR_RATIO * HardwareConstants.DRIVETRAIN_RIGHT_ENCODER_PULSES_PER_REVOLUTION) / HardwareConstants.DRIVETRAIN_RIGHT_WHEEL_CIRCUMFERENCE;
 
     // measure from outside of wheel:
-    public static final double DRIVETRAIN_WHEEL_SEPARATION_DISTANCE = 24.5; // (in inches)
+    public static final double DRIVETRAIN_WHEEL_SEPARATION_DISTANCE = 22.0; // (in inches)
 
     // DriveTrain motor/sensor orientations
     public static final boolean DRIVETRAIN_LEFT_MASTER_INVERT_OUTPUT = false;
