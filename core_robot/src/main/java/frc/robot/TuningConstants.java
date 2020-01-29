@@ -124,12 +124,12 @@ public class TuningConstants
 
     // Kinodynamic constraints for driving with roadrunner
     public static final double ROADRUNNER_TIME_STEP = 0.01;
-    public static final double ROADRUNNER_MAX_VELOCITY = 10;
-    public static final double ROADRUNNER_MAX_ACCELERATION = 10;
-    public static final double ROADRUNNER_MAX_JERK = 80;
-    public static final double ROADRUNNER_MAX_ANGULAR_VELOCITY = 1;
-    public static final double ROADRUNNER_MAX_ANGULAR_ACCELERATION = 2;
-    public static final double ROADRUNNER_MAX_ANGULAR_JERK = 4;
+    public static final double ROADRUNNER_MAX_VELOCITY = 100.0;
+    public static final double ROADRUNNER_MAX_ACCELERATION = 200.0;
+    public static final double ROADRUNNER_MAX_JERK = 2000.0;
+    public static final double ROADRUNNER_MAX_ANGULAR_VELOCITY = 5.0;
+    public static final double ROADRUNNER_MAX_ANGULAR_ACCELERATION = 10.0;
+    public static final double ROADRUNNER_MAX_ANGULAR_JERK = 20.0;
 
     //================================================== Indicator Lights ==============================================================
 
@@ -148,17 +148,17 @@ public class TuningConstants
     public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KI = 0.0;
     public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KD = 0.0;
     public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KF = 0.0478; // .0478 ==> ~ 1023 / 21400 (100% control authority)
-    public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KS = 17000.0;
+    public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KS = 17000.0; // 21400 was highest speed at full throttle FF on blocks
 
     // Velocity PID (left)
     public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KP = 0.09;
     public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KI = 0.0;
     public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KD = 0.0;
     public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KF = 0.0478; // .0478 ==> ~ 1023 / 21400 (100% control authority)
-    public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KS = 17000.0;
+    public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KS = 17000.0; // 21400 was highest speed at full throttle FF on blocks
 
     // Path PID (right)
-    public static final double DRIVETRAIN_PATH_PID_RIGHT_KP = 0.0002;
+    public static final double DRIVETRAIN_PATH_PID_RIGHT_KP = 0.0;
     public static final double DRIVETRAIN_PATH_PID_RIGHT_KI = 0.0;
     public static final double DRIVETRAIN_PATH_PID_RIGHT_KD = 0.0;
     public static final double DRIVETRAIN_PATH_PID_RIGHT_KF = 0.0;
@@ -173,7 +173,7 @@ public class TuningConstants
     // public static final double DRIVETRAIN_PATH_RIGHT_MAX_VELOCITY_INCHES_PER_SECOND = TuningConstants.DRIVETRAIN_VELOCITY_PID_LEFT_KS * HardwareConstants.DRIVETRAIN_LEFT_PULSE_DISTANCE;
 
     // Path PID (left)
-    public static final double DRIVETRAIN_PATH_PID_LEFT_KP = 0.0002;
+    public static final double DRIVETRAIN_PATH_PID_LEFT_KP = 0.0;
     public static final double DRIVETRAIN_PATH_PID_LEFT_KI = 0.0;
     public static final double DRIVETRAIN_PATH_PID_LEFT_KD = 0.0;
     public static final double DRIVETRAIN_PATH_PID_LEFT_KF = 0.0;
@@ -181,7 +181,7 @@ public class TuningConstants
     public static final double DRIVETRAIN_PATH_PID_LEFT_KCC = 0.0;
     public static final double DRIVETRAIN_PATH_LEFT_HEADING_CORRECTION = 0.0;
 
-    // gets the max speed in inches per second
+    // gets the max control speed in inches per second
     // (TalonSRX: 10 * (ticks per 100ms) * (inches per tick) * (10) == in / s)
     public static final double DRIVETRAIN_PATH_LEFT_MAX_VELOCITY_INCHES_PER_SECOND = 10.0 * TuningConstants.DRIVETRAIN_VELOCITY_PID_LEFT_KS * HardwareConstants.DRIVETRAIN_LEFT_PULSE_DISTANCE;
     // public static final double DRIVETRAIN_PATH_LEFT_MAX_VELOCITY_INCHES_PER_SECOND = TuningConstants.DRIVETRAIN_VELOCITY_PID_LEFT_KS * HardwareConstants.DRIVETRAIN_LEFT_PULSE_DISTANCE;
