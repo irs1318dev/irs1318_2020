@@ -29,7 +29,8 @@ public class OffboardVisionManager implements IMechanism
     private double centerX;
     private double centerY;
 
-    private double distance;
+    private Double distance;
+    private Double horizontalAngle;
 
     /**
      * Initializes a new OffboardVisionManager
@@ -68,12 +69,22 @@ public class OffboardVisionManager implements IMechanism
         this.logger.logNumber(OffboardVisionManager.logName, "x_read", this.centerX);
         this.logger.logNumber(OffboardVisionManager.logName, "y_read", this.centerY);
 
-        double yOffset = -1 * (this.centerY - VisionConstants.LIFECAM_CAMERA_CENTER_WIDTH);
+        // return if we couldn't find a vision target
+        if (this.centerX < 0.0 || this.centerY < 0)
+        {
+            this.distance = null;
+            this.horizontalAngle = null;
 
-        double heightOfGoal = TuningConstants.TARGET_Z_OFFSET - TuningConstants.CAMERA_Z_OFFSET;
+            return;
+        }
+
+        double yOffset = VisionConstants.LIFECAM_CAMERA_CENTER_WIDTH - this.centerY;
+        double verticalAngle = Helpers.atand(yOffset / VisionConstants.LIFECAM_CAMERA_FOCAL_LENGTH_Y);
+
+        this.distance = (TuningConstants.CAMERA_TO_TARGET_Z_OFFSET / Helpers.tand(verticalAngle + TuningConstants.CAMERA_PITCH)) - TuningConstants.CAMERA_X_OFFSET;
+
         double xOffset = this.centerX - VisionConstants.LIFECAM_CAMERA_CENTER_WIDTH;
-        double theta = Math.atan(xOffset / VisionConstants.LIFECAM_CAMERA_FOCAL_LENGTH_X) * VisionConstants.RADIANS_TO_ANGLE;
-        this.distance = (heightOfGoal/(Math.tan(theta + TuningConstants.CAMERA_PITCH))) - TuningConstants.CAMERA_X_OFFSET;
+        this.horizontalAngle = Helpers.atand(xOffset / VisionConstants.LIFECAM_CAMERA_FOCAL_LENGTH_X) + TuningConstants.CAMERA_YAW;
     }
 
     @Override
@@ -96,5 +107,15 @@ public class OffboardVisionManager implements IMechanism
     public void setDriver(Driver driver)
     {
         this.driver = driver;
+    }
+
+    public Double getHorizontalAngle()
+    {
+        return this.horizontalAngle;
+    }
+
+    public Double getDistance()
+    {
+        return this.distance;
     }
 }

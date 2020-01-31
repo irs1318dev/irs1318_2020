@@ -94,7 +94,7 @@ public class RoadRunnerTankTranslator
         //calculates position of each wheel by multiplying the vel at a time step by the time step length
         leftWheelPos += leftWheelVel * TuningConstants.ROADRUNNER_TIME_STEP;
         rightWheelPos += rightWheelVel * TuningConstants.ROADRUNNER_TIME_STEP;
-        double heading = pose.getHeading() * Helpers.RADIANS_TO_ANGLE;
+        double heading = pose.getHeading() * Helpers.RADIANS_TO_DEGREES;
 
         return new PathStep(leftWheelPos, rightWheelPos, leftWheelVel, 
             rightWheelVel, leftWheelAcc, rightWheelAcc, heading);
