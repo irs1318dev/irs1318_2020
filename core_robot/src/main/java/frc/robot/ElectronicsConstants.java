@@ -39,7 +39,8 @@ public class ElectronicsConstants
     public static final int DRIVETRAIN_RIGHT_MASTER_CAN_ID = 3;
     public static final int DRIVETRAIN_RIGHT_FOLLOWER1_CAN_ID = 4;
     //public static final int DRIVETRAIN_RIGHT_FOLLOWER2_CAN_ID = 6;
-    //=================================================PowerCellMechanism===========================================================
+
+    //================================================== PowerCell =================================================================
     
     //shooter
     public static final int FLYWHEEL_MASTER_CAN_ID = 5;
@@ -60,13 +61,4 @@ public class ElectronicsConstants
     public static final int ROLLERMOTOR_OUTER_CAN_ID = 10;
     public static final int INTAKE_FORWARD_PCM = -1;
     public static final int INTAKE_REVERSE_PCM = -1;
-    
-    
-
-    
-
-
-
-
-
 }
