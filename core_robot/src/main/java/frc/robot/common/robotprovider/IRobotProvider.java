@@ -5,13 +5,14 @@ import frc.robot.vision.VisionCalculations;
 public interface IRobotProvider
 {
     public IAnalogInput getAnalogInput(int channel);
+    public IDigitalInput getDigitalInput(int channel);
+    public ICounter getCounter(int channel);
     public ITalonSRX getTalonSRX(int deviceNumber);
     public ITalonFX getTalonFX(int deviceNumber);
     public IVictorSPX getVictorSPX(int deviceNumber);
     public ISparkMax getSparkMax(int deviceID, SparkMaxMotorType motorType);
     public ICompressor getCompressor();
     public ICompressor getCompressor(int module);
-    public IDigitalInput getDigitalInput(int channel);
     public IDoubleSolenoid getDoubleSolenoid(int forwardChannel, int reverseChannel);
     public IDoubleSolenoid getDoubleSolenoid(int module, int forwardChannel, int reverseChannel);
     public IEncoder getEncoder(int channelA, int channelB);

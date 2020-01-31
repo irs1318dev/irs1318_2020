@@ -10,12 +10,13 @@ import frc.robot.vision.VisionCalculations;
 public class TestProvider implements IRobotProvider
 {
     private HashMap<Integer, IAnalogInput> analogInputMap = new HashMap<Integer, IAnalogInput>();
+    private HashMap<Integer, IDigitalInput> digitalInputMap = new HashMap<Integer, IDigitalInput>();
+    private HashMap<Integer, ICounter> counterMap = new HashMap<Integer, ICounter>();
     private HashMap<Integer, ITalonSRX> talonSrxMap = new HashMap<Integer, ITalonSRX>();
     private HashMap<Integer, ITalonFX> talonFxMap = new HashMap<Integer, ITalonFX>();
     private HashMap<Integer, IVictorSPX> victorSpxMap = new HashMap<Integer, IVictorSPX>();
     private HashMap<Integer, ISparkMax> sparkMaxMap = new HashMap<Integer, ISparkMax>();
     private HashMap<Integer, ICompressor> compressorMap = new HashMap<Integer, ICompressor>();
-    private HashMap<Integer, IDigitalInput> digitalInputMap = new HashMap<Integer, IDigitalInput>();
     private HashMap<Integer, HashMap<Integer, IDoubleSolenoid>> doubleSolenoidModuleMap = new HashMap<Integer, HashMap<Integer, IDoubleSolenoid>>();
     private HashMap<Integer, IEncoder> encoderMap = new HashMap<Integer, IEncoder>();
     private HashMap<Integer, IJoystick> joystickMap = new HashMap<Integer, IJoystick>();
@@ -34,6 +35,28 @@ public class TestProvider implements IRobotProvider
         }
 
         return this.analogInputMap.get(channel);
+    }
+
+    @Override
+    public IDigitalInput getDigitalInput(int channel)
+    {
+        if (!this.digitalInputMap.containsKey(channel))
+        {
+            this.digitalInputMap.put(channel, mock(IDigitalInput.class));
+        }
+
+        return this.digitalInputMap.get(channel);
+    }
+
+    @Override
+    public ICounter getCounter(int channel)
+    {
+        if (!this.counterMap.containsKey(channel))
+        {
+            this.counterMap.put(channel, mock(ICounter.class));
+        }
+
+        return this.counterMap.get(channel);
     }
 
     @Override
@@ -95,17 +118,6 @@ public class TestProvider implements IRobotProvider
         }
 
         return this.compressorMap.get(module);
-    }
-
-    @Override
-    public IDigitalInput getDigitalInput(int channel)
-    {
-        if (!this.digitalInputMap.containsKey(channel))
-        {
-            this.digitalInputMap.put(channel, mock(IDigitalInput.class));
-        }
-
-        return this.digitalInputMap.get(channel);
     }
 
     @Override

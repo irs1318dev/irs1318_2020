@@ -14,6 +14,18 @@ public class RobotProvider implements IRobotProvider
     }
 
     @Override
+    public IDigitalInput getDigitalInput(int channel)
+    {
+        return new DigitalInputWrapper(channel);
+    }
+
+    @Override
+    public ICounter getCounter(int channel)
+    {
+        return new CounterWrapper(channel);
+    }
+
+    @Override
     public ITalonSRX getTalonSRX(int deviceNumber)
     {
         return new TalonSRXWrapper(deviceNumber);
@@ -47,12 +59,6 @@ public class RobotProvider implements IRobotProvider
     public ICompressor getCompressor(int module)
     {
         return new CompressorWrapper(module);
-    }
-
-    @Override
-    public IDigitalInput getDigitalInput(int channel)
-    {
-        return new DigitalInputWrapper(channel);
     }
 
     @Override

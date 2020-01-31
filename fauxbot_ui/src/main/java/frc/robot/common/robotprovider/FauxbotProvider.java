@@ -21,6 +21,18 @@ public class FauxbotProvider implements IRobotProvider
     }
 
     @Override
+    public IDigitalInput getDigitalInput(int channel)
+    {
+        return new FauxbotDigitalInput(channel);
+    }
+
+    @Override
+    public ICounter getCounter(int channel)
+    {
+        return new FauxbotCounter(channel);
+    }
+
+    @Override
     public ITalonSRX getTalonSRX(int deviceNumber)
     {
         return new FauxbotTalonSRX(deviceNumber);
@@ -54,12 +66,6 @@ public class FauxbotProvider implements IRobotProvider
     public ICompressor getCompressor(int module)
     {
         return new FauxbotCompressor(module);
-    }
-
-    @Override
-    public IDigitalInput getDigitalInput(int channel)
-    {
-        return new FauxbotDigitalInput(channel);
     }
 
     @Override
