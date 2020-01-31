@@ -39,4 +39,34 @@ public class ElectronicsConstants
     public static final int DRIVETRAIN_RIGHT_MASTER_CAN_ID = 3;
     public static final int DRIVETRAIN_RIGHT_FOLLOWER1_CAN_ID = 4;
     //public static final int DRIVETRAIN_RIGHT_FOLLOWER2_CAN_ID = 6;
+    //=================================================PowerCellMechanism===========================================================
+    
+    //shooter
+    public static final int FLYWHEEL_MASTER_CAN_ID = 5;
+    public static final int FLYWHEEL_FOLLOWER_CAN_ID = 6;
+    public static final int TURRET_CAN_ID = 7;
+    public static final int LOWER_HOOD_FORWARD_PCM = -1;
+    public static final int LOWER_HOOD_REVERSE_PCM = -1;
+    public static final int UPPER_HOOD_FORWARD_PCM = -1;
+    public static final int UPPER_HOOD_REVERSE_PCM = -1;
+
+    //hopper
+    public static final int GENEVAMOTOR_CAN_ID = 8;
+    public static final int KICKER_FORWARD_PCM = -1;
+    public static final int KICKER_REVERSE_PCM = -1;
+
+    //intake
+    public static final int ROLLERMOTOR_INNER_CAN_ID = 9;
+    public static final int ROLLERMOTOR_OUTER_CAN_ID = 10;
+    public static final int INTAKE_FORWARD_PCM = -1;
+    public static final int INTAKE_REVERSE_PCM = -1;
+    
+    
+
+    
+
+
+
+
+
 }

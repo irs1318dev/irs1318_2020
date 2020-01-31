@@ -1,9 +1,11 @@
 package frc.robot.mechanisms;
 
+import frc.robot.TuningConstants;
 import frc.robot.common.*;
 import frc.robot.common.robotprovider.*;
 import frc.robot.driver.DigitalOperation;
 import frc.robot.driver.common.*;
+import frc.robot.vision.VisionConstants;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -26,6 +28,8 @@ public class OffboardVisionManager implements IMechanism
 
     private double centerX;
     private double centerY;
+
+    private double distance;
 
     /**
      * Initializes a new OffboardVisionManager
@@ -63,6 +67,13 @@ public class OffboardVisionManager implements IMechanism
 
         this.logger.logNumber(OffboardVisionManager.logName, "x_read", this.centerX);
         this.logger.logNumber(OffboardVisionManager.logName, "y_read", this.centerY);
+
+        double yOffset = -1 * (this.centerY - VisionConstants.LIFECAM_CAMERA_CENTER_WIDTH);
+
+        double heightOfGoal = TuningConstants.TARGET_Z_OFFSET - TuningConstants.CAMERA_Z_OFFSET;
+        double xOffset = this.centerX - VisionConstants.LIFECAM_CAMERA_CENTER_WIDTH;
+        double theta = Math.atan(xOffset / VisionConstants.LIFECAM_CAMERA_FOCAL_LENGTH_X) * VisionConstants.RADIANS_TO_ANGLE;
+        this.distance = (heightOfGoal/(Math.tan(theta + TuningConstants.CAMERA_PITCH))) - TuningConstants.CAMERA_X_OFFSET;
     }
 
     @Override

@@ -124,17 +124,36 @@ public class TuningConstants
 
     // Kinodynamic constraints for driving with roadrunner
     public static final double ROADRUNNER_TIME_STEP = 0.01;
-    public static final double ROADRUNNER_MAX_VELOCITY = 100.0;
-    public static final double ROADRUNNER_MAX_ACCELERATION = 200.0;
-    public static final double ROADRUNNER_MAX_JERK = 2000.0;
-    public static final double ROADRUNNER_MAX_ANGULAR_VELOCITY = 5.0;
-    public static final double ROADRUNNER_MAX_ANGULAR_ACCELERATION = 10.0;
-    public static final double ROADRUNNER_MAX_ANGULAR_JERK = 20.0;
+    public static final double ROADRUNNER_MAX_VELOCITY = 10.0;
+    public static final double ROADRUNNER_MAX_ACCELERATION = 10.0;
+    public static final double ROADRUNNER_MAX_JERK = 80.0;
+    public static final double ROADRUNNER_MAX_ANGULAR_VELOCITY = 1.0;
+    public static final double ROADRUNNER_MAX_ANGULAR_ACCELERATION = 2.0;
+    public static final double ROADRUNNER_MAX_ANGULAR_JERK = 4.0;
+
+    //Vision Alignment 
+    public static final double CAMERA_PITCH = 1.0;
+    public static final double CAMERA_X_OFFSET = 1.0;
+    public static final double CAMERA_Z_OFFSET = 22.0;
+    public static final double TARGET_Z_OFFSET = 90.25;
+    public static final double CAMERA_YAW = 0.0;
 
     //================================================== Indicator Lights ==============================================================
 
     public static final double INDICATOR_LIGHT_VISION_CONSIDERATION_DISTANCE_RANGE = VisionConstants.VISION_CONSIDERATION_DISTANCE_RANGE;
     public static final double INDICATOR_LIGHT_VISION_ACCEPTABLE_ANGLE_RANGE = 3.0;
+
+    //=================================================PowerCell======================================================
+
+    public static final double FLYWHEEL_ONE_VELOCITY_PID_KP = 0.0;
+    public static final double FLYWHEEL_ONE_VELOCITY_PID_KI = 0.0;
+    public static final double FLYWHEEL_ONE_VELOCITY_PID_KD = 0.0;
+    public static final double FLYWHEEL_ONE_VELOCITY_PID_KF = 0.0;
+
+    public static final double TURRET_POSITION_PID_KP = 0.0;
+    public static final double TURRET_POSITION_PID_KI = 0.0;
+    public static final double TURRET_POSITION_PID_KD = 0.0;
+    public static final double TURRET_POSITION_PID_KF = 0.0;
 
     //================================================== DriveTrain ==============================================================
 
@@ -144,21 +163,21 @@ public class TuningConstants
     public static final boolean DRIVETRAIN_USE_HEADING_CORRECTION = true;
 
     // Velocity PID (right)
-    public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KP = 0.09;
+    public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KP = 0.3;
     public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KI = 0.0;
     public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KD = 0.0;
-    public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KF = 0.0478; // .0478 ==> ~ 1023 / 21400 (100% control authority)
-    public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KS = 17000.0; // 21400 was highest speed at full throttle FF on blocks
+    public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KF = 0.227; // .227 ==> ~ 1023 / 4500 (100% control authority)
+    public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KS = 4500.0;
 
     // Velocity PID (left)
-    public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KP = 0.09;
+    public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KP = 0.3;
     public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KI = 0.0;
     public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KD = 0.0;
-    public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KF = 0.0478; // .0478 ==> ~ 1023 / 21400 (100% control authority)
-    public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KS = 17000.0; // 21400 was highest speed at full throttle FF on blocks
+    public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KF = 0.227; // .227 ==> ~ 1023 / 4500 (100% control authority)
+    public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KS = 4500.0;
 
     // Path PID (right)
-    public static final double DRIVETRAIN_PATH_PID_RIGHT_KP = 0.0;
+    public static final double DRIVETRAIN_PATH_PID_RIGHT_KP = 0.0002;
     public static final double DRIVETRAIN_PATH_PID_RIGHT_KI = 0.0;
     public static final double DRIVETRAIN_PATH_PID_RIGHT_KD = 0.0;
     public static final double DRIVETRAIN_PATH_PID_RIGHT_KF = 0.0;
@@ -173,7 +192,7 @@ public class TuningConstants
     // public static final double DRIVETRAIN_PATH_RIGHT_MAX_VELOCITY_INCHES_PER_SECOND = TuningConstants.DRIVETRAIN_VELOCITY_PID_LEFT_KS * HardwareConstants.DRIVETRAIN_LEFT_PULSE_DISTANCE;
 
     // Path PID (left)
-    public static final double DRIVETRAIN_PATH_PID_LEFT_KP = 0.0;
+    public static final double DRIVETRAIN_PATH_PID_LEFT_KP = 0.0002;
     public static final double DRIVETRAIN_PATH_PID_LEFT_KI = 0.0;
     public static final double DRIVETRAIN_PATH_PID_LEFT_KD = 0.0;
     public static final double DRIVETRAIN_PATH_PID_LEFT_KF = 0.0;
@@ -181,7 +200,7 @@ public class TuningConstants
     public static final double DRIVETRAIN_PATH_PID_LEFT_KCC = 0.0;
     public static final double DRIVETRAIN_PATH_LEFT_HEADING_CORRECTION = 0.0;
 
-    // gets the max control speed in inches per second
+    // gets the max speed in inches per second
     // (TalonSRX: 10 * (ticks per 100ms) * (inches per tick) * (10) == in / s)
     public static final double DRIVETRAIN_PATH_LEFT_MAX_VELOCITY_INCHES_PER_SECOND = 10.0 * TuningConstants.DRIVETRAIN_VELOCITY_PID_LEFT_KS * HardwareConstants.DRIVETRAIN_LEFT_PULSE_DISTANCE;
     // public static final double DRIVETRAIN_PATH_LEFT_MAX_VELOCITY_INCHES_PER_SECOND = TuningConstants.DRIVETRAIN_VELOCITY_PID_LEFT_KS * HardwareConstants.DRIVETRAIN_LEFT_PULSE_DISTANCE;
@@ -217,12 +236,6 @@ public class TuningConstants
     public static final double DRIVETRAIN_K2 = 0.5;
 
     // Drivetrain deadzone/max power levels
-    public static final boolean DRIVETRAIN_VOLTAGE_COMPENSATION_ENABLED = true;
-    public static final double DRIVETRAIN_VOLTAGE_COMPENSATION = 12.0;
-    public static final boolean DRIVETRAIN_SUPPLY_CURRENT_LIMITING_ENABLED = true;
-    public static final double DRIVETRAIN_SUPPLY_CURRENT_MAX = 40.0;
-    public static final double DRIVETRAIN_SUPPLY_TRIGGER_CURRENT = 100.0;
-    public static final double DRIVETRAIN_SUPPLY_TRIGGER_DURATION = 0.25;
     public static final double DRIVETRAIN_X_DEAD_ZONE = .05;
     public static final double DRIVETRAIN_Y_DEAD_ZONE = .1;
     public static final double DRIVETRAIN_MAX_POWER_LEVEL = 1.0;// max power level (velocity)
