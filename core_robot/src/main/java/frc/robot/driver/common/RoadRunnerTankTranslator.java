@@ -31,7 +31,8 @@ public class RoadRunnerTankTranslator
         // Initialize path and interpolator (check to see if interpolator is needed)
         TangentInterpolator interpolator = new TangentInterpolator();
         Path path = new PathBuilder(new Pose2d(0, 0, 0))
-            .splineTo(new Pose2d(30, 15, 0), interpolator)
+            //.lineTo(new Vector2d(120, 0), interpolator)
+            .splineTo(new Pose2d(120, 60, 0), interpolator)
             .build();
 
         PathManager.writePathToFile(RoadRunnerTankTranslator.filePath, RoadRunnerTankTranslator.convert(path));

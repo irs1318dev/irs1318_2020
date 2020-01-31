@@ -129,10 +129,10 @@ public class ButtonMap implements IButtonMap
             }),
         new MacroOperationDescription(
             MacroOperation.FollowSomePath,
-            UserInputDevice.None,
-            UserInputDeviceButton.NONE,
+            UserInputDevice.Driver,
+            UserInputDeviceButton.XBONE_A_BUTTON,
             ButtonType.Toggle,
-            () -> new FollowPathTask("/Paths/Circle 40 inch radius.csv"),
+            () -> new FollowPathTask("/Paths/straight_path.csv"),
             new IOperation[]
             {
                 DigitalOperation.DriveTrainUsePositionalMode,
@@ -154,7 +154,34 @@ public class ButtonMap implements IButtonMap
                 AnalogOperation.DriveTrainLeftPosition,
                 AnalogOperation.DriveTrainRightPosition,
             }),
-
+        new MacroOperationDescription(
+            MacroOperation.FollowAnotherPath,
+            UserInputDevice.Driver,
+            UserInputDeviceButton.XBONE_B_BUTTON,
+            ButtonType.Toggle,
+            () -> new FollowPathTask("/Paths/curved_path.csv"),
+            new IOperation[]
+            {
+                DigitalOperation.DriveTrainUsePositionalMode,
+                DigitalOperation.DriveTrainUseBrakeMode,
+                AnalogOperation.DriveTrainLeftPosition,
+                AnalogOperation.DriveTrainRightPosition,
+                AnalogOperation.DriveTrainLeftVelocity,
+                AnalogOperation.DriveTrainRightVelocity,
+                AnalogOperation.DriveTrainHeadingCorrection,
+                DigitalOperation.DriveTrainUsePathMode,
+                AnalogOperation.DriveTrainTurn,
+                AnalogOperation.DriveTrainMoveForward,
+                DigitalOperation.DriveTrainSimpleMode,
+            },
+            new IOperation[]
+            {
+                DigitalOperation.DriveTrainUsePositionalMode,
+                DigitalOperation.DriveTrainUseBrakeMode,
+                AnalogOperation.DriveTrainLeftPosition,
+                AnalogOperation.DriveTrainRightPosition,
+            }),
+    
         // Vision Macros
         new MacroOperationDescription(
             MacroOperation.VisionCenterAndAdvance,
