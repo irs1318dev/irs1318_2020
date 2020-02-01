@@ -128,7 +128,42 @@ public class PowerCellMechanism implements IMechanism
     @Override
     public void update()
     {
-        // TODO Auto-generated method stub
+        if(driver.getDigital(DigitalOperation.PowerCellUpperHoodExtend)){
+            this.upperHood.set(DoubleSolenoidValue.Forward);
+        }
+        else if(driver.getDigital(DigitalOperation.PowerCellUpperHoodRetract)){
+            this.upperHood.set(DoubleSolenoidValue.Reverse);
+        }
+        if(driver.getDigital(DigitalOperation.PowerCellLowerHoodExtend)){
+            this.lowerHood.set(DoubleSolenoidValue.Forward);
+        }
+        else if(driver.getDigital(DigitalOperation.PowerCellLowerHoodRetract)){
+            this.lowerHood.set(DoubleSolenoidValue.Reverse);
+        }
+        if(driver.getDigital(DigitalOperation.PowerCellKick)){
+            this.kickerSolenoid.set(DoubleSolenoidValue.Forward);
+        }
+        else if(!(driver.getDigital(DigitalOperation.PowerCellKick))){
+            this.kickerSolenoid.set(DoubleSolenoidValue.Reverse);
+        }
+        if(driver.getDigital(DigitalOperation.PowerCellIntakeExtend)){
+            this.intakeSolenoid.set(DoubleSolenoidValue.Forward);
+        }
+        else if(driver.getDigital(DigitalOperation.PowerCellIntakeRetract)){
+            this.intakeSolenoid.set(DoubleSolenoidValue.Reverse);
+        }
+        if(driver.getDigital(DigitalOperation.PowerCellIntake)){
+            this.rollerMotorInner.set(TuningConstants.ROLLER_MOTOR_INNER_POWER_LEVEL_INTAKE);
+            this.rollerMotorOuter.set(TuningConstants.ROLLER_MOTOR_OUTER_POWER_LEVEL_INTAKE);
+        }
+        else if(driver.getDigital(DigitalOperation.PowerCellOuttake)){
+            this.rollerMotorInner.set(TuningConstants.ROLLER_MOTOR_INNER_POWER_LEVEL_OUTTAKE);
+            this.rollerMotorOuter.set(TuningConstants.ROLLER_MOTOR_OUTER_POWER_LEVEL_OUTTAKE);
+        }
+        double flyWheelspeed = driver.getAnalog(AnalogOperation.PowerCellFlywheelVelocity);
+        this.flyWheel.set(flyWheelspeed);
+        double turretAnalogPosition = driver.getAnalog(AnalogOperation.PowerCellTurretPosition);
+        this.turret.set(turretAnalogPosition);
     }
 
     @Override

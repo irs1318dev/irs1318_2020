@@ -174,6 +174,11 @@ public class TuningConstants
     public static final double FLYWHEEL_MASTER_VELOCITY_VOLTAGE_COMPENSATION_MAXVOLTAGE = 12.0;
     public static final double FLYWHEEL_FOLLOWER_VELOCITY_VOLTAGE_COMPENSATION_MAXVOLTAGE = 12.0;
 
+    public static final double ROLLER_MOTOR_INNER_POWER_LEVEL_INTAKE = 1;
+    public static final double ROLLER_MOTOR_OUTER_POWER_LEVEL_INTAKE = 1;
+
+    public static final double ROLLER_MOTOR_INNER_POWER_LEVEL_OUTTAKE = -1;
+    public static final double ROLLER_MOTOR_OUTER_POWER_LEVEL_OUTTAKE = -1;
 //=========================================================Climber================================================================================
 
     public static final boolean WINCH_MASTER_INVERT_OUTPUT = true;
