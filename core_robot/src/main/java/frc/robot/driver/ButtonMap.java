@@ -49,7 +49,7 @@ public class ButtonMap implements IButtonMap
     public static DigitalOperationDescription[] DigitalOperationSchema = new DigitalOperationDescription[]
     {
         new DigitalOperationDescription(
-            DigitalOperation.ControlPanelEnable,
+            DigitalOperation.ControlPanelExtend,
             UserInputDevice.Driver,
             UserInputDeviceButton.JOYSTICK_BASE_BOTTOM_LEFT_BUTTON,
             ButtonType.Simple)
