@@ -158,12 +158,26 @@ public class TuningConstants
     public static final double TURRET_POSITION_PID_KD = 0.0;
     public static final double TURRET_POSITION_PID_KF = 0.0;
 
-    //================================================= PowerCell ======================================================
+    public static final boolean TURRET_INVERT_OUTPUT = true;
+    public static final boolean TURRET_INVERT_SENSOR = true;
+    public static final boolean FLYWHEEL_MASTER_INVERT_OUTPUT = false;
+    public static final boolean FLYWHEEL_MASTER_INVERT_SENSOR = false;
+    public static final boolean FLYWHEEL_FOLLOWER_INVERT_OUTPUT = true;
+    public static final boolean ROLLER_MOTOR_OUTER_INVERT_OUTPUT = true;
+    public static final boolean ROLLER_MOTOR_INNER_INVERT_OUTPUT = true;
+    public static final boolean GENEVA_INVERT_OUTPUT = true;
 
-    public static final double WINCH_POSITION_PID_KP = 0.0;
-    public static final double WINCH_POSITION_PID_KI = 0.0;
-    public static final double WINCH_POSITION_PID_KD = 0.0;
-    public static final double WINCH_POSITION_PID_KF = 0.0;
+    public static final int FLYWHEEL_VELOCITY_PERIOD = 10;
+    public static final int FLYWHEEL_VELOCITY_WINDOWSIZE = 32;
+    public static final boolean FLYWHEEL_MASTER_VELOCITY_VOLTAGE_COMPENSATION_ENABLED = true;
+    public static final boolean FLYWHEEL_FOLLOWER_VELOCITY_VOLTAGE_COMPENSATION_ENABLED = true;
+    public static final double FLYWHEEL_MASTER_VELOCITY_VOLTAGE_COMPENSATION_MAXVOLTAGE = 12.0;
+    public static final double FLYWHEEL_FOLLOWER_VELOCITY_VOLTAGE_COMPENSATION_MAXVOLTAGE = 12.0;
+
+//=========================================================Climber================================================================================
+
+    public static final boolean WINCH_MASTER_INVERT_OUTPUT = true;
+    public static final boolean WINCH_FOLLOWER_INVERT_OUTPUT = false;
 
 
     //================================================== DriveTrain ==============================================================

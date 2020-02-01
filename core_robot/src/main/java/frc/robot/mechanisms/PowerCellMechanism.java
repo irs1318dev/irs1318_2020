@@ -22,9 +22,21 @@ public class PowerCellMechanism implements IMechanism
     private final ITalonSRX rollerMotorInner;
     private final ITalonSRX rollerMotorOuter;
 
+    private Driver driver;
+
     private final IDoubleSolenoid kickerSolenoid;
     private final ITalonSRX genevaMotor;
     //sensor?
+
+    private final ICounter carouselCounter;
+
+    private double flywheelPosition;
+    private double flywheelVelocity;
+    private double turretPosition;
+    private double turretVelocity;
+    private double flywheelError;
+    private double turretError;
+    private int carouselCount;
 
     private final IDoubleSolenoid lowerHood;
     private final IDoubleSolenoid upperHood;
@@ -42,14 +54,18 @@ public class PowerCellMechanism implements IMechanism
         this.upperHood = provider.getDoubleSolenoid(ElectronicsConstants.UPPER_HOOD_FORWARD_PCM, ElectronicsConstants.UPPER_HOOD_REVERSE_PCM);
 
         this.rollerMotorInner = provider.getTalonSRX(ElectronicsConstants.ROLLERMOTOR_INNER_CAN_ID);
+        this.rollerMotorInner.setInvertOutput(TuningConstants.ROLLER_MOTOR_INNER_INVERT_OUTPUT);
         this.rollerMotorInner.setControlMode(TalonSRXControlMode.PercentOutput);
         this.rollerMotorInner.setNeutralMode(MotorNeutralMode.Brake);
 
         this.rollerMotorOuter = provider.getTalonSRX(ElectronicsConstants.ROLLERMOTOR_OUTER_CAN_ID);
+        this.rollerMotorOuter.setInvertOutput(TuningConstants.ROLLER_MOTOR_OUTER_INVERT_OUTPUT);
         this.rollerMotorOuter.setControlMode(TalonSRXControlMode.PercentOutput);
         this.rollerMotorOuter.setNeutralMode(MotorNeutralMode.Brake);
 
         this.flyWheel = provider.getTalonSRX(ElectronicsConstants.FLYWHEEL_MASTER_CAN_ID);
+        this.flyWheel.setInvertOutput(TuningConstants.FLYWHEEL_MASTER_INVERT_OUTPUT);
+        this.flyWheel.setInvertSensor(TuningConstants.FLYWHEEL_MASTER_INVERT_SENSOR);
         this.flyWheel.setNeutralMode(MotorNeutralMode.Coast);
         this.flyWheel.setControlMode(TalonSRXControlMode.Velocity);
         this.flyWheel.setPIDF(
@@ -58,12 +74,18 @@ public class PowerCellMechanism implements IMechanism
             TuningConstants.FLYWHEEL_ONE_VELOCITY_PID_KD, 
             TuningConstants.FLYWHEEL_ONE_VELOCITY_PID_KF, 
             PowerCellMechanism.slotId);
+        this.flyWheel.configureVelocityMeasurements(TuningConstants.FLYWHEEL_VELOCITY_PERIOD, TuningConstants.FLYWHEEL_VELOCITY_WINDOWSIZE);
+        this.flyWheel.setVoltageCompensation(TuningConstants.FLYWHEEL_MASTER_VELOCITY_VOLTAGE_COMPENSATION_ENABLED, TuningConstants.FLYWHEEL_MASTER_VELOCITY_VOLTAGE_COMPENSATION_MAXVOLTAGE);
 
         ITalonSRX flyWheelFollower = provider.getTalonSRX(ElectronicsConstants.FLYWHEEL_FOLLOWER_CAN_ID);
         flyWheelFollower.setNeutralMode(MotorNeutralMode.Coast);
         flyWheelFollower.follow(this.flyWheel);
+        flyWheelFollower.setInvertOutput(TuningConstants.FLYWHEEL_FOLLOWER_INVERT_OUTPUT);
+        flyWheelFollower.setVoltageCompensation(TuningConstants.FLYWHEEL_FOLLOWER_VELOCITY_VOLTAGE_COMPENSATION_ENABLED, TuningConstants.FLYWHEEL_FOLLOWER_VELOCITY_VOLTAGE_COMPENSATION_MAXVOLTAGE);
 
         this.turret = provider.getTalonSRX(ElectronicsConstants.TURRET_CAN_ID);
+        this.turret.setInvertOutput(TuningConstants.TURRET_INVERT_OUTPUT);
+        this.turret.setInvertSensor(TuningConstants.TURRET_INVERT_SENSOR);
         this.turret.setNeutralMode(MotorNeutralMode.Brake);
         this.turret.setControlMode(TalonSRXControlMode.Position);
         this.turret.setPIDF(
@@ -74,22 +96,33 @@ public class PowerCellMechanism implements IMechanism
             PowerCellMechanism.slotId);
 
         this.genevaMotor = provider.getTalonSRX(ElectronicsConstants.GENEVAMOTOR_CAN_ID);
+        this.genevaMotor.setInvertOutput(TuningConstants.GENEVA_INVERT_OUTPUT);
         this.genevaMotor.setControlMode(TalonSRXControlMode.PercentOutput);
         this.genevaMotor.setNeutralMode(MotorNeutralMode.Brake);
+
+        this.carouselCounter = provider.getCounter(ElectronicsConstants.CAROUSEL_COUNTER_DIO);
     }
 
     @Override
     public void readSensors()
     {
-        /* log position/velocity of turret and flywheel but idk how to find it
+        
+        this.turretPosition = turret.getPosition();
+        this.turretVelocity = turret.getVelocity();
+        this.flywheelPosition = flyWheel.getPosition();
+        this.flywheelVelocity = flyWheel.getVelocity();
+        this.turretError = turret.getError();
+        this.flywheelError = flyWheel.getError();
+        this.carouselCount = carouselCounter.get();
 
-        this.turretPosition = 
-        this.turretVelocity = 
-        this.flywheelPosition = 
-        this.flywheelVelocity = 
-*/
-        //this.logger.logNumber(PowerCellMechanism.logName, "turret position", turretPosition);
-        //this.logger.logNumber(PowerCellMechanism.logName, "flywheel velocity", flywheelVelocity);
+
+        this.logger.logNumber(PowerCellMechanism.logName, "turret velocity", turretVelocity);
+        this.logger.logNumber(PowerCellMechanism.logName, "turret position", turretPosition);
+        this.logger.logNumber(PowerCellMechanism.logName, "flywheel velocity", flywheelVelocity);
+        this.logger.logNumber(PowerCellMechanism.logName, "flywheel position", flywheelPosition);
+        this.logger.logNumber(PowerCellMechanism.logName, "flywheel error", flywheelError);
+        this.logger.logNumber(PowerCellMechanism.logName, "turret error", turretError);
+        this.logger.logInteger(PowerCellMechanism.logName, "carousel count", carouselCount);
     }
 
     @Override
@@ -107,7 +140,7 @@ public class PowerCellMechanism implements IMechanism
     @Override
     public void setDriver(Driver driver)
     {
-        // TODO Auto-generated method stub
+        this.driver = driver;
     }
 
     // get functions...

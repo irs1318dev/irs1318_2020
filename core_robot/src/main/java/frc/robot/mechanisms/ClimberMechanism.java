@@ -12,6 +12,8 @@ import com.google.inject.Singleton;
 @Singleton
 public class ClimberMechanism implements IMechanism
 {
+    private Driver driver;
+
     private static final int slotId = 0;
 
     private final IDoubleSolenoid climberExtendSolenoid;
@@ -26,16 +28,12 @@ public class ClimberMechanism implements IMechanism
         this.climberGrabSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.CLIMBER_GRAB_FORWARD_CAN_ID, ElectronicsConstants.CLIMBER_GRAB_REVERSE_CAN_ID);
 
         this.winchMotorMaster = provider.getTalonSRX(ElectronicsConstants.WINCH_MASTER_CAN_ID);
-        this.winchMotorMaster.setControlMode(TalonSRXControlMode.Position);
+        this.winchMotorMaster.setInvertOutput(TuningConstants.WINCH_MASTER_INVERT_OUTPUT);
+        this.winchMotorMaster.setControlMode(TalonSRXControlMode.PercentOutput);
         this.winchMotorMaster.setNeutralMode(MotorNeutralMode.Brake);
-        this.winchMotorMaster.setPIDF(
-            TuningConstants.WINCH_POSITION_PID_KP, 
-            TuningConstants.WINCH_POSITION_PID_KI, 
-            TuningConstants.WINCH_POSITION_PID_KD, 
-            TuningConstants.WINCH_POSITION_PID_KF, 
-            ClimberMechanism.slotId);
 
         ITalonSRX winchMotorFollower = provider.getTalonSRX(ElectronicsConstants.WINCH_FOLLOWER_CAN_ID);
+        winchMotorFollower.setInvertOutput(TuningConstants.WINCH_FOLLOWER_INVERT_OUTPUT);
         winchMotorFollower.setNeutralMode(MotorNeutralMode.Brake);
         winchMotorFollower.follow(this.winchMotorMaster);
     }
@@ -61,6 +59,6 @@ public class ClimberMechanism implements IMechanism
     @Override
     public void setDriver(Driver driver)
     {
-        // TODO Auto-generated method stub
+        this.driver = driver;
     }
 }

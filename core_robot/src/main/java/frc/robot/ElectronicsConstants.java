@@ -62,6 +62,7 @@ public class ElectronicsConstants
     public static final int INTAKE_FORWARD_PCM = -1;
     public static final int INTAKE_REVERSE_PCM = -1;
 
+    public static final int CAROUSEL_COUNTER_DIO = -1;
 
     //================================================== Climber =================================================================
 
@@ -74,8 +75,12 @@ public class ElectronicsConstants
     public static final int WINCH_MASTER_CAN_ID = 11;
     public static final int WINCH_FOLLOWER_CAN_ID = 12;
 
+
     //================================================== Control panel =================================================================
 
     public static final int CONTROL_PANEL_SPINNER_CAN_ID = 13;
+
+    public static final int EXTENDER_FORWARD_PCM = -1
+    public static final int EXTENDER_REVERSE_PCM = -1
 
 }
