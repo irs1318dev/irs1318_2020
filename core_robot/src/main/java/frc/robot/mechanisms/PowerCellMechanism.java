@@ -3,23 +3,19 @@ package frc.robot.mechanisms;
 import frc.robot.*;
 import frc.robot.common.*;
 import frc.robot.common.robotprovider.*;
-import frc.robot.driver.common.Driver;
-import frc.robot.common.robotprovider.IDashboardLogger;
+import frc.robot.driver.*;
+import frc.robot.driver.common.*;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import frc.robot.driver.*;
-import frc.robot.driver.common.*;
-
 @Singleton
 public class PowerCellMechanism implements IMechanism
 {
-    private static final String logName = "powercells";
+    private static final String logName = "pc";
+    private static final int slotId = 0;
 
     private final IDashboardLogger logger;
-
-    private static final int slotId = 0;
 
     private final IDoubleSolenoid intakeSolenoid;
 
@@ -34,7 +30,6 @@ public class PowerCellMechanism implements IMechanism
     private final IDoubleSolenoid upperHood;
     private final ITalonSRX flyWheel;
     private final ITalonSRX turret;
-
 
     @Inject
     public PowerCellMechanism(IRobotProvider provider, IDashboardLogger logger)
@@ -81,41 +76,40 @@ public class PowerCellMechanism implements IMechanism
         this.genevaMotor = provider.getTalonSRX(ElectronicsConstants.GENEVAMOTOR_CAN_ID);
         this.genevaMotor.setControlMode(TalonSRXControlMode.PercentOutput);
         this.genevaMotor.setNeutralMode(MotorNeutralMode.Brake);
-
     }
+
     @Override
-    public void readSensors() {
-        // TODO Auto-generated method stub
+    public void readSensors()
+    {
         /* log position/velocity of turret and flywheel but idk how to find it
 
-        int turretPosition = 
-        int flywheelVelocity = 
+        this.turretPosition = 
+        this.turretVelocity = 
+        this.flywheelPosition = 
+        this.flywheelVelocity = 
 */
         //this.logger.logNumber(PowerCellMechanism.logName, "turret position", turretPosition);
         //this.logger.logNumber(PowerCellMechanism.logName, "flywheel velocity", flywheelVelocity);
-
     }
 
     @Override
-    public void update() {
+    public void update()
+    {
         // TODO Auto-generated method stub
-        
     }
 
     @Override
-    public void stop() {
+    public void stop()
+    {
         // TODO Auto-generated method stub
-
     }
 
     @Override
-    public void setDriver(Driver driver) {
+    public void setDriver(Driver driver)
+    {
         // TODO Auto-generated method stub
-
     }
 
-    //hopper stuff
-    
+    // get functions...
 
-    
 }
