@@ -111,7 +111,7 @@ public class ControlPanelMechanism implements IMechanism
     @Override
     public void update()
     {
-        this.buttonPressed = this.driver.getDigital(DigitalOperation.ControlPanelEnable);
+        this.buttonPressed = this.driver.getDigital(DigitalOperation.ControlPanelExtend);
         double speed = this.driver.getAnalog(AnalogOperation.ControlPanelSpinSpeed);
         this.spinnerMotor.set(speed);
     }
