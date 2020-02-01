@@ -20,6 +20,9 @@ public class ClimberMechanism implements IMechanism
     private final IDoubleSolenoid climberGrabSolenoid;
 
     private final ITalonSRX winchMotorMaster;
+
+    private boolean isExtended;
+    private boolean isReleased;
     
     @Inject
     public ClimberMechanism(IRobotProvider provider)
@@ -32,6 +35,9 @@ public class ClimberMechanism implements IMechanism
         this.winchMotorMaster.setControlMode(TalonSRXControlMode.PercentOutput);
         this.winchMotorMaster.setNeutralMode(MotorNeutralMode.Brake);
 
+        this.isExtended = false;
+        this.isReleased = false;
+
         ITalonSRX winchMotorFollower = provider.getTalonSRX(ElectronicsConstants.WINCH_FOLLOWER_CAN_ID);
         winchMotorFollower.setInvertOutput(TuningConstants.WINCH_FOLLOWER_INVERT_OUTPUT);
         winchMotorFollower.setNeutralMode(MotorNeutralMode.Brake);
@@ -41,13 +47,37 @@ public class ClimberMechanism implements IMechanism
     @Override
     public void readSensors()
     {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void update()
     {
-        // TODO Auto-generated method stub
+        if (this.driver.getDigital(DigitalOperation.ClimberExtend)) 
+        {
+            this.isExtended = true;
+            this.climberExtendSolenoid.set(DoubleSolenoidValue.Forward);
+        }
+        else if (this.driver.getDigital(DigitalOperation.ClimberRetract))
+        {
+            this.isExtended = false;
+            this.climberExtendSolenoid.set(DoubleSolenoidValue.Reverse);
+        }
+  
+        if (this.driver.getDigital(DigitalOperation.ClimberHookLock)) 
+        {
+            this.climberGrabSolenoid.set(DoubleSolenoidValue.Reverse);
+        }
+        else if (this.isExtended && this.driver.getDigital(DigitalOperation.ClimberHookRelease))
+        {
+            this.isReleased = true;
+            this.climberGrabSolenoid.set(DoubleSolenoidValue.Forward);
+        }
+
+        if (this.isExtended) 
+        {
+            double speed = this.driver.getAnalog(AnalogOperation.ClimberWinch);
+            this.winchMotorMaster.set(speed);
+        }
     }
 
     @Override
