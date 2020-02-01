@@ -39,7 +39,7 @@ public class ButtonMap implements IButtonMap
             ElectronicsConstants.INVERT_X_AXIS,
             TuningConstants.DRIVETRAIN_X_DEAD_ZONE),
         new AnalogOperationDescription(
-            AnalogOperation.ControlPanelMotorSpeed,
+            AnalogOperation.ControlPanelSpinSpeed,
             UserInputDevice.Driver,
             AnalogAxis.JOYSTICK_THROTTLE,
             ElectronicsConstants.INVERT_THROTTLE_AXIS,
