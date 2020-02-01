@@ -13,5 +13,12 @@ public enum AnalogOperation implements IOperation
     PositionStartingAngle,
 
     // Control Panel Operations
-    ControlPanelMotorSpeed;
+    ControlPanelSpinSpeed,
+
+    // Climber Operation
+    ClimberWinch,
+
+    // Power Cell Operations
+    PowerCellTurretPosition,
+    PowerCellFlywheelVelocity;
 }
