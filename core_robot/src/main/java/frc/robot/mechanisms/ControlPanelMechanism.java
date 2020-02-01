@@ -41,7 +41,7 @@ public class ControlPanelMechanism implements IMechanism
     public ControlPanelMechanism(IDashboardLogger logger, IRobotProvider provider)
     {
         this.logger = logger;
-        this.extender = provider.getDoubleSolenoid(ElectronicsConstants.EXTENDER_FORWARD_PCM, ElectronicsConstants.EXTENDER_REVERSE_PCM)
+        this.extender = provider.getDoubleSolenoid(ElectronicsConstants.EXTENDER_FORWARD_PCM, ElectronicsConstants.EXTENDER_REVERSE_PCM);
         this.sensor = provider.getColorSensor();
         this.colorMatch = provider.getColorMatch();
         this.colorMatch.addColorMatch("red", TuningConstants.COLOR_MATCH_RED_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_RED_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_RED_TARGET_BLUE_PERCENTAGE);

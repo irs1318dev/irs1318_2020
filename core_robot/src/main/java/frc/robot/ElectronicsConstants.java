@@ -80,7 +80,7 @@ public class ElectronicsConstants
 
     public static final int CONTROL_PANEL_SPINNER_CAN_ID = 13;
 
-    public static final int EXTENDER_FORWARD_PCM = -1
-    public static final int EXTENDER_REVERSE_PCM = -1
+    public static final int EXTENDER_FORWARD_PCM = -1;
+    public static final int EXTENDER_REVERSE_PCM = -1;
 
 }
