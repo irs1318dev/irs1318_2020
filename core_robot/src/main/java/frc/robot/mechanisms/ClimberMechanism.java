@@ -53,7 +53,9 @@ public class ClimberMechanism implements IMechanism
     @Override
     public void stop()
     {
-        // TODO Auto-generated method stub
+        this.climberExtendSolenoid.set(DoubleSolenoidValue.Off);
+        this.climberGrabSolenoid.set(DoubleSolenoidValue.Off);
+        this.winchMotorMaster.set(0.0);
     }
 
     @Override

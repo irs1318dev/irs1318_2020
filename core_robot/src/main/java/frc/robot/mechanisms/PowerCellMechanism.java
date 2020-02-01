@@ -134,7 +134,13 @@ public class PowerCellMechanism implements IMechanism
     @Override
     public void stop()
     {
-        // TODO Auto-generated method stub
+        this.genevaMotor.set(0.0);
+        this.rollerMotorInner.set(0.0);
+        this.rollerMotorOuter.set(0.0);
+        this.lowerHood.set(DoubleSolenoidValue.Off);
+        this.upperHood.set(DoubleSolenoidValue.Off);
+        this.kickerSolenoid.set(DoubleSolenoidValue.Off);
+        this.intakeSolenoid.set(DoubleSolenoidValue.Off);
     }
 
     @Override

@@ -120,6 +120,7 @@ public class ControlPanelMechanism implements IMechanism
     public void stop()
     {
         this.spinnerMotor.set(0.0);
+        this.extender.set(DoubleSolenoidValue.Off);
     }
 
     @Override
