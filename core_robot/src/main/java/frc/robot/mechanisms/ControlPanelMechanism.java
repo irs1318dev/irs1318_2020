@@ -121,9 +121,12 @@ public class ControlPanelMechanism implements IMechanism
             this.isExtended = false;
             this.extender.set(DoubleSolenoidValue.Reverse);
         }
-        
-        double speed = this.driver.getAnalog(AnalogOperation.ControlPanelSpinSpeed);
-        this.spinnerMotor.set(speed);
+
+        if (this.isExtended) 
+        {
+            double speed = this.driver.getAnalog(AnalogOperation.ControlPanelSpinSpeed);
+            this.spinnerMotor.set(speed);
+        }
     }
 
     @Override
