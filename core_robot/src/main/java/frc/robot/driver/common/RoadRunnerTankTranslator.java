@@ -32,16 +32,23 @@ public class RoadRunnerTankTranslator
         TangentInterpolator interpolator = new TangentInterpolator();
         Path path = new PathBuilder(new Pose2d(0, 0, 0))
             //.lineTo(new Vector2d(120, 0), interpolator)
-            .splineTo(new Pose2d(120, 60, 0), interpolator)
+            .splineTo(new Pose2d(120, 60.0, 0), interpolator)
             .build();
 
-        PathManager.writePathToFile(RoadRunnerTankTranslator.filePath, RoadRunnerTankTranslator.convert(path));
+        Path  trenchRunClosePath = new PathBuilder(new Pose2d(0, 0, 0))
+            .splineTo(new Pose2d(117.179, -65.975, 0), interpolator)
+            .lineTo(new Vector2d(251.492, -65.975))
+            .build();
+            
+        boolean isBackwards = true;
+
+        PathManager.writePathToFile(RoadRunnerTankTranslator.filePath, RoadRunnerTankTranslator.convert(trenchRunClosePath, isBackwards));
 
         PathManager pathManager = new PathManager();
         pathManager.loadPaths();
     }
 
-    public static List<PathStep> convert(Path path)
+    public static List<PathStep> convert(Path path, boolean isBackwards)
     {
         //initialize roadrunner constraints
         DriveConstraints constraints = new DriveConstraints(
@@ -63,7 +70,7 @@ public class RoadRunnerTankTranslator
 
         for (double i = 0; i < duration; i += TuningConstants.ROADRUNNER_TIME_STEP)
         {
-            PathStep step = buildPathStep(i, traj, leftWheelPos, rightWheelPos);
+            PathStep step = buildPathStep(i, traj, leftWheelPos, rightWheelPos, isBackwards);
             leftWheelPos = step.getLeftPosition();
             rightWheelPos = step.getRightPosition();
             steps.add(step);
@@ -72,7 +79,7 @@ public class RoadRunnerTankTranslator
         return steps;
     }
 
-    public static PathStep buildPathStep (double time, Trajectory traj, double leftWheelPos, double rightWheelPos)  
+    public static PathStep buildPathStep (double time, Trajectory traj, double leftWheelPos, double rightWheelPos, boolean isBackwards)  
     {
         Pose2d pose = traj.get(time);
         Pose2d poseVel = traj.velocity(time);
@@ -90,6 +97,14 @@ public class RoadRunnerTankTranslator
         List<Double> accelerations = TankKinematics.robotToWheelAccelerations(robotAcceleration, HardwareConstants.DRIVETRAIN_WHEEL_SEPARATION_DISTANCE);
         double leftWheelAcc = accelerations.get(0);
         double rightWheelAcc = accelerations.get(1);
+
+        if (isBackwards) 
+        {
+            leftWheelVel *= -1;
+            rightWheelVel *= -1;
+            leftWheelAcc *= -1;
+            rightWheelAcc *= -1;
+        }
 
         //calculates position of each wheel by multiplying the vel at a time step by the time step length
         leftWheelPos += leftWheelVel * TuningConstants.ROADRUNNER_TIME_STEP;
