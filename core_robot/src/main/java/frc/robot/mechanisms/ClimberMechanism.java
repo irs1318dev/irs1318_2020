@@ -3,15 +3,11 @@ package frc.robot.mechanisms;
 import frc.robot.*;
 import frc.robot.common.*;
 import frc.robot.common.robotprovider.*;
-import frc.robot.driver.common.Driver;
-import frc.robot.common.robotprovider.IDashboardLogger;
-
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
-
 import frc.robot.driver.*;
 import frc.robot.driver.common.*;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 @Singleton
 public class ClimberMechanism implements IMechanism
@@ -42,34 +38,29 @@ public class ClimberMechanism implements IMechanism
         ITalonSRX winchMotorFollower = provider.getTalonSRX(ElectronicsConstants.WINCH_FOLLOWER_CAN_ID);
         winchMotorFollower.setNeutralMode(MotorNeutralMode.Brake);
         winchMotorFollower.follow(this.winchMotorMaster);
-
-
     }
 
     @Override
-    public void readSensors() {
+    public void readSensors()
+    {
         // TODO Auto-generated method stub
-
     }
 
     @Override
-    public void update() {
+    public void update()
+    {
         // TODO Auto-generated method stub
-
     }
 
     @Override
-    public void stop() {
+    public void stop()
+    {
         // TODO Auto-generated method stub
-
     }
 
     @Override
-    public void setDriver(Driver driver) {
+    public void setDriver(Driver driver)
+    {
         // TODO Auto-generated method stub
-
     }
-    
-
-
 }
