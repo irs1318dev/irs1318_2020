@@ -61,4 +61,21 @@ public class ElectronicsConstants
     public static final int ROLLERMOTOR_OUTER_CAN_ID = 10;
     public static final int INTAKE_FORWARD_PCM = -1;
     public static final int INTAKE_REVERSE_PCM = -1;
+
+
+    //================================================== Climber =================================================================
+
+    public static final int CLIMBER_EXTEND_FORWARD_CAN_ID = -1;
+    public static final int CLIMBER_EXTEND_REVERSE_CAN_ID = -1;
+
+    public static final int CLIMBER_GRAB_FORWARD_CAN_ID = -1;
+    public static final int CLIMBER_GRAB_REVERSE_CAN_ID = -1;
+
+    public static final int WINCH_MASTER_CAN_ID = 11;
+    public static final int WINCH_FOLLOWER_CAN_ID = 12;
+
+    //================================================== Control panel =================================================================
+
+    public static final int CONTROL_PANEL_SPINNER_CAN_ID = 13;
+
 }

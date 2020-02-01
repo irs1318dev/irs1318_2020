@@ -22,7 +22,7 @@ public class ControlPanelMechanism implements IMechanism
     private final IDashboardLogger logger;
     private final IColorSensorV3 sensor;
     private final IColorMatch colorMatch;
-    private final IVictorSPX motor;
+    private final IVictorSPX spinnerMotor;
     private final IDriverStation ds;
     private boolean buttonPressed;
 
@@ -45,8 +45,9 @@ public class ControlPanelMechanism implements IMechanism
         this.logger = logger;
         this.sensor = provider.getColorSensor();
         this.colorMatch = provider.getColorMatch();
-        this.motor = provider.getVictorSPX(1);
-        this.motor.setControlMode(TalonSRXControlMode.PercentOutput);
+        this.spinnerMotor = provider.getVictorSPX(ElectronicsConstants.CONTROL_PANEL_SPINNER_CAN_ID);
+        this.spinnerMotor.setControlMode(TalonSRXControlMode.PercentOutput);
+        this.spinnerMotor.setNeutralMode(MotorNeutralMode.Brake);
         this.ds = provider.getDriverStation();
 
         this.colorMatch.addColorMatch("red", TuningConstants.COLOR_MATCH_RED_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_RED_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_RED_TARGET_BLUE_PERCENTAGE);
@@ -109,13 +110,13 @@ public class ControlPanelMechanism implements IMechanism
     {
         this.buttonPressed = this.driver.getDigital(DigitalOperation.ControlPanelEnable);
         double speed = this.driver.getAnalog(AnalogOperation.ControlPanelMotorSpeed);
-        this.motor.set(speed);
+        this.spinnerMotor.set(speed);
     }
 
     @Override
     public void stop()
     {
-        this.motor.set(0.0);
+        this.spinnerMotor.set(0.0);
     }
 
     @Override

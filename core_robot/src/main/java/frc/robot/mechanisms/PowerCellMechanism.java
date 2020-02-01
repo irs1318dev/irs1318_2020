@@ -12,8 +12,13 @@ import com.google.inject.Singleton;
 import frc.robot.driver.*;
 import frc.robot.driver.common.*;
 
+@Singleton
 public class PowerCellMechanism implements IMechanism
 {
+    private static final String logName = "powercells";
+
+    private final IDashboardLogger logger;
+
     private static final int slotId = 0;
 
     private final IDoubleSolenoid intakeSolenoid;
@@ -30,8 +35,12 @@ public class PowerCellMechanism implements IMechanism
     private final ITalonSRX flyWheel;
     private final ITalonSRX turret;
 
-    public PowerCellMechanism(IRobotProvider provider)
+
+    @Inject
+    public PowerCellMechanism(IRobotProvider provider, IDashboardLogger logger)
     {
+        this.logger = logger;
+
         this.intakeSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.INTAKE_FORWARD_PCM, ElectronicsConstants.INTAKE_REVERSE_PCM);
         this.kickerSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.KICKER_FORWARD_PCM, ElectronicsConstants.KICKER_REVERSE_PCM);
         this.lowerHood = provider.getDoubleSolenoid(ElectronicsConstants.LOWER_HOOD_FORWARD_PCM, ElectronicsConstants.LOWER_HOOD_REVERSE_PCM);
@@ -77,13 +86,20 @@ public class PowerCellMechanism implements IMechanism
     @Override
     public void readSensors() {
         // TODO Auto-generated method stub
+        /* log position/velocity of turret and flywheel but idk how to find it
+
+        int turretPosition = 
+        int flywheelVelocity = 
+*/
+        //this.logger.logNumber(PowerCellMechanism.logName, "turret position", turretPosition);
+        //this.logger.logNumber(PowerCellMechanism.logName, "flywheel velocity", flywheelVelocity);
 
     }
 
     @Override
     public void update() {
         // TODO Auto-generated method stub
-
+        
     }
 
     @Override

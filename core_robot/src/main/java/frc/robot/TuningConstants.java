@@ -158,6 +158,14 @@ public class TuningConstants
     public static final double TURRET_POSITION_PID_KD = 0.0;
     public static final double TURRET_POSITION_PID_KF = 0.0;
 
+    //================================================= PowerCell ======================================================
+
+    public static final double WINCH_POSITION_PID_KP = 0.0;
+    public static final double WINCH_POSITION_PID_KI = 0.0;
+    public static final double WINCH_POSITION_PID_KD = 0.0;
+    public static final double WINCH_POSITION_PID_KF = 0.0;
+
+
     //================================================== DriveTrain ==============================================================
 
     // Drivetrain PID keys/default values:
