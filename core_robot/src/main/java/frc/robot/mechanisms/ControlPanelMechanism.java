@@ -21,7 +21,7 @@ public class ControlPanelMechanism implements IMechanism
     private final IDriverStation ds;
 
     private final IDoubleSolenoid extender;
-    private boolean buttonPressed;
+    private boolean isExtended;
 
     private String gsm; 
     private TargetColor targetColor;
@@ -59,7 +59,7 @@ public class ControlPanelMechanism implements IMechanism
     @Override
     public void readSensors()
     {
-        if (this.buttonPressed)
+        if (this.isExtended)
         {
             this.gsm = this.ds.getGameSpecificMessage();
 
@@ -111,7 +111,17 @@ public class ControlPanelMechanism implements IMechanism
     @Override
     public void update()
     {
-        this.buttonPressed = this.driver.getDigital(DigitalOperation.ControlPanelExtend);
+        if (this.driver.getDigital(DigitalOperation.ControlPanelExtend)) 
+        {
+            this.isExtended = true;
+            this.extender.set(DoubleSolenoidValue.Forward);
+        }
+        else if (!this.driver.getDigital(DigitalOperation.ControlPanelRetract)) 
+        {  
+            this.isExtended = false;
+            this.extender.set(DoubleSolenoidValue.Reverse);
+        }
+        
         double speed = this.driver.getAnalog(AnalogOperation.ControlPanelSpinSpeed);
         this.spinnerMotor.set(speed);
     }
