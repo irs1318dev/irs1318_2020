@@ -12,18 +12,16 @@ import com.google.inject.Singleton;
 @Singleton
 public class ClimberMechanism implements IMechanism
 {
-    private Driver driver;
-
-    private static final int slotId = 0;
-
     private final IDoubleSolenoid climberExtendSolenoid;
     private final IDoubleSolenoid climberGrabSolenoid;
 
     private final ITalonSRX winchMotorMaster;
 
+    private Driver driver;
+
     private boolean isExtended;
     private boolean isReleased;
-    
+
     @Inject
     public ClimberMechanism(IRobotProvider provider)
     {
@@ -35,13 +33,13 @@ public class ClimberMechanism implements IMechanism
         this.winchMotorMaster.setControlMode(TalonSRXControlMode.PercentOutput);
         this.winchMotorMaster.setNeutralMode(MotorNeutralMode.Brake);
 
-        this.isExtended = false;
-        this.isReleased = false;
-
         ITalonSRX winchMotorFollower = provider.getTalonSRX(ElectronicsConstants.WINCH_FOLLOWER_CAN_ID);
         winchMotorFollower.setInvertOutput(TuningConstants.WINCH_FOLLOWER_INVERT_OUTPUT);
         winchMotorFollower.setNeutralMode(MotorNeutralMode.Brake);
         winchMotorFollower.follow(this.winchMotorMaster);
+
+        this.isExtended = false;
+        this.isReleased = false;
     }
 
     @Override
@@ -62,7 +60,7 @@ public class ClimberMechanism implements IMechanism
             this.isExtended = false;
             this.climberExtendSolenoid.set(DoubleSolenoidValue.Reverse);
         }
-  
+
         if (this.driver.getDigital(DigitalOperation.ClimberHookLock)) 
         {
             this.climberGrabSolenoid.set(DoubleSolenoidValue.Reverse);

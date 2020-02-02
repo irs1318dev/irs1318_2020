@@ -20,5 +20,6 @@ public enum AnalogOperation implements IOperation
 
     // Power Cell Operations
     PowerCellTurretPosition,
-    PowerCellFlywheelVelocity;
+    PowerCellFlywheelVelocity,
+    PowerCellGenevaPower,
 }

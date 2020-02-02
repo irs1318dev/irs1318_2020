@@ -15,19 +15,20 @@ public class ControlPanelMechanism implements IMechanism
     private static final String logName = "color";
 
     private final IDashboardLogger logger;
+
     private final IColorSensorV3 sensor;
     private final IColorMatch colorMatch;
-    private final IVictorSPX spinnerMotor;
     private final IDriverStation ds;
 
     private final IDoubleSolenoid extender;
-    private boolean isExtended;
+    private final IVictorSPX spinnerMotor;
+
+    private Driver driver;
 
     private String gsm; 
     private TargetColor targetColor;
     private ColorMatchResult colorResult;
-
-    private Driver driver;
+    private boolean isExtended;
 
     private enum TargetColor
     {
@@ -41,7 +42,7 @@ public class ControlPanelMechanism implements IMechanism
     public ControlPanelMechanism(IDashboardLogger logger, IRobotProvider provider)
     {
         this.logger = logger;
-        this.extender = provider.getDoubleSolenoid(ElectronicsConstants.EXTENDER_FORWARD_PCM, ElectronicsConstants.EXTENDER_REVERSE_PCM);
+
         this.sensor = provider.getColorSensor();
         this.colorMatch = provider.getColorMatch();
         this.colorMatch.addColorMatch("red", TuningConstants.COLOR_MATCH_RED_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_RED_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_RED_TARGET_BLUE_PERCENTAGE);
@@ -51,9 +52,13 @@ public class ControlPanelMechanism implements IMechanism
 
         this.ds = provider.getDriverStation();
 
+        this.extender = provider.getDoubleSolenoid(ElectronicsConstants.EXTENDER_FORWARD_PCM, ElectronicsConstants.EXTENDER_REVERSE_PCM);
+
         this.spinnerMotor = provider.getVictorSPX(ElectronicsConstants.CONTROL_PANEL_SPINNER_CAN_ID);
         this.spinnerMotor.setControlMode(TalonSRXControlMode.PercentOutput);
         this.spinnerMotor.setNeutralMode(MotorNeutralMode.Brake);
+
+        this.isExtended = false;
     }
 
     @Override
@@ -132,8 +137,8 @@ public class ControlPanelMechanism implements IMechanism
     @Override
     public void stop()
     {
-        this.spinnerMotor.set(0.0);
         this.extender.set(DoubleSolenoidValue.Off);
+        this.spinnerMotor.set(0.0);
     }
 
     @Override

@@ -22,13 +22,12 @@ public class PowerCellMechanism implements IMechanism
     private final ITalonSRX rollerMotorInner;
     private final ITalonSRX rollerMotorOuter;
 
-    private Driver driver;
-
     private final IDoubleSolenoid kickerSolenoid;
     private final ITalonSRX genevaMotor;
-    //sensor?
 
     private final ICounter carouselCounter;
+
+    private Driver driver;
 
     private double flywheelPosition;
     private double flywheelVelocity;
@@ -106,64 +105,83 @@ public class PowerCellMechanism implements IMechanism
     @Override
     public void readSensors()
     {
-        
-        this.turretPosition = turret.getPosition();
-        this.turretVelocity = turret.getVelocity();
-        this.flywheelPosition = flyWheel.getPosition();
-        this.flywheelVelocity = flyWheel.getVelocity();
-        this.turretError = turret.getError();
-        this.flywheelError = flyWheel.getError();
-        this.carouselCount = carouselCounter.get();
+        this.turretPosition = this.turret.getPosition();
+        this.turretVelocity = this.turret.getVelocity();
+        this.turretError = this.turret.getError();
 
+        this.flywheelPosition = this.flyWheel.getPosition();
+        this.flywheelVelocity = this.flyWheel.getVelocity();
+        this.flywheelError = this.flyWheel.getError();
 
-        this.logger.logNumber(PowerCellMechanism.logName, "turret velocity", turretVelocity);
-        this.logger.logNumber(PowerCellMechanism.logName, "turret position", turretPosition);
-        this.logger.logNumber(PowerCellMechanism.logName, "flywheel velocity", flywheelVelocity);
-        this.logger.logNumber(PowerCellMechanism.logName, "flywheel position", flywheelPosition);
-        this.logger.logNumber(PowerCellMechanism.logName, "flywheel error", flywheelError);
-        this.logger.logNumber(PowerCellMechanism.logName, "turret error", turretError);
-        this.logger.logInteger(PowerCellMechanism.logName, "carousel count", carouselCount);
+        this.carouselCount = this.carouselCounter.get();
+
+        this.logger.logNumber(PowerCellMechanism.logName, "turretVelocity", this.turretVelocity);
+        this.logger.logNumber(PowerCellMechanism.logName, "turretPosition", this.turretPosition);
+        this.logger.logNumber(PowerCellMechanism.logName, "turretError", this.turretError);
+        this.logger.logNumber(PowerCellMechanism.logName, "flywheelVelocity", this.flywheelVelocity);
+        this.logger.logNumber(PowerCellMechanism.logName, "flywheelPosition", this.flywheelPosition);
+        this.logger.logNumber(PowerCellMechanism.logName, "flywheelError", this.flywheelError);
+        this.logger.logInteger(PowerCellMechanism.logName, "carouselCount", this.carouselCount);
     }
 
     @Override
     public void update()
     {
-        if(driver.getDigital(DigitalOperation.PowerCellUpperHoodExtend)){
+        if (this.driver.getDigital(DigitalOperation.PowerCellUpperHoodExtend))
+        {
             this.upperHood.set(DoubleSolenoidValue.Forward);
         }
-        else if(driver.getDigital(DigitalOperation.PowerCellUpperHoodRetract)){
+        else if (this.driver.getDigital(DigitalOperation.PowerCellUpperHoodRetract))
+        {
             this.upperHood.set(DoubleSolenoidValue.Reverse);
         }
-        if(driver.getDigital(DigitalOperation.PowerCellLowerHoodExtend)){
+
+        if (this.driver.getDigital(DigitalOperation.PowerCellLowerHoodExtend))
+        {
             this.lowerHood.set(DoubleSolenoidValue.Forward);
         }
-        else if(driver.getDigital(DigitalOperation.PowerCellLowerHoodRetract)){
+        else if (this.driver.getDigital(DigitalOperation.PowerCellLowerHoodRetract))
+        {
             this.lowerHood.set(DoubleSolenoidValue.Reverse);
         }
-        if(driver.getDigital(DigitalOperation.PowerCellKick)){
+
+        if (this.driver.getDigital(DigitalOperation.PowerCellKick))
+        {
             this.kickerSolenoid.set(DoubleSolenoidValue.Forward);
         }
-        else if(!(driver.getDigital(DigitalOperation.PowerCellKick))){
+        else if(!(driver.getDigital(DigitalOperation.PowerCellKick)))
+        {
             this.kickerSolenoid.set(DoubleSolenoidValue.Reverse);
         }
-        if(driver.getDigital(DigitalOperation.PowerCellIntakeExtend)){
+
+        if (this.driver.getDigital(DigitalOperation.PowerCellIntakeExtend))
+        {
             this.intakeSolenoid.set(DoubleSolenoidValue.Forward);
         }
-        else if(driver.getDigital(DigitalOperation.PowerCellIntakeRetract)){
+        else if (this.driver.getDigital(DigitalOperation.PowerCellIntakeRetract))
+        {
             this.intakeSolenoid.set(DoubleSolenoidValue.Reverse);
         }
-        if(driver.getDigital(DigitalOperation.PowerCellIntake)){
+
+        if (this.driver.getDigital(DigitalOperation.PowerCellIntake))
+        {
             this.rollerMotorInner.set(TuningConstants.ROLLER_MOTOR_INNER_POWER_LEVEL_INTAKE);
             this.rollerMotorOuter.set(TuningConstants.ROLLER_MOTOR_OUTER_POWER_LEVEL_INTAKE);
         }
-        else if(driver.getDigital(DigitalOperation.PowerCellOuttake)){
+        else if (this.driver.getDigital(DigitalOperation.PowerCellOuttake))
+        {
             this.rollerMotorInner.set(TuningConstants.ROLLER_MOTOR_INNER_POWER_LEVEL_OUTTAKE);
             this.rollerMotorOuter.set(TuningConstants.ROLLER_MOTOR_OUTER_POWER_LEVEL_OUTTAKE);
         }
-        double flyWheelspeed = driver.getAnalog(AnalogOperation.PowerCellFlywheelVelocity);
+
+        double flyWheelspeed = this.driver.getAnalog(AnalogOperation.PowerCellFlywheelVelocity);
         this.flyWheel.set(flyWheelspeed);
-        double turretAnalogPosition = driver.getAnalog(AnalogOperation.PowerCellTurretPosition);
+
+        double turretAnalogPosition = this.driver.getAnalog(AnalogOperation.PowerCellTurretPosition);
         this.turret.set(turretAnalogPosition);
+
+        double genevaPower = this.driver.getAnalog(AnalogOperation.PowerCellGenevaPower);
+        this.genevaMotor.set(genevaPower);
     }
 
     @Override
@@ -184,6 +202,18 @@ public class PowerCellMechanism implements IMechanism
         this.driver = driver;
     }
 
-    // get functions...
+    public double getTurretPosition()
+    {
+        return this.turretPosition;
+    }
 
+    public double getFlywheelVelocity()
+    {
+        return this.flywheelVelocity;
+    }
+
+    public int getCarouselCount()
+    {
+        return this.carouselCount;
+    }
 }
