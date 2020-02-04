@@ -128,11 +128,11 @@ public class AnalogOperationState extends OperationState
             newValue = 0.0;
         }
 
-        this.currentValue = newValue;
+        this.currentValue = newValue * description.getMultiplier();
         return this.currentValue != oldValue;
     }
 
-    public double getState()
+	public double getState()
     {
         if (this.isInterrupted)
         {

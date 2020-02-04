@@ -13,6 +13,7 @@ public class AnalogOperationDescription extends OperationDescription
     private final AnalogAxis userInputDeviceAxis;
     private final boolean shouldInvert;
     private final double deadZone;
+    private final double multiplier;
 
     private final AnalogSensor sensor;
 
@@ -62,11 +63,36 @@ public class AnalogOperationDescription extends OperationDescription
         boolean shouldInvert,
         double deadZone)
     {
+        this(operation, userInputDevice, userInputDeviceAxis, relevantShifts, requiredShifts, shouldInvert, deadZone, 1.0);
+    }
+
+    /**
+     * Initializes a new AnalogOperationDescription based on a user interaction
+     * @param operation the analog operation being described
+     * @param userInputDevice which device will indicate the operation (driver or operator joystick) 
+     * @param userInputDeviceAxis the axis on the device that will indicate the operation
+     * @param relevantShifts the shifts that should be considered when checking if we should perform the operation
+     * @param requiredShifts the shift button(s) that must be applied to perform operation
+     * @param shouldInvert whether we should invert the axis so that -1 and 1 are on the opposite ends as where they are designed to be in hardware
+     * @param deadZone the amount in the center of the axis (around 0) that should be ignored to account for joystick sensors imprecision
+     * @param multiplier the multiplier to use to extend the range from [-1, 1] so that it instead goes to [-multiplier, multiplier]
+     */
+    public AnalogOperationDescription(
+        AnalogOperation operation,
+        UserInputDevice userInputDevice,
+        AnalogAxis userInputDeviceAxis,
+        Shift relevantShifts,
+        Shift requiredShifts,
+        boolean shouldInvert,
+        double deadZone,
+        double multiplier)
+    {
         super(operation, OperationType.Analog, userInputDevice, relevantShifts, requiredShifts);
 
         this.userInputDeviceAxis = userInputDeviceAxis;
         this.shouldInvert = shouldInvert;
         this.deadZone = deadZone;
+        this.multiplier = multiplier;
 
         this.sensor = AnalogSensor.None;
     }
@@ -85,6 +111,7 @@ public class AnalogOperationDescription extends OperationDescription
         this.userInputDeviceAxis = AnalogAxis.NONE;
         this.shouldInvert = false;
         this.deadZone = 0.0;
+        this.multiplier = 1.0;
 
         this.sensor = sensor;
     }
@@ -107,6 +134,11 @@ public class AnalogOperationDescription extends OperationDescription
     public double getDeadZone()
     {
         return this.deadZone;
+    }
+
+    public double getMultiplier()
+    {
+        return this.multiplier;
     }
 
     public double getDefaultValue()

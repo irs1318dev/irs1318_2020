@@ -66,7 +66,6 @@ public class NavxTurnTask extends ControlTaskBase implements IControlTask
             waitTime,
             false,
             false);
-
     }
 
     /**
@@ -132,7 +131,7 @@ public class NavxTurnTask extends ControlTaskBase implements IControlTask
             currentDesiredAngle = currentDesiredAngle % 360.0; // odometry measures angles from 0 to 30 only
         }
 
-        this.desiredTurnVelocity = this.turnPidHandler.calculatePosition(currentDesiredAngle, currentMeasuredAngle);
+        this.desiredTurnVelocity = -1.0 * this.turnPidHandler.calculatePosition(currentDesiredAngle, currentMeasuredAngle);
 
         this.setAnalogOperationState(AnalogOperation.DriveTrainTurn, this.desiredTurnVelocity);
     }

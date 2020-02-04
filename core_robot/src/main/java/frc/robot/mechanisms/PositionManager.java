@@ -13,7 +13,7 @@ import com.google.inject.Singleton;
  * Position manager
  * 
  * This class maintains the approximate current location and orientation of the robot relative to its starting point.
- * This uses Jim's differential odometry algorithm. In the future we can consider adding other sensors to help correct for error.
+ * This uses Jim's differential odometry algorithm and the NAVX independently. In the future we can consider adding other sensors to help correct for error.
  * 
  */
 @Singleton
@@ -110,7 +110,7 @@ public class PositionManager implements IMechanism
         }
 
         // calculate the angle (in radians) based on the total distance traveled
-        double angleR = ((leftDistance - rightDistance) / HardwareConstants.DRIVETRAIN_WHEEL_SEPARATION_DISTANCE);
+        double angleR = ((rightDistance - leftDistance) / HardwareConstants.DRIVETRAIN_WHEEL_SEPARATION_DISTANCE);
 
         // correct for odometry angle inconsistencies
         angleR *= TuningConstants.DRIVETRAIN_ENCODER_ODOMETRY_ANGLE_CORRECTION;
@@ -122,7 +122,7 @@ public class PositionManager implements IMechanism
         this.odometryX += averagePositionChange * Math.cos(angleR);
         this.odometryY += averagePositionChange * Math.sin(angleR);
 
-        this.odometryAngle = (angleR * 360 / (2 * Math.PI)) % 360;
+        this.odometryAngle = (angleR * Helpers.RADIANS_TO_DEGREES) % 360;
 
         // record distance for next time
         this.prevLeftDistance = leftDistance;
@@ -130,7 +130,7 @@ public class PositionManager implements IMechanism
 
         this.navxIsConnected = this.navx.isConnected();
 
-        this.navxAngle = this.navx.getAngle();
+        this.navxAngle = -1.0 * this.navx.getAngle();
         this.navxX = this.navx.getDisplacementX() * 100.0;
         this.navxY = this.navx.getDisplacementY() * 100.0;
         this.navxZ = this.navx.getDisplacementZ() * 100.0;
@@ -170,7 +170,7 @@ public class PositionManager implements IMechanism
     }
 
     /**
-     * Retrieve the current angle in degrees
+     * Retrieve the current angle (counter-clockwise) in degrees
      * @return the current angle in degrees
      */
     public double getOdometryAngle()
@@ -206,7 +206,7 @@ public class PositionManager implements IMechanism
     }
 
     /**
-     * Retrieve the current angle in degrees
+     * Retrieve the current angle (counter-clockwise) in degrees
      * @return the current angle in degrees
      */
     public double getNavxAngle()

@@ -17,11 +17,18 @@ import com.google.inject.Singleton;
 @Singleton
 public class IndicatorLightManager implements IMechanism
 {
-    private static final double FlashingFrequency = 0.2;
+    private enum LightMode
+    {
+        Off,
+        Flashing,
+        On,
+    }
+
+    private static final double FlashingFrequency = 0.5;
     private static final double FlashingComparisonFrequency = IndicatorLightManager.FlashingFrequency / 2.0;
 
-    private final ITimer timer;
     private final IDashboardLogger logger;
+    private final ITimer timer;
 
     private final IDigitalOutput indicator;
 
@@ -36,8 +43,8 @@ public class IndicatorLightManager implements IMechanism
         IDashboardLogger logger,
         ITimer timer)
     {
-        this.timer = timer;
         this.logger = logger;
+        this.timer = timer;
 
         this.indicator = provider.getDigitalOutput(ElectronicsConstants.INDICATOR_LIGHT_DIO);
     }
@@ -73,34 +80,27 @@ public class IndicatorLightManager implements IMechanism
         this.indicator.set(false);
     }
 
-    private void controlLight(IRelay indicatorLight, LightMode mode)
+    private void controlLight(IDigitalOutput indicatorLight, LightMode mode)
     {
         if (mode == LightMode.On)
         {
-            indicatorLight.set(RelayValue.Forward);
+            indicatorLight.set(true);
         }
         else if (mode == LightMode.Off)
         {
-            indicatorLight.set(RelayValue.Off);
+            indicatorLight.set(false);
         }
         else
         {
             double currentTime = this.timer.get();
             if (currentTime % IndicatorLightManager.FlashingFrequency >= IndicatorLightManager.FlashingComparisonFrequency)
             {
-                indicatorLight.set(RelayValue.Forward);
+                indicatorLight.set(true);
             }
             else
             {
-                indicatorLight.set(RelayValue.Off);
+                indicatorLight.set(false);
             }
         }
-    }
-
-    private enum LightMode
-    {
-        Off,
-        Flashing,
-        On,
     }
 }

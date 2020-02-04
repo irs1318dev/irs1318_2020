@@ -30,12 +30,13 @@ public class ControlPanelMechanism implements IMechanism
     private ColorMatchResult colorResult;
     private boolean isExtended;
 
-    private enum TargetColor
+    public enum TargetColor
     {
-        red,
-        blue,
-        green,
-        yellow;
+        None,
+        Red,
+        Blue,
+        Green,
+        Yellow;
     }
 
     @Inject
@@ -45,10 +46,10 @@ public class ControlPanelMechanism implements IMechanism
 
         this.sensor = provider.getColorSensor();
         this.colorMatch = provider.getColorMatch();
-        this.colorMatch.addColorMatch("red", TuningConstants.COLOR_MATCH_RED_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_RED_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_RED_TARGET_BLUE_PERCENTAGE);
-        this.colorMatch.addColorMatch("green", TuningConstants.COLOR_MATCH_GREEN_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_GREEN_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_GREEN_TARGET_BLUE_PERCENTAGE);
-        this.colorMatch.addColorMatch("blue",TuningConstants.COLOR_MATCH_BLUE_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_BLUE_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_BLUE_TARGET_BLUE_PERCENTAGE);
-        this.colorMatch.addColorMatch("yellow", TuningConstants.COLOR_MATCH_YELLOW_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_YELLOW_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_YELLOW_TARGET_BLUE_PERCENTAGE);
+        this.colorMatch.addColorMatch("Red", TuningConstants.COLOR_MATCH_RED_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_RED_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_RED_TARGET_BLUE_PERCENTAGE);
+        this.colorMatch.addColorMatch("Green", TuningConstants.COLOR_MATCH_GREEN_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_GREEN_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_GREEN_TARGET_BLUE_PERCENTAGE);
+        this.colorMatch.addColorMatch("Blue",TuningConstants.COLOR_MATCH_BLUE_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_BLUE_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_BLUE_TARGET_BLUE_PERCENTAGE);
+        this.colorMatch.addColorMatch("Yellow", TuningConstants.COLOR_MATCH_YELLOW_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_YELLOW_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_YELLOW_TARGET_BLUE_PERCENTAGE);
 
         this.ds = provider.getDriverStation();
 
@@ -91,22 +92,31 @@ public class ControlPanelMechanism implements IMechanism
             int proximity = this.sensor.getProximity();
             this.logger.logInteger(ControlPanelMechanism.logName, "proximity", proximity);
 
-            // Mapped colors, taking the game specific message and mapping it to the color desired
-            if (this.gsm.equals("G"))
+            // Mapped colors, taking the game specific message and mapping it to the color desired along the front edge
+            if (this.gsm != null || this.gsm.equals(""))
             {
-                this.targetColor = TargetColor.yellow;
+                this.targetColor = TargetColor.None;
+            }
+            else if (this.gsm.equals("G"))
+            {
+                this.targetColor = TargetColor.Yellow;
             }
             else if (this.gsm.equals("Y"))
             {
-                this.targetColor = TargetColor.green;
+                this.targetColor = TargetColor.Green;
             }
             else if (this.gsm.equals("B"))
             {
-                this.targetColor = TargetColor.red;
+                this.targetColor = TargetColor.Red;
             }
             else if (this.gsm.equals("R"))
             {
-                this.targetColor = TargetColor.blue;
+                this.targetColor = TargetColor.Blue;
+            }
+            else
+            {
+                // unexpected
+                this.targetColor = TargetColor.None;
             }
 
             this.logger.logString(ControlPanelMechanism.logName, "targetColorMapped", this.targetColor.toString());
