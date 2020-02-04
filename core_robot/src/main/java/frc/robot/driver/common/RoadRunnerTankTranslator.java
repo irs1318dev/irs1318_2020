@@ -37,7 +37,7 @@ public class RoadRunnerTankTranslator
 
         Path  trenchRunClosePath = new PathBuilder(new Pose2d(0, 0, 0))
             .splineTo(new Pose2d(117.179, -65.975, 0), interpolator)
-            .lineTo(new Vector2d(251.492, -65.975))
+            //.lineTo(new Vector2d(251.492, -65.975))
             .build();
             
         boolean isBackwards = true;

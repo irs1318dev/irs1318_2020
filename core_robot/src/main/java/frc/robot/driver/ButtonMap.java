@@ -181,6 +181,33 @@ public class ButtonMap implements IButtonMap
                 AnalogOperation.DriveTrainLeftPosition,
                 AnalogOperation.DriveTrainRightPosition,
             }),
+            new MacroOperationDescription(
+                MacroOperation.FollowSomePath,
+                UserInputDevice.Driver,
+                UserInputDeviceButton.XBONE_Y_BUTTON,
+                ButtonType.Toggle,
+                () -> new FollowPathTask("/Paths/backwards_path.csv"),
+                new IOperation[]
+                {
+                    DigitalOperation.DriveTrainUsePositionalMode,
+                    DigitalOperation.DriveTrainUseBrakeMode,
+                    AnalogOperation.DriveTrainLeftPosition,
+                    AnalogOperation.DriveTrainRightPosition,
+                    AnalogOperation.DriveTrainLeftVelocity,
+                    AnalogOperation.DriveTrainRightVelocity,
+                    AnalogOperation.DriveTrainHeadingCorrection,
+                    DigitalOperation.DriveTrainUsePathMode,
+                    AnalogOperation.DriveTrainTurn,
+                    AnalogOperation.DriveTrainMoveForward,
+                    DigitalOperation.DriveTrainSimpleMode,
+                },
+                new IOperation[]
+                {
+                    DigitalOperation.DriveTrainUsePositionalMode,
+                    DigitalOperation.DriveTrainUseBrakeMode,
+                    AnalogOperation.DriveTrainLeftPosition,
+                    AnalogOperation.DriveTrainRightPosition,
+                }),
     
         // Vision Macros
         new MacroOperationDescription(
