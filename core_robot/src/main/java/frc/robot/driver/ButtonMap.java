@@ -182,7 +182,7 @@ public class ButtonMap implements IButtonMap
                 AnalogOperation.DriveTrainRightPosition,
             }),
             new MacroOperationDescription(
-                MacroOperation.FollowSomePath,
+                MacroOperation.FollowADifferentPath,
                 UserInputDevice.Driver,
                 UserInputDeviceButton.XBONE_Y_BUTTON,
                 ButtonType.Toggle,

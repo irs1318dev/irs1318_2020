@@ -31,7 +31,8 @@ public class PathManager
             "/Paths/Turn left 4 feet.csv",
             "/Paths/Turn right 4 feet.csv",
             "/Paths/straight_path.csv",
-            "/Paths/curved_path.csv"
+            "/Paths/curved_path.csv",
+            "/Paths/backwards_path.csv"
         };
 
     private static final String LEFT_POSITION_NAME = "LeftPosition";

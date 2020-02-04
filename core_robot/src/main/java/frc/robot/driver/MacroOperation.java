@@ -9,6 +9,7 @@ public enum MacroOperation implements IOperation
     TurnInPlaceRight,
     FollowSomePath,
     FollowAnotherPath,
+    FollowADifferentPath,
 
     // Vision operations:
     VisionCenterAndAdvance,

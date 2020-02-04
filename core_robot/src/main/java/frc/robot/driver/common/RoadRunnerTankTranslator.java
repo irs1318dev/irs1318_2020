@@ -31,18 +31,18 @@ public class RoadRunnerTankTranslator
         // Initialize path and interpolator (check to see if interpolator is needed)
         TangentInterpolator interpolator = new TangentInterpolator();
         Path path = new PathBuilder(new Pose2d(0, 0, 0))
-            //.lineTo(new Vector2d(120, 0), interpolator)
-            .splineTo(new Pose2d(120, 60.0, 0), interpolator)
+            .lineTo(new Vector2d(120, 0), interpolator)
+            //.splineTo(new Pose2d(120, 60.0, 0), interpolator)
             .build();
 
-        Path  trenchRunClosePath = new PathBuilder(new Pose2d(0, 0, 0))
+/*        Path  trenchRunClosePath = new PathBuilder(new Pose2d(0, 0, 0))
             .splineTo(new Pose2d(117.179, -65.975, 0), interpolator)
             //.lineTo(new Vector2d(251.492, -65.975))
             .build();
-            
-        boolean isBackwards = true;
+  */          
+        boolean isBackwards = false;
 
-        PathManager.writePathToFile(RoadRunnerTankTranslator.filePath, RoadRunnerTankTranslator.convert(trenchRunClosePath, isBackwards));
+        PathManager.writePathToFile(RoadRunnerTankTranslator.filePath, RoadRunnerTankTranslator.convert(path, isBackwards));
 
         PathManager pathManager = new PathManager();
         pathManager.loadPaths();
