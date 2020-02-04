@@ -1,16 +1,10 @@
 package frc.robot;
 
 import org.junit.jupiter.api.Test;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import frc.robot.common.robotprovider.ColorMatchResult;
 import frc.robot.common.robotprovider.ColorMatchWrapper;
 
-import com.google.inject.Guice;
 
 public class ColorMatchWrapperTest
 {
