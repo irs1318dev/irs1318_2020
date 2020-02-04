@@ -42,7 +42,7 @@ public class VisionAdvanceAndCenterTask extends VisionCenteringTask implements I
     public void update()
     {
         super.update();
-        Double currentDistance = this.visionManager.getMeasuredDistance();
+        Double currentDistance = this.visionManager.getDistance();
         if (currentDistance != null)
         {
             this.setAnalogOperationState(AnalogOperation.DriveTrainMoveForward, this.forwardPIDHandler.calculatePosition(0.0, -currentDistance));
@@ -59,7 +59,7 @@ public class VisionAdvanceAndCenterTask extends VisionCenteringTask implements I
     @Override
     public boolean hasCompleted()
     {
-        Double currentDistance = this.visionManager.getMeasuredDistance();
+        Double currentDistance = this.visionManager.getDistance();
         if (currentDistance == null)
         {
             return false;

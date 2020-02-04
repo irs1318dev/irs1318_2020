@@ -25,11 +25,11 @@ public class ElectronicsConstants
 
     //================================================== Vision ==============================================================
 
-    public static final int VISION_RING_LIGHT_PWM_CHANNEL = -1;
+    public static final int VISION_RING_LIGHT_DIO = -1;
 
     //================================================== Indicator Lights ==============================================================
 
-    public static final int INDICATOR_VISION_RELAY_CHANNEL = -1;
+    public static final int INDICATOR_LIGHT_DIO = -1;
 
     //================================================== DriveTrain ==============================================================
 
@@ -43,26 +43,26 @@ public class ElectronicsConstants
     //================================================== PowerCell =================================================================
     
     //shooter
-    public static final int FLYWHEEL_MASTER_CAN_ID = 5;
-    public static final int FLYWHEEL_FOLLOWER_CAN_ID = 6;
-    public static final int TURRET_CAN_ID = 7;
-    public static final int LOWER_HOOD_FORWARD_PCM = -1;
-    public static final int LOWER_HOOD_REVERSE_PCM = -1;
-    public static final int UPPER_HOOD_FORWARD_PCM = -1;
-    public static final int UPPER_HOOD_REVERSE_PCM = -1;
+    public static final int POWERCELL_FLYWHEEL_MASTER_CAN_ID = 5;
+    public static final int POWERCELL_FLYWHEEL_FOLLOWER_CAN_ID = 6;
+    public static final int POWERCELL_TURRET_MOTOR_CAN_ID = 7;
+    public static final int POWERCELL_LOWER_HOOD_FORWARD_PCM = -1;
+    public static final int POWERCELL_LOWER_HOOD_REVERSE_PCM = -1;
+    public static final int POWERCELL_UPPER_HOOD_FORWARD_PCM = -1;
+    public static final int POWERCELL_UPPER_HOOD_REVERSE_PCM = -1;
+    public static final int POWERCELL_KICKER_FORWARD_PCM = -1;
+    public static final int POWERCELL_KICKER_REVERSE_PCM = -1;
 
-    //hopper
-    public static final int GENEVAMOTOR_CAN_ID = 8;
-    public static final int KICKER_FORWARD_PCM = -1;
-    public static final int KICKER_REVERSE_PCM = -1;
+    // hopper
+    public static final int POWERCELL_GENEVA_MOTOR_CAN_ID = 8;
 
     //intake
-    public static final int ROLLERMOTOR_INNER_CAN_ID = 9;
-    public static final int ROLLERMOTOR_OUTER_CAN_ID = 10;
-    public static final int INTAKE_FORWARD_PCM = -1;
-    public static final int INTAKE_REVERSE_PCM = -1;
+    public static final int POWERCELL_INNER_ROLLER_MOTOR_CAN_ID = 9;
+    public static final int POWERCELL_OUTER_ROLLER_MOTOR_CAN_ID = 10;
+    public static final int POWERCELL_INTAKE_FORWARD_PCM = -1;
+    public static final int POWERCELL_INTAKE_REVERSE_PCM = -1;
 
-    public static final int CAROUSEL_COUNTER_DIO = -1;
+    public static final int POWERCELL_CAROUSEL_COUNTER_DIO = -1;
 
     //================================================== Climber =================================================================
 
@@ -72,15 +72,13 @@ public class ElectronicsConstants
     public static final int CLIMBER_GRAB_FORWARD_CAN_ID = -1;
     public static final int CLIMBER_GRAB_REVERSE_CAN_ID = -1;
 
-    public static final int WINCH_MASTER_CAN_ID = 11;
-    public static final int WINCH_FOLLOWER_CAN_ID = 12;
-
+    public static final int CLIMBER_WINCH_MASTER_CAN_ID = 11;
+    public static final int CLIMBER_WINCH_FOLLOWER_CAN_ID = 12;
 
     //================================================== Control panel =================================================================
 
-    public static final int CONTROL_PANEL_SPINNER_CAN_ID = 13;
+    public static final int CONTROLPANEL_SPINNER_CAN_ID = 13;
 
-    public static final int EXTENDER_FORWARD_PCM = -1;
-    public static final int EXTENDER_REVERSE_PCM = -1;
-
+    public static final int CONTROLPANEL_EXTENDER_FORWARD_PCM = -1;
+    public static final int CONTROLPANEL_EXTENDER_REVERSE_PCM = -1;
 }

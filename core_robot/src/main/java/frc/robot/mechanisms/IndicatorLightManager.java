@@ -4,7 +4,6 @@ import frc.robot.*;
 import frc.robot.common.*;
 import frc.robot.common.robotprovider.*;
 import frc.robot.driver.common.Driver;
-import frc.robot.vision.common.VisionProcessingState;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -21,35 +20,26 @@ public class IndicatorLightManager implements IMechanism
     private static final double FlashingFrequency = 0.2;
     private static final double FlashingComparisonFrequency = IndicatorLightManager.FlashingFrequency / 2.0;
 
-    private final VisionManager visionManager;
     private final ITimer timer;
     private final IDashboardLogger logger;
 
-    private final IRelay visionIndicator;
-
-    private LightMode visionMode;
+    private final IDigitalOutput indicator;
 
     /**
      * Initializes a new IndicatorLightManager
      * @param provider for obtaining electronics objects
      * @param timer to use
-     * @param grabberMechanism for grabber reference
-     * @param visionManager for vision reference
      */
     @Inject
     public IndicatorLightManager(
         IRobotProvider provider,
         IDashboardLogger logger,
-        ITimer timer,
-        VisionManager visionManager)
+        ITimer timer)
     {
-        this.visionManager = visionManager;
         this.timer = timer;
         this.logger = logger;
 
-        this.visionIndicator = provider.getRelay(ElectronicsConstants.INDICATOR_VISION_RELAY_CHANNEL);
-
-        this.visionMode = LightMode.Off;
+        this.indicator = provider.getDigitalOutput(ElectronicsConstants.INDICATOR_LIGHT_DIO);
     }
 
     /**
@@ -72,30 +62,6 @@ public class IndicatorLightManager implements IMechanism
     @Override
     public void update()
     {
-        if (this.visionManager != null &&
-            this.visionManager.getState() != VisionProcessingState.Disabled &&
-            this.visionManager.getCenter() != null)
-        {
-            if (this.visionManager.getMeasuredDistance() > TuningConstants.INDICATOR_LIGHT_VISION_CONSIDERATION_DISTANCE_RANGE)
-            {
-                this.visionMode = LightMode.Off;
-            }
-            else if (Math.abs(this.visionManager.getMeasuredAngle() - this.visionManager.getDesiredAngle()) < TuningConstants.INDICATOR_LIGHT_VISION_ACCEPTABLE_ANGLE_RANGE)
-            {
-                this.visionMode = LightMode.On;
-            }
-            else
-            {
-                this.visionMode = LightMode.Flashing;
-            }
-        }
-        else
-        {
-            this.visionMode = LightMode.Off;
-        }
-
-        this.logger.logBoolean("ind", "vision", this.visionMode != LightMode.Off);
-        this.controlLight(this.visionIndicator, this.visionMode);
     }
 
     /**
@@ -104,7 +70,7 @@ public class IndicatorLightManager implements IMechanism
     @Override
     public void stop()
     {
-        this.visionIndicator.set(RelayValue.Off);
+        this.indicator.set(false);
     }
 
     private void controlLight(IRelay indicatorLight, LightMode mode)

@@ -2,8 +2,6 @@ package frc.robot.common.robotprovider;
 
 import javax.inject.Singleton;
 
-import frc.robot.vision.VisionCalculations;
-
 @Singleton
 public class RobotProvider implements IRobotProvider
 {
@@ -17,6 +15,12 @@ public class RobotProvider implements IRobotProvider
     public IDigitalInput getDigitalInput(int channel)
     {
         return new DigitalInputWrapper(channel);
+    }
+
+    @Override
+    public IDigitalOutput getDigitalOutput(int channel)
+    {
+        return new DigitalOutputWrapper(channel);
     }
 
     @Override
@@ -185,12 +189,6 @@ public class RobotProvider implements IRobotProvider
     public INetworkTableProvider getNetworkTableProvider()
     {
         return new NetworkTableProvider();
-    }
-
-    @Override
-    public VisionCalculations getVisionCalculations()
-    {
-        return new VisionCalculations();
     }
     
     public <V> ISendableChooser<V> getSendableChooser()

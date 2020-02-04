@@ -35,22 +35,16 @@ public class RoadRunnerTankTranslator
             //.splineTo(new Pose2d(120, 60.0, 0), interpolator)
             .build();
 
-/*        Path  trenchRunClosePath = new PathBuilder(new Pose2d(0, 0, 0))
-            .splineTo(new Pose2d(117.179, -65.975, 0), interpolator)
-            //.lineTo(new Vector2d(251.492, -65.975))
-            .build();
-  */          
         boolean isBackwards = false;
 
-        PathManager.writePathToFile(RoadRunnerTankTranslator.filePath, RoadRunnerTankTranslator.convert(path, isBackwards));
-
-        PathManager pathManager = new PathManager();
-        pathManager.loadPaths();
+        PathManager.writePathToFile(
+            RoadRunnerTankTranslator.filePath,
+            RoadRunnerTankTranslator.convert(path, isBackwards));
     }
 
     public static List<PathStep> convert(Path path, boolean isBackwards)
     {
-        //initialize roadrunner constraints
+        // initialize roadrunner constraints
         DriveConstraints constraints = new DriveConstraints(
             TuningConstants.ROADRUNNER_MAX_VELOCITY,
             TuningConstants.ROADRUNNER_MAX_ACCELERATION,
@@ -63,14 +57,14 @@ public class RoadRunnerTankTranslator
         Trajectory traj = TrajectoryGenerator.INSTANCE.generateTrajectory(path, constraintsTank);
 
         double duration = traj.duration();
-        List<PathStep> steps = new ArrayList<PathStep> ((int)(duration / TuningConstants.ROADRUNNER_TIME_STEP));
+        List<PathStep> steps = new ArrayList<PathStep>((int)(duration / TuningConstants.ROADRUNNER_TIME_STEP));
 
         double leftWheelPos = 0.0;
         double rightWheelPos = 0.0;
 
         for (double i = 0; i < duration; i += TuningConstants.ROADRUNNER_TIME_STEP)
         {
-            PathStep step = buildPathStep(i, traj, leftWheelPos, rightWheelPos, isBackwards);
+            PathStep step = RoadRunnerTankTranslator.buildPathStep(i, traj, leftWheelPos, rightWheelPos, isBackwards);
             leftWheelPos = step.getLeftPosition();
             rightWheelPos = step.getRightPosition();
             steps.add(step);
@@ -79,17 +73,17 @@ public class RoadRunnerTankTranslator
         return steps;
     }
 
-    public static PathStep buildPathStep (double time, Trajectory traj, double leftWheelPos, double rightWheelPos, boolean isBackwards)  
+    public static PathStep buildPathStep(double time, Trajectory traj, double leftWheelPos, double rightWheelPos, boolean isBackwards)  
     {
         Pose2d pose = traj.get(time);
         Pose2d poseVel = traj.velocity(time);
         Pose2d poseAcc = traj.acceleration(time);
 
-        //converts the each pose from a field frame of reference to a robot frame of reference
+        // converts the each pose from a field frame of reference to a robot frame of reference
         Pose2d robotVelocity = Kinematics.fieldToRobotVelocity(pose, poseVel);
         Pose2d robotAcceleration = Kinematics.fieldToRobotAcceleration(pose, poseVel, poseAcc);
 
-        //converts unicycle model given by trajectory to left/right wheel velocities and accelerations
+        // converts unicycle model given by trajectory to left/right wheel velocities and accelerations
         List<Double> velocities = TankKinematics.robotToWheelVelocities(robotVelocity, HardwareConstants.DRIVETRAIN_WHEEL_SEPARATION_DISTANCE);
         double leftWheelVel = velocities.get(0);
         double rightWheelVel = velocities.get(1);
@@ -106,12 +100,18 @@ public class RoadRunnerTankTranslator
             rightWheelAcc *= -1;
         }
 
-        //calculates position of each wheel by multiplying the vel at a time step by the time step length
+        // calculates position of each wheel by multiplying the vel at a time step by the time step length
         leftWheelPos += leftWheelVel * TuningConstants.ROADRUNNER_TIME_STEP;
         rightWheelPos += rightWheelVel * TuningConstants.ROADRUNNER_TIME_STEP;
         double heading = pose.getHeading() * Helpers.RADIANS_TO_DEGREES;
 
-        return new PathStep(leftWheelPos, rightWheelPos, leftWheelVel, 
-            rightWheelVel, leftWheelAcc, rightWheelAcc, heading);
+        return new PathStep(
+            leftWheelPos,
+            rightWheelPos,
+            leftWheelVel,
+            rightWheelVel,
+            leftWheelAcc,
+            rightWheelAcc,
+            heading);
     }
 }

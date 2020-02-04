@@ -8,6 +8,36 @@ package frc.robot;
  */
 public class HardwareConstants
 {
+    //================================================= Vision ======================================================
+
+    // Vision Alignment 
+    public static final double CAMERA_PITCH = 1.0; // in degrees
+    public static final double CAMERA_X_OFFSET = 1.0; // in inches
+    public static final double CAMERA_Z_OFFSET = 22.0; // in inches
+    public static final double VISIONTARGET_Z_OFFSET = 90.25; // in inches
+    public static final double CAMERA_TO_TARGET_Z_OFFSET = HardwareConstants.VISIONTARGET_Z_OFFSET - HardwareConstants.CAMERA_Z_OFFSET;
+    public static final double CAMERA_YAW = 0.0; // in degrees
+
+    //================================================== PowerCell ===============================================================
+
+    public static final boolean POWERCELL_TURRET_INVERT_OUTPUT = false;
+    public static final boolean POWERCELL_TURRET_INVERT_SENSOR = false;
+    public static final boolean POWERCELL_FLYWHEEL_MASTER_INVERT_OUTPUT = false;
+    public static final boolean POWERCELL_FLYWHEEL_MASTER_INVERT_SENSOR = false;
+    public static final boolean POWERCELL_FLYWHEEL_FOLLOWER_INVERT_OUTPUT = true;
+    public static final boolean POWERCELL_ROLLER_MOTOR_OUTER_INVERT_OUTPUT = false;
+    public static final boolean POWERCELL_ROLLER_MOTOR_INNER_INVERT_OUTPUT = false;
+    public static final boolean POWERCELL_GENEVA_MOTOR_INVERT_OUTPUT = false;
+
+    //================================================== Climber =================================================================
+
+    public static final boolean CLIMBER_WINCH_MASTER_INVERT_OUTPUT = false;
+    public static final boolean CLIMBER_WINCH_FOLLOWER_INVERT_OUTPUT = true;
+
+    //================================================== ControlPanel ============================================================
+
+	public static final boolean CONTROLPANEL_SPINNER_INVERT_OUTPUT = false;
+
     //================================================== DriveTrain ==============================================================
     // Note: Pulse Distance is the distance moved per tick
 

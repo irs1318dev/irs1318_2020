@@ -47,59 +47,59 @@ public class PowerCellMechanism implements IMechanism
     {
         this.logger = logger;
 
-        this.intakeSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.INTAKE_FORWARD_PCM, ElectronicsConstants.INTAKE_REVERSE_PCM);
-        this.kickerSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.KICKER_FORWARD_PCM, ElectronicsConstants.KICKER_REVERSE_PCM);
-        this.lowerHood = provider.getDoubleSolenoid(ElectronicsConstants.LOWER_HOOD_FORWARD_PCM, ElectronicsConstants.LOWER_HOOD_REVERSE_PCM);
-        this.upperHood = provider.getDoubleSolenoid(ElectronicsConstants.UPPER_HOOD_FORWARD_PCM, ElectronicsConstants.UPPER_HOOD_REVERSE_PCM);
+        this.intakeSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.POWERCELL_INTAKE_FORWARD_PCM, ElectronicsConstants.POWERCELL_INTAKE_REVERSE_PCM);
+        this.kickerSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.POWERCELL_KICKER_FORWARD_PCM, ElectronicsConstants.POWERCELL_KICKER_REVERSE_PCM);
+        this.lowerHood = provider.getDoubleSolenoid(ElectronicsConstants.POWERCELL_LOWER_HOOD_FORWARD_PCM, ElectronicsConstants.POWERCELL_LOWER_HOOD_REVERSE_PCM);
+        this.upperHood = provider.getDoubleSolenoid(ElectronicsConstants.POWERCELL_UPPER_HOOD_FORWARD_PCM, ElectronicsConstants.POWERCELL_UPPER_HOOD_REVERSE_PCM);
 
-        this.rollerMotorInner = provider.getTalonSRX(ElectronicsConstants.ROLLERMOTOR_INNER_CAN_ID);
-        this.rollerMotorInner.setInvertOutput(TuningConstants.ROLLER_MOTOR_INNER_INVERT_OUTPUT);
+        this.rollerMotorInner = provider.getTalonSRX(ElectronicsConstants.POWERCELL_INNER_ROLLER_MOTOR_CAN_ID);
+        this.rollerMotorInner.setInvertOutput(HardwareConstants.POWERCELL_ROLLER_MOTOR_INNER_INVERT_OUTPUT);
         this.rollerMotorInner.setControlMode(TalonSRXControlMode.PercentOutput);
         this.rollerMotorInner.setNeutralMode(MotorNeutralMode.Brake);
 
-        this.rollerMotorOuter = provider.getTalonSRX(ElectronicsConstants.ROLLERMOTOR_OUTER_CAN_ID);
-        this.rollerMotorOuter.setInvertOutput(TuningConstants.ROLLER_MOTOR_OUTER_INVERT_OUTPUT);
+        this.rollerMotorOuter = provider.getTalonSRX(ElectronicsConstants.POWERCELL_OUTER_ROLLER_MOTOR_CAN_ID);
+        this.rollerMotorOuter.setInvertOutput(HardwareConstants.POWERCELL_ROLLER_MOTOR_OUTER_INVERT_OUTPUT);
         this.rollerMotorOuter.setControlMode(TalonSRXControlMode.PercentOutput);
         this.rollerMotorOuter.setNeutralMode(MotorNeutralMode.Brake);
 
-        this.flyWheel = provider.getTalonSRX(ElectronicsConstants.FLYWHEEL_MASTER_CAN_ID);
-        this.flyWheel.setInvertOutput(TuningConstants.FLYWHEEL_MASTER_INVERT_OUTPUT);
-        this.flyWheel.setInvertSensor(TuningConstants.FLYWHEEL_MASTER_INVERT_SENSOR);
+        this.flyWheel = provider.getTalonSRX(ElectronicsConstants.POWERCELL_FLYWHEEL_MASTER_CAN_ID);
+        this.flyWheel.setInvertOutput(HardwareConstants.POWERCELL_FLYWHEEL_MASTER_INVERT_OUTPUT);
+        this.flyWheel.setInvertSensor(HardwareConstants.POWERCELL_FLYWHEEL_MASTER_INVERT_SENSOR);
         this.flyWheel.setNeutralMode(MotorNeutralMode.Coast);
         this.flyWheel.setControlMode(TalonSRXControlMode.Velocity);
         this.flyWheel.setPIDF(
-            TuningConstants.FLYWHEEL_ONE_VELOCITY_PID_KP, 
-            TuningConstants.FLYWHEEL_ONE_VELOCITY_PID_KI, 
-            TuningConstants.FLYWHEEL_ONE_VELOCITY_PID_KD, 
-            TuningConstants.FLYWHEEL_ONE_VELOCITY_PID_KF, 
+            TuningConstants.POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KP, 
+            TuningConstants.POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KI, 
+            TuningConstants.POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KD, 
+            TuningConstants.POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KF, 
             PowerCellMechanism.slotId);
-        this.flyWheel.configureVelocityMeasurements(TuningConstants.FLYWHEEL_VELOCITY_PERIOD, TuningConstants.FLYWHEEL_VELOCITY_WINDOWSIZE);
-        this.flyWheel.setVoltageCompensation(TuningConstants.FLYWHEEL_MASTER_VELOCITY_VOLTAGE_COMPENSATION_ENABLED, TuningConstants.FLYWHEEL_MASTER_VELOCITY_VOLTAGE_COMPENSATION_MAXVOLTAGE);
+        this.flyWheel.configureVelocityMeasurements(TuningConstants.POWERCELL_FLYWHEEL_VELOCITY_PERIOD, TuningConstants.POWERCELL_FLYWHEEL_VELOCITY_WINDOWSIZE);
+        this.flyWheel.setVoltageCompensation(TuningConstants.POWERCELL_FLYWHEEL_MASTER_VELOCITY_VOLTAGE_COMPENSATION_ENABLED, TuningConstants.POWERCELL_FLYWHEEL_MASTER_VELOCITY_VOLTAGE_COMPENSATION_MAXVOLTAGE);
 
-        ITalonSRX flyWheelFollower = provider.getTalonSRX(ElectronicsConstants.FLYWHEEL_FOLLOWER_CAN_ID);
+        ITalonSRX flyWheelFollower = provider.getTalonSRX(ElectronicsConstants.POWERCELL_FLYWHEEL_FOLLOWER_CAN_ID);
         flyWheelFollower.setNeutralMode(MotorNeutralMode.Coast);
         flyWheelFollower.follow(this.flyWheel);
-        flyWheelFollower.setInvertOutput(TuningConstants.FLYWHEEL_FOLLOWER_INVERT_OUTPUT);
-        flyWheelFollower.setVoltageCompensation(TuningConstants.FLYWHEEL_FOLLOWER_VELOCITY_VOLTAGE_COMPENSATION_ENABLED, TuningConstants.FLYWHEEL_FOLLOWER_VELOCITY_VOLTAGE_COMPENSATION_MAXVOLTAGE);
+        flyWheelFollower.setInvertOutput(HardwareConstants.POWERCELL_FLYWHEEL_FOLLOWER_INVERT_OUTPUT);
+        flyWheelFollower.setVoltageCompensation(TuningConstants.POWERCELL_FLYWHEEL_FOLLOWER_VELOCITY_VOLTAGE_COMPENSATION_ENABLED, TuningConstants.POWERCELL_FLYWHEEL_FOLLOWER_VELOCITY_VOLTAGE_COMPENSATION_MAXVOLTAGE);
 
-        this.turret = provider.getTalonSRX(ElectronicsConstants.TURRET_CAN_ID);
-        this.turret.setInvertOutput(TuningConstants.TURRET_INVERT_OUTPUT);
-        this.turret.setInvertSensor(TuningConstants.TURRET_INVERT_SENSOR);
+        this.turret = provider.getTalonSRX(ElectronicsConstants.POWERCELL_TURRET_MOTOR_CAN_ID);
+        this.turret.setInvertOutput(HardwareConstants.POWERCELL_TURRET_INVERT_OUTPUT);
+        this.turret.setInvertSensor(HardwareConstants.POWERCELL_TURRET_INVERT_SENSOR);
         this.turret.setNeutralMode(MotorNeutralMode.Brake);
         this.turret.setControlMode(TalonSRXControlMode.Position);
         this.turret.setPIDF(
-            TuningConstants.TURRET_POSITION_PID_KP, 
-            TuningConstants.TURRET_POSITION_PID_KI, 
-            TuningConstants.TURRET_POSITION_PID_KD, 
-            TuningConstants.TURRET_POSITION_PID_KF, 
+            TuningConstants.POWERCELL_TURRET_POSITION_PID_KP, 
+            TuningConstants.POWERCELL_TURRET_POSITION_PID_KI, 
+            TuningConstants.POWERCELL_TURRET_POSITION_PID_KD, 
+            TuningConstants.POWERCELL_TURRET_POSITION_PID_KF, 
             PowerCellMechanism.slotId);
 
-        this.genevaMotor = provider.getTalonSRX(ElectronicsConstants.GENEVAMOTOR_CAN_ID);
-        this.genevaMotor.setInvertOutput(TuningConstants.GENEVA_INVERT_OUTPUT);
+        this.genevaMotor = provider.getTalonSRX(ElectronicsConstants.POWERCELL_GENEVA_MOTOR_CAN_ID);
+        this.genevaMotor.setInvertOutput(HardwareConstants.POWERCELL_GENEVA_MOTOR_INVERT_OUTPUT);
         this.genevaMotor.setControlMode(TalonSRXControlMode.PercentOutput);
         this.genevaMotor.setNeutralMode(MotorNeutralMode.Brake);
 
-        this.carouselCounter = provider.getCounter(ElectronicsConstants.CAROUSEL_COUNTER_DIO);
+        this.carouselCounter = provider.getCounter(ElectronicsConstants.POWERCELL_CAROUSEL_COUNTER_DIO);
     }
 
     @Override
@@ -165,13 +165,13 @@ public class PowerCellMechanism implements IMechanism
 
         if (this.driver.getDigital(DigitalOperation.PowerCellIntake))
         {
-            this.rollerMotorInner.set(TuningConstants.ROLLER_MOTOR_INNER_POWER_LEVEL_INTAKE);
-            this.rollerMotorOuter.set(TuningConstants.ROLLER_MOTOR_OUTER_POWER_LEVEL_INTAKE);
+            this.rollerMotorInner.set(TuningConstants.POWERCELL_INNER_ROLLER_MOTOR_INTAKE_POWER);
+            this.rollerMotorOuter.set(TuningConstants.POWERCELL_OUTER_ROLLER_MOTOR_INTAKE_POWER);
         }
         else if (this.driver.getDigital(DigitalOperation.PowerCellOuttake))
         {
-            this.rollerMotorInner.set(TuningConstants.ROLLER_MOTOR_INNER_POWER_LEVEL_OUTTAKE);
-            this.rollerMotorOuter.set(TuningConstants.ROLLER_MOTOR_OUTER_POWER_LEVEL_OUTTAKE);
+            this.rollerMotorInner.set(TuningConstants.POWERCELL_INNER_ROLLER_MOTOR_OUTTAKE_POWER);
+            this.rollerMotorOuter.set(TuningConstants.POWERCELL_OUTER_ROLLER_MOTOR_OUTTAKE_POWER);
         }
 
         double flyWheelspeed = this.driver.getAnalog(AnalogOperation.PowerCellFlywheelVelocity);

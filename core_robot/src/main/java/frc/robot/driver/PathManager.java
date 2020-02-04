@@ -25,11 +25,6 @@ public class PathManager
     private static final String[] NAMES =
         new String[]
         {
-            "/Paths/Circle 40 inch radius.csv",
-            "/Paths/S path.csv",
-            "/Paths/Straight 4 feet.csv",
-            "/Paths/Turn left 4 feet.csv",
-            "/Paths/Turn right 4 feet.csv",
             "/Paths/straight_path.csv",
             "/Paths/curved_path.csv",
             "/Paths/backwards_path.csv"
@@ -68,30 +63,43 @@ public class PathManager
                 csvReader.setContainsHeader(true);
                 CsvParser csvParser = csvReader.parse(reader);
 
-                CsvRow row;
-                while ((row = csvParser.nextRow()) != null)
+                CsvRow row = csvParser.nextRow();
+                if (row == null)
                 {
-                    String leftPosition = row.getField(PathManager.LEFT_POSITION_NAME);
-                    String rightPosition = row.getField(PathManager.RIGHT_POSITION_NAME);
-                    String leftVelocity = row.getField(PathManager.LEFT_VELOCITY_NAME);
-                    String rightVelocity = row.getField(PathManager.RIGHT_VELOCITY_NAME);
-                    String heading = row.getField(PathManager.HEADING_NAME);
+                    continue;
+                }
 
-                    if (leftPosition != null && !leftPosition.equals("") &&
-                        rightPosition != null && !rightPosition.equals("") &&
-                        leftVelocity != null && !leftVelocity.equals("") &&
-                        rightVelocity != null && !rightVelocity.equals("") &&
-                        heading != null && !heading.equals(""))
+                List<String> headers = csvParser.getHeader();
+                int leftPositionIndex = headers.indexOf(PathManager.LEFT_POSITION_NAME);
+                int rightPositionIndex = headers.indexOf(PathManager.RIGHT_POSITION_NAME);
+                int leftVelocityIndex = headers.indexOf(PathManager.LEFT_VELOCITY_NAME);
+                int rightVelocityIndex = headers.indexOf(PathManager.RIGHT_VELOCITY_NAME);
+                int headingIndex = headers.indexOf(PathManager.HEADING_NAME);
+
+                do 
+                {
+                    String leftPositionString = row.getField(leftPositionIndex);
+                    String rightPositionString = row.getField(rightPositionIndex);
+                    String leftVelocityString = row.getField(leftVelocityIndex);
+                    String rightVelocityString = row.getField(rightVelocityIndex);
+                    String headingString = row.getField(headingIndex);
+
+                    if (leftPositionString != null && !leftPositionString.equals("") &&
+                        rightPositionString != null && !rightPositionString.equals("") &&
+                        leftVelocityString != null && !leftVelocityString.equals("") &&
+                        rightVelocityString != null && !rightVelocityString.equals("") &&
+                        headingString != null && !headingString.equals(""))
                     {
-                        double lpos = Double.parseDouble(leftPosition);
-                        double rpos = Double.parseDouble(rightPosition);
-                        double lvel = Double.parseDouble(leftVelocity);
-                        double rvel = Double.parseDouble(rightVelocity);
-                        double head = Double.parseDouble(heading);
+                        double leftPosition = Double.parseDouble(leftPositionString);
+                        double rightPosition = Double.parseDouble(rightPositionString);
+                        double leftVelocity = Double.parseDouble(leftVelocityString);
+                        double rightVelocity = Double.parseDouble(rightVelocityString);
+                        double heading = Double.parseDouble(headingString);
 
-                        path.add(new PathStep(lpos, rpos, lvel, rvel, head));
+                        path.add(new PathStep(leftPosition, rightPosition, leftVelocity, rightVelocity, heading));
                     }
                 }
+                while ((row = csvParser.nextRow()) != null);
 
                 this.map.put(name, path);
             }

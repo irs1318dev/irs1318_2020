@@ -1,11 +1,10 @@
 package frc.robot.common.robotprovider;
 
-import frc.robot.vision.VisionCalculations;
-
 public interface IRobotProvider
 {
     public IAnalogInput getAnalogInput(int channel);
     public IDigitalInput getDigitalInput(int channel);
+    public IDigitalOutput getDigitalOutput(int channel);
     public ICounter getCounter(int channel);
     public ITalonSRX getTalonSRX(int deviceNumber);
     public ITalonFX getTalonFX(int deviceNumber);
@@ -34,6 +33,5 @@ public interface IRobotProvider
     public IDriverStation getDriverStation();
     public IOpenCVProvider getOpenCVProvider();
     public INetworkTableProvider getNetworkTableProvider();
-    public VisionCalculations getVisionCalculations();
     public <V> ISendableChooser<V> getSendableChooser();
 }

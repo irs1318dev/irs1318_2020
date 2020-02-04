@@ -20,7 +20,6 @@ public class ClimberMechanism implements IMechanism
     private Driver driver;
 
     private boolean isExtended;
-    private boolean isReleased;
 
     @Inject
     public ClimberMechanism(IRobotProvider provider)
@@ -28,18 +27,17 @@ public class ClimberMechanism implements IMechanism
         this.climberExtendSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.CLIMBER_EXTEND_FORWARD_CAN_ID, ElectronicsConstants.CLIMBER_EXTEND_REVERSE_CAN_ID);
         this.climberGrabSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.CLIMBER_GRAB_FORWARD_CAN_ID, ElectronicsConstants.CLIMBER_GRAB_REVERSE_CAN_ID);
 
-        this.winchMotorMaster = provider.getTalonSRX(ElectronicsConstants.WINCH_MASTER_CAN_ID);
-        this.winchMotorMaster.setInvertOutput(TuningConstants.WINCH_MASTER_INVERT_OUTPUT);
+        this.winchMotorMaster = provider.getTalonSRX(ElectronicsConstants.CLIMBER_WINCH_MASTER_CAN_ID);
+        this.winchMotorMaster.setInvertOutput(HardwareConstants.CLIMBER_WINCH_MASTER_INVERT_OUTPUT);
         this.winchMotorMaster.setControlMode(TalonSRXControlMode.PercentOutput);
         this.winchMotorMaster.setNeutralMode(MotorNeutralMode.Brake);
 
-        ITalonSRX winchMotorFollower = provider.getTalonSRX(ElectronicsConstants.WINCH_FOLLOWER_CAN_ID);
-        winchMotorFollower.setInvertOutput(TuningConstants.WINCH_FOLLOWER_INVERT_OUTPUT);
+        ITalonSRX winchMotorFollower = provider.getTalonSRX(ElectronicsConstants.CLIMBER_WINCH_FOLLOWER_CAN_ID);
+        winchMotorFollower.setInvertOutput(HardwareConstants.CLIMBER_WINCH_FOLLOWER_INVERT_OUTPUT);
         winchMotorFollower.setNeutralMode(MotorNeutralMode.Brake);
         winchMotorFollower.follow(this.winchMotorMaster);
 
         this.isExtended = false;
-        this.isReleased = false;
     }
 
     @Override
@@ -67,7 +65,6 @@ public class ClimberMechanism implements IMechanism
         }
         else if (this.isExtended && this.driver.getDigital(DigitalOperation.ClimberHookRelease))
         {
-            this.isReleased = true;
             this.climberGrabSolenoid.set(DoubleSolenoidValue.Forward);
         }
 

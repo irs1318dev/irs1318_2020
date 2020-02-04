@@ -52,9 +52,10 @@ public class ControlPanelMechanism implements IMechanism
 
         this.ds = provider.getDriverStation();
 
-        this.extender = provider.getDoubleSolenoid(ElectronicsConstants.EXTENDER_FORWARD_PCM, ElectronicsConstants.EXTENDER_REVERSE_PCM);
+        this.extender = provider.getDoubleSolenoid(ElectronicsConstants.CONTROLPANEL_EXTENDER_FORWARD_PCM, ElectronicsConstants.CONTROLPANEL_EXTENDER_REVERSE_PCM);
 
-        this.spinnerMotor = provider.getVictorSPX(ElectronicsConstants.CONTROL_PANEL_SPINNER_CAN_ID);
+        this.spinnerMotor = provider.getVictorSPX(ElectronicsConstants.CONTROLPANEL_SPINNER_CAN_ID);
+        this.spinnerMotor.setInvertOutput(HardwareConstants.CONTROLPANEL_SPINNER_INVERT_OUTPUT);
         this.spinnerMotor.setControlMode(TalonSRXControlMode.PercentOutput);
         this.spinnerMotor.setNeutralMode(MotorNeutralMode.Brake);
 

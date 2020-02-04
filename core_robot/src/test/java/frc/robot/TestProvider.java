@@ -5,12 +5,12 @@ import static org.mockito.Mockito.mock;
 import java.util.HashMap;
 
 import frc.robot.common.robotprovider.*;
-import frc.robot.vision.VisionCalculations;
 
 public class TestProvider implements IRobotProvider
 {
     private HashMap<Integer, IAnalogInput> analogInputMap = new HashMap<Integer, IAnalogInput>();
     private HashMap<Integer, IDigitalInput> digitalInputMap = new HashMap<Integer, IDigitalInput>();
+    private HashMap<Integer, IDigitalOutput> digitalOutputMap = new HashMap<Integer, IDigitalOutput>();
     private HashMap<Integer, ICounter> counterMap = new HashMap<Integer, ICounter>();
     private HashMap<Integer, ITalonSRX> talonSrxMap = new HashMap<Integer, ITalonSRX>();
     private HashMap<Integer, ITalonFX> talonFxMap = new HashMap<Integer, ITalonFX>();
@@ -46,6 +46,17 @@ public class TestProvider implements IRobotProvider
         }
 
         return this.digitalInputMap.get(channel);
+    }
+
+    @Override
+    public IDigitalOutput getDigitalOutput(int channel)
+    {
+        if (!this.digitalOutputMap.containsKey(channel))
+        {
+            this.digitalOutputMap.put(channel, mock(IDigitalOutput.class));
+        }
+
+        return this.digitalOutputMap.get(channel);
     }
 
     @Override
@@ -294,12 +305,6 @@ public class TestProvider implements IRobotProvider
 
     @Override
     public INetworkTableProvider getNetworkTableProvider()
-    {
-        return null;
-    }
-
-    @Override
-    public VisionCalculations getVisionCalculations()
     {
         return null;
     }

@@ -1,11 +1,10 @@
 package frc.robot.mechanisms;
 
-import frc.robot.TuningConstants;
+import frc.robot.*;
 import frc.robot.common.*;
 import frc.robot.common.robotprovider.*;
-import frc.robot.driver.DigitalOperation;
+import frc.robot.driver.*;
 import frc.robot.driver.common.*;
-import frc.robot.vision.VisionConstants;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -24,6 +23,8 @@ public class OffboardVisionManager implements IMechanism
     private final INetworkTableProvider networkTable;
     private final IDashboardLogger logger;
 
+    private final IDigitalOutput ringLight;
+
     private Driver driver;
 
     private double centerX;
@@ -40,8 +41,10 @@ public class OffboardVisionManager implements IMechanism
     @Inject
     public OffboardVisionManager(IRobotProvider provider, IDashboardLogger logger)
     {
-        this.networkTable = provider.getNetworkTableProvider();
         this.logger = logger;
+
+        this.networkTable = provider.getNetworkTableProvider();
+        this.ringLight = provider.getDigitalOutput(ElectronicsConstants.VISION_RING_LIGHT_DIO);
 
         this.centerX = 0.0;
         this.centerY = 0.0;
@@ -81,24 +84,28 @@ public class OffboardVisionManager implements IMechanism
         double yOffset = VisionConstants.LIFECAM_CAMERA_CENTER_WIDTH - this.centerY;
         double verticalAngle = Helpers.atand(yOffset / VisionConstants.LIFECAM_CAMERA_FOCAL_LENGTH_Y);
 
-        this.distance = (TuningConstants.CAMERA_TO_TARGET_Z_OFFSET / Helpers.tand(verticalAngle + TuningConstants.CAMERA_PITCH)) - TuningConstants.CAMERA_X_OFFSET;
+        this.distance = (HardwareConstants.CAMERA_TO_TARGET_Z_OFFSET / Helpers.tand(verticalAngle + HardwareConstants.CAMERA_PITCH)) - HardwareConstants.CAMERA_X_OFFSET;
 
         double xOffset = this.centerX - VisionConstants.LIFECAM_CAMERA_CENTER_WIDTH;
-        this.horizontalAngle = Helpers.atand(xOffset / VisionConstants.LIFECAM_CAMERA_FOCAL_LENGTH_X) + TuningConstants.CAMERA_YAW;
+        this.horizontalAngle = Helpers.atand(xOffset / VisionConstants.LIFECAM_CAMERA_FOCAL_LENGTH_X) + HardwareConstants.CAMERA_YAW;
     }
 
     @Override
     public void update()
     {
-        boolean enableVideoStream = this.driver.getDigital(DigitalOperation.VisionEnableOffboardStream);
-        boolean enableVideoProcessing = this.driver.getDigital(DigitalOperation.VisionEnableOffboardProcessing);
+        boolean enableVideoStream = !this.driver.getDigital(DigitalOperation.VisionEnableOffboardStream);
+        boolean enableVideoProcessing = !this.driver.getDigital(DigitalOperation.VisionEnableOffboardProcessing);
         this.logger.logBoolean(OffboardVisionManager.logName, "enableStream", enableVideoStream);
         this.logger.logBoolean(OffboardVisionManager.logName, "enableProcessing", enableVideoProcessing);
+
+        this.ringLight.set(enableVideoProcessing);
     }
 
     @Override
     public void stop()
     {
+        this.ringLight.set(false);
+
         this.logger.logBoolean(OffboardVisionManager.logName, "enableStream", false);
         this.logger.logBoolean(OffboardVisionManager.logName, "enableProcessing", false);
     }

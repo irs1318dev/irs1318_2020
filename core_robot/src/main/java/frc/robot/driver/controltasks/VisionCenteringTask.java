@@ -6,7 +6,7 @@ import frc.robot.common.robotprovider.ITimer;
 import frc.robot.driver.AnalogOperation;
 import frc.robot.driver.DigitalOperation;
 import frc.robot.driver.common.IControlTask;
-import frc.robot.mechanisms.VisionManager;
+import frc.robot.mechanisms.OffboardVisionManager;
 
 /**
  * Task that turns the robot a certain amount clockwise or counterclockwise in-place based on vision center
@@ -20,7 +20,7 @@ public class VisionCenteringTask extends ControlTaskBase implements IControlTask
 
     private PIDHandler turnPidHandler;
     private Double centeredTime;
-    protected VisionManager visionManager;
+    protected OffboardVisionManager visionManager;
 
     private int noCenterCount;
 
@@ -53,7 +53,7 @@ public class VisionCenteringTask extends ControlTaskBase implements IControlTask
     @Override
     public void begin()
     {
-        this.visionManager = this.getInjector().getInstance(VisionManager.class);
+        this.visionManager = this.getInjector().getInstance(OffboardVisionManager.class);
         this.turnPidHandler = this.createTurnHandler();
     }
 
@@ -66,13 +66,12 @@ public class VisionCenteringTask extends ControlTaskBase implements IControlTask
         this.setDigitalOperationState(DigitalOperation.DriveTrainUsePositionalMode, false);
         this.setDigitalOperationState(this.toPerform, true);
 
-        Double currentMeasuredAngle = this.visionManager.getMeasuredAngle();
-        Double currentDesiredAngle = this.visionManager.getDesiredAngle();
-        if (currentMeasuredAngle != null && currentDesiredAngle != null)
+        Double currentMeasuredAngle = this.visionManager.getHorizontalAngle();
+        if (currentMeasuredAngle != null)
         {
             this.setAnalogOperationState(
                 AnalogOperation.DriveTrainTurn,
-                -this.turnPidHandler.calculatePosition(currentDesiredAngle, currentMeasuredAngle));
+                -this.turnPidHandler.calculatePosition(0.0, currentMeasuredAngle));
         }
     }
 
@@ -96,14 +95,13 @@ public class VisionCenteringTask extends ControlTaskBase implements IControlTask
     @Override
     public boolean hasCompleted()
     {
-        Double currentMeasuredAngle = this.visionManager.getMeasuredAngle();
-        Double currentDesiredAngle = this.visionManager.getDesiredAngle();
-        if (currentMeasuredAngle == null || currentDesiredAngle == null)
+        Double currentMeasuredAngle = this.visionManager.getHorizontalAngle();
+        if (currentMeasuredAngle == null)
         {
             return false;
         }
 
-        double centerAngleDifference = Math.abs(currentMeasuredAngle - currentDesiredAngle);
+        double centerAngleDifference = Math.abs(currentMeasuredAngle);
         if (centerAngleDifference > TuningConstants.MAX_VISION_CENTERING_RANGE_DEGREES)
         {
             return false;
@@ -139,7 +137,7 @@ public class VisionCenteringTask extends ControlTaskBase implements IControlTask
     @Override
     public boolean shouldCancel()
     {
-        if (this.visionManager.getCenter() == null)
+        if (this.visionManager.getDistance() == null)
         {
             this.noCenterCount++;
         }

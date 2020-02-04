@@ -6,7 +6,6 @@ import com.google.inject.Injector;
 
 import frc.robot.common.*;
 import frc.robot.mechanisms.*;
-import frc.robot.vision.*;
 
 /**
  * All constants related to tuning the operation of the robot.
@@ -89,14 +88,6 @@ public class TuningConstants
 
     //================================================= Vision ======================================================
 
-    // Vision Alignment 
-    public static final double CAMERA_PITCH = 1.0; // in degrees
-    public static final double CAMERA_X_OFFSET = 1.0; // in inches
-    public static final double CAMERA_Z_OFFSET = 22.0; // in inches
-    public static final double TARGET_Z_OFFSET = 90.25; // in inches
-    public static final double CAMERA_TO_TARGET_Z_OFFSET = TuningConstants.TARGET_Z_OFFSET - TuningConstants.CAMERA_Z_OFFSET;
-    public static final double CAMERA_YAW = 0.0; // in degrees
-
     // Acceptable vision centering range values in degrees
     public static final double MAX_VISION_CENTERING_RANGE_DEGREES = 5.0;
 
@@ -141,49 +132,34 @@ public class TuningConstants
 
     public static final boolean VISION_ENABLE_DURING_TELEOP = true;
 
-    //================================================== Indicator Lights ==============================================================
+    //================================================== Indicator Lights ========================================================
 
-    public static final double INDICATOR_LIGHT_VISION_CONSIDERATION_DISTANCE_RANGE = VisionConstants.VISION_CONSIDERATION_DISTANCE_RANGE;
     public static final double INDICATOR_LIGHT_VISION_ACCEPTABLE_ANGLE_RANGE = 3.0;
 
-    //================================================= PowerCell ======================================================
+    //================================================== PowerCell ===============================================================
 
-    public static final double FLYWHEEL_ONE_VELOCITY_PID_KP = 0.0;
-    public static final double FLYWHEEL_ONE_VELOCITY_PID_KI = 0.0;
-    public static final double FLYWHEEL_ONE_VELOCITY_PID_KD = 0.0;
-    public static final double FLYWHEEL_ONE_VELOCITY_PID_KF = 0.0;
+    public static final double POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KP = 0.0;
+    public static final double POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KI = 0.0;
+    public static final double POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KD = 0.0;
+    public static final double POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KF = 0.0;
 
-    public static final double TURRET_POSITION_PID_KP = 0.0;
-    public static final double TURRET_POSITION_PID_KI = 0.0;
-    public static final double TURRET_POSITION_PID_KD = 0.0;
-    public static final double TURRET_POSITION_PID_KF = 0.0;
+    public static final double POWERCELL_TURRET_POSITION_PID_KP = 0.0;
+    public static final double POWERCELL_TURRET_POSITION_PID_KI = 0.0;
+    public static final double POWERCELL_TURRET_POSITION_PID_KD = 0.0;
+    public static final double POWERCELL_TURRET_POSITION_PID_KF = 0.0;
 
-    public static final boolean TURRET_INVERT_OUTPUT = true;
-    public static final boolean TURRET_INVERT_SENSOR = true;
-    public static final boolean FLYWHEEL_MASTER_INVERT_OUTPUT = false;
-    public static final boolean FLYWHEEL_MASTER_INVERT_SENSOR = false;
-    public static final boolean FLYWHEEL_FOLLOWER_INVERT_OUTPUT = true;
-    public static final boolean ROLLER_MOTOR_OUTER_INVERT_OUTPUT = true;
-    public static final boolean ROLLER_MOTOR_INNER_INVERT_OUTPUT = true;
-    public static final boolean GENEVA_INVERT_OUTPUT = true;
+    public static final int POWERCELL_FLYWHEEL_VELOCITY_PERIOD = 10;
+    public static final int POWERCELL_FLYWHEEL_VELOCITY_WINDOWSIZE = 32;
+    public static final boolean POWERCELL_FLYWHEEL_MASTER_VELOCITY_VOLTAGE_COMPENSATION_ENABLED = true;
+    public static final boolean POWERCELL_FLYWHEEL_FOLLOWER_VELOCITY_VOLTAGE_COMPENSATION_ENABLED = true;
+    public static final double POWERCELL_FLYWHEEL_MASTER_VELOCITY_VOLTAGE_COMPENSATION_MAXVOLTAGE = 12.0;
+    public static final double POWERCELL_FLYWHEEL_FOLLOWER_VELOCITY_VOLTAGE_COMPENSATION_MAXVOLTAGE = 12.0;
 
-    public static final int FLYWHEEL_VELOCITY_PERIOD = 10;
-    public static final int FLYWHEEL_VELOCITY_WINDOWSIZE = 32;
-    public static final boolean FLYWHEEL_MASTER_VELOCITY_VOLTAGE_COMPENSATION_ENABLED = true;
-    public static final boolean FLYWHEEL_FOLLOWER_VELOCITY_VOLTAGE_COMPENSATION_ENABLED = true;
-    public static final double FLYWHEEL_MASTER_VELOCITY_VOLTAGE_COMPENSATION_MAXVOLTAGE = 12.0;
-    public static final double FLYWHEEL_FOLLOWER_VELOCITY_VOLTAGE_COMPENSATION_MAXVOLTAGE = 12.0;
+    public static final double POWERCELL_INNER_ROLLER_MOTOR_INTAKE_POWER = 0.5;
+    public static final double POWERCELL_OUTER_ROLLER_MOTOR_INTAKE_POWER = 0.5;
 
-    public static final double ROLLER_MOTOR_INNER_POWER_LEVEL_INTAKE = 1;
-    public static final double ROLLER_MOTOR_OUTER_POWER_LEVEL_INTAKE = 1;
-
-    public static final double ROLLER_MOTOR_INNER_POWER_LEVEL_OUTTAKE = -1;
-    public static final double ROLLER_MOTOR_OUTER_POWER_LEVEL_OUTTAKE = -1;
-//=========================================================Climber================================================================================
-
-    public static final boolean WINCH_MASTER_INVERT_OUTPUT = true;
-    public static final boolean WINCH_FOLLOWER_INVERT_OUTPUT = false;
-
+    public static final double POWERCELL_INNER_ROLLER_MOTOR_OUTTAKE_POWER = -0.5;
+    public static final double POWERCELL_OUTER_ROLLER_MOTOR_OUTTAKE_POWER = -0.5;
 
     //================================================== DriveTrain ==============================================================
 
