@@ -23,7 +23,7 @@ public class OffboardVisionManager implements IMechanism
     private final INetworkTableProvider networkTable;
     private final IDashboardLogger logger;
 
-    private final IDigitalOutput ringLight;
+    // private final IDigitalOutput ringLight;
 
     private Driver driver;
 
@@ -44,7 +44,7 @@ public class OffboardVisionManager implements IMechanism
         this.logger = logger;
 
         this.networkTable = provider.getNetworkTableProvider();
-        this.ringLight = provider.getDigitalOutput(ElectronicsConstants.VISION_RING_LIGHT_DIO);
+        // this.ringLight = provider.getDigitalOutput(ElectronicsConstants.VISION_RING_LIGHT_DIO);
 
         this.centerX = 0.0;
         this.centerY = 0.0;
@@ -88,6 +88,9 @@ public class OffboardVisionManager implements IMechanism
 
         double xOffset = this.centerX - VisionConstants.LIFECAM_CAMERA_CENTER_WIDTH;
         this.horizontalAngle = Helpers.atand(xOffset / VisionConstants.LIFECAM_CAMERA_FOCAL_LENGTH_X) + HardwareConstants.CAMERA_YAW;
+
+        this.logger.logNumber(OffboardVisionManager.logName, "distance", this.distance);
+        this.logger.logNumber(OffboardVisionManager.logName, "horizontalAngle", this.horizontalAngle);
     }
 
     @Override
@@ -98,13 +101,13 @@ public class OffboardVisionManager implements IMechanism
         this.logger.logBoolean(OffboardVisionManager.logName, "enableStream", enableVideoStream);
         this.logger.logBoolean(OffboardVisionManager.logName, "enableProcessing", enableVideoProcessing);
 
-        this.ringLight.set(enableVideoProcessing);
+        // this.ringLight.set(enableVideoProcessing);
     }
 
     @Override
     public void stop()
     {
-        this.ringLight.set(false);
+        // this.ringLight.set(false);
 
         this.logger.logBoolean(OffboardVisionManager.logName, "enableStream", false);
         this.logger.logBoolean(OffboardVisionManager.logName, "enableProcessing", false);

@@ -20,8 +20,8 @@ public class ControlPanelMechanism implements IMechanism
     private final IColorMatch colorMatch;
     private final IDriverStation ds;
 
-    private final IDoubleSolenoid extender;
-    private final IVictorSPX spinnerMotor;
+    //private final IDoubleSolenoid extender;
+    //private final IVictorSPX spinnerMotor;
 
     private Driver driver;
 
@@ -53,12 +53,12 @@ public class ControlPanelMechanism implements IMechanism
 
         this.ds = provider.getDriverStation();
 
-        this.extender = provider.getDoubleSolenoid(ElectronicsConstants.CONTROLPANEL_EXTENDER_FORWARD_PCM, ElectronicsConstants.CONTROLPANEL_EXTENDER_REVERSE_PCM);
+        // this.extender = provider.getDoubleSolenoid(ElectronicsConstants.CONTROLPANEL_EXTENDER_FORWARD_PCM, ElectronicsConstants.CONTROLPANEL_EXTENDER_REVERSE_PCM);
 
-        this.spinnerMotor = provider.getVictorSPX(ElectronicsConstants.CONTROLPANEL_SPINNER_CAN_ID);
-        this.spinnerMotor.setInvertOutput(HardwareConstants.CONTROLPANEL_SPINNER_INVERT_OUTPUT);
-        this.spinnerMotor.setControlMode(TalonSRXControlMode.PercentOutput);
-        this.spinnerMotor.setNeutralMode(MotorNeutralMode.Brake);
+        // this.spinnerMotor = provider.getVictorSPX(ElectronicsConstants.CONTROLPANEL_SPINNER_CAN_ID);
+        // this.spinnerMotor.setInvertOutput(HardwareConstants.CONTROLPANEL_SPINNER_INVERT_OUTPUT);
+        // this.spinnerMotor.setControlMode(TalonSRXControlMode.PercentOutput);
+        // this.spinnerMotor.setNeutralMode(MotorNeutralMode.Brake);
 
         this.isExtended = false;
     }
@@ -66,7 +66,7 @@ public class ControlPanelMechanism implements IMechanism
     @Override
     public void readSensors()
     {
-        if (this.isExtended)
+        // if (this.isExtended)
         {
             this.gsm = this.ds.getGameSpecificMessage();
 
@@ -130,26 +130,26 @@ public class ControlPanelMechanism implements IMechanism
         if (this.driver.getDigital(DigitalOperation.ControlPanelExtend)) 
         {
             this.isExtended = true;
-            this.extender.set(DoubleSolenoidValue.Forward);
+            // this.extender.set(DoubleSolenoidValue.Forward);
         }
         else if (!this.driver.getDigital(DigitalOperation.ControlPanelRetract)) 
         {  
             this.isExtended = false;
-            this.extender.set(DoubleSolenoidValue.Reverse);
+            // this.extender.set(DoubleSolenoidValue.Reverse);
         }
 
         if (this.isExtended) 
         {
             double speed = this.driver.getAnalog(AnalogOperation.ControlPanelSpinSpeed);
-            this.spinnerMotor.set(speed);
+            // this.spinnerMotor.set(speed);
         }
     }
 
     @Override
     public void stop()
     {
-        this.extender.set(DoubleSolenoidValue.Off);
-        this.spinnerMotor.set(0.0);
+        // this.extender.set(DoubleSolenoidValue.Off);
+        // this.spinnerMotor.set(0.0);
     }
 
     @Override
