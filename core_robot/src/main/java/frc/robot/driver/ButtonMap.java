@@ -14,13 +14,13 @@ public class ButtonMap implements IButtonMap
     private static ShiftDescription[] ShiftButtonSchema = new ShiftDescription[]
     {
         new ShiftDescription(
-            Shift.Debug,
+            Shift.DriverDebug,
             UserInputDevice.Driver,
             UserInputDeviceButton.XBONE_LEFT_BUTTON),
-/*        new ShiftDescription(
-            Shift.ButtonPadDebug,
+        new ShiftDescription(
+            Shift.OperatorDebug,
             UserInputDevice.Operator,
-            UserInputDeviceButton.BUTTON_PAD_BUTTON_16)),*/
+            UserInputDeviceButton.XBONE_LEFT_BUTTON),
     };
 
     public static AnalogOperationDescription[] AnalogOperationSchema = new AnalogOperationDescription[]
@@ -79,8 +79,8 @@ public class ButtonMap implements IButtonMap
             MacroOperation.TurnInPlaceRight,
             UserInputDevice.Driver,
             90,
-            Shift.Debug,
-            Shift.Debug,
+            Shift.DriverDebug,
+            Shift.DriverDebug,
             ButtonType.Toggle,
             () -> new NavxTurnTask(true, 180, 3.0, true, false),
             new IOperation[]
@@ -106,8 +106,8 @@ public class ButtonMap implements IButtonMap
             MacroOperation.TurnInPlaceLeft,
             UserInputDevice.Driver,
             270,
-            Shift.Debug,
-            Shift.Debug,
+            Shift.DriverDebug,
+            Shift.DriverDebug,
             ButtonType.Toggle,
             () -> new NavxTurnTask(true, -180, TuningConstants.NAVX_FAST_TURN_TIMEOUT, true, true),
             new IOperation[]
@@ -181,71 +181,33 @@ public class ButtonMap implements IButtonMap
                 AnalogOperation.DriveTrainLeftPosition,
                 AnalogOperation.DriveTrainRightPosition,
             }),
-            new MacroOperationDescription(
-                MacroOperation.FollowADifferentPath,
-                UserInputDevice.Driver,
-                UserInputDeviceButton.XBONE_Y_BUTTON,
-                ButtonType.Toggle,
-                () -> new FollowPathTask("/Paths/backwards_path.csv"),
-                new IOperation[]
-                {
-                    DigitalOperation.DriveTrainUsePositionalMode,
-                    DigitalOperation.DriveTrainUseBrakeMode,
-                    AnalogOperation.DriveTrainLeftPosition,
-                    AnalogOperation.DriveTrainRightPosition,
-                    AnalogOperation.DriveTrainLeftVelocity,
-                    AnalogOperation.DriveTrainRightVelocity,
-                    AnalogOperation.DriveTrainHeadingCorrection,
-                    DigitalOperation.DriveTrainUsePathMode,
-                    AnalogOperation.DriveTrainTurn,
-                    AnalogOperation.DriveTrainMoveForward,
-                    DigitalOperation.DriveTrainSimpleMode,
-                },
-                new IOperation[]
-                {
-                    DigitalOperation.DriveTrainUsePositionalMode,
-                    DigitalOperation.DriveTrainUseBrakeMode,
-                    AnalogOperation.DriveTrainLeftPosition,
-                    AnalogOperation.DriveTrainRightPosition,
-                }),
-    
-        // Vision Macros
         new MacroOperationDescription(
-            MacroOperation.VisionCenterAndAdvance,
+            MacroOperation.FollowADifferentPath,
             UserInputDevice.Driver,
-            180,
-            Shift.Debug,
-            Shift.Debug,
+            UserInputDeviceButton.XBONE_Y_BUTTON,
             ButtonType.Toggle,
-            () -> new VisionAdvanceAndCenterTask(DigitalOperation.VisionEnable),
+            () -> new FollowPathTask("/Paths/backwards_path.csv"),
             new IOperation[]
             {
-                DigitalOperation.VisionDisable,
-                DigitalOperation.VisionEnable,
                 DigitalOperation.DriveTrainUsePositionalMode,
+                DigitalOperation.DriveTrainUseBrakeMode,
                 AnalogOperation.DriveTrainLeftPosition,
                 AnalogOperation.DriveTrainRightPosition,
+                AnalogOperation.DriveTrainLeftVelocity,
+                AnalogOperation.DriveTrainRightVelocity,
+                AnalogOperation.DriveTrainHeadingCorrection,
+                DigitalOperation.DriveTrainUsePathMode,
                 AnalogOperation.DriveTrainTurn,
-                AnalogOperation.DriveTrainMoveForward
-            }),
-/*      new MacroOperationDescription(
-            MacroOperation.VisionFastCenterAndAdvance,
-            UserInputDevice.Operator,
-            UserInputDeviceButton.BUTTON_PAD_BUTTON_7,
-            Shift.Debug,
-            Shift.None,
-            ButtonType.Toggle,
-            () -> new VisionFastAdvanceAndCenterTask(DigitalOperation.VisionEnable),
+                AnalogOperation.DriveTrainMoveForward,
+                DigitalOperation.DriveTrainSimpleMode,
+            },
             new IOperation[]
             {
-                DigitalOperation.VisionDisable,
-                DigitalOperation.VisionEnable,
                 DigitalOperation.DriveTrainUsePositionalMode,
+                DigitalOperation.DriveTrainUseBrakeMode,
                 AnalogOperation.DriveTrainLeftPosition,
                 AnalogOperation.DriveTrainRightPosition,
-                AnalogOperation.DriveTrainTurn,
-                AnalogOperation.DriveTrainMoveForward
-            }),*/
+            })
     };
 
     @Override
