@@ -23,6 +23,32 @@ public abstract class StringLogger implements IDashboardLogger
     }
 
     /**
+     * Write a boolean array to the smart dashboard
+     * @param component to log for
+     * @param key to write to
+     * @param value to write
+     */
+    @Override
+    public void logBooleanArray(String component, String key, boolean[] value)
+    {
+        String str = "";        
+        if (value != null)
+        {
+            for (int i = 0; i < value.length; i++)
+            {
+                if (i > 0)
+                {
+                    str += ",";
+                }
+
+                str += String.valueOf(value[i]);
+            }
+        }
+        
+        this.logString(component, key, str);
+    }
+
+    /**
      * Write a number (double) to the smart dashboard
      * @param component to log for
      * @param key to write to

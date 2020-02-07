@@ -29,6 +29,21 @@ public class MultiLogger implements IDashboardLogger
     }
 
     /**
+     * Write a boolean array to the smart dashboard
+     * @param component to log for
+     * @param key to write to
+     * @param value to write
+     */
+    @Override
+    public void logBooleanArray(String component, String key, boolean[] value)
+    {
+        for (IDashboardLogger logger : this.loggers)
+        {
+            logger.logBooleanArray(component, key, value);
+        }
+    }
+
+    /**
      * Write a number (double) to the smart dashboard
      * @param component to log for
      * @param key to write to

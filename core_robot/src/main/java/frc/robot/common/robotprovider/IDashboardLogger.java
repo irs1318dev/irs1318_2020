@@ -11,6 +11,14 @@ public interface IDashboardLogger
     void logBoolean(String component, String key, boolean value);
 
     /**
+     * Write a boolean array to the smart dashboard
+     * @param component to log for
+     * @param key to write to
+     * @param value to write
+     */
+    void logBooleanArray(String component, String key, boolean[] value);
+
+    /**
      * Write a number (double) to the smart dashboard
      * @param component to log for
      * @param key to write to

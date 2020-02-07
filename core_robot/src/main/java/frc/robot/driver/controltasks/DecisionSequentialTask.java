@@ -51,7 +51,7 @@ public abstract class DecisionSequentialTask extends ControlTaskBase implements 
     }
 
     /**
-     * Extension point that will be availablke so that child classes can decide what to do after any given task ends
+     * Extension point that will be available so that child classes can decide what to do after any given task ends
      */
     protected void finishedTask()
     {
