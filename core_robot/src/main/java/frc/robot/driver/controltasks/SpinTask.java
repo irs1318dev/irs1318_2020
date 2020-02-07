@@ -9,10 +9,10 @@ import frc.robot.mechanisms.ControlPanelMechanism.TargetColor;
 
 public class SpinTask extends ControlTaskBase implements IControlTask
 {
-    public ControlPanelMechanism controlPanel;
-    public TargetColor targetColor;
-    public int counter;
-    public boolean seenRed;
+    private ControlPanelMechanism controlPanel;
+    private TargetColor targetColor;
+    private int counter;
+    private boolean seenRed;
 
     public SpinTask(){
     }
