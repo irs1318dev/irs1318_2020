@@ -22,13 +22,12 @@ public class PowerCellMechanism implements IMechanism
     private final ITalonSRX rollerMotorInner;
     private final ITalonSRX rollerMotorOuter;
 
-    private Driver driver;
-
     private final IDoubleSolenoid kickerSolenoid;
     private final ITalonSRX genevaMotor;
-    //sensor?
 
     private final ICounter carouselCounter;
+
+    private Driver driver;
 
     private double flywheelPosition;
     private double flywheelVelocity;
@@ -43,131 +42,146 @@ public class PowerCellMechanism implements IMechanism
     private final ITalonSRX flyWheel;
     private final ITalonSRX turret;
 
-    private boolean[] indexes;
-
     @Inject
     public PowerCellMechanism(IRobotProvider provider, IDashboardLogger logger)
     {
         this.logger = logger;
 
-        this.indexes = new boolean[] {false, false, false, false, false};
+        this.intakeSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.POWERCELL_INTAKE_FORWARD_PCM, ElectronicsConstants.POWERCELL_INTAKE_REVERSE_PCM);
+        this.kickerSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.POWERCELL_KICKER_FORWARD_PCM, ElectronicsConstants.POWERCELL_KICKER_REVERSE_PCM);
+        this.lowerHood = provider.getDoubleSolenoid(ElectronicsConstants.POWERCELL_LOWER_HOOD_FORWARD_PCM, ElectronicsConstants.POWERCELL_LOWER_HOOD_REVERSE_PCM);
+        this.upperHood = provider.getDoubleSolenoid(ElectronicsConstants.POWERCELL_UPPER_HOOD_FORWARD_PCM, ElectronicsConstants.POWERCELL_UPPER_HOOD_REVERSE_PCM);
 
-        this.intakeSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.INTAKE_FORWARD_PCM, ElectronicsConstants.INTAKE_REVERSE_PCM);
-        this.kickerSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.KICKER_FORWARD_PCM, ElectronicsConstants.KICKER_REVERSE_PCM);
-        this.lowerHood = provider.getDoubleSolenoid(ElectronicsConstants.LOWER_HOOD_FORWARD_PCM, ElectronicsConstants.LOWER_HOOD_REVERSE_PCM);
-        this.upperHood = provider.getDoubleSolenoid(ElectronicsConstants.UPPER_HOOD_FORWARD_PCM, ElectronicsConstants.UPPER_HOOD_REVERSE_PCM);
-
-        this.rollerMotorInner = provider.getTalonSRX(ElectronicsConstants.ROLLERMOTOR_INNER_CAN_ID);
-        this.rollerMotorInner.setInvertOutput(TuningConstants.ROLLER_MOTOR_INNER_INVERT_OUTPUT);
+        this.rollerMotorInner = provider.getTalonSRX(ElectronicsConstants.POWERCELL_INNER_ROLLER_MOTOR_CAN_ID);
+        this.rollerMotorInner.setInvertOutput(HardwareConstants.POWERCELL_ROLLER_MOTOR_INNER_INVERT_OUTPUT);
         this.rollerMotorInner.setControlMode(TalonSRXControlMode.PercentOutput);
         this.rollerMotorInner.setNeutralMode(MotorNeutralMode.Brake);
 
-        this.rollerMotorOuter = provider.getTalonSRX(ElectronicsConstants.ROLLERMOTOR_OUTER_CAN_ID);
-        this.rollerMotorOuter.setInvertOutput(TuningConstants.ROLLER_MOTOR_OUTER_INVERT_OUTPUT);
+        this.rollerMotorOuter = provider.getTalonSRX(ElectronicsConstants.POWERCELL_OUTER_ROLLER_MOTOR_CAN_ID);
+        this.rollerMotorOuter.setInvertOutput(HardwareConstants.POWERCELL_ROLLER_MOTOR_OUTER_INVERT_OUTPUT);
         this.rollerMotorOuter.setControlMode(TalonSRXControlMode.PercentOutput);
         this.rollerMotorOuter.setNeutralMode(MotorNeutralMode.Brake);
 
-        this.flyWheel = provider.getTalonSRX(ElectronicsConstants.FLYWHEEL_MASTER_CAN_ID);
-        this.flyWheel.setInvertOutput(TuningConstants.FLYWHEEL_MASTER_INVERT_OUTPUT);
-        this.flyWheel.setInvertSensor(TuningConstants.FLYWHEEL_MASTER_INVERT_SENSOR);
+        this.flyWheel = provider.getTalonSRX(ElectronicsConstants.POWERCELL_FLYWHEEL_MASTER_CAN_ID);
+        this.flyWheel.setInvertOutput(HardwareConstants.POWERCELL_FLYWHEEL_MASTER_INVERT_OUTPUT);
+        this.flyWheel.setInvertSensor(HardwareConstants.POWERCELL_FLYWHEEL_MASTER_INVERT_SENSOR);
         this.flyWheel.setNeutralMode(MotorNeutralMode.Coast);
         this.flyWheel.setControlMode(TalonSRXControlMode.Velocity);
         this.flyWheel.setPIDF(
-            TuningConstants.FLYWHEEL_ONE_VELOCITY_PID_KP, 
-            TuningConstants.FLYWHEEL_ONE_VELOCITY_PID_KI, 
-            TuningConstants.FLYWHEEL_ONE_VELOCITY_PID_KD, 
-            TuningConstants.FLYWHEEL_ONE_VELOCITY_PID_KF, 
+            TuningConstants.POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KP, 
+            TuningConstants.POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KI, 
+            TuningConstants.POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KD, 
+            TuningConstants.POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KF, 
             PowerCellMechanism.slotId);
-        this.flyWheel.configureVelocityMeasurements(TuningConstants.FLYWHEEL_VELOCITY_PERIOD, TuningConstants.FLYWHEEL_VELOCITY_WINDOWSIZE);
-        this.flyWheel.setVoltageCompensation(TuningConstants.FLYWHEEL_MASTER_VELOCITY_VOLTAGE_COMPENSATION_ENABLED, TuningConstants.FLYWHEEL_MASTER_VELOCITY_VOLTAGE_COMPENSATION_MAXVOLTAGE);
+        this.flyWheel.configureVelocityMeasurements(TuningConstants.POWERCELL_FLYWHEEL_VELOCITY_PERIOD, TuningConstants.POWERCELL_FLYWHEEL_VELOCITY_WINDOWSIZE);
+        this.flyWheel.setVoltageCompensation(TuningConstants.POWERCELL_FLYWHEEL_MASTER_VELOCITY_VOLTAGE_COMPENSATION_ENABLED, TuningConstants.POWERCELL_FLYWHEEL_MASTER_VELOCITY_VOLTAGE_COMPENSATION_MAXVOLTAGE);
 
-        ITalonSRX flyWheelFollower = provider.getTalonSRX(ElectronicsConstants.FLYWHEEL_FOLLOWER_CAN_ID);
+        ITalonSRX flyWheelFollower = provider.getTalonSRX(ElectronicsConstants.POWERCELL_FLYWHEEL_FOLLOWER_CAN_ID);
         flyWheelFollower.setNeutralMode(MotorNeutralMode.Coast);
         flyWheelFollower.follow(this.flyWheel);
-        flyWheelFollower.setInvertOutput(TuningConstants.FLYWHEEL_FOLLOWER_INVERT_OUTPUT);
-        flyWheelFollower.setVoltageCompensation(TuningConstants.FLYWHEEL_FOLLOWER_VELOCITY_VOLTAGE_COMPENSATION_ENABLED, TuningConstants.FLYWHEEL_FOLLOWER_VELOCITY_VOLTAGE_COMPENSATION_MAXVOLTAGE);
+        flyWheelFollower.setInvertOutput(HardwareConstants.POWERCELL_FLYWHEEL_FOLLOWER_INVERT_OUTPUT);
+        flyWheelFollower.setVoltageCompensation(TuningConstants.POWERCELL_FLYWHEEL_FOLLOWER_VELOCITY_VOLTAGE_COMPENSATION_ENABLED, TuningConstants.POWERCELL_FLYWHEEL_FOLLOWER_VELOCITY_VOLTAGE_COMPENSATION_MAXVOLTAGE);
 
-        this.turret = provider.getTalonSRX(ElectronicsConstants.TURRET_CAN_ID);
-        this.turret.setInvertOutput(TuningConstants.TURRET_INVERT_OUTPUT);
-        this.turret.setInvertSensor(TuningConstants.TURRET_INVERT_SENSOR);
+        this.turret = provider.getTalonSRX(ElectronicsConstants.POWERCELL_TURRET_MOTOR_CAN_ID);
+        this.turret.setInvertOutput(HardwareConstants.POWERCELL_TURRET_INVERT_OUTPUT);
+        this.turret.setInvertSensor(HardwareConstants.POWERCELL_TURRET_INVERT_SENSOR);
         this.turret.setNeutralMode(MotorNeutralMode.Brake);
         this.turret.setControlMode(TalonSRXControlMode.Position);
         this.turret.setPIDF(
-            TuningConstants.TURRET_POSITION_PID_KP, 
-            TuningConstants.TURRET_POSITION_PID_KI, 
-            TuningConstants.TURRET_POSITION_PID_KD, 
-            TuningConstants.TURRET_POSITION_PID_KF, 
+            TuningConstants.POWERCELL_TURRET_POSITION_PID_KP, 
+            TuningConstants.POWERCELL_TURRET_POSITION_PID_KI, 
+            TuningConstants.POWERCELL_TURRET_POSITION_PID_KD, 
+            TuningConstants.POWERCELL_TURRET_POSITION_PID_KF, 
             PowerCellMechanism.slotId);
 
-        this.genevaMotor = provider.getTalonSRX(ElectronicsConstants.GENEVAMOTOR_CAN_ID);
-        this.genevaMotor.setInvertOutput(TuningConstants.GENEVA_INVERT_OUTPUT);
+        this.genevaMotor = provider.getTalonSRX(ElectronicsConstants.POWERCELL_GENEVA_MOTOR_CAN_ID);
+        this.genevaMotor.setInvertOutput(HardwareConstants.POWERCELL_GENEVA_MOTOR_INVERT_OUTPUT);
         this.genevaMotor.setControlMode(TalonSRXControlMode.PercentOutput);
         this.genevaMotor.setNeutralMode(MotorNeutralMode.Brake);
 
-        this.carouselCounter = provider.getCounter(ElectronicsConstants.CAROUSEL_COUNTER_DIO);
+        this.carouselCounter = provider.getCounter(ElectronicsConstants.POWERCELL_CAROUSEL_COUNTER_DIO);
     }
 
     @Override
     public void readSensors()
     {
-        
-        this.turretPosition = turret.getPosition();
-        this.turretVelocity = turret.getVelocity();
-        this.flywheelPosition = flyWheel.getPosition();
-        this.flywheelVelocity = flyWheel.getVelocity();
-        this.turretError = turret.getError();
-        this.flywheelError = flyWheel.getError();
-        this.carouselCount = carouselCounter.get();
+        this.turretPosition = this.turret.getPosition();
+        this.turretVelocity = this.turret.getVelocity();
+        this.turretError = this.turret.getError();
 
+        this.flywheelPosition = this.flyWheel.getPosition();
+        this.flywheelVelocity = this.flyWheel.getVelocity();
+        this.flywheelError = this.flyWheel.getError();
 
-        this.logger.logNumber(PowerCellMechanism.logName, "turret velocity", turretVelocity);
-        this.logger.logNumber(PowerCellMechanism.logName, "turret position", turretPosition);
-        this.logger.logNumber(PowerCellMechanism.logName, "flywheel velocity", flywheelVelocity);
-        this.logger.logNumber(PowerCellMechanism.logName, "flywheel position", flywheelPosition);
-        this.logger.logNumber(PowerCellMechanism.logName, "flywheel error", flywheelError);
-        this.logger.logNumber(PowerCellMechanism.logName, "turret error", turretError);
-        this.logger.logInteger(PowerCellMechanism.logName, "carousel count", carouselCount);
+        this.carouselCount = this.carouselCounter.get();
+
+        this.logger.logNumber(PowerCellMechanism.logName, "turretVelocity", this.turretVelocity);
+        this.logger.logNumber(PowerCellMechanism.logName, "turretPosition", this.turretPosition);
+        this.logger.logNumber(PowerCellMechanism.logName, "turretError", this.turretError);
+        this.logger.logNumber(PowerCellMechanism.logName, "flywheelVelocity", this.flywheelVelocity);
+        this.logger.logNumber(PowerCellMechanism.logName, "flywheelPosition", this.flywheelPosition);
+        this.logger.logNumber(PowerCellMechanism.logName, "flywheelError", this.flywheelError);
+        this.logger.logInteger(PowerCellMechanism.logName, "carouselCount", this.carouselCount);
     }
 
     @Override
     public void update()
     {
-        if(driver.getDigital(DigitalOperation.PowerCellUpperHoodExtend)){
+        if (this.driver.getDigital(DigitalOperation.PowerCellUpperHoodExtend))
+        {
             this.upperHood.set(DoubleSolenoidValue.Forward);
         }
-        else if(driver.getDigital(DigitalOperation.PowerCellUpperHoodRetract)){
+        else if (this.driver.getDigital(DigitalOperation.PowerCellUpperHoodRetract))
+        {
             this.upperHood.set(DoubleSolenoidValue.Reverse);
         }
-        if(driver.getDigital(DigitalOperation.PowerCellLowerHoodExtend)){
+
+        if (this.driver.getDigital(DigitalOperation.PowerCellLowerHoodExtend))
+        {
             this.lowerHood.set(DoubleSolenoidValue.Forward);
         }
-        else if(driver.getDigital(DigitalOperation.PowerCellLowerHoodRetract)){
+        else if (this.driver.getDigital(DigitalOperation.PowerCellLowerHoodRetract))
+        {
             this.lowerHood.set(DoubleSolenoidValue.Reverse);
         }
-        if(driver.getDigital(DigitalOperation.PowerCellKick)){
+
+        if (this.driver.getDigital(DigitalOperation.PowerCellKick))
+        {
             this.kickerSolenoid.set(DoubleSolenoidValue.Forward);
         }
-        else if(!(driver.getDigital(DigitalOperation.PowerCellKick))){
+        else if(!(driver.getDigital(DigitalOperation.PowerCellKick)))
+        {
             this.kickerSolenoid.set(DoubleSolenoidValue.Reverse);
         }
-        if(driver.getDigital(DigitalOperation.PowerCellIntakeExtend)){
+
+        if (this.driver.getDigital(DigitalOperation.PowerCellIntakeExtend))
+        {
             this.intakeSolenoid.set(DoubleSolenoidValue.Forward);
         }
-        else if(driver.getDigital(DigitalOperation.PowerCellIntakeRetract)){
+        else if (this.driver.getDigital(DigitalOperation.PowerCellIntakeRetract))
+        {
             this.intakeSolenoid.set(DoubleSolenoidValue.Reverse);
         }
-        if(driver.getDigital(DigitalOperation.PowerCellIntake)){
-            this.rollerMotorInner.set(TuningConstants.ROLLER_MOTOR_INNER_POWER_LEVEL_INTAKE);
-            this.rollerMotorOuter.set(TuningConstants.ROLLER_MOTOR_OUTER_POWER_LEVEL_INTAKE);
+
+        if (this.driver.getDigital(DigitalOperation.PowerCellIntake))
+        {
+            this.rollerMotorInner.set(TuningConstants.POWERCELL_INNER_ROLLER_MOTOR_INTAKE_POWER);
+            this.rollerMotorOuter.set(TuningConstants.POWERCELL_OUTER_ROLLER_MOTOR_INTAKE_POWER);
         }
-        else if(driver.getDigital(DigitalOperation.PowerCellOuttake)){
-            this.rollerMotorInner.set(TuningConstants.ROLLER_MOTOR_INNER_POWER_LEVEL_OUTTAKE);
-            this.rollerMotorOuter.set(TuningConstants.ROLLER_MOTOR_OUTER_POWER_LEVEL_OUTTAKE);
+        else if (this.driver.getDigital(DigitalOperation.PowerCellOuttake))
+        {
+            this.rollerMotorInner.set(TuningConstants.POWERCELL_INNER_ROLLER_MOTOR_OUTTAKE_POWER);
+            this.rollerMotorOuter.set(TuningConstants.POWERCELL_OUTER_ROLLER_MOTOR_OUTTAKE_POWER);
         }
-        double flyWheelspeed = driver.getAnalog(AnalogOperation.PowerCellFlywheelVelocity);
+
+        double flyWheelspeed = this.driver.getAnalog(AnalogOperation.PowerCellFlywheelVelocity);
         this.flyWheel.set(flyWheelspeed);
-        double turretAnalogPosition = driver.getAnalog(AnalogOperation.PowerCellTurretPosition);
+
+        double turretAnalogPosition = this.driver.getAnalog(AnalogOperation.PowerCellTurretPosition);
         this.turret.set(turretAnalogPosition);
+
+        double genevaPower = this.driver.getAnalog(AnalogOperation.PowerCellGenevaPower);
+        this.genevaMotor.set(genevaPower);
     }
 
     @Override
@@ -187,13 +201,19 @@ public class PowerCellMechanism implements IMechanism
     {
         this.driver = driver;
     }
-    public int getcurrentSlot(){
 
+    public double getTurretPosition()
+    {
+        return this.turretPosition;
     }
 
-    public boolean isTherePowerCell(int index){
-        
+    public double getFlywheelVelocity()
+    {
+        return this.flywheelVelocity;
     }
-    // get functions...
 
+    public int getCarouselCount()
+    {
+        return this.carouselCount;
+    }
 }
