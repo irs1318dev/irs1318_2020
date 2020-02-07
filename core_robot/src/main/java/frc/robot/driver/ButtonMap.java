@@ -51,7 +51,7 @@ public class ButtonMap implements IButtonMap
             AnalogAxis.XBONE_RSX,
             ElectronicsConstants.INVERT_X_AXIS,
             .1,
-            135.0),
+            1.0), //135.0),
         new AnalogOperationDescription(
             AnalogOperation.PowerCellFlywheelVelocity,
             UserInputDevice.Operator,

@@ -22,14 +22,14 @@ public class TuningConstants
     {
         List<IMechanism> mechanismList = new ArrayList<IMechanism>();
         //mechanismList.add(injector.getInstance(DriveTrainMechanism.class));
-        mechanismList.add(injector.getInstance(ControlPanelMechanism.class));
+        //mechanismList.add(injector.getInstance(ControlPanelMechanism.class));
+        mechanismList.add(injector.getInstance(PowerCellMechanism.class));
+        //mechanismList.add(injector.getInstance(ClimberMechanism.class));
         //mechanismList.add(injector.getInstance(PowerManager.class));
         //mechanismList.add(injector.getInstance(PositionManager.class));
         //mechanismList.add(injector.getInstance(CompressorMechanism.class));
-        //mechanismList.add(injector.getInstance(VisionManager.class));
         //mechanismList.add(injector.getInstance(OffboardVisionManager.class));
         //mechanismList.add(injector.getInstance(IndicatorLightManager.class));
-        //mechanismList.add(injector.getInstance(SomeMechanism.class));
         return mechanismList;
     }
 
@@ -154,6 +154,11 @@ public class TuningConstants
     public static final double POWERCELL_TURRET_POSITION_PID_KI = 0.0;
     public static final double POWERCELL_TURRET_POSITION_PID_KD = 0.0;
     public static final double POWERCELL_TURRET_POSITION_PID_KF = 0.0;
+
+    public static final boolean POWERCELL_TURRET_FORWARD_LIMIT_SWITCH_ENABLED = false;
+    public static final boolean POWERCELL_TURRET_FORWARD_LIMIT_SWITCH_NORMALLY_OPEN = false;
+    public static final boolean POWERCELL_TURRET_REVERSE_LIMIT_SWITCH_ENABLED = false;
+    public static final boolean POWERCELL_TURRET_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN = false;
 
     public static final int POWERCELL_FLYWHEEL_VELOCITY_PERIOD = 10;
     public static final int POWERCELL_FLYWHEEL_VELOCITY_WINDOWSIZE = 32;

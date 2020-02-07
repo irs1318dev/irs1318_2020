@@ -71,13 +71,14 @@ public class PowerCellMechanism implements IMechanism
         this.flyWheel.setInvertOutput(HardwareConstants.POWERCELL_FLYWHEEL_MASTER_INVERT_OUTPUT);
         this.flyWheel.setInvertSensor(HardwareConstants.POWERCELL_FLYWHEEL_MASTER_INVERT_SENSOR);
         this.flyWheel.setNeutralMode(MotorNeutralMode.Coast);
-        this.flyWheel.setControlMode(TalonSRXControlMode.Velocity);
-        this.flyWheel.setPIDF(
-            TuningConstants.POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KP, 
-            TuningConstants.POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KI, 
-            TuningConstants.POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KD, 
-            TuningConstants.POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KF, 
-            PowerCellMechanism.slotId);
+        this.flyWheel.setControlMode(TalonSRXControlMode.PercentOutput);
+        // this.flyWheel.setControlMode(TalonSRXControlMode.Velocity);
+        // this.flyWheel.setPIDF(
+        //     TuningConstants.POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KP, 
+        //     TuningConstants.POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KI, 
+        //     TuningConstants.POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KD, 
+        //     TuningConstants.POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KF, 
+        //     PowerCellMechanism.slotId);
         this.flyWheel.configureVelocityMeasurements(TuningConstants.POWERCELL_FLYWHEEL_VELOCITY_PERIOD, TuningConstants.POWERCELL_FLYWHEEL_VELOCITY_WINDOWSIZE);
         this.flyWheel.setVoltageCompensation(TuningConstants.POWERCELL_FLYWHEEL_MASTER_VELOCITY_VOLTAGE_COMPENSATION_ENABLED, TuningConstants.POWERCELL_FLYWHEEL_MASTER_VELOCITY_VOLTAGE_COMPENSATION_MAXVOLTAGE);
 
@@ -91,13 +92,16 @@ public class PowerCellMechanism implements IMechanism
         this.turret.setInvertOutput(HardwareConstants.POWERCELL_TURRET_INVERT_OUTPUT);
         this.turret.setInvertSensor(HardwareConstants.POWERCELL_TURRET_INVERT_SENSOR);
         this.turret.setNeutralMode(MotorNeutralMode.Brake);
-        this.turret.setControlMode(TalonSRXControlMode.Position);
-        this.turret.setPIDF(
-            TuningConstants.POWERCELL_TURRET_POSITION_PID_KP, 
-            TuningConstants.POWERCELL_TURRET_POSITION_PID_KI, 
-            TuningConstants.POWERCELL_TURRET_POSITION_PID_KD, 
-            TuningConstants.POWERCELL_TURRET_POSITION_PID_KF, 
-            PowerCellMechanism.slotId);
+        this.turret.setControlMode(TalonSRXControlMode.PercentOutput);
+        // this.turret.setControlMode(TalonSRXControlMode.Position);
+        // this.turret.setPIDF(
+        //     TuningConstants.POWERCELL_TURRET_POSITION_PID_KP, 
+        //     TuningConstants.POWERCELL_TURRET_POSITION_PID_KI, 
+        //     TuningConstants.POWERCELL_TURRET_POSITION_PID_KD, 
+        //     TuningConstants.POWERCELL_TURRET_POSITION_PID_KF, 
+        //     PowerCellMechanism.slotId);
+        // this.turret.setForwardLimitSwitch(TuningConstants.POWERCELL_TURRET_FORWARD_LIMIT_SWITCH_ENABLED, TuningConstants.POWERCELL_TURRET_FORWARD_LIMIT_SWITCH_NORMALLY_OPEN);
+        // this.turret.setReverseLimitSwitch(TuningConstants.POWERCELL_TURRET_REVERSE_LIMIT_SWITCH_ENABLED, TuningConstants.POWERCELL_TURRET_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN);
 
         // this.genevaMotor = provider.getTalonSRX(ElectronicsConstants.POWERCELL_GENEVA_MOTOR_CAN_ID);
         // this.genevaMotor.setInvertOutput(HardwareConstants.POWERCELL_GENEVA_MOTOR_INVERT_OUTPUT);
