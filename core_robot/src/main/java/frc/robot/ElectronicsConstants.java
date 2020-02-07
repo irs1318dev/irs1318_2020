@@ -17,6 +17,9 @@ public class ElectronicsConstants
     // change INVERT_THROTTLE_AXIS to true if positive on the joystick isn't forward, and negative isn't backwards.
     public static final boolean INVERT_THROTTLE_AXIS = true;
 
+    // change INVERT_TRIGGER_AXIS to true if positive on the joystick isn't forward, and negative isn't backwards.
+    public static final boolean INVERT_TRIGGER_AXIS = false;
+
     public static final int PCM_A_MODULE = 0;
     public static final int PCM_B_MODULE = 1;
 

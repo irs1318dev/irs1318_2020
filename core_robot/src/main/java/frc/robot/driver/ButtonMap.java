@@ -38,12 +38,27 @@ public class ButtonMap implements IButtonMap
             AnalogAxis.XBONE_RSX,
             ElectronicsConstants.INVERT_X_AXIS,
             TuningConstants.DRIVETRAIN_X_DEAD_ZONE),
+
         new AnalogOperationDescription(
             AnalogOperation.ControlPanelSpinSpeed,
-            UserInputDevice.Driver,
-            AnalogAxis.JOYSTICK_THROTTLE,
-            ElectronicsConstants.INVERT_THROTTLE_AXIS,
-            .25),
+            UserInputDevice.Operator,
+            AnalogAxis.XBONE_LT,
+            ElectronicsConstants.INVERT_TRIGGER_AXIS,
+            .1),
+        new AnalogOperationDescription(
+            AnalogOperation.PowerCellTurretPosition,
+            UserInputDevice.Operator,
+            AnalogAxis.XBONE_RSX,
+            ElectronicsConstants.INVERT_X_AXIS,
+            .1,
+            135.0),
+        new AnalogOperationDescription(
+            AnalogOperation.PowerCellFlywheelVelocity,
+            UserInputDevice.Operator,
+            AnalogAxis.XBONE_RT,
+            ElectronicsConstants.INVERT_TRIGGER_AXIS,
+            .1,
+            1.0),
     };
 
     public static DigitalOperationDescription[] DigitalOperationSchema = new DigitalOperationDescription[]

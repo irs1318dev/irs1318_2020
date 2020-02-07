@@ -41,7 +41,27 @@ public class AnalogOperationDescription extends OperationDescription
         boolean shouldInvert,
         double deadZone)
     {
-        this(operation, userInputDevice, userInputDeviceAxis, null, null, shouldInvert, deadZone);
+        this(operation, userInputDevice, userInputDeviceAxis, null, null, shouldInvert, deadZone, 1.0);
+    }
+
+    /**
+     * Initializes a new AnalogOperationDescription based on a user interaction
+     * @param operation the analog operation being described
+     * @param userInputDevice which device will indicate the operation (driver or operator joystick) 
+     * @param userInputDeviceAxis the axis on the device that will indicate the operation
+     * @param shouldInvert whether we should invert the axis so that -1 and 1 are on the opposite ends as where they are designed to be in hardware
+     * @param deadZone the amount in the center of the axis (around 0) that should be ignored to account for joystick sensors imprecision
+     * @param multiplier the multiplier to use to extend the range from [-1, 1] so that it instead goes to [-multiplier, multiplier]
+     */
+    public AnalogOperationDescription(
+        AnalogOperation operation,
+        UserInputDevice userInputDevice,
+        AnalogAxis userInputDeviceAxis,
+        boolean shouldInvert,
+        double deadZone,
+        double multiplier)
+    {
+        this(operation, userInputDevice, userInputDeviceAxis, null, null, shouldInvert, deadZone, multiplier);
     }
 
     /**
