@@ -11,4 +11,13 @@ public enum MacroOperation implements IOperation
     FollowSomePath,
     FollowAnotherPath,
     FollowADifferentPath,
+
+    // ColorSpinner operations
+    Spin,
+
+    // PowerCell operations
+    VisionAlignShooting,
+    SpinUpPointBlank,
+    TracerShot,
+    FullHopperShot,
 }

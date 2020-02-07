@@ -86,6 +86,10 @@ public class TuningConstants
     public static final double ROADRUNNER_MAX_ANGULAR_ACCELERATION = 10.0;
     public static final double ROADRUNNER_MAX_ANGULAR_JERK = 20.0;
 
+    public static final double STHOPE_BLEASE = 0.0;
+    public static final double CONTROL_PANEL_POSITION_SPIN_SPEED = .5;
+    public static final double CONTROL_PANEL_ROTATION_SPIN_SPEED = 1;
+
     //================================================= Vision ======================================================
 
     // Acceptable vision centering range values in degrees
@@ -131,6 +135,8 @@ public class TuningConstants
     public static final double VISION_FAST_ADVANCING_PID_MAX = 0.45;
 
     public static final boolean VISION_ENABLE_DURING_TELEOP = true;
+
+   
 
     //================================================== Indicator Lights ========================================================
 
