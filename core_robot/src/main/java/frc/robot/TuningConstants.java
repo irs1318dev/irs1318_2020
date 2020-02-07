@@ -94,6 +94,7 @@ public class TuningConstants
 
     // Acceptable vision centering range values in degrees
     public static final double MAX_VISION_CENTERING_RANGE_DEGREES = 5.0;
+    public static final double MAX_VISION_TURRET_CENTERING_RANGE_DEGREES = 1.0;
 
     // Acceptable vision distance from tape in inches
     public static final double MAX_VISION_ACCEPTABLE_FORWARD_DISTANCE = 3.25;
