@@ -44,20 +44,15 @@ public class PowerCellMechanism implements IMechanism
     private final ITalonSRX flyWheel;
     private final ITalonSRX turret;
 
-    private boolean throughBeamSensorOutput;
-
-    private boolean[] indexes;
-    private boolean isBroken = false;
-    private int index;
+    private boolean[] hasPowerCell;
+    private int currentCarouselIndex;
 
     @Inject
     public PowerCellMechanism(IRobotProvider provider, IDashboardLogger logger)
     {
-        this.index = 0;
-        this.isBroken = false;
         this.logger = logger;
+
         this.throughBeamSensor = provider.getAnalogInput(ElectronicsConstants.POWERCELL_THROUGHBEAM_CHANNEL);
-        this.indexes = new boolean[5];
 
         this.intakeSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.POWERCELL_INTAKE_FORWARD_PCM, ElectronicsConstants.POWERCELL_INTAKE_REVERSE_PCM);
         this.kickerSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.POWERCELL_KICKER_FORWARD_PCM, ElectronicsConstants.POWERCELL_KICKER_REVERSE_PCM);
@@ -112,15 +107,20 @@ public class PowerCellMechanism implements IMechanism
         this.genevaMotor.setNeutralMode(MotorNeutralMode.Brake);
 
         this.carouselCounter = provider.getCounter(ElectronicsConstants.POWERCELL_CAROUSEL_COUNTER_DIO);
+        
+        this.hasPowerCell = new boolean[5];
+        this.currentCarouselIndex = 0;
     }
 
     @Override
     public void readSensors()
     {
-        
-        if(this.throughBeamSensor.getVoltage() > TuningConstants.POWERCELL_TROUGHBEAM_CUTOFF){
-            isBroken = true;
+        boolean throughBeamBroken = false;
+        if (this.throughBeamSensor.getVoltage() > TuningConstants.POWERCELL_TROUGHBEAM_CUTOFF)
+        {
+            throughBeamBroken = true;
         }
+
         this.turretPosition = this.turret.getPosition();
         this.turretVelocity = this.turret.getVelocity();
         this.turretError = this.turret.getError();
@@ -129,12 +129,14 @@ public class PowerCellMechanism implements IMechanism
         this.flywheelVelocity = this.flyWheel.getVelocity();
         this.flywheelError = this.flyWheel.getError();
 
-        if(this.carouselCount < this.carouselCounter.get()){
-            index = (index + 1) % 5; 
+        int newCarouselCount = this.carouselCounter.get();
+        if (newCarouselCount > this.carouselCount)
+        {
+            currentCarouselIndex = (currentCarouselIndex + 1) % 5; 
         }
-        indexes[index] = isBroken;
-        this.carouselCount = this.carouselCounter.get();
-        
+
+        this.hasPowerCell[currentCarouselIndex] = throughBeamBroken;
+        this.carouselCount = newCarouselCount;
 
         this.logger.logNumber(PowerCellMechanism.logName, "turretVelocity", this.turretVelocity);
         this.logger.logNumber(PowerCellMechanism.logName, "turretPosition", this.turretPosition);
@@ -143,6 +145,9 @@ public class PowerCellMechanism implements IMechanism
         this.logger.logNumber(PowerCellMechanism.logName, "flywheelPosition", this.flywheelPosition);
         this.logger.logNumber(PowerCellMechanism.logName, "flywheelError", this.flywheelError);
         this.logger.logInteger(PowerCellMechanism.logName, "carouselCount", this.carouselCount);
+        this.logger.logInteger(PowerCellMechanism.logName, "currentCarouselIndex", this.currentCarouselIndex);
+        this.logger.logBoolean(PowerCellMechanism.logName, "throughBeamBroken", throughBeamBroken);
+        this.logger.logBooleanArray(PowerCellMechanism.logName, "hasPowerCell", this.hasPowerCell);
     }
 
     @Override
@@ -233,15 +238,13 @@ public class PowerCellMechanism implements IMechanism
         return this.flywheelVelocity;
     }
 
-    public int getCarouselCount()
+    public int getCurrentCarouselIndex()
     {
-        return this.carouselCount;
-    }
-    public int getCurrentSlot(){
-        return index;
-    }
-    public boolean isTherePowerCell(int index){
-        return indexes[index];
+        return this.currentCarouselIndex;
     }
 
+    public boolean hasPowerCell(int index)
+    {
+        return this.hasPowerCell[index];
+    }
 }
