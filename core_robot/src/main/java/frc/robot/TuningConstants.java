@@ -168,6 +168,8 @@ public class TuningConstants
     public static final double POWERCELL_INNER_ROLLER_MOTOR_OUTTAKE_POWER = -0.5;
     public static final double POWERCELL_OUTER_ROLLER_MOTOR_OUTTAKE_POWER = -0.5;
 
+    public static final double POWERCELL_TROUGHBEAM_CUTOFF = 2.7;
+
     //================================================== DriveTrain ==============================================================
 
     // Drivetrain PID keys/default values:

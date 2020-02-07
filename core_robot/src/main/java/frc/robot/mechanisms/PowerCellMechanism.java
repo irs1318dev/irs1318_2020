@@ -27,6 +27,8 @@ public class PowerCellMechanism implements IMechanism
 
     private final ICounter carouselCounter;
 
+    private final IAnalogInput throughBeamSensor;
+
     private Driver driver;
 
     private double flywheelPosition;
@@ -42,10 +44,20 @@ public class PowerCellMechanism implements IMechanism
     private final ITalonSRX flyWheel;
     private final ITalonSRX turret;
 
+    private boolean throughBeamSensorOutput;
+
+    private boolean[] indexes;
+    private boolean isBroken = false;
+    private int index;
+
     @Inject
     public PowerCellMechanism(IRobotProvider provider, IDashboardLogger logger)
     {
+        this.index = 0;
+        this.isBroken = false;
         this.logger = logger;
+        this.throughBeamSensor = provider.getAnalogInput(ElectronicsConstants.POWERCELL_THROUGHBEAM_CHANNEL);
+        this.indexes = new boolean[5];
 
         this.intakeSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.POWERCELL_INTAKE_FORWARD_PCM, ElectronicsConstants.POWERCELL_INTAKE_REVERSE_PCM);
         this.kickerSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.POWERCELL_KICKER_FORWARD_PCM, ElectronicsConstants.POWERCELL_KICKER_REVERSE_PCM);
@@ -105,6 +117,10 @@ public class PowerCellMechanism implements IMechanism
     @Override
     public void readSensors()
     {
+        
+        if(this.throughBeamSensor.getVoltage() > TuningConstants.POWERCELL_TROUGHBEAM_CUTOFF){
+            isBroken = true;
+        }
         this.turretPosition = this.turret.getPosition();
         this.turretVelocity = this.turret.getVelocity();
         this.turretError = this.turret.getError();
@@ -113,7 +129,12 @@ public class PowerCellMechanism implements IMechanism
         this.flywheelVelocity = this.flyWheel.getVelocity();
         this.flywheelError = this.flyWheel.getError();
 
+        if(this.carouselCount < this.carouselCounter.get()){
+            index = (index + 1) % 5; 
+        }
+        indexes[index] = isBroken;
         this.carouselCount = this.carouselCounter.get();
+        
 
         this.logger.logNumber(PowerCellMechanism.logName, "turretVelocity", this.turretVelocity);
         this.logger.logNumber(PowerCellMechanism.logName, "turretPosition", this.turretPosition);
@@ -216,4 +237,11 @@ public class PowerCellMechanism implements IMechanism
     {
         return this.carouselCount;
     }
+    public int getCurrentSlot(){
+        return index;
+    }
+    public boolean isTherePowerCell(int index){
+        return indexes[index];
+    }
+
 }

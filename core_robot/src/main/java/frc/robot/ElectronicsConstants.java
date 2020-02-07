@@ -64,6 +64,8 @@ public class ElectronicsConstants
 
     public static final int POWERCELL_CAROUSEL_COUNTER_DIO = -1;
 
+    public static final int POWERCELL_THROUGHBEAM_CHANNEL = -1;
+
     //================================================== Climber =================================================================
 
     public static final int CLIMBER_EXTEND_FORWARD_CAN_ID = -1;
