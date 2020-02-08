@@ -71,6 +71,7 @@ public class PowerCellMechanism implements IMechanism
         this.flyWheel.setInvertOutput(HardwareConstants.POWERCELL_FLYWHEEL_MASTER_INVERT_OUTPUT);
         this.flyWheel.setInvertSensor(HardwareConstants.POWERCELL_FLYWHEEL_MASTER_INVERT_SENSOR);
         this.flyWheel.setNeutralMode(MotorNeutralMode.Coast);
+        this.flyWheel.setSensorType(TalonXFeedbackDevice.QuadEncoder);
         this.flyWheel.setControlMode(TalonSRXControlMode.PercentOutput);
         // this.flyWheel.setControlMode(TalonSRXControlMode.Velocity);
         // this.flyWheel.setPIDF(
@@ -92,6 +93,7 @@ public class PowerCellMechanism implements IMechanism
         this.turret.setInvertOutput(HardwareConstants.POWERCELL_TURRET_INVERT_OUTPUT);
         this.turret.setInvertSensor(HardwareConstants.POWERCELL_TURRET_INVERT_SENSOR);
         this.turret.setNeutralMode(MotorNeutralMode.Brake);
+        this.turret.setSensorType(TalonXFeedbackDevice.PulseWidthEncodedPosition);
         this.turret.setControlMode(TalonSRXControlMode.PercentOutput);
         // this.turret.setControlMode(TalonSRXControlMode.Position);
         // this.turret.setPIDF(

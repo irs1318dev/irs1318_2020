@@ -80,13 +80,21 @@ public class TalonFXWrapper implements ITalonFX
         if (feedbackDevice == TalonXFeedbackDevice.QuadEncoder)
         {
             device = FeedbackDevice.QuadEncoder;
-            this.wrappedObject.configSelectedFeedbackSensor(device, TalonFXWrapper.pidIdx, 0);
+        }
+        else if (feedbackDevice == TalonXFeedbackDevice.PulseWidthEncodedPosition)
+        {
+            device = FeedbackDevice.PulseWidthEncodedPosition;
         }
         else if (feedbackDevice == TalonXFeedbackDevice.IntegratedSensor)
         {
             device = FeedbackDevice.IntegratedSensor;
-            this.wrappedObject.configSelectedFeedbackSensor(device, TalonFXWrapper.pidIdx, 0);
         }
+        else
+        {
+            return;
+        }
+
+        this.wrappedObject.configSelectedFeedbackSensor(device, TalonFXWrapper.pidIdx, 0);
     }
 
     public void setPIDFFramePeriod(int periodMS)
