@@ -3,21 +3,17 @@ package frc.robot.driver.controltasks;
 import frc.robot.driver.AnalogOperation;
 import frc.robot.driver.common.IControlTask;
 import frc.robot.TuningConstants;
-import frc.robot.common.robotprovider.ITimer;
 
-/**
- * Abstract class defining a task that lasts only for a certain duration.
- * 
- */
 public class FlyWheelSpinTask extends ControlTaskBase implements IControlTask
 {
-    private double speed;
+    private final double speed;
 
     /**
-     * Initializes a new TimedTask
-     * @param duration to perform the task in seconds
+     * Initializes a new FlyWheelSpinTask
+     * @param speed to spin the flywheel
      */
-    public FlyWheelSpinTask(double speed){
+    public FlyWheelSpinTask(double speed)
+    {
         this.speed = speed;
     }
 
@@ -27,14 +23,15 @@ public class FlyWheelSpinTask extends ControlTaskBase implements IControlTask
     @Override
     public void begin()
     {
-        this.setAnalogOperationState(AnalogOperation.PowerCellFlywheelVelocity, speed);
+        this.setAnalogOperationState(AnalogOperation.PowerCellFlywheelVelocity, this.speed);
     }
 
     /**
      * Run an iteration of the current task and apply any control changes 
      */
-    public void update(){
-        this.setAnalogOperationState(AnalogOperation.PowerCellFlywheelVelocity, speed);
+    public void update()
+    {
+        this.setAnalogOperationState(AnalogOperation.PowerCellFlywheelVelocity, this.speed);
     }
 
     /**

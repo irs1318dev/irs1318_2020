@@ -32,7 +32,6 @@ public class TracerShotTask extends ControlTaskBase implements IControlTask
             {
                 this.kickTime = this.timer.get();
             }
-            
         }
         else
         {

@@ -5,25 +5,28 @@ import frc.robot.driver.DigitalOperation;
 import frc.robot.driver.common.IControlTask;
 import frc.robot.mechanisms.PowerCellMechanism;
 
-public class FullHopperShotTask extends ControlTaskBase implements IControlTask{
-
+public class FullHopperShotTask extends ControlTaskBase implements IControlTask
+{
     private PowerCellMechanism powerCellMechanism;
     private ITimer timer;
     private Double kickTime;
 
+    public FullHopperShotTask()
+    {
+    }
 
-    //elapse 1/4 second
-	@Override
-	public void begin() {
+    @Override
+    public void begin()
+    {
 		this.powerCellMechanism = this.getInjector().getInstance(PowerCellMechanism.class);  
         this.timer = this.getInjector().getInstance(ITimer.class);
-		
 	}
 
 	@Override
-	public void update() {
-        if(kickTime == null){
-            
+    public void update()
+    {
+        if (this.kickTime == null)
+        {            
             if (this.powerCellMechanism.hasPowerCell(this.powerCellMechanism.getCurrentCarouselIndex()))
             {
                 this.setDigitalOperationState(DigitalOperation.PowerCellKick, true);
