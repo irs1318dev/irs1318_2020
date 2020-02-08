@@ -12,8 +12,7 @@ public class TracerShotTask extends ControlTaskBase implements IControlTask
     private PowerCellMechanism powerCellMechanism;
     private int currentSlotIndex;
     private ITimer timer;
-    private double startTime;
-    private double time;
+    private Double kickTime;
 
     TracerShotTask() {}
 
@@ -22,8 +21,6 @@ public class TracerShotTask extends ControlTaskBase implements IControlTask
         this.powerCellMechanism = this.getInjector().getInstance(PowerCellMechanism.class);  
         this.currentSlotIndex = powerCellMechanism.getCurrentCarouselIndex();
         this.timer = this.getInjector().getInstance(ITimer.class);
-        this.startTime = this.timer.get();
-        this.time = 0;
     }
 
     @Override
@@ -41,20 +38,25 @@ public class TracerShotTask extends ControlTaskBase implements IControlTask
         }
         else // if power cell to kick, stop motor and kick piston
         {
-            this.setAnalogOperationState(AnalogOperation.PowerCellGenevaPower, 0.0);
+            this.setAnalogOperationState(AnalogOperation.PowerCellGenevaPower, TuningConstants.STHOPE_BLEASE);
             this.setDigitalOperationState(DigitalOperation.PowerCellKick, true);
+            if(kickTime == null){
+                this.kickTime = this.timer.get();
+            }
         }
     }
 
     @Override
     public void end() {
-        this.time = this.timer.get() - this.startTime;
-
+        this.setAnalogOperationState(AnalogOperation.PowerCellGenevaPower, TuningConstants.STHOPE_BLEASE);
+        this.setDigitalOperationState(DigitalOperation.PowerCellKick, false);
     }
 
     @Override
     public boolean hasCompleted() {
-        // TODO Auto-generated method stub
-        return false; 
+        if(kickTime != null && this.timer.get() - kickTime >= .5){
+            return true; 
+        }
+        return false;
     }
 }
