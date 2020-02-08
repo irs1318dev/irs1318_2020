@@ -174,7 +174,9 @@ public class TuningConstants
 
     public static final double POWERCELL_TROUGHBEAM_CUTOFF = 2.7;
 
-    public static final double POWERCELL_GENEVA_MECHANISM_MOTOR_POWER = 1.0;
+    public static final double POWERCELL_GENEVA_MECHANISM_MOTOR_POWER_INDEXING = 0.5;
+    public static final double POWERCELL_GENEVA_MECHANISM_MOTOR_POWER_SHOOTING = 1.0;
+
 
     //================================================== DriveTrain ==============================================================
 

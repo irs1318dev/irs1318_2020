@@ -27,7 +27,10 @@ public class PowerCellMechanism implements IMechanism
     private final ITalonSRX flyWheel;
     private final ITalonSRX turret;
 
-    // private final ITalonSRX genevaMotor;
+    private final ITalonSRX genevaMotor;
+    private final ITimer timer;
+
+    private double lastIntakeTime;
 
     // private final ICounter carouselCounter;
     // private final IAnalogInput throughBeamSensor;
@@ -45,8 +48,11 @@ public class PowerCellMechanism implements IMechanism
     private boolean[] hasPowerCell;
     private int currentCarouselIndex;
 
+    private CarouselState state;
+    private int previousIndex;
+
     @Inject
-    public PowerCellMechanism(IRobotProvider provider, IDashboardLogger logger)
+    public PowerCellMechanism(IRobotProvider provider, IDashboardLogger logger, ITimer timer)
     {
         this.logger = logger;
 
@@ -106,13 +112,19 @@ public class PowerCellMechanism implements IMechanism
         // this.turret.setForwardLimitSwitch(TuningConstants.POWERCELL_TURRET_FORWARD_LIMIT_SWITCH_ENABLED, TuningConstants.POWERCELL_TURRET_FORWARD_LIMIT_SWITCH_NORMALLY_OPEN);
         // this.turret.setReverseLimitSwitch(TuningConstants.POWERCELL_TURRET_REVERSE_LIMIT_SWITCH_ENABLED, TuningConstants.POWERCELL_TURRET_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN);
 
-        // this.genevaMotor = provider.getTalonSRX(ElectronicsConstants.POWERCELL_GENEVA_MOTOR_CAN_ID);
-        // this.genevaMotor.setInvertOutput(HardwareConstants.POWERCELL_GENEVA_MOTOR_INVERT_OUTPUT);
-        // this.genevaMotor.setControlMode(TalonSRXControlMode.PercentOutput);
-        // this.genevaMotor.setNeutralMode(MotorNeutralMode.Brake);
+        this.genevaMotor = provider.getTalonSRX(ElectronicsConstants.POWERCELL_GENEVA_MOTOR_CAN_ID);
+        this.genevaMotor.setInvertOutput(HardwareConstants.POWERCELL_GENEVA_MOTOR_INVERT_OUTPUT);
+        this.genevaMotor.setControlMode(TalonSRXControlMode.PercentOutput);
+        this.genevaMotor.setNeutralMode(MotorNeutralMode.Brake);
+
+        this.timer = timer;
+        this.lastIntakeTime = this.timer.get();
 
         // this.carouselCounter = provider.getCounter(ElectronicsConstants.POWERCELL_CAROUSEL_COUNTER_DIO);
         
+        this.state = CarouselState.Stationary;
+        this.previousIndex = 0;
+
         this.hasPowerCell = new boolean[5];
         this.currentCarouselIndex = 0;
     }
@@ -194,7 +206,8 @@ public class PowerCellMechanism implements IMechanism
         //     this.intakeSolenoid.set(DoubleSolenoidValue.Reverse);
         // }
 
-        // if (this.driver.getDigital(DigitalOperation.PowerCellIntake))
+        boolean isIntaking = this.driver.getDigital(DigitalOperation.PowerCellIntake);
+        // if (isIntaking)
         // {
         //     this.rollerMotorInner.set(TuningConstants.POWERCELL_INNER_ROLLER_MOTOR_INTAKE_POWER);
         //     this.rollerMotorOuter.set(TuningConstants.POWERCELL_OUTER_ROLLER_MOTOR_INTAKE_POWER);
@@ -227,6 +240,50 @@ public class PowerCellMechanism implements IMechanism
 
         // double genevaPower = this.driver.getAnalog(AnalogOperation.PowerCellGenevaPower);
         // this.genevaMotor.set(genevaPower);
+        
+        if (isIntaking && this.state == CarouselState.Stationary)  // if intaking and currently stationary, start indexing
+        {
+            this.state = CarouselState.Indexing;
+        }
+
+        if (!isIntaking  && this.state == CarouselState.Indexing && this.lastIntakeTime - this.timer.get() < 2.0) // become stationary if stopped intaking for more than 2 sec and indexing
+        {
+            this.state = CarouselState.Stationary;
+        }
+
+        if (this.driver.getDigital(DigitalOperation.PowerCellMoveOneSlot)) 
+        {
+            this.previousIndex = this.getCurrentCarouselIndex();
+            this.state = CarouselState.MovingToNext;
+        }
+
+        if (isIntaking && this.state == CarouselState.Indexing) // if intaking and currently indexing, keep track of time
+        {
+            this.lastIntakeTime = this.timer.get();
+        }
+
+        if (this.getCurrentCarouselIndex() != this.previousIndex && this.state == CarouselState.MovingToNext) 
+        {
+            this.genevaMotor.set(TuningConstants.STHOPE_BLEASE);
+            this.state = CarouselState.Stationary;
+        }
+
+        if (this.state == CarouselState.Indexing) 
+        {
+            this.genevaMotor.set(TuningConstants.POWERCELL_GENEVA_MECHANISM_MOTOR_POWER_INDEXING);
+        }
+
+        if (this.state == CarouselState.MovingToNext) 
+        {
+            this.genevaMotor.set(TuningConstants.POWERCELL_GENEVA_MECHANISM_MOTOR_POWER_SHOOTING);
+        }
+
+        if (this.state == CarouselState.Stationary)
+        {
+            this.genevaMotor.set(TuningConstants.STHOPE_BLEASE);
+        }
+        
+        
     }
 
     @Override
@@ -280,5 +337,12 @@ public class PowerCellMechanism implements IMechanism
         }
 
         return false; 
+    }
+
+    private enum CarouselState 
+    {
+        Indexing,
+        Stationary,
+        MovingToNext,
     }
 }
