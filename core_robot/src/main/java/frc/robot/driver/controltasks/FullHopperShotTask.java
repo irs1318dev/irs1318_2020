@@ -1,8 +1,6 @@
 package frc.robot.driver.controltasks;
 
-import frc.robot.TuningConstants;
 import frc.robot.common.robotprovider.ITimer;
-import frc.robot.driver.AnalogOperation;
 import frc.robot.driver.DigitalOperation;
 import frc.robot.driver.common.IControlTask;
 import frc.robot.mechanisms.PowerCellMechanism;
@@ -26,41 +24,50 @@ public class FullHopperShotTask extends ControlTaskBase implements IControlTask{
 	public void update() {
         if(kickTime == null){
             
-            if(this.powerCellMechanism.hasPowerCell(this.powerCellMechanism.getCurrentCarouselIndex())){
-                this.setAnalogOperationState(AnalogOperation.PowerCellGenevaPower, TuningConstants.STHOPE_BLEASE);
-                this.setDigitalOperationState(DigitalOperation.PowerCellKick, true); 
+            if (this.powerCellMechanism.hasPowerCell(this.powerCellMechanism.getCurrentCarouselIndex()))
+            {
+                this.setDigitalOperationState(DigitalOperation.PowerCellKick, true);
+                this.setDigitalOperationState(DigitalOperation.PowerCellMoveOneSlot, false); 
                 this.kickTime = this.timer.get();
             }
-            else{
-                this.setAnalogOperationState(AnalogOperation.PowerCellGenevaPower, TuningConstants.POWERCELL_GENEVA_MECHANISM_MOTOR_POWER);
+            else
+            {
+                this.setDigitalOperationState(DigitalOperation.PowerCellMoveOneSlot, true);
             }
         }
-        else{
-            if(this.kickTime != null && this.timer.get() - this.kickTime == .25){
+        else
+        {
+            if (this.kickTime != null && this.timer.get() - this.kickTime >= .25)
+            {
                 this.setDigitalOperationState(DigitalOperation.PowerCellKick, false);
-                this.setAnalogOperationState(AnalogOperation.PowerCellGenevaPower, TuningConstants.POWERCELL_GENEVA_MECHANISM_MOTOR_POWER); 
+                this.setDigitalOperationState(DigitalOperation.PowerCellMoveOneSlot, true); 
                 this.kickTime = null;
             } 
-            else{
+            else
+            {
                 this.setDigitalOperationState(DigitalOperation.PowerCellKick, true);
-                this.setAnalogOperationState(AnalogOperation.PowerCellGenevaPower, TuningConstants.STHOPE_BLEASE);
+                this.setDigitalOperationState(DigitalOperation.PowerCellMoveOneSlot, false);
             }
         }
     }
 
 	@Override
-	public void end() {
-		this.setAnalogOperationState(AnalogOperation.PowerCellGenevaPower, TuningConstants.STHOPE_BLEASE);
+    public void end()
+    {
+        this.setDigitalOperationState(DigitalOperation.PowerCellMoveOneSlot, false);
         this.setDigitalOperationState(DigitalOperation.PowerCellKick, false);
-		
 	}
 
 	@Override
-	public boolean hasCompleted() {
-		if(!this.powerCellMechanism.hasAnyPowerCell() && kickTime != null && this.timer.get() - this.kickTime == .25){
+    public boolean hasCompleted()
+    {
+        if (!this.powerCellMechanism.hasAnyPowerCell() &&
+            (this.kickTime == null || this.timer.get() - this.kickTime == .25))
+        {
             return true;
         }
-		return false;
+
+        return false;
 	}
     
 }
