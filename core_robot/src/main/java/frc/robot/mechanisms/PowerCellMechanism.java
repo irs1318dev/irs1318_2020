@@ -82,6 +82,7 @@ public class PowerCellMechanism implements IMechanism
         //     PowerCellMechanism.slotId);
         this.flyWheel.configureVelocityMeasurements(TuningConstants.POWERCELL_FLYWHEEL_VELOCITY_PERIOD, TuningConstants.POWERCELL_FLYWHEEL_VELOCITY_WINDOWSIZE);
         this.flyWheel.setVoltageCompensation(TuningConstants.POWERCELL_FLYWHEEL_MASTER_VELOCITY_VOLTAGE_COMPENSATION_ENABLED, TuningConstants.POWERCELL_FLYWHEEL_MASTER_VELOCITY_VOLTAGE_COMPENSATION_MAXVOLTAGE);
+        this.flyWheel.setPosition(0);
 
         ITalonSRX flyWheelFollower = provider.getTalonSRX(ElectronicsConstants.POWERCELL_FLYWHEEL_FOLLOWER_CAN_ID);
         flyWheelFollower.setNeutralMode(MotorNeutralMode.Coast);
@@ -95,6 +96,7 @@ public class PowerCellMechanism implements IMechanism
         this.turret.setNeutralMode(MotorNeutralMode.Brake);
         this.turret.setSensorType(TalonXFeedbackDevice.PulseWidthEncodedPosition);
         this.turret.setControlMode(TalonSRXControlMode.PercentOutput);
+        this.turret.setPosition(0);
         // this.turret.setControlMode(TalonSRXControlMode.Position);
         // this.turret.setPIDF(
         //     TuningConstants.POWERCELL_TURRET_POSITION_PID_KP, 

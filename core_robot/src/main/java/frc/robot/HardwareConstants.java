@@ -22,9 +22,9 @@ public class HardwareConstants
 
     public static final boolean POWERCELL_TURRET_INVERT_OUTPUT = false;
     public static final boolean POWERCELL_TURRET_INVERT_SENSOR = false;
-    public static final boolean POWERCELL_FLYWHEEL_MASTER_INVERT_OUTPUT = false;
-    public static final boolean POWERCELL_FLYWHEEL_MASTER_INVERT_SENSOR = false;
-    public static final boolean POWERCELL_FLYWHEEL_FOLLOWER_INVERT_OUTPUT = true;
+    public static final boolean POWERCELL_FLYWHEEL_MASTER_INVERT_OUTPUT = true;
+    public static final boolean POWERCELL_FLYWHEEL_MASTER_INVERT_SENSOR = true;
+    public static final boolean POWERCELL_FLYWHEEL_FOLLOWER_INVERT_OUTPUT = false;
     public static final boolean POWERCELL_ROLLER_MOTOR_OUTER_INVERT_OUTPUT = false;
     public static final boolean POWERCELL_ROLLER_MOTOR_INNER_INVERT_OUTPUT = false;
     public static final boolean POWERCELL_GENEVA_MOTOR_INVERT_OUTPUT = false;

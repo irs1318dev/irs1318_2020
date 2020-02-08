@@ -43,7 +43,7 @@ public class FullHopperShotTask extends ControlTaskBase implements IControlTask{
             } 
             else{
                 this.setDigitalOperationState(DigitalOperation.PowerCellKick, true);
-                this.setAnalogOperationState(AnalogOperation.PowerCellGenevaPower, TuningConstants.STHOPE_BLEASE)
+                this.setAnalogOperationState(AnalogOperation.PowerCellGenevaPower, TuningConstants.STHOPE_BLEASE);
             }
         }
     }
