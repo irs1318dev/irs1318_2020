@@ -137,8 +137,6 @@ public class TuningConstants
 
     public static final boolean VISION_ENABLE_DURING_TELEOP = true;
 
-   
-
     //================================================== Indicator Lights ========================================================
 
     public static final double INDICATOR_LIGHT_VISION_ACCEPTABLE_ANGLE_RANGE = 3.0;
@@ -148,9 +146,10 @@ public class TuningConstants
     public static final double POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KP = 0.0;
     public static final double POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KI = 0.0;
     public static final double POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KD = 0.0;
-    public static final double POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KF = 0.0;
+    public static final double POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KF = 0.0113666; // 90000 / 1023
+    public static final double POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KS = 85000.0;
 
-    public static final double POWERCELL_TURRET_POSITION_PID_KP = 0.0;
+    public static final double POWERCELL_TURRET_POSITION_PID_KP = 0.01;
     public static final double POWERCELL_TURRET_POSITION_PID_KI = 0.0;
     public static final double POWERCELL_TURRET_POSITION_PID_KD = 0.0;
     public static final double POWERCELL_TURRET_POSITION_PID_KF = 0.0;

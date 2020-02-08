@@ -51,7 +51,7 @@ public class ButtonMap implements IButtonMap
             AnalogAxis.XBONE_RSX,
             ElectronicsConstants.INVERT_X_AXIS,
             .1,
-            1.0), //HardwareConstants.POWERCELL_TURRET_MAXIMUM_RANGE),
+            HardwareConstants.POWERCELL_TURRET_MAXIMUM_RANGE),
         new AnalogOperationDescription(
             AnalogOperation.PowerCellFlywheelVelocity,
             UserInputDevice.Operator,

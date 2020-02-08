@@ -29,7 +29,8 @@ public class HardwareConstants
     public static final boolean POWERCELL_ROLLER_MOTOR_INNER_INVERT_OUTPUT = false;
     public static final boolean POWERCELL_GENEVA_MOTOR_INVERT_OUTPUT = false;
 
-    public static final double POWERCELL_TURRET_MAXIMUM_RANGE = 135.0; // in ticks? in degrees?
+    public static final double POWERCELL_TURRET_DEGREES_TO_TICKS = 4096.0 / 360.0; // (360 degrees => 4096 ticks)
+    public static final double POWERCELL_TURRET_MAXIMUM_RANGE = 135.0; // -135 to 135 degrees
 
     //================================================== Climber =================================================================
 
