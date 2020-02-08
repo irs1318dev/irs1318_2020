@@ -253,4 +253,13 @@ public class PowerCellMechanism implements IMechanism
     {
         return this.hasPowerCell[index];
     }
+
+    public boolean hasAnyPowerCell(){
+        for (boolean bool : hasPowerCell){
+            if(bool){
+                return true;
+            }
+        }
+        return false; 
+    }
 }
