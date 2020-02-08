@@ -49,10 +49,10 @@ public class ElectronicsConstants
     public static final int POWERCELL_FLYWHEEL_MASTER_CAN_ID = 5;
     public static final int POWERCELL_FLYWHEEL_FOLLOWER_CAN_ID = 6;
     public static final int POWERCELL_TURRET_MOTOR_CAN_ID = 7;
-    public static final int POWERCELL_LOWER_HOOD_FORWARD_PCM = -1; // Module ? 
-    public static final int POWERCELL_LOWER_HOOD_REVERSE_PCM = -1; // Module ?
-    public static final int POWERCELL_UPPER_HOOD_FORWARD_PCM = -1; // Module ?
-    public static final int POWERCELL_UPPER_HOOD_REVERSE_PCM = -1; // Module ?
+    public static final int POWERCELL_OUTER_HOOD_FORWARD_PCM = -1; // Module ? 
+    public static final int POWERCELL_OUTER_HOOD_REVERSE_PCM = -1; // Module ?
+    public static final int POWERCELL_INNER_HOOD_FORWARD_PCM = -1; // Module ?
+    public static final int POWERCELL_INNER_HOOD_REVERSE_PCM = -1; // Module ?
     public static final int POWERCELL_KICKER_FORWARD_PCM = -1; // Module ?
     public static final int POWERCELL_KICKER_REVERSE_PCM = -1; // Module ?
 

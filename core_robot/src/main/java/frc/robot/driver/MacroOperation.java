@@ -20,4 +20,5 @@ public enum MacroOperation implements IOperation
     SpinUpPointBlank,
     TracerShot,
     FullHopperShot,
+    FlyWheelSpin,
 }

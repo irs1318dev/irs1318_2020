@@ -74,6 +74,16 @@ public class ButtonMap implements IButtonMap
     {
         // Brake mode macro
         new MacroOperationDescription(
+            MacroOperation.FlyWheelSpin, 
+            UserInputDevice.Operator, 
+            UserInputDeviceButton.XBONE_X_BUTTON,
+            ButtonType.Simple,
+            () -> new FlyWheelSpinTask(0.8),
+            new IOperation[]
+            {
+                AnalogOperation.PowerCellFlywheelVelocity,
+            }),
+         new MacroOperationDescription(
             MacroOperation.PIDBrake,
             UserInputDevice.Driver,
             AnalogAxis.XBONE_LT,

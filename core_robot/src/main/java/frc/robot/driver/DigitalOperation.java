@@ -33,10 +33,10 @@ public enum DigitalOperation implements IOperation
     ClimberRetract,
 
     // Power Cell Operations
-    PowerCellUpperHoodExtend,
-    PowerCellUpperHoodRetract,
-    PowerCellLowerHoodExtend,
-    PowerCellLowerHoodRetract,
+    PowerCellInnerHoodExtend,
+    PowerCellInnerHoodRetract,
+    PowerCellOuterHoodExtend,
+    PowerCellOuterHoodRetract,
     PowerCellKick,
     PowerCellIntakeExtend,
     PowerCellIntakeRetract,
