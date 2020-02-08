@@ -4,5 +4,6 @@ public enum TalonXFeedbackDevice
 {
     None,
     QuadEncoder,
+    PulseWidthEncodedPosition,
     IntegratedSensor;
 }

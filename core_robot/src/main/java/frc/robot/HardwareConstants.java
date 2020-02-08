@@ -29,6 +29,8 @@ public class HardwareConstants
     public static final boolean POWERCELL_ROLLER_MOTOR_INNER_INVERT_OUTPUT = false;
     public static final boolean POWERCELL_GENEVA_MOTOR_INVERT_OUTPUT = false;
 
+    public static final double POWERCELL_TURRET_MAXIMUM_RANGE = 135.0; // in ticks? in degrees?
+
     //================================================== Climber =================================================================
 
     public static final boolean CLIMBER_WINCH_MASTER_INVERT_OUTPUT = false;
