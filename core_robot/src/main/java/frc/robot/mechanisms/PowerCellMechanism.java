@@ -27,7 +27,7 @@ public class PowerCellMechanism implements IMechanism
     private final ITalonSRX flyWheel;
     private final ITalonSRX turret;
 
-    private final ITalonSRX genevaMotor;
+    // private final ITalonSRX genevaMotor;
     private final ITimer timer;
 
     private double lastIntakeTime;
@@ -112,10 +112,10 @@ public class PowerCellMechanism implements IMechanism
         // this.turret.setForwardLimitSwitch(TuningConstants.POWERCELL_TURRET_FORWARD_LIMIT_SWITCH_ENABLED, TuningConstants.POWERCELL_TURRET_FORWARD_LIMIT_SWITCH_NORMALLY_OPEN);
         // this.turret.setReverseLimitSwitch(TuningConstants.POWERCELL_TURRET_REVERSE_LIMIT_SWITCH_ENABLED, TuningConstants.POWERCELL_TURRET_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN);
 
-        this.genevaMotor = provider.getTalonSRX(ElectronicsConstants.POWERCELL_GENEVA_MOTOR_CAN_ID);
-        this.genevaMotor.setInvertOutput(HardwareConstants.POWERCELL_GENEVA_MOTOR_INVERT_OUTPUT);
-        this.genevaMotor.setControlMode(TalonSRXControlMode.PercentOutput);
-        this.genevaMotor.setNeutralMode(MotorNeutralMode.Brake);
+        // this.genevaMotor = provider.getTalonSRX(ElectronicsConstants.POWERCELL_GENEVA_MOTOR_CAN_ID);
+        // this.genevaMotor.setInvertOutput(HardwareConstants.POWERCELL_GENEVA_MOTOR_INVERT_OUTPUT);
+        // this.genevaMotor.setControlMode(TalonSRXControlMode.PercentOutput);
+        // this.genevaMotor.setNeutralMode(MotorNeutralMode.Brake);
 
         this.timer = timer;
         this.lastIntakeTime = this.timer.get();
@@ -238,52 +238,47 @@ public class PowerCellMechanism implements IMechanism
         turretAnalogPosition = Helpers.EnforceRange(turretAnalogPosition, -HardwareConstants.POWERCELL_TURRET_MAXIMUM_RANGE, HardwareConstants.POWERCELL_TURRET_MAXIMUM_RANGE);
         this.turret.set(turretAnalogPosition * HardwareConstants.POWERCELL_TURRET_DEGREES_TO_TICKS);
 
-        // double genevaPower = this.driver.getAnalog(AnalogOperation.PowerCellGenevaPower);
-        // this.genevaMotor.set(genevaPower);
-        
-        if (isIntaking && this.state == CarouselState.Stationary)  // if intaking and currently stationary, start indexing
-        {
-            this.state = CarouselState.Indexing;
-        }
+        // if (isIntaking && this.state == CarouselState.Stationary)  // if intaking and currently stationary, start indexing
+        // {
+        //     this.state = CarouselState.Indexing;
+        // }
 
-        if (!isIntaking  && this.state == CarouselState.Indexing && this.lastIntakeTime - this.timer.get() < 2.0) // become stationary if stopped intaking for more than 2 sec and indexing
-        {
-            this.state = CarouselState.Stationary;
-        }
+        // if (!isIntaking  && this.state == CarouselState.Indexing && this.lastIntakeTime - this.timer.get() < 2.0) // become stationary if stopped intaking for more than 2 sec and indexing
+        // {
+        //     this.state = CarouselState.Stationary;
+        // }
 
-        if (this.driver.getDigital(DigitalOperation.PowerCellMoveOneSlot)) 
-        {
-            this.previousIndex = this.getCurrentCarouselIndex();
-            this.state = CarouselState.MovingToNext;
-        }
+        // if (this.driver.getDigital(DigitalOperation.PowerCellMoveOneSlot)) 
+        // {
+        //     this.previousIndex = this.getCurrentCarouselIndex();
+        //     this.state = CarouselState.MovingToNext;
+        // }
 
-        if (isIntaking && this.state == CarouselState.Indexing) // if intaking and currently indexing, keep track of time
-        {
-            this.lastIntakeTime = this.timer.get();
-        }
+        // if (isIntaking && this.state == CarouselState.Indexing) // if intaking and currently indexing, keep track of time
+        // {
+        //     this.lastIntakeTime = this.timer.get();
+        // }
 
-        if (this.getCurrentCarouselIndex() != this.previousIndex && this.state == CarouselState.MovingToNext) 
-        {
-            this.genevaMotor.set(TuningConstants.STHOPE_BLEASE);
-            this.state = CarouselState.Stationary;
-        }
+        // if (this.getCurrentCarouselIndex() != this.previousIndex && this.state == CarouselState.MovingToNext) 
+        // {
+        //     this.genevaMotor.set(TuningConstants.STHOPE_BLEASE);
+        //     this.state = CarouselState.Stationary;
+        // }
 
-        if (this.state == CarouselState.Indexing) 
-        {
-            this.genevaMotor.set(TuningConstants.POWERCELL_GENEVA_MECHANISM_MOTOR_POWER_INDEXING);
-        }
+        // if (this.state == CarouselState.Indexing) 
+        // {
+        //     this.genevaMotor.set(TuningConstants.POWERCELL_GENEVA_MECHANISM_MOTOR_POWER_INDEXING);
+        // }
 
-        if (this.state == CarouselState.MovingToNext) 
-        {
-            this.genevaMotor.set(TuningConstants.POWERCELL_GENEVA_MECHANISM_MOTOR_POWER_SHOOTING);
-        }
+        // if (this.state == CarouselState.MovingToNext) 
+        // {
+        //     this.genevaMotor.set(TuningConstants.POWERCELL_GENEVA_MECHANISM_MOTOR_POWER_SHOOTING);
+        // }
 
-        if (this.state == CarouselState.Stationary)
-        {
-            this.genevaMotor.set(TuningConstants.STHOPE_BLEASE);
-        }
-        
-        
+        // if (this.state == CarouselState.Stationary)
+        // {
+        //     this.genevaMotor.set(TuningConstants.STHOPE_BLEASE);
+        // }
     }
 
     @Override
