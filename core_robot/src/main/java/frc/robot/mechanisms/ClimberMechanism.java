@@ -24,8 +24,8 @@ public class ClimberMechanism implements IMechanism
     @Inject
     public ClimberMechanism(IRobotProvider provider)
     {
-        this.climberExtendSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.CLIMBER_EXTEND_FORWARD_PCM, ElectronicsConstants.CLIMBER_EXTEND_REVERSE_PCM);
-        this.climberGrabSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.CLIMBER_GRAB_FORWARD_PCM, ElectronicsConstants.CLIMBER_GRAB_REVERSE_PCM);
+        this.climberExtendSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.PCM_A_MODULE, ElectronicsConstants.CLIMBER_EXTEND_FORWARD_PCM, ElectronicsConstants.CLIMBER_EXTEND_REVERSE_PCM);
+        this.climberGrabSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.PCM_A_MODULE, ElectronicsConstants.CLIMBER_GRAB_FORWARD_PCM, ElectronicsConstants.CLIMBER_GRAB_REVERSE_PCM);
 
         this.winchMotorMaster = provider.getTalonSRX(ElectronicsConstants.CLIMBER_WINCH_MASTER_CAN_ID);
         this.winchMotorMaster.setInvertOutput(HardwareConstants.CLIMBER_WINCH_MASTER_INVERT_OUTPUT);

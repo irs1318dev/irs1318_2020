@@ -52,10 +52,10 @@ public class PowerCellMechanism implements IMechanism
 
         // this.throughBeamSensor = provider.getAnalogInput(ElectronicsConstants.POWERCELL_THROUGHBEAM_CHANNEL);
 
-        // this.intakeSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.POWERCELL_INTAKE_FORWARD_PCM, ElectronicsConstants.POWERCELL_INTAKE_REVERSE_PCM);
-        // this.kickerSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.POWERCELL_KICKER_FORWARD_PCM, ElectronicsConstants.POWERCELL_KICKER_REVERSE_PCM);
-        // this.lowerHood = provider.getDoubleSolenoid(ElectronicsConstants.POWERCELL_LOWER_HOOD_FORWARD_PCM, ElectronicsConstants.POWERCELL_LOWER_HOOD_REVERSE_PCM);
-        // this.upperHood = provider.getDoubleSolenoid(ElectronicsConstants.POWERCELL_UPPER_HOOD_FORWARD_PCM, ElectronicsConstants.POWERCELL_UPPER_HOOD_REVERSE_PCM);
+        // this.intakeSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.PCM_A_MODULE, ElectronicsConstants.POWERCELL_INTAKE_FORWARD_PCM, ElectronicsConstants.POWERCELL_INTAKE_REVERSE_PCM);
+        // this.kickerSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.PCM_A_MODULE, ElectronicsConstants.POWERCELL_KICKER_FORWARD_PCM, ElectronicsConstants.POWERCELL_KICKER_REVERSE_PCM);
+        // this.lowerHood = provider.getDoubleSolenoid(ElectronicsConstants.PCM_A_MODULE, ElectronicsConstants.POWERCELL_LOWER_HOOD_FORWARD_PCM, ElectronicsConstants.POWERCELL_LOWER_HOOD_REVERSE_PCM);
+        // this.upperHood = provider.getDoubleSolenoid(ElectronicsConstants.PCM_A_MODULE, ElectronicsConstants.POWERCELL_UPPER_HOOD_FORWARD_PCM, ElectronicsConstants.POWERCELL_UPPER_HOOD_REVERSE_PCM);
 
         // this.rollerMotorInner = provider.getTalonSRX(ElectronicsConstants.POWERCELL_INNER_ROLLER_MOTOR_CAN_ID);
         // this.rollerMotorInner.setInvertOutput(HardwareConstants.POWERCELL_ROLLER_MOTOR_INNER_INVERT_OUTPUT);
