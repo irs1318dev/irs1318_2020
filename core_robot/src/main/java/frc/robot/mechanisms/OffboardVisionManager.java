@@ -50,16 +50,6 @@ public class OffboardVisionManager implements IMechanism
         this.centerY = 0.0;
     }
 
-    public double getCenterX()
-    {
-        return this.centerX;
-    }
-
-    public double getCenterY()
-    {
-        return this.centerY;
-    }
-
     /**
      * read all of the sensors for the mechanism that we will use in macros/autonomous mode and record their values
      */

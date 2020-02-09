@@ -170,22 +170,25 @@ public class PowerCellMechanism implements IMechanism
     @Override
     public void update()
     {
-        // if (this.driver.getDigital(DigitalOperation.PowerCellInnerHoodExtend))
-        // {
-        //     this.innerHood.set(DoubleSolenoidValue.Forward);
-        // }
-        // else if (this.driver.getDigital(DigitalOperation.PowerCellInnerHoodRetract))
+        // if (this.driver.getDigital(DigitalOperation.PowerCellHoodPointBlank))
         // {
         //     this.innerHood.set(DoubleSolenoidValue.Reverse);
+        //     this.outerHood.set(DoubleSolenoidValue.Reverse);
         // }
-
-        // if (this.driver.getDigital(DigitalOperation.PowerCellOuterHoodExtend))
+        // else if (this.driver.getDigital(DigitalOperation.PowerCellHoodShort))
         // {
+        //     this.innerHood.set(DoubleSolenoidValue.Forward);
+        //     this.outerHood.set(DoubleSolenoidValue.Reverse);
+        // }
+        // else if (this.driver.getDigital(DigitalOperation.PowerCellHoodMedium))
+        // {
+        //     this.innerHood.set(DoubleSolenoidValue.Reverse);
         //     this.outerHood.set(DoubleSolenoidValue.Forward);
         // }
-        // else if (this.driver.getDigital(DigitalOperation.PowerCellOuterHoodRetract))
+        // else if (this.driver.getDigital(DigitalOperation.PowerCellHoodLong))
         // {
-        //     this.outerHood.set(DoubleSolenoidValue.Reverse);
+        //     this.innerHood.set(DoubleSolenoidValue.Forward);
+        //     this.outerHood.set(DoubleSolenoidValue.Forward);
         // }
 
         // if (this.driver.getDigital(DigitalOperation.PowerCellKick))
