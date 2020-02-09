@@ -89,7 +89,7 @@ public class DriveTrainMechanism implements IMechanism
             TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_CURRENT,
             TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_DURATION);
 
-        ITalonFX leftFollowerMotor1 = provider.getTalonFX(ElectronicsConstants.DRIVETRAIN_LEFT_FOLLOWER1_CAN_ID);
+        ITalonFX leftFollowerMotor1 = provider.getTalonFX(ElectronicsConstants.DRIVETRAIN_LEFT_FOLLOWER_CAN_ID);
         leftFollowerMotor1.setNeutralMode(MotorNeutralMode.Brake);
         leftFollowerMotor1.setInvertOutput(HardwareConstants.DRIVETRAIN_LEFT_FOLLOWER1_INVERT_OUTPUT);
         leftFollowerMotor1.follow(this.leftMotor);
@@ -101,11 +101,6 @@ public class DriveTrainMechanism implements IMechanism
             TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_MAX,
             TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_CURRENT,
             TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_DURATION);
-
-        // ITalonFX leftFollowerMotor2 = provider.getTalonFX(ElectronicsConstants.DRIVETRAIN_LEFT_FOLLOWER2_CAN_ID);
-        // leftFollowerMotor2.setNeutralMode(MotorNeutralMode.Brake);
-        // leftFollowerMotor2.setInvertOutput(HardwareConstants.DRIVETRAIN_LEFT_FOLLOWER2_INVERT_OUTPUT);
-        // leftFollowerMotor2.follow(this.leftMotor);
 
         this.rightMotor = provider.getTalonFX(ElectronicsConstants.DRIVETRAIN_RIGHT_MASTER_CAN_ID);
         this.rightMotor.setNeutralMode(MotorNeutralMode.Brake);
@@ -130,7 +125,7 @@ public class DriveTrainMechanism implements IMechanism
             TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_CURRENT,
             TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_DURATION);
 
-        ITalonFX rightFollowerMotor1 = provider.getTalonFX(ElectronicsConstants.DRIVETRAIN_RIGHT_FOLLOWER1_CAN_ID);
+        ITalonFX rightFollowerMotor1 = provider.getTalonFX(ElectronicsConstants.DRIVETRAIN_RIGHT_FOLLOWER_CAN_ID);
         rightFollowerMotor1.setNeutralMode(MotorNeutralMode.Brake);
         rightFollowerMotor1.setInvertOutput(HardwareConstants.DRIVETRAIN_RIGHT_FOLLOWER1_INVERT_OUTPUT);
         rightFollowerMotor1.follow(this.rightMotor);
@@ -142,11 +137,6 @@ public class DriveTrainMechanism implements IMechanism
             TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_MAX,
             TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_CURRENT,
             TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_DURATION);
-
-        // ITalonFX rightFollowerMotor2 = provider.getTalonFX(ElectronicsConstants.DRIVETRAIN_RIGHT_FOLLOWER2_CAN_ID);
-        // rightFollowerMotor2.setNeutralMode(MotorNeutralMode.Brake);
-        // rightFollowerMotor2.setInvertOutput(HardwareConstants.DRIVETRAIN_RIGHT_FOLLOWER2_INVERT_OUTPUT);
-        // rightFollowerMotor2.follow(this.rightMotor);
 
         this.leftPID = null;
         this.rightPID = null;

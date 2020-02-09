@@ -143,13 +143,13 @@ public class TuningConstants
 
     //================================================== PowerCell ===============================================================
 
-    public static final double POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KP = 1.0;
+    public static final double POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KP = 0.725;
     public static final double POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KI = 0.0;
-    public static final double POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KD = 0.0;
+    public static final double POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KD = 1.0;
     public static final double POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KF = 0.0113666; // 90000 / 1023
     public static final double POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KS = 85000.0;
 
-    public static final double POWERCELL_TURRET_POSITION_PID_KP = 0.01;
+    public static final double POWERCELL_TURRET_POSITION_PID_KP = 0.0;
     public static final double POWERCELL_TURRET_POSITION_PID_KI = 0.0;
     public static final double POWERCELL_TURRET_POSITION_PID_KD = 0.0;
     public static final double POWERCELL_TURRET_POSITION_PID_KF = 0.0;
