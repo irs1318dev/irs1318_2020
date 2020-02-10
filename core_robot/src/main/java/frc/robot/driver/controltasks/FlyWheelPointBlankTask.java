@@ -1,26 +1,21 @@
 package frc.robot.driver.controltasks;
 
 import frc.robot.TuningConstants;
-import frc.robot.common.PIDHandler;
-import frc.robot.common.robotprovider.ITimer;
 import frc.robot.driver.AnalogOperation;
 import frc.robot.driver.DigitalOperation;
 import frc.robot.driver.common.IControlTask;
-import frc.robot.mechanisms.OffboardVisionManager;
-import frc.robot.mechanisms.PowerCellMechanism;
 
 /**
  * Task that turns the turret a certain amount clockwise or counterclockwise based on vision center
  */
 public class FlyWheelPointBlankTask extends ControlTaskBase implements IControlTask
 {
-    private PowerCellMechanism powerCell;
-
     /**
     * Initializes a new FlyWheelPointBlankTask
     */
     public FlyWheelPointBlankTask()
-    {}
+    {
+    }
 
     /**
      * Begin the current task
@@ -28,7 +23,6 @@ public class FlyWheelPointBlankTask extends ControlTaskBase implements IControlT
     @Override
     public void begin()
     {
-        this.powerCell = this.getInjector().getInstance(PowerCellMechanism.class);
     }
 
     /**

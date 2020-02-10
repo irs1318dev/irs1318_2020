@@ -12,11 +12,16 @@ import frc.robot.mechanisms.OffboardVisionManager;
 public class FlyWheelVelocityTask extends ControlTaskBase implements IControlTask
 {
     private static final int NO_CENTER_THRESHOLD = 40;
+    private static final double[][] HOOD_RANGES = 
+        {
+            {120, 200}, // short
+            {200, 400}, // medium
+            {400, 600}, // long
+        };
 
     private OffboardVisionManager visionManager;
 
     private Double distance;
-
     private int noCenterCount;
 
     /**
@@ -43,25 +48,24 @@ public class FlyWheelVelocityTask extends ControlTaskBase implements IControlTas
     {
         this.distance = this.visionManager.getDistance();
 
-        double[][] range = {{120, 200},
-                            {200, 400},
-                            {400, 600}};
-
         if (this.distance != null) 
         {
             double flywheelSpeed = 0.0;
-            if (this.distance >= range[0][0] && this.distance < range[0][1])
+            if (this.distance >= FlyWheelVelocityTask.HOOD_RANGES[0][0] &&
+                this.distance < FlyWheelVelocityTask.HOOD_RANGES[0][1])
             {
                 this.setDigitalOperationState(DigitalOperation.PowerCellHoodShort, true);
                 flywheelSpeed = 0.0; // do calculations to find speed based off distance
                 
             }
-            else if (this.distance >= range[1][0] && this.distance < range[1][1])
+            else if (this.distance >= FlyWheelVelocityTask.HOOD_RANGES[1][0] &&
+                this.distance < FlyWheelVelocityTask.HOOD_RANGES[1][1])
             {
                 this.setDigitalOperationState(DigitalOperation.PowerCellHoodMedium, true);
                 flywheelSpeed = 0.0; // do calculations to find speed based off distance
             }
-            else if (this.distance >= range[2][0] && this.distance < range[2][1])
+            else if (this.distance >= FlyWheelVelocityTask.HOOD_RANGES[2][0] &&
+                this.distance < FlyWheelVelocityTask.HOOD_RANGES[2][1])
             {
                 this.setDigitalOperationState(DigitalOperation.PowerCellHoodLong, true);
                 flywheelSpeed = 0.0; // do calculations to find speed based off distance
