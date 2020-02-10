@@ -113,7 +113,7 @@ public class MacroOperationState extends OperationState implements IMacroOperati
         if (relevantShifts != null && requiredShifts != null)
         {
             Shift relevantActiveShifts = Shift.Intersect(relevantShifts, activeShifts);
-            if (relevantActiveShifts.hasFlag(requiredShifts))
+            if (!relevantActiveShifts.equals(requiredShifts))
             {
                 this.button.updateState(false);
                 return false;
