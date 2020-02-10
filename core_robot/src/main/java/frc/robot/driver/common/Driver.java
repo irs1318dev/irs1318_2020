@@ -42,7 +42,10 @@ public class Driver
 
     /**
      * Initializes a new Driver
+     * @param logger used to log data to the dashboard
      * @param injector used to retrieve the components to utilize within the robot
+     * @param buttonMap to control the mapping of joysticks to the corresponding operations
+     * @param provider to retrieve abstracted robot joysticks
      */
     @Inject
     public Driver(
@@ -266,6 +269,7 @@ public class Driver
         }
 
         this.logger.logString(Driver.LogName, "activeMacros", String.join(", ", macroStrings));
+        this.logger.logString(Driver.LogName, "activeShifts", activeShifts.toString());
     }
 
     /**
