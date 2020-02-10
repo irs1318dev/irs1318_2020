@@ -73,16 +73,6 @@ public class ButtonMap implements IButtonMap
     public static MacroOperationDescription[] MacroSchema = new MacroOperationDescription[]
     {
         // Brake mode macro
-        new MacroOperationDescription(
-            MacroOperation.FlyWheelSpin, 
-            UserInputDevice.Operator, 
-            UserInputDeviceButton.XBONE_X_BUTTON,
-            ButtonType.Simple,
-            () -> new FlyWheelSpinTask(0.8),
-            new IOperation[]
-            {
-                AnalogOperation.PowerCellFlywheelVelocity,
-            }),
          new MacroOperationDescription(
             MacroOperation.PIDBrake,
             UserInputDevice.Driver,
@@ -232,7 +222,19 @@ public class ButtonMap implements IButtonMap
                 DigitalOperation.DriveTrainUseBrakeMode,
                 AnalogOperation.DriveTrainLeftPosition,
                 AnalogOperation.DriveTrainRightPosition,
-            })
+            }),
+
+        // Shooting macros
+        new MacroOperationDescription(
+            MacroOperation.FlyWheelSpin, 
+            UserInputDevice.Operator, 
+            UserInputDeviceButton.XBONE_X_BUTTON,
+            ButtonType.Simple,
+            () -> new FlyWheelSpinTask(0.8),
+            new IOperation[]
+            {
+                AnalogOperation.PowerCellFlywheelVelocity,
+            }),
     };
 
     @Override
