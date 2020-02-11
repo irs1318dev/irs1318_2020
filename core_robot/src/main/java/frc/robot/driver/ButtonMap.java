@@ -3,6 +3,7 @@ package frc.robot.driver;
 import javax.inject.Singleton;
 
 import frc.robot.*;
+import frc.robot.common.Helpers;
 import frc.robot.driver.common.*;
 import frc.robot.driver.common.buttons.*;
 import frc.robot.driver.common.descriptions.*;
@@ -25,7 +26,7 @@ public class ButtonMap implements IButtonMap
 
     public static AnalogOperationDescription[] AnalogOperationSchema = new AnalogOperationDescription[]
     {
-        // Operations for the drive train
+        // DriveTrain operations
         new AnalogOperationDescription(
             AnalogOperation.DriveTrainMoveForward,
             UserInputDevice.Driver,
@@ -39,12 +40,15 @@ public class ButtonMap implements IButtonMap
             ElectronicsConstants.INVERT_X_AXIS,
             TuningConstants.DRIVETRAIN_X_DEAD_ZONE),
 
+        // ControlPanel operations
         new AnalogOperationDescription(
             AnalogOperation.ControlPanelSpinSpeed,
             UserInputDevice.Operator,
             AnalogAxis.XBONE_LT,
             ElectronicsConstants.INVERT_TRIGGER_AXIS,
             .1),
+
+        // PowerCell operations
         new AnalogOperationDescription(
             AnalogOperation.PowerCellTurretPosition,
             UserInputDevice.Operator,
@@ -52,6 +56,68 @@ public class ButtonMap implements IButtonMap
             ElectronicsConstants.INVERT_X_AXIS,
             .1,
             HardwareConstants.POWERCELL_TURRET_MAXIMUM_RANGE),
+        // new AnalogOperationDescription(
+        //     AnalogOperation.PowerCellTurretPosition,
+        //     UserInputDevice.Operator,
+        //     AnalogAxis.XBONE_LSX,
+        //     AnalogAxis.XBONE_LSY,
+        //     Shift.OperatorDebug,
+        //     Shift.OperatorDebug,
+        //     ElectronicsConstants.INVERT_X_AXIS,
+        //     ElectronicsConstants.INVERT_Y_AXIS,
+        //     0.05,
+        //     1.0,
+        //     -1.0,
+        //     (x, y) ->
+        //     {
+        //         if (x == 0.0 && y == 0.0)
+        //         {
+        //             return -1.0;
+        //         }
+
+        //         if (x > 0.0 && y > 0.0)
+        //         {
+        //             // quadrant I
+        //             return Helpers.atand(y / x);
+        //         }
+        //         else if (x < 0.0 && y > 0.0)
+        //         {
+        //             // quadrant II
+        //             return Helpers.atand(y / x) + 180.0;
+        //         }
+        //         else if (x < 0.0 && y < 0.0)
+        //         {
+        //             // quadrant III
+        //             return Helpers.atand(y / x) + 180.0;
+        //         }
+        //         else if (x > 0.0 && y < 0.0)
+        //         {
+        //             // quadrant IV
+        //             return Helpers.atand(y / x) + 360.0;
+        //         }
+        //         else if (x == 0.0)
+        //         {
+        //             if (y > 0.0)
+        //             {
+        //                 return 90.0;
+        //             }
+        //             else
+        //             {
+        //                 return 270.0;
+        //             }
+        //         }
+        //         else // if (y == 0.0)
+        //         {
+        //             if (x > 0.0)
+        //             {
+        //                 return 0.0;
+        //             }
+        //             else
+        //             {
+        //                 return 180.0;
+        //             }
+        //         }
+        //     }),
         new AnalogOperationDescription(
             AnalogOperation.PowerCellFlywheelVelocity,
             UserInputDevice.Operator,
@@ -142,6 +208,8 @@ public class ButtonMap implements IButtonMap
                 AnalogOperation.DriveTrainLeftPosition,
                 AnalogOperation.DriveTrainRightPosition,
             }),
+
+        // Testing macros:
         new MacroOperationDescription(
             MacroOperation.FollowSomePath,
             UserInputDevice.Driver,
@@ -223,8 +291,6 @@ public class ButtonMap implements IButtonMap
                 AnalogOperation.DriveTrainLeftPosition,
                 AnalogOperation.DriveTrainRightPosition,
             }),
-
-        // Shooting macros
         new MacroOperationDescription(
             MacroOperation.FlyWheelSpin, 
             UserInputDevice.Operator, 

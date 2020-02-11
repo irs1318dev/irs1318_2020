@@ -21,9 +21,10 @@ public class AnalogOperationState extends OperationState
     {
         super(description);
 
-        this.currentValue = 0.0;
+        double defaultValue = description.getDefaultValue();
+        this.currentValue = defaultValue;
         this.isInterrupted = false;
-        this.interruptValue = 0.0;
+        this.interruptValue = defaultValue;
     }
 
     /**
@@ -36,7 +37,7 @@ public class AnalogOperationState extends OperationState
         this.isInterrupted = enable;
         if (!enable)
         {
-            this.interruptValue = 0.0;
+            this.interruptValue = ((AnalogOperationDescription)this.getDescription()).getDefaultValue();
         }
     }
 
@@ -73,8 +74,9 @@ public class AnalogOperationState extends OperationState
         if (relevantShifts != null && requiredShifts != null)
         {
             Shift relevantActiveShifts = Shift.Intersect(relevantShifts, activeShifts);
-            if (relevantActiveShifts.hasFlag(requiredShifts))
+            if (!relevantActiveShifts.equals(requiredShifts))
             {
+                this.currentValue = description.getDefaultValue();
                 return false;
             }
         }
@@ -108,7 +110,7 @@ public class AnalogOperationState extends OperationState
         if (relevantJoystick != null)
         {
             relevantAxis = description.getUserInputDeviceAxis();
-            if (relevantAxis == null)
+            if (relevantAxis == null || relevantAxis == AnalogAxis.NONE)
             {
                 return false;
             }
@@ -119,16 +121,42 @@ public class AnalogOperationState extends OperationState
                 newValue *= -1.0;
             }
 
-            newValue = this.adjustForDeadZone(newValue, description.getDeadZone());
+            newValue = this.adjustForDeadZone(newValue, description.getDeadZone()) * description.getMultiplier();
+
+            AnalogAxis secondaryAxis = description.getUserInputDeviceSecondaryAxis();
+            if (secondaryAxis != null && secondaryAxis != AnalogAxis.NONE)
+            {
+                double secondaryValue = relevantJoystick.getAxis(relevantAxis.Value);
+                if (description.getShouldInvertSecondary())
+                {
+                    secondaryValue *= -1.0;
+                }
+
+                secondaryValue = this.adjustForDeadZone(newValue, description.getDeadZone()) * description.getMultiplier();
+
+                AnalogOperationDescription.ResultCalculator calculator = description.getResultCalculator();
+                if (calculator == null)
+                {
+                    if (TuningConstants.THROW_EXCEPTIONS)
+                    {
+                        throw new RuntimeException("No result calculator provided!");
+                    }
+
+                    this.currentValue = description.getDefaultValue();
+                    return false;
+                }
+
+                newValue = calculator.calculate(newValue, secondaryValue);
+            }
         }
         else
         {
             // grab the appropriate sensor output.
             // e.g.: if (description.getSensor() == AnalogSensor.None) ...
-            newValue = 0.0;
+            newValue = description.getDefaultValue();
         }
 
-        this.currentValue = newValue * description.getMultiplier();
+        this.currentValue = newValue;
         return this.currentValue != oldValue;
     }
 
