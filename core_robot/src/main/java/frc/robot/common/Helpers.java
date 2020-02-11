@@ -89,4 +89,66 @@ public class Helpers
     {
         return Math.acos(ratio) * Helpers.RADIANS_TO_DEGREES;
     }
+
+    /**
+     * Convert from cartesian coordinates (x, y) to polar angle (along positive x-axis is 0, increasing counter-clockwise)
+     * @param x coordinate
+     * @param y coordinate
+     * @return polar angle (theta), or -1 if at (0, 0)
+     */
+    public static double convertToPolarAngle(double x, double y)
+    {
+        // special case for (0, 0)
+        if (x == 0.0 && y == 0.0)
+        {
+            return -1.0;
+        }
+
+        // handle horizontal lines
+        if (x == 0.0)
+        {
+            if (y > 0.0)
+            {
+                return 90.0;
+            }
+            else
+            {
+                return 270.0;
+            }
+        }
+
+        // handle vertical lines
+        if (y == 0.0)
+        {
+            if (x > 0.0)
+            {
+                return 0.0;
+            }
+            else
+            {
+                return 180.0;
+            }
+        }
+
+        if (x > 0.0 && y > 0.0)
+        {
+            // quadrant I
+            return Helpers.atand(y / x);
+        }
+        else if (x < 0.0 && y > 0.0)
+        {
+            // quadrant II
+            return Helpers.atand(y / x) + 180.0;
+        }
+        else if (x < 0.0 && y < 0.0)
+        {
+            // quadrant III
+            return Helpers.atand(y / x) + 180.0;
+        }
+        else // if (x > 0.0 && y < 0.0)
+        {
+            // quadrant IV
+            return Helpers.atand(y / x) + 360.0;
+        }
+    }
 }

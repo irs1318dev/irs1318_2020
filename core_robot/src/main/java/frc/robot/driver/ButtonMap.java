@@ -70,53 +70,14 @@ public class ButtonMap implements IButtonMap
         //     -1.0,
         //     (x, y) ->
         //     {
-        //         if (x == 0.0 && y == 0.0)
+        //         double angle = Helpers.convertToPolarAngle(x, y);
+        //         if (angle == -1.0)
         //         {
         //             return -1.0;
         //         }
 
-        //         if (x > 0.0 && y > 0.0)
-        //         {
-        //             // quadrant I
-        //             return Helpers.atand(y / x);
-        //         }
-        //         else if (x < 0.0 && y > 0.0)
-        //         {
-        //             // quadrant II
-        //             return Helpers.atand(y / x) + 180.0;
-        //         }
-        //         else if (x < 0.0 && y < 0.0)
-        //         {
-        //             // quadrant III
-        //             return Helpers.atand(y / x) + 180.0;
-        //         }
-        //         else if (x > 0.0 && y < 0.0)
-        //         {
-        //             // quadrant IV
-        //             return Helpers.atand(y / x) + 360.0;
-        //         }
-        //         else if (x == 0.0)
-        //         {
-        //             if (y > 0.0)
-        //             {
-        //                 return 90.0;
-        //             }
-        //             else
-        //             {
-        //                 return 270.0;
-        //             }
-        //         }
-        //         else // if (y == 0.0)
-        //         {
-        //             if (x > 0.0)
-        //             {
-        //                 return 0.0;
-        //             }
-        //             else
-        //             {
-        //                 return 180.0;
-        //             }
-        //         }
+        //         // change to straight forward being 0, left being 90, down being 180, right being 270, opposite of the POV.
+        //         return (angle + 270.0) % 360.0;
         //     }),
         new AnalogOperationDescription(
             AnalogOperation.PowerCellFlywheelVelocity,
