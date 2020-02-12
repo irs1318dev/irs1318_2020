@@ -18,14 +18,14 @@ public class TracerShotTask extends ControlTaskBase implements IControlTask
     @Override
     public void begin()
     {
-        this.powerCellMechanism = this.getInjector().getInstance(PowerCellMechanism.class);  
+        this.powerCellMechanism = this.getInjector().getInstance(PowerCellMechanism.class);
         this.timer = this.getInjector().getInstance(ITimer.class);
     }
 
     @Override
     public void update()
     {
-        if (this.kickTime != null || this.powerCellMechanism.hasPowerCell(this.powerCellMechanism.getCurrentCarouselIndex())) 
+        if (this.kickTime != null || this.powerCellMechanism.hasPowerCell(this.powerCellMechanism.getCurrentCarouselIndex()))
         {
             this.setDigitalOperationState(DigitalOperation.PowerCellKick, true);
             if (this.kickTime == null)
@@ -51,9 +51,9 @@ public class TracerShotTask extends ControlTaskBase implements IControlTask
     {
         if (this.kickTime != null && this.timer.get() - this.kickTime >= .5)
         {
-            return true; 
+            return true;
         }
-        
+
         return false;
     }
 }

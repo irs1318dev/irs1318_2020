@@ -76,7 +76,7 @@ public class PathManager
                 int rightVelocityIndex = headers.indexOf(PathManager.RIGHT_VELOCITY_NAME);
                 int headingIndex = headers.indexOf(PathManager.HEADING_NAME);
 
-                do 
+                do
                 {
                     String leftPositionString = row.getField(leftPositionIndex);
                     String rightPositionString = row.getField(rightPositionIndex);

@@ -25,7 +25,7 @@ public class ButtonMapVerifier
             for (DigitalOperationDescription description : buttonMap.getDigitalOperationSchema())
             {
                 ButtonCombination button = new ButtonCombination(
-                    description.getUserInputDevice(), 
+                    description.getUserInputDevice(),
                     description.getUserInputDeviceButton(),
                     description.getUserInputDevicePovValue(),
                     description.getUserInputDeviceAxis());
@@ -70,7 +70,7 @@ public class ButtonMapVerifier
             for (AnalogOperationDescription description : buttonMap.getAnalogOperationSchema())
             {
                 ButtonCombination button = new ButtonCombination(
-                    description.getUserInputDevice(), 
+                    description.getUserInputDevice(),
                     UserInputDeviceButton.ANALOG_AXIS_RANGE,
                     -1,
                     description.getUserInputDeviceAxis());
@@ -115,7 +115,7 @@ public class ButtonMapVerifier
             for (MacroOperationDescription description : buttonMap.getMacroOperationSchema())
             {
                 ButtonCombination button = new ButtonCombination(
-                    description.getUserInputDevice(), 
+                    description.getUserInputDevice(),
                     description.getUserInputDeviceButton(),
                     description.getUserInputDevicePovValue(),
                     description.getUserInputDeviceAxis());
@@ -160,7 +160,7 @@ public class ButtonMapVerifier
             for (ShiftDescription description : buttonMap.getShiftSchema())
             {
                 ButtonCombination button = new ButtonCombination(
-                    description.getUserInputDevice(), 
+                    description.getUserInputDevice(),
                     description.getUserInputDeviceButton(),
                     description.getUserInputDevicePovValue(),
                     AnalogAxis.NONE);

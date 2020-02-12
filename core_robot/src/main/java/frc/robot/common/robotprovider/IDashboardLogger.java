@@ -75,5 +75,5 @@ public interface IDashboardLogger
     /**
      * Add a sendable chooser to the smart dashboard
      */
-	<V> void addChooser(String name, ISendableChooser<V> chooser);
+    <V> void addChooser(String name, ISendableChooser<V> chooser);
 }

@@ -81,10 +81,10 @@ public class PowerCellMechanism implements IMechanism
         this.flyWheel.setPosition(0);
         this.flyWheel.setControlMode(TalonSRXControlMode.Velocity);
         this.flyWheel.setPIDF(
-            TuningConstants.POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KP, 
-            TuningConstants.POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KI, 
-            TuningConstants.POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KD, 
-            TuningConstants.POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KF, 
+            TuningConstants.POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KP,
+            TuningConstants.POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KI,
+            TuningConstants.POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KD,
+            TuningConstants.POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KF,
             PowerCellMechanism.slotId);
         this.flyWheel.configureVelocityMeasurements(TuningConstants.POWERCELL_FLYWHEEL_VELOCITY_PERIOD, TuningConstants.POWERCELL_FLYWHEEL_VELOCITY_WINDOWSIZE);
         this.flyWheel.setVoltageCompensation(TuningConstants.POWERCELL_FLYWHEEL_MASTER_VELOCITY_VOLTAGE_COMPENSATION_ENABLED, TuningConstants.POWERCELL_FLYWHEEL_MASTER_VELOCITY_VOLTAGE_COMPENSATION_MAXVOLTAGE);
@@ -104,10 +104,10 @@ public class PowerCellMechanism implements IMechanism
         this.turret.setControlMode(TalonSRXControlMode.PercentOutput);
         // this.turret.setControlMode(TalonSRXControlMode.Position);
         // this.turret.setPIDF(
-        //     TuningConstants.POWERCELL_TURRET_POSITION_PID_KP, 
-        //     TuningConstants.POWERCELL_TURRET_POSITION_PID_KI, 
-        //     TuningConstants.POWERCELL_TURRET_POSITION_PID_KD, 
-        //     TuningConstants.POWERCELL_TURRET_POSITION_PID_KF, 
+        //     TuningConstants.POWERCELL_TURRET_POSITION_PID_KP,
+        //     TuningConstants.POWERCELL_TURRET_POSITION_PID_KI,
+        //     TuningConstants.POWERCELL_TURRET_POSITION_PID_KD,
+        //     TuningConstants.POWERCELL_TURRET_POSITION_PID_KF,
         //     PowerCellMechanism.slotId);
         // this.turret.setForwardLimitSwitch(TuningConstants.POWERCELL_TURRET_FORWARD_LIMIT_SWITCH_ENABLED, TuningConstants.POWERCELL_TURRET_FORWARD_LIMIT_SWITCH_NORMALLY_OPEN);
         // this.turret.setReverseLimitSwitch(TuningConstants.POWERCELL_TURRET_REVERSE_LIMIT_SWITCH_ENABLED, TuningConstants.POWERCELL_TURRET_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN);
@@ -121,7 +121,7 @@ public class PowerCellMechanism implements IMechanism
         this.lastIntakeTime = this.timer.get();
 
         // this.carouselCounter = provider.getCounter(ElectronicsConstants.POWERCELL_CAROUSEL_COUNTER_DIO);
-        
+
         this.state = CarouselState.Stationary;
         this.previousIndex = 0;
 
@@ -149,7 +149,7 @@ public class PowerCellMechanism implements IMechanism
         // int newCarouselCount = this.carouselCounter.get();
         // if (newCarouselCount > this.carouselCount)
         // {
-        //     currentCarouselIndex = (currentCarouselIndex + 1) % 5; 
+        //     currentCarouselIndex = (currentCarouselIndex + 1) % 5;
         // }
 
         // this.hasPowerCell[currentCarouselIndex] = throughBeamBroken;
@@ -231,7 +231,7 @@ public class PowerCellMechanism implements IMechanism
         }
         else
         {
-            flyWheelVelocitySetpoint = flyWheelVelocityPercentage * TuningConstants.POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KS; 
+            flyWheelVelocitySetpoint = flyWheelVelocityPercentage * TuningConstants.POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KS;
             this.flyWheel.set(flyWheelVelocitySetpoint);
         }
 
@@ -251,7 +251,7 @@ public class PowerCellMechanism implements IMechanism
         //     this.state = CarouselState.Stationary;
         // }
 
-        // if (this.driver.getDigital(DigitalOperation.PowerCellMoveOneSlot)) 
+        // if (this.driver.getDigital(DigitalOperation.PowerCellMoveOneSlot))
         // {
         //     this.previousIndex = this.getCurrentCarouselIndex();
         //     this.state = CarouselState.MovingToNext;
@@ -262,18 +262,18 @@ public class PowerCellMechanism implements IMechanism
         //     this.lastIntakeTime = this.timer.get();
         // }
 
-        // if (this.getCurrentCarouselIndex() != this.previousIndex && this.state == CarouselState.MovingToNext) 
+        // if (this.getCurrentCarouselIndex() != this.previousIndex && this.state == CarouselState.MovingToNext)
         // {
         //     this.genevaMotor.set(TuningConstants.STHOPE_BLEASE);
         //     this.state = CarouselState.Stationary;
         // }
 
-        // if (this.state == CarouselState.Indexing) 
+        // if (this.state == CarouselState.Indexing)
         // {
         //     this.genevaMotor.set(TuningConstants.POWERCELL_GENEVA_MECHANISM_MOTOR_POWER_INDEXING);
         // }
 
-        // if (this.state == CarouselState.MovingToNext) 
+        // if (this.state == CarouselState.MovingToNext)
         // {
         //     this.genevaMotor.set(TuningConstants.POWERCELL_GENEVA_MECHANISM_MOTOR_POWER_SHOOTING);
         // }
@@ -334,10 +334,10 @@ public class PowerCellMechanism implements IMechanism
             }
         }
 
-        return false; 
+        return false;
     }
 
-    private enum CarouselState 
+    private enum CarouselState
     {
         Indexing,
         Stationary,

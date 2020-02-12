@@ -6,23 +6,24 @@ import frc.robot.driver.DigitalOperation;
 import frc.robot.driver.common.IControlTask;
 
 /**
- * Task that turns the turret a certain amount clockwise or counterclockwise based on vision center
+ * Task that sets the Hood Position and spins the wheel at the appropriate speed for a point-blank shot.
  */
-public class FlyWheelPointBlankTask extends ControlTaskBase implements IControlTask
+public class FlyWheelPointBlankTask extends CompositeOperationTask implements IControlTask
 {
+    private static DigitalOperation[] hoodPositionOperations =
+    {
+        DigitalOperation.PowerCellHoodPointBlank,
+        DigitalOperation.PowerCellHoodShort,
+        DigitalOperation.PowerCellHoodMedium,
+        DigitalOperation.PowerCellHoodLong,
+    };
+
     /**
     * Initializes a new FlyWheelPointBlankTask
     */
     public FlyWheelPointBlankTask()
     {
-    }
-
-    /**
-     * Begin the current task
-     */
-    @Override
-    public void begin()
-    {
+        super(0.5, DigitalOperation.PowerCellHoodPointBlank, FlyWheelPointBlankTask.hoodPositionOperations);
     }
 
     /**
@@ -31,7 +32,8 @@ public class FlyWheelPointBlankTask extends ControlTaskBase implements IControlT
     @Override
     public void update()
     {
-        this.setDigitalOperationState(DigitalOperation.PowerCellHoodPointBlank, true);
+        super.update();
+
         this.setAnalogOperationState(AnalogOperation.PowerCellFlywheelVelocity, TuningConstants.POWERCELL_FLYWHEEL_POINT_BLANK_MOTOR_VELOCITY);
     }
 
@@ -41,17 +43,8 @@ public class FlyWheelPointBlankTask extends ControlTaskBase implements IControlT
     @Override
     public void end()
     {
-        this.setDigitalOperationState(DigitalOperation.VisionDisable, true);
-        this.setAnalogOperationState(AnalogOperation.PowerCellFlywheelVelocity, TuningConstants.STHOPE_BLEASE);
-    }
+        super.end();
 
-    /**
-     * Checks whether this task has completed, or whether it should continue being processed
-     * @return true if we should continue onto the next task, otherwise false (to keep processing this task)
-     */
-    @Override
-    public boolean hasCompleted()
-    {
-        return false;
+        this.setAnalogOperationState(AnalogOperation.PowerCellFlywheelVelocity, TuningConstants.STHOPE_BLEASE);
     }
 }

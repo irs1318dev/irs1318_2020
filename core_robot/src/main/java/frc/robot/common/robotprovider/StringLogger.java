@@ -31,7 +31,7 @@ public abstract class StringLogger implements IDashboardLogger
     @Override
     public void logBooleanArray(String component, String key, boolean[] value)
     {
-        String str = "";        
+        String str = "";
         if (value != null)
         {
             for (int i = 0; i < value.length; i++)
@@ -44,7 +44,7 @@ public abstract class StringLogger implements IDashboardLogger
                 str += String.valueOf(value[i]);
             }
         }
-        
+
         this.logString(component, key, str);
     }
 

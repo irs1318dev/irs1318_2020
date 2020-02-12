@@ -112,7 +112,7 @@ public class TalonFXWrapper implements ITalonFX
         this.wrappedObject.configVelocityMeasurementPeriod(VelocityMeasPeriod.valueOf(periodMS), TalonFXWrapper.timeoutMS);
         this.wrappedObject.configVelocityMeasurementWindow(windowSize, TalonFXWrapper.timeoutMS);
     }
-    
+
     public void configureAllowableClosedloopError(int slotId, int error)
     {
         this.wrappedObject.configAllowableClosedloopError(slotId, error, TalonFXWrapper.timeoutMS);

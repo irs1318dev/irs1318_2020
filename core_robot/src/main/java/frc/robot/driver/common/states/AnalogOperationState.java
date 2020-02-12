@@ -160,7 +160,7 @@ public class AnalogOperationState extends OperationState
         return this.currentValue != oldValue;
     }
 
-	public double getState()
+    public double getState()
     {
         if (this.isInterrupted)
         {

@@ -197,7 +197,7 @@ public class FauxbotProvider implements IRobotProvider
     {
         return new FauxbotNetworkTableProvider();
     }
-    
+
     public <V> ISendableChooser<V> getSendableChooser()
     {
         return new FauxbotSendableChooser<V>();

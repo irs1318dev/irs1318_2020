@@ -73,7 +73,7 @@ public class RoadRunnerTankTranslator
         return steps;
     }
 
-    public static PathStep buildPathStep(double time, Trajectory traj, double leftWheelPos, double rightWheelPos, boolean isBackwards)  
+    public static PathStep buildPathStep(double time, Trajectory traj, double leftWheelPos, double rightWheelPos, boolean isBackwards)
     {
         Pose2d pose = traj.get(time);
         Pose2d poseVel = traj.velocity(time);
@@ -92,7 +92,7 @@ public class RoadRunnerTankTranslator
         double leftWheelAcc = accelerations.get(0);
         double rightWheelAcc = accelerations.get(1);
 
-        if (isBackwards) 
+        if (isBackwards)
         {
             leftWheelVel *= -1;
             rightWheelVel *= -1;

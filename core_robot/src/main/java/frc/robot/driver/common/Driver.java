@@ -28,7 +28,7 @@ public class Driver
 
     protected final Injector injector;
     protected final Map<IOperation, OperationState> operationStateMap;
-    
+
     private final IJoystick joystickDriver;
     private final IJoystick joystickOperator;
 

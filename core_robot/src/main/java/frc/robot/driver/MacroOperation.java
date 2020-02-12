@@ -8,18 +8,19 @@ public enum MacroOperation implements IOperation
     PIDBrake,
     TurnInPlaceLeft,
     TurnInPlaceRight,
-    FollowSomePath,
-    FollowAnotherPath,
-    FollowADifferentPath,
 
     // ColorSpinner operations
     ControlPanelSpin,
 
     // PowerCell operations
-    VisionAlignShooting,
+    AlignShotVision,
+    SpinUpVisionDistance,
     SpinUpPointBlank,
     TracerShot,
     FullHopperShot,
-    FlyWheelSpin,
 
+    // Testing operations
+    FollowSomePath,
+    FollowAnotherPath,
+    FollowADifferentPath,
 }

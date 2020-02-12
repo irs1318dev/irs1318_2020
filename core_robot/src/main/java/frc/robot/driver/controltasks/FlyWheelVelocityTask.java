@@ -12,7 +12,7 @@ import frc.robot.mechanisms.OffboardVisionManager;
 public class FlyWheelVelocityTask extends ControlTaskBase implements IControlTask
 {
     private static final int NO_CENTER_THRESHOLD = 40;
-    private static final double[][] HOOD_RANGES = 
+    private static final double[][] HOOD_RANGES =
         {
             {120, 200}, // short
             {200, 400}, // medium
@@ -48,7 +48,7 @@ public class FlyWheelVelocityTask extends ControlTaskBase implements IControlTas
     {
         this.distance = this.visionManager.getDistance();
 
-        if (this.distance != null) 
+        if (this.distance != null)
         {
             double flywheelSpeed = 0.0;
             if (this.distance >= FlyWheelVelocityTask.HOOD_RANGES[0][0] &&
@@ -56,7 +56,6 @@ public class FlyWheelVelocityTask extends ControlTaskBase implements IControlTas
             {
                 this.setDigitalOperationState(DigitalOperation.PowerCellHoodShort, true);
                 flywheelSpeed = 0.0; // do calculations to find speed based off distance
-                
             }
             else if (this.distance >= FlyWheelVelocityTask.HOOD_RANGES[1][0] &&
                 this.distance < FlyWheelVelocityTask.HOOD_RANGES[1][1])

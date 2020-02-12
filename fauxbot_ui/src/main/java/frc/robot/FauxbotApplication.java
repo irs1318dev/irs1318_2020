@@ -88,7 +88,7 @@ public class FauxbotApplication extends Application
         simulationGroup.selectedToggleProperty().addListener(
             (ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) ->
             {
-                this.desiredSimulation = (Simulation)newValue.getUserData(); 
+                this.desiredSimulation = (Simulation)newValue.getUserData();
             });
 
         Button startSimulationButton = new Button("Start Simulation");
@@ -177,7 +177,7 @@ public class FauxbotApplication extends Application
                 public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue)
                 {
                     runner.setMode((RobotMode)newValue.getUserData());
-                } 
+                }
             });
 
         rowCount++;

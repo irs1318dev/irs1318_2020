@@ -10,26 +10,25 @@ import frc.robot.mechanisms.OffboardVisionManager;
 import frc.robot.mechanisms.PowerCellMechanism;
 
 /**
- * Task that turns the robot a certain amount clockwise or counterclockwise in-place based on vision center
+ * Task that turns the turret a certain amount clockwise or counterclockwise based on vision center
  */
 public class TurretVisionCenteringTask extends ControlTaskBase implements IControlTask
 {
     private static final int NO_CENTER_THRESHOLD = 40;
-    
-    public PowerCellMechanism powerCell;
-    
+
     private final boolean useTime;
+
+    private OffboardVisionManager visionManager;
+    private PowerCellMechanism powerCell;
+    private ITimer timer;
 
     private PIDHandler turnPidHandler;
     private Double centeredTime;
-    protected OffboardVisionManager visionManager;
 
     private int noCenterCount;
 
-    private double turretPosition;
-
     /**
-    * Initializes a new VisionCenteringTask
+    * Initializes a new TurretVisionCenteringTask
     */
     public TurretVisionCenteringTask()
     {
@@ -37,7 +36,7 @@ public class TurretVisionCenteringTask extends ControlTaskBase implements IContr
     }
 
     /**
-    * Initializes a new VisionCenteringTask
+    * Initializes a new TurretVisionCenteringTask
     * @param useTime whether to make sure we are centered for a second or not
     */
     public TurretVisionCenteringTask(boolean useTime)
@@ -57,8 +56,13 @@ public class TurretVisionCenteringTask extends ControlTaskBase implements IContr
     public void begin()
     {
         this.visionManager = this.getInjector().getInstance(OffboardVisionManager.class);
-        this.turnPidHandler = this.createTurnHandler();
         this.powerCell = this.getInjector().getInstance(PowerCellMechanism.class);
+        this.turnPidHandler = this.createTurnHandler();
+
+        if (this.useTime)
+        {
+            this.timer = this.getInjector().getInstance(ITimer.class);
+        }
     }
 
     /**
@@ -67,14 +71,14 @@ public class TurretVisionCenteringTask extends ControlTaskBase implements IContr
     @Override
     public void update()
     {
-        this.turretPosition = powerCell.getTurretPosition();
+        double turretPosition = powerCell.getTurretPosition();
 
         Double currentMeasuredAngle = this.visionManager.getHorizontalAngle();
         if (currentMeasuredAngle != null)
         {
             this.setAnalogOperationState(
                 AnalogOperation.PowerCellTurretPosition,
-                this.turretPosition-this.turnPidHandler.calculatePosition(0.0, currentMeasuredAngle));
+                turretPosition - this.turnPidHandler.calculatePosition(0.0, currentMeasuredAngle));
         }
     }
 
@@ -110,22 +114,20 @@ public class TurretVisionCenteringTask extends ControlTaskBase implements IContr
         {
             return true;
         }
+
+        // otherwise, use time:
+        if (this.centeredTime == null)
+        {
+            this.centeredTime = this.timer.get();
+            return false;
+        }
+        else if (this.timer.get() - this.centeredTime < 0.75)
+        {
+            return false;
+        }
         else
         {
-            ITimer timer = this.getInjector().getInstance(ITimer.class);
-            if (this.centeredTime == null)
-            {
-                this.centeredTime = timer.get();
-                return false;
-            }
-            else if (timer.get() - this.centeredTime < 0.75)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }}
+            return true;
         }
     }
 
@@ -148,7 +150,7 @@ public class TurretVisionCenteringTask extends ControlTaskBase implements IContr
         return this.noCenterCount >= TurretVisionCenteringTask.NO_CENTER_THRESHOLD;
     }
 
-    protected PIDHandler createTurnHandler()
+    private PIDHandler createTurnHandler()
     {
         return new PIDHandler(
             TuningConstants.VISION_STATIONARY_CENTERING_PID_KP,

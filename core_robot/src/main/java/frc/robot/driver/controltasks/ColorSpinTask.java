@@ -42,11 +42,11 @@ public class ColorSpinTask extends ControlTaskBase implements IControlTask
                 this.seenRed = true; // seenRed prevents double counting - if we see it once, it cannot count it again 
                 this.counter++;
             }
-            else 
-            {   
+            else
+            {
                 this.seenRed = false;
-            } 
-        }  
+            }
+        }
         else
         {
             this.setAnalogOperationState(AnalogOperation.ControlPanelSpinSpeed, TuningConstants.CONTROL_PANEL_ROTATION_SPIN_SPEED);

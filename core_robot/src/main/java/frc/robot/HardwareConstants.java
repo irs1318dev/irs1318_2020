@@ -39,7 +39,7 @@ public class HardwareConstants
 
     //================================================== ControlPanel ============================================================
 
-	public static final boolean CONTROLPANEL_SPINNER_INVERT_OUTPUT = false;
+    public static final boolean CONTROLPANEL_SPINNER_INVERT_OUTPUT = false;
 
     //================================================== DriveTrain ==============================================================
     // Note: Pulse Distance is the distance moved per tick

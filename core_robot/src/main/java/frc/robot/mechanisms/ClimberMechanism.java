@@ -48,7 +48,7 @@ public class ClimberMechanism implements IMechanism
     @Override
     public void update()
     {
-        if (this.driver.getDigital(DigitalOperation.ClimberExtend)) 
+        if (this.driver.getDigital(DigitalOperation.ClimberExtend))
         {
             this.isExtended = true;
             this.climberExtendSolenoid.set(DoubleSolenoidValue.Forward);
@@ -59,7 +59,7 @@ public class ClimberMechanism implements IMechanism
             this.climberExtendSolenoid.set(DoubleSolenoidValue.Reverse);
         }
 
-        if (this.driver.getDigital(DigitalOperation.ClimberHookLock)) 
+        if (this.driver.getDigital(DigitalOperation.ClimberHookLock))
         {
             this.climberGrabSolenoid.set(DoubleSolenoidValue.Reverse);
         }
@@ -68,7 +68,7 @@ public class ClimberMechanism implements IMechanism
             this.climberGrabSolenoid.set(DoubleSolenoidValue.Forward);
         }
 
-        if (this.isExtended) 
+        if (this.isExtended)
         {
             double speed = this.driver.getAnalog(AnalogOperation.ClimberWinch);
             this.winchMotorMaster.set(speed);

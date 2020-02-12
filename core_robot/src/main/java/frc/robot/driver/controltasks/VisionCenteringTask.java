@@ -18,9 +18,11 @@ public class VisionCenteringTask extends ControlTaskBase implements IControlTask
     private final boolean useTime;
     private final DigitalOperation toPerform;
 
-    private PIDHandler turnPidHandler;
-    private Double centeredTime;
     protected OffboardVisionManager visionManager;
+    private ITimer timer;
+    private PIDHandler turnPidHandler;
+
+    private Double centeredTime;
 
     private int noCenterCount;
 
@@ -55,6 +57,11 @@ public class VisionCenteringTask extends ControlTaskBase implements IControlTask
     {
         this.visionManager = this.getInjector().getInstance(OffboardVisionManager.class);
         this.turnPidHandler = this.createTurnHandler();
+
+        if (this.useTime)
+        {
+            this.timer = this.getInjector().getInstance(ITimer.class);
+        }
     }
 
     /**
@@ -111,22 +118,20 @@ public class VisionCenteringTask extends ControlTaskBase implements IControlTask
         {
             return true;
         }
+
+        // otherwise, use time:
+        if (this.centeredTime == null)
+        {
+            this.centeredTime = this.timer.get();
+            return false;
+        }
+        else if (this.timer.get() - this.centeredTime < 0.75)
+        {
+            return false;
+        }
         else
         {
-            ITimer timer = this.getInjector().getInstance(ITimer.class);
-            if (this.centeredTime == null)
-            {
-                this.centeredTime = timer.get();
-                return false;
-            }
-            else if (timer.get() - this.centeredTime < 0.75)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return true;
         }
     }
 

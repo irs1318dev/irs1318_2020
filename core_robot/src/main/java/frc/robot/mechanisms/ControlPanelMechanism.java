@@ -25,7 +25,7 @@ public class ControlPanelMechanism implements IMechanism
 
     private Driver driver;
 
-    private String gsm; 
+    private String gsm;
     private TargetColor targetColor;
     private ColorMatchResult colorResult;
     private boolean isExtended;
@@ -127,18 +127,18 @@ public class ControlPanelMechanism implements IMechanism
     @Override
     public void update()
     {
-        if (this.driver.getDigital(DigitalOperation.ControlPanelExtend)) 
+        if (this.driver.getDigital(DigitalOperation.ControlPanelExtend))
         {
             this.isExtended = true;
             // this.extender.set(DoubleSolenoidValue.Forward);
         }
-        else if (!this.driver.getDigital(DigitalOperation.ControlPanelRetract)) 
-        {  
+        else if (!this.driver.getDigital(DigitalOperation.ControlPanelRetract))
+        {
             this.isExtended = false;
             // this.extender.set(DoubleSolenoidValue.Reverse);
         }
 
-        if (this.isExtended) 
+        if (this.isExtended)
         {
             double speed = this.driver.getAnalog(AnalogOperation.ControlPanelSpinSpeed);
             // this.spinnerMotor.set(speed);
