@@ -200,6 +200,8 @@ public class ButtonMap implements IButtonMap
             MacroOperation.FlyWheelSpin,
             UserInputDevice.Operator,
             UserInputDeviceButton.XBONE_X_BUTTON,
+            Shift.OperatorDebug,
+            Shift.None,
             ButtonType.Click,
             () -> new FlyWheelVelocityTask(),
             new IOperation[]
@@ -215,6 +217,8 @@ public class ButtonMap implements IButtonMap
             MacroOperation.SpinUpPointBlank,
             UserInputDevice.Operator,
             UserInputDeviceButton.XBONE_Y_BUTTON,
+            Shift.OperatorDebug,
+            Shift.None,
             ButtonType.Click,
             () -> new FlyWheelPointBlankTask(),
             new IOperation[]
