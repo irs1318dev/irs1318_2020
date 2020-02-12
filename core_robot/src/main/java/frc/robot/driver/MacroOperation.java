@@ -13,7 +13,7 @@ public enum MacroOperation implements IOperation
     FollowADifferentPath,
 
     // ColorSpinner operations
-    Spin,
+    ControlPanelSpin,
 
     // PowerCell operations
     VisionAlignShooting,
@@ -21,4 +21,5 @@ public enum MacroOperation implements IOperation
     TracerShot,
     FullHopperShot,
     FlyWheelSpin,
+
 }

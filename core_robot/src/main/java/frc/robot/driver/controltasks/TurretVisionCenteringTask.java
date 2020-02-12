@@ -10,25 +10,26 @@ import frc.robot.mechanisms.OffboardVisionManager;
 import frc.robot.mechanisms.PowerCellMechanism;
 
 /**
- * Task that turns the turret a certain amount clockwise or counterclockwise based on vision center
+ * Task that turns the robot a certain amount clockwise or counterclockwise in-place based on vision center
  */
 public class TurretVisionCenteringTask extends ControlTaskBase implements IControlTask
 {
     private static final int NO_CENTER_THRESHOLD = 40;
-
+    
+    public PowerCellMechanism powerCell;
+    
     private final boolean useTime;
 
-    private PowerCellMechanism powerCell;
-    private OffboardVisionManager visionManager;
-    private ITimer timer;
     private PIDHandler turnPidHandler;
-
     private Double centeredTime;
+    protected OffboardVisionManager visionManager;
+
     private int noCenterCount;
+
     private double turretPosition;
 
     /**
-    * Initializes a new TurretVisionCenteringTask
+    * Initializes a new VisionCenteringTask
     */
     public TurretVisionCenteringTask()
     {
@@ -36,7 +37,7 @@ public class TurretVisionCenteringTask extends ControlTaskBase implements IContr
     }
 
     /**
-    * Initializes a new TurretVisionCenteringTask
+    * Initializes a new VisionCenteringTask
     * @param useTime whether to make sure we are centered for a second or not
     */
     public TurretVisionCenteringTask(boolean useTime)
@@ -58,11 +59,6 @@ public class TurretVisionCenteringTask extends ControlTaskBase implements IContr
         this.visionManager = this.getInjector().getInstance(OffboardVisionManager.class);
         this.turnPidHandler = this.createTurnHandler();
         this.powerCell = this.getInjector().getInstance(PowerCellMechanism.class);
-
-        if (this.useTime)
-        {
-            this.timer = this.getInjector().getInstance(ITimer.class);
-        }
     }
 
     /**
@@ -114,19 +110,22 @@ public class TurretVisionCenteringTask extends ControlTaskBase implements IContr
         {
             return true;
         }
-
-        if (this.centeredTime == null)
-        {
-            this.centeredTime = this.timer.get();
-            return false;
-        }
-        else if (this.timer.get() - this.centeredTime < 0.75)
-        {
-            return false;
-        }
         else
         {
-            return true;
+            ITimer timer = this.getInjector().getInstance(ITimer.class);
+            if (this.centeredTime == null)
+            {
+                this.centeredTime = timer.get();
+                return false;
+            }
+            else if (timer.get() - this.centeredTime < 0.75)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }}
         }
     }
 
