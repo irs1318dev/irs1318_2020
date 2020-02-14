@@ -238,8 +238,11 @@ public class PowerCellMechanism implements IMechanism
         this.logger.logNumber(PowerCellMechanism.logName, "flyWheelVelocitySetpoint", flyWheelVelocitySetpoint);
 
         double turretAnalogPosition = this.driver.getAnalog(AnalogOperation.PowerCellTurretPosition);
-        turretAnalogPosition = Helpers.EnforceRange(turretAnalogPosition, -HardwareConstants.POWERCELL_TURRET_MAXIMUM_RANGE, HardwareConstants.POWERCELL_TURRET_MAXIMUM_RANGE);
-        this.turret.set(turretAnalogPosition * HardwareConstants.POWERCELL_TURRET_DEGREES_TO_TICKS);
+
+        if(turretAnalogPosition < 0){
+            turretAnalogPosition = Helpers.EnforceRange(turretAnalogPosition, 0.0, 360.0);
+            this.turret.set(turretAnalogPosition * HardwareConstants.POWERCELL_TURRET_DEGREES_TO_TICKS);
+        }
 
         // if (isIntaking && this.state == CarouselState.Stationary)  // if intaking and currently stationary, start indexing
         // {
@@ -306,7 +309,7 @@ public class PowerCellMechanism implements IMechanism
 
     public double getTurretPosition()
     {
-        return this.turretPosition;
+        return (this.turretPosition * HardwareConstants.POWERCELL_TURRET_DEGREES_TO_TICKS);
     }
 
     public double getFlywheelVelocity()
