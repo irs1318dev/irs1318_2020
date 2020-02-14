@@ -49,14 +49,12 @@ public class ButtonMap implements IButtonMap
             .1),
 
         // PowerCell operations
-        new AnalogOperationDescription(
+        new AnalogOperationDescription( // for testing:
             AnalogOperation.PowerCellTurretPosition,
             UserInputDevice.Operator,
             AnalogAxis.XBONE_RSX,
             ElectronicsConstants.INVERT_X_AXIS,
             .1),
-        //turret?
-
         // new AnalogOperationDescription(
         //     AnalogOperation.PowerCellTurretPosition,
         //     UserInputDevice.Operator,
@@ -84,20 +82,46 @@ public class ButtonMap implements IButtonMap
 
     public static DigitalOperationDescription[] DigitalOperationSchema = new DigitalOperationDescription[]
     {
+        // Climber operations
+        new DigitalOperationDescription(
+            DigitalOperation.ClimberHookLock,
+            UserInputDevice.Driver,
+            UserInputDeviceButton.XBONE_X_BUTTON,
+            Shift.DriverDebug,
+            Shift.DriverDebug,
+            ButtonType.Click),
+        new DigitalOperationDescription(
+            DigitalOperation.ClimberHookRelease,
+            UserInputDevice.Driver,
+            UserInputDeviceButton.XBONE_B_BUTTON,
+            Shift.DriverDebug,
+            Shift.DriverDebug,
+            ButtonType.Click),
+        new DigitalOperationDescription(
+            DigitalOperation.ClimberRetract,
+            UserInputDevice.Driver,
+            UserInputDeviceButton.XBONE_A_BUTTON,
+            Shift.DriverDebug,
+            Shift.DriverDebug,
+            ButtonType.Click),
+        new DigitalOperationDescription(
+            DigitalOperation.ClimberExtend,
+            UserInputDevice.Driver,
+            UserInputDeviceButton.XBONE_Y_BUTTON,
+            Shift.DriverDebug,
+            Shift.DriverDebug,
+            ButtonType.Click),
+
         // ControlPanel operations
         new DigitalOperationDescription(
             DigitalOperation.ControlPanelExtend,
             UserInputDevice.Operator,
             UserInputDeviceButton.XBONE_SELECT_BUTTON,
-            Shift.OperatorDebug,
-            Shift.None,
             ButtonType.Click),
         new DigitalOperationDescription(
             DigitalOperation.ControlPanelRetract,
             UserInputDevice.Operator,
             UserInputDeviceButton.XBONE_START_BUTTON,
-            Shift.OperatorDebug,
-            Shift.None,
             ButtonType.Click),
 
         // PowerCell operations
@@ -118,47 +142,17 @@ public class ButtonMap implements IButtonMap
         new DigitalOperationDescription(
             DigitalOperation.PowerCellIntake,
             UserInputDevice.Operator,
-            270,
+            90,
             Shift.OperatorDebug,
             Shift.None,
             ButtonType.Simple),
         new DigitalOperationDescription(
             DigitalOperation.PowerCellOuttake,
             UserInputDevice.Operator,
-            90,
+            270,
             Shift.OperatorDebug,
             Shift.None,
             ButtonType.Simple),
-
-            //climber operations
-        new DigitalOperationDescription(
-            DigitalOperation.ClimberHookLock,
-            UserInputDevice.Driver,
-            UserInputDeviceButton.XBONE_X_BUTTON,
-            Shift.DriverDebug,
-            Shift.DriverDebug,
-            ButtonType.Click),//correct?
-        new DigitalOperationDescription(
-            DigitalOperation.ClimberExtend,
-            UserInputDevice.Driver,
-            UserInputDeviceButton.XBONE_Y_BUTTON,
-            Shift.DriverDebug,
-            Shift.DriverDebug,
-            ButtonType.Click),
-        new DigitalOperationDescription(
-            DigitalOperation.ClimberRetract,
-            UserInputDevice.Driver,
-            UserInputDeviceButton.XBONE_A_BUTTON,
-            Shift.DriverDebug,
-            Shift.DriverDebug,
-            ButtonType.Click),
-        new DigitalOperationDescription(
-            DigitalOperation.ClimberHookRelease,
-            UserInputDevice.Driver,
-            UserInputDeviceButton.XBONE_B_BUTTON,
-            Shift.DriverDebug,
-            Shift.DriverDebug,
-            ButtonType.Click),
     };
 
     public static MacroOperationDescription[] MacroSchema = new MacroOperationDescription[]
@@ -186,7 +180,7 @@ public class ButtonMap implements IButtonMap
             Shift.DriverDebug,
             Shift.DriverDebug,
             ButtonType.Toggle,
-            () -> new NavxTurnTask(true, -180, 3.0, true, false),
+            () -> new NavxTurnTask(true, -180, TuningConstants.NAVX_FAST_TURN_TIMEOUT, true, true),
             new IOperation[]
             {
                 DigitalOperation.DriveTrainUsePositionalMode,
@@ -237,8 +231,6 @@ public class ButtonMap implements IButtonMap
             MacroOperation.ControlPanelSpin,
             UserInputDevice.Operator,
             UserInputDeviceButton.XBONE_LEFT_STICK_BUTTON,
-            Shift.OperatorDebug,
-            Shift.None,
             ButtonType.Toggle,
             () -> new ColorSpinTask(),
             new IOperation[]
@@ -281,11 +273,12 @@ public class ButtonMap implements IButtonMap
             () -> new FlyWheelVelocityTask(),
             new IOperation[]
             {
+                DigitalOperation.PowerCellHoodPointBlank,
                 DigitalOperation.PowerCellHoodShort,
                 DigitalOperation.PowerCellHoodMedium,
                 DigitalOperation.PowerCellHoodLong,
                 AnalogOperation.PowerCellFlywheelVelocity,
-                DigitalOperation.VisionDisable
+                DigitalOperation.VisionEnable
             }),
         new MacroOperationDescription(
             MacroOperation.SpinUpPointBlank,
@@ -298,8 +291,11 @@ public class ButtonMap implements IButtonMap
             new IOperation[]
             {
                 DigitalOperation.PowerCellHoodPointBlank,
+                DigitalOperation.PowerCellHoodShort,
+                DigitalOperation.PowerCellHoodMedium,
+                DigitalOperation.PowerCellHoodLong,
                 AnalogOperation.PowerCellFlywheelVelocity,
-                DigitalOperation.VisionDisable,
+                DigitalOperation.VisionEnable,
             }),
         new MacroOperationDescription(
             MacroOperation.TurretMoveLeft,
@@ -308,7 +304,7 @@ public class ButtonMap implements IButtonMap
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ButtonType.Toggle,
-            () -> new TurretMoveLeftTask(0.1, 5.0),
+            () -> new TurretMoveTask(0.1, 5.0),
             new IOperation[]
             {
                 AnalogOperation.PowerCellTurretPosition,
@@ -320,7 +316,7 @@ public class ButtonMap implements IButtonMap
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ButtonType.Toggle,
-            () -> new TurretMoveRightTask(0.1, -5.0),
+            () -> new TurretMoveTask(0.1, -5.0),
             new IOperation[]
             {
                 AnalogOperation.PowerCellTurretPosition,
@@ -332,7 +328,7 @@ public class ButtonMap implements IButtonMap
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ButtonType.Toggle,
-            () -> new IncreaseFlyWheelSpeedTask(0.1, 5.0),
+            () -> new ChangeFlyWheelSpeedTask(0.1, 5.0),
             new IOperation[]
             {
                 AnalogOperation.PowerCellFlywheelVelocity,
@@ -344,7 +340,7 @@ public class ButtonMap implements IButtonMap
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ButtonType.Toggle,
-            () -> new DecreaseFlyWheelSpeedTask(0.1, -5.0),
+            () -> new ChangeFlyWheelSpeedTask(0.1, -5.0),
             new IOperation[]
             {
                 AnalogOperation.PowerCellFlywheelVelocity,
@@ -355,25 +351,12 @@ public class ButtonMap implements IButtonMap
             UserInputDeviceButton.XBONE_A_BUTTON,
             Shift.OperatorDebug,
             Shift.None,
-            ButtonType.Click, //correct?
+            ButtonType.Toggle,
             () -> new TurretVisionCenteringTask(),
             new IOperation[]
             {
                 AnalogOperation.PowerCellTurretPosition,
-                DigitalOperation.VisionDisable,
-            }),
-        new MacroOperationDescription(
-            MacroOperation.AlignShotVision,
-            UserInputDevice.Operator,
-            UserInputDeviceButton.XBONE_A_BUTTON,
-            Shift.OperatorDebug,
-            Shift.None,
-            ButtonType.Click, //correct?
-            () -> new TurretVisionCenteringTask(),
-            new IOperation[]
-            {
-                AnalogOperation.PowerCellTurretPosition,
-                DigitalOperation.VisionDisable,
+                DigitalOperation.VisionEnable,
             }),
  
         // Testing macros:
@@ -381,6 +364,8 @@ public class ButtonMap implements IButtonMap
             MacroOperation.FollowSomePath,
             UserInputDevice.Driver,
             UserInputDeviceButton.XBONE_A_BUTTON,
+            Shift.DriverDebug,
+            Shift.None,
             ButtonType.Toggle,
             () -> new FollowPathTask("/Paths/straight_path.csv"),
             new IOperation[]
@@ -408,6 +393,8 @@ public class ButtonMap implements IButtonMap
             MacroOperation.FollowAnotherPath,
             UserInputDevice.Driver,
             UserInputDeviceButton.XBONE_B_BUTTON,
+            Shift.DriverDebug,
+            Shift.None,
             ButtonType.Toggle,
             () -> new FollowPathTask("/Paths/curved_path.csv"),
             new IOperation[]
@@ -435,6 +422,8 @@ public class ButtonMap implements IButtonMap
             MacroOperation.FollowADifferentPath,
             UserInputDevice.Driver,
             UserInputDeviceButton.XBONE_Y_BUTTON,
+            Shift.DriverDebug,
+            Shift.None,
             ButtonType.Toggle,
             () -> new FollowPathTask("/Paths/backwards_path.csv"),
             new IOperation[]

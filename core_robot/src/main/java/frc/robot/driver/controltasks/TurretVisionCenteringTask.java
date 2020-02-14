@@ -63,6 +63,8 @@ public class TurretVisionCenteringTask extends ControlTaskBase implements IContr
         {
             this.timer = this.getInjector().getInstance(ITimer.class);
         }
+
+        this.setDigitalOperationState(DigitalOperation.VisionEnable, true);
     }
 
     /**
@@ -71,7 +73,7 @@ public class TurretVisionCenteringTask extends ControlTaskBase implements IContr
     @Override
     public void update()
     {
-        double turretPosition = powerCell.getTurretPosition();
+        double turretPosition = this.powerCell.getTurretPosition();
 
         Double currentMeasuredAngle = this.visionManager.getHorizontalAngle();
         if (currentMeasuredAngle != null)
@@ -88,7 +90,8 @@ public class TurretVisionCenteringTask extends ControlTaskBase implements IContr
     @Override
     public void end()
     {
-        this.setDigitalOperationState(DigitalOperation.VisionDisable, true);
+        this.setAnalogOperationState(AnalogOperation.PowerCellTurretPosition, -1);
+        this.setDigitalOperationState(DigitalOperation.VisionEnable, false);
     }
 
     /**

@@ -38,6 +38,7 @@ public class FlyWheelVelocityTask extends ControlTaskBase implements IControlTas
     public void begin()
     {
         this.visionManager = this.getInjector().getInstance(OffboardVisionManager.class);
+        this.setDigitalOperationState(DigitalOperation.VisionEnable, true);
     }
 
     /**
@@ -80,7 +81,7 @@ public class FlyWheelVelocityTask extends ControlTaskBase implements IControlTas
     @Override
     public void end()
     {
-        this.setDigitalOperationState(DigitalOperation.VisionDisable, true);
+        this.setDigitalOperationState(DigitalOperation.VisionEnable, false);
         this.setAnalogOperationState(AnalogOperation.PowerCellFlywheelVelocity, TuningConstants.STHOPE_BLEASE);
     }
 

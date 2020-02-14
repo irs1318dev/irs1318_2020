@@ -16,7 +16,6 @@ public class VisionCenteringTask extends ControlTaskBase implements IControlTask
     private static final int NO_CENTER_THRESHOLD = 40;
 
     private final boolean useTime;
-    private final DigitalOperation toPerform;
 
     protected OffboardVisionManager visionManager;
     private ITimer timer;
@@ -29,19 +28,18 @@ public class VisionCenteringTask extends ControlTaskBase implements IControlTask
     /**
     * Initializes a new VisionCenteringTask
     */
-    public VisionCenteringTask(DigitalOperation toPerform)
+    public VisionCenteringTask()
     {
-        this(true, toPerform);
+        this(true);
     }
 
     /**
     * Initializes a new VisionCenteringTask
     * @param useTime whether to make sure we are centered for a second or not
     */
-    public VisionCenteringTask(boolean useTime, DigitalOperation toPerform)
+    public VisionCenteringTask(boolean useTime)
     {
         this.useTime = useTime;
-        this.toPerform = toPerform;
 
         this.turnPidHandler = null;
         this.centeredTime = null;
@@ -62,6 +60,8 @@ public class VisionCenteringTask extends ControlTaskBase implements IControlTask
         {
             this.timer = this.getInjector().getInstance(ITimer.class);
         }
+
+        this.setDigitalOperationState(DigitalOperation.VisionEnable, true);
     }
 
     /**
@@ -71,7 +71,6 @@ public class VisionCenteringTask extends ControlTaskBase implements IControlTask
     public void update()
     {
         this.setDigitalOperationState(DigitalOperation.DriveTrainUsePositionalMode, false);
-        this.setDigitalOperationState(this.toPerform, true);
 
         Double currentMeasuredAngle = this.visionManager.getHorizontalAngle();
         if (currentMeasuredAngle != null)
@@ -91,8 +90,7 @@ public class VisionCenteringTask extends ControlTaskBase implements IControlTask
         this.setDigitalOperationState(DigitalOperation.DriveTrainUsePositionalMode, false);
         this.setAnalogOperationState(AnalogOperation.DriveTrainTurn, 0.0);
 
-        this.setDigitalOperationState(this.toPerform, false);
-        this.setDigitalOperationState(DigitalOperation.VisionDisable, true);
+        this.setDigitalOperationState(DigitalOperation.VisionEnable, false);
     }
 
     /**

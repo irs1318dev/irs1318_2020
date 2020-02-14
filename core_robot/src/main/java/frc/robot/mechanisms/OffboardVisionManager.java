@@ -86,12 +86,14 @@ public class OffboardVisionManager implements IMechanism
     @Override
     public void update()
     {
+        boolean enableVision = this.driver.getDigital(DigitalOperation.VisionEnable) && !this.driver.getDigital(DigitalOperation.VisionForceDisable);
         boolean enableVideoStream = !this.driver.getDigital(DigitalOperation.VisionEnableOffboardStream);
         boolean enableVideoProcessing = !this.driver.getDigital(DigitalOperation.VisionEnableOffboardProcessing);
+        this.logger.logBoolean(OffboardVisionManager.logName, "enableVision", enableVision);
         this.logger.logBoolean(OffboardVisionManager.logName, "enableStream", enableVideoStream);
         this.logger.logBoolean(OffboardVisionManager.logName, "enableProcessing", enableVideoProcessing);
 
-        // this.ringLight.set(enableVideoProcessing);
+        // this.ringLight.set(enableVision);
     }
 
     @Override

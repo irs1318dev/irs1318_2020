@@ -10,18 +10,17 @@ import frc.robot.mechanisms.PowerCellMechanism;
  * Task that applies a single operation from a group of related operations for a short period of time.
  * 
  */
-public class TurretMoveRightTask extends TimedTask implements IControlTask
+public class TurretMoveTask extends TimedTask implements IControlTask
 {
     private final double turnAmount;
     private double desiredAngle;
 
     /**
-     * Initializes a new CompositeOperationTask
+     * Initializes a new TurretMoveTask
      * @param duration to wait in seconds
-     * @param toPerform the operation to perform by setting to true for duration
-     * @param possibleOperations to set of linked operations that should be set to false for duration
+     * @param turnAmount the amount to turn (positive == left, negative == right)
      */
-    public TurretMoveRightTask(double duration, double turnAmount)
+    public TurretMoveTask(double duration, double turnAmount)
     {
         super(duration);
         this.turnAmount = turnAmount;
@@ -33,9 +32,11 @@ public class TurretMoveRightTask extends TimedTask implements IControlTask
     @Override
     public void begin()
     {
-        PowerCellMechanism powerCell = this.getInjector().getInstance(PowerCellMechanism.class);
-        this.desiredAngle = this.turnAmount + powerCell.getTurretPosition();
         super.begin();
+
+        PowerCellMechanism powerCell = this.getInjector().getInstance(PowerCellMechanism.class);
+        this.desiredAngle = powerCell.getTurretPosition() + this.turnAmount;
+
         this.setAnalogOperationState(AnalogOperation.PowerCellTurretPosition, desiredAngle);
     }
 
@@ -55,6 +56,7 @@ public class TurretMoveRightTask extends TimedTask implements IControlTask
     public void end()
     {
         super.end();
+
         this.setAnalogOperationState(AnalogOperation.PowerCellTurretPosition, -1.0);
     }
 }
