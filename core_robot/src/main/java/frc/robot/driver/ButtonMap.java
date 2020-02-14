@@ -55,6 +55,8 @@ public class ButtonMap implements IButtonMap
             AnalogAxis.XBONE_RSX,
             ElectronicsConstants.INVERT_X_AXIS,
             .1),
+        //turret?
+
         // new AnalogOperationDescription(
         //     AnalogOperation.PowerCellTurretPosition,
         //     UserInputDevice.Operator,
@@ -269,7 +271,55 @@ public class ButtonMap implements IButtonMap
                 AnalogOperation.PowerCellFlywheelVelocity,
                 DigitalOperation.VisionDisable,
             }),
-
+        new MacroOperationDescription(
+            MacroOperation.TurretMoveLeft,
+            UserInputDevice.Operator,
+            UserInputDeviceButton.XBONE_X_BUTTON,
+            Shift.OperatorDebug,
+            Shift.OperatorDebug,
+            ButtonType.Toggle,
+            () -> new TurretMoveLeftTask(0.1, 5.0),
+            new IOperation[]
+            {
+                AnalogOperation.PowerCellTurretPosition,
+            }),
+        new MacroOperationDescription(
+            MacroOperation.TurretMoveRight,
+            UserInputDevice.Operator,
+            UserInputDeviceButton.XBONE_B_BUTTON,
+            Shift.OperatorDebug,
+            Shift.OperatorDebug,
+            ButtonType.Toggle,
+            () -> new TurretMoveRightTask(0.1, -5.0),
+            new IOperation[]
+            {
+                AnalogOperation.PowerCellTurretPosition,
+            }),
+        new MacroOperationDescription(
+            MacroOperation.IncreaseFlyWheelSpeed,
+            UserInputDevice.Operator,
+            UserInputDeviceButton.XBONE_Y_BUTTON,
+            Shift.OperatorDebug,
+            Shift.OperatorDebug,
+            ButtonType.Toggle,
+            () -> new IncreaseFlyWheelSpeedTask(0.1, 5.0),
+            new IOperation[]
+            {
+                AnalogOperation.PowerCellFlywheelVelocity,
+            }),
+        new MacroOperationDescription(
+            MacroOperation.DecreaseFlyWheelSpeed,
+            UserInputDevice.Operator,
+            UserInputDeviceButton.XBONE_A_BUTTON,
+            Shift.OperatorDebug,
+            Shift.OperatorDebug,
+            ButtonType.Toggle,
+            () -> new DecreaseFlyWheelSpeedTask(0.1, -5.0),
+            new IOperation[]
+            {
+                AnalogOperation.PowerCellFlywheelVelocity,
+            }), 
+ 
         // Testing macros:
         new MacroOperationDescription(
             MacroOperation.FollowSomePath,

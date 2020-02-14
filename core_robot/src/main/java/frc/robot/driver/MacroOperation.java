@@ -18,6 +18,10 @@ public enum MacroOperation implements IOperation
     SpinUpPointBlank,
     TracerShot,
     FullHopperShot,
+    TurretMoveLeft,
+    TurretMoveRight,
+    IncreaseFlyWheelSpeed,
+    DecreaseFlyWheelSpeed,
 
     // Testing operations
     FollowSomePath,

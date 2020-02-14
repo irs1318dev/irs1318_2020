@@ -539,7 +539,17 @@ public class MacroOperationDescription extends OperationDescription
         this.macroCancelOperations = macroCancelOperations;
     }
 
-    public boolean shouldClearInterrupt()
+    public MacroOperationDescription(MacroOperation increaseflywheelspeed, UserInputDevice operator,
+			UserInputDeviceButton xboneYButton, Shift operatordebug, Shift operatordebug2, ButtonType toggle,
+			Object object, IOperation[] iOperations) {
+	}
+
+	public MacroOperationDescription(MacroOperation increaseflywheelspeed, UserInputDevice operator,
+			UserInputDeviceButton xboneYButton, Shift operatordebug, Shift operatordebug2, ButtonType toggle,
+			Object object, IOperation[] iOperations) {
+	}
+
+	public boolean shouldClearInterrupt()
     {
         return this.clearInterrupt;
     }
