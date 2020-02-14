@@ -129,6 +129,36 @@ public class ButtonMap implements IButtonMap
             Shift.OperatorDebug,
             Shift.None,
             ButtonType.Simple),
+
+            //climber operations
+        new DigitalOperationDescription(
+            DigitalOperation.ClimberHookLock,
+            UserInputDevice.Driver,
+            UserInputDeviceButton.XBONE_X_BUTTON,
+            Shift.DriverDebug,
+            Shift.DriverDebug,
+            ButtonType.Click),//correct?
+        new DigitalOperationDescription(
+            DigitalOperation.ClimberExtend,
+            UserInputDevice.Driver,
+            UserInputDeviceButton.XBONE_Y_BUTTON,
+            Shift.DriverDebug,
+            Shift.DriverDebug,
+            ButtonType.Click),
+        new DigitalOperationDescription(
+            DigitalOperation.ClimberRetract,
+            UserInputDevice.Driver,
+            UserInputDeviceButton.XBONE_A_BUTTON,
+            Shift.DriverDebug,
+            Shift.DriverDebug,
+            ButtonType.Click),
+        new DigitalOperationDescription(
+            DigitalOperation.ClimberHookRelease,
+            UserInputDevice.Driver,
+            UserInputDeviceButton.XBONE_B_BUTTON,
+            Shift.DriverDebug,
+            Shift.DriverDebug,
+            ButtonType.Click),
     };
 
     public static MacroOperationDescription[] MacroSchema = new MacroOperationDescription[]
@@ -318,7 +348,33 @@ public class ButtonMap implements IButtonMap
             new IOperation[]
             {
                 AnalogOperation.PowerCellFlywheelVelocity,
-            }), 
+            }),
+        new MacroOperationDescription(
+            MacroOperation.AlignShotVision,
+            UserInputDevice.Operator,
+            UserInputDeviceButton.XBONE_A_BUTTON,
+            Shift.OperatorDebug,
+            Shift.None,
+            ButtonType.Click, //correct?
+            () -> new TurretVisionCenteringTask(),
+            new IOperation[]
+            {
+                AnalogOperation.PowerCellTurretPosition,
+                DigitalOperation.VisionDisable,
+            }),
+        new MacroOperationDescription(
+            MacroOperation.AlignShotVision,
+            UserInputDevice.Operator,
+            UserInputDeviceButton.XBONE_A_BUTTON,
+            Shift.OperatorDebug,
+            Shift.None,
+            ButtonType.Click, //correct?
+            () -> new TurretVisionCenteringTask(),
+            new IOperation[]
+            {
+                AnalogOperation.PowerCellTurretPosition,
+                DigitalOperation.VisionDisable,
+            }),
  
         // Testing macros:
         new MacroOperationDescription(
