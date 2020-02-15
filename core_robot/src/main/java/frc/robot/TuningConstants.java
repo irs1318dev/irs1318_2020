@@ -181,6 +181,8 @@ public class TuningConstants
     public static final double POWERCELL_FLYWHEEL_MEDIUM_MOTOR_VELOCITY = 0.6;
 
     public static final double POWERCELL_LEFT_TURN_TURRET = -5.0;
+    public static final double POWERCELL_MIN_TURRET_OFFSET= 1.0;
+    
 
     //================================================== DriveTrain ==============================================================
 

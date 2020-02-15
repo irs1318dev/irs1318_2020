@@ -1,15 +1,18 @@
 package frc.robot.driver.controltasks;
 
+import frc.robot.TuningConstants;
 import frc.robot.driver.*;
 import frc.robot.driver.common.IControlTask;
 import frc.robot.mechanisms.*;
 
 public class TurretAlignTask extends ControlTaskBase implements IControlTask
 {
-    public PowerCellMechanism powerCell;
-
-    public TurretAlignTask()
+    private final double angle;
+    private PowerCellMechanism powerCell;
+    
+    public TurretAlignTask(double angle)
     {
+        this.angle = angle;
     }
 
     @Override
@@ -21,7 +24,7 @@ public class TurretAlignTask extends ControlTaskBase implements IControlTask
     @Override
     public void update()
     {
-        this.setAnalogOperationState(AnalogOperation.PowerCellTurretPosition, 0.0);
+        this.setAnalogOperationState(AnalogOperation.PowerCellTurretPosition, this.angle);
     }
 
     @Override
@@ -32,7 +35,7 @@ public class TurretAlignTask extends ControlTaskBase implements IControlTask
     @Override
     public boolean hasCompleted()
     {
-        if (this.powerCell.getTurretPosition() == 0.0)
+        if (Math.abs(this.powerCell.getTurretPosition() - this.angle) <= TuningConstants.POWERCELL_MIN_TURRET_OFFSET)
         {
             return true;
         }
