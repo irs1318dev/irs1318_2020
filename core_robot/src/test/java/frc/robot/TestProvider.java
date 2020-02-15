@@ -308,10 +308,4 @@ public class TestProvider implements IRobotProvider
     {
         return null;
     }
-
-    @Override
-    public <V> ISendableChooser<V> getSendableChooser()
-    {
-        return null;
-    }
 }

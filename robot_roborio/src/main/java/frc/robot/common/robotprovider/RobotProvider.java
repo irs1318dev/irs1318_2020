@@ -190,9 +190,4 @@ public class RobotProvider implements IRobotProvider
     {
         return new NetworkTableProvider();
     }
-
-    public <V> ISendableChooser<V> getSendableChooser()
-    {
-        return new SendableChooserWrapper<V>();
-    }
 }

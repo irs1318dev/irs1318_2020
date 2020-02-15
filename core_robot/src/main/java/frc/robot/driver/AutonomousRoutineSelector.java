@@ -46,16 +46,18 @@ public class AutonomousRoutineSelector
         this.logger = logger;
         this.pathManager = pathManager;
 
-        this.routineChooser = provider.getSendableChooser();
+        INetworkTableProvider networkTableProvider = provider.getNetworkTableProvider();
+
+        this.routineChooser = networkTableProvider.getSendableChooser();
         this.routineChooser.addDefault("None", AutoRoutine.None);
         //this.routineChooser.addObject("Routine1", AutoRoutine.Routine1);
-        this.logger.addChooser("Auto Routine", this.routineChooser);
+        networkTableProvider.addChooser("Auto Routine", this.routineChooser);
 
-        this.positionChooser = provider.getSendableChooser();
+        this.positionChooser = networkTableProvider.getSendableChooser();
         this.positionChooser.addDefault("center", StartPosition.Center);
         this.positionChooser.addObject("left", StartPosition.Left);
         this.positionChooser.addObject("right", StartPosition.Right);
-        this.logger.addChooser("Start Position", this.positionChooser);
+        networkTableProvider.addChooser("Start Position", this.positionChooser);
 
         this.generateDynamicPaths();
     }

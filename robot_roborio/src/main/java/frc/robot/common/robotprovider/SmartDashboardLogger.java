@@ -142,14 +142,4 @@ public class SmartDashboardLogger implements IDashboardLogger
     public void flush()
     {
     }
-
-    /**
-     * Add a sendable chooser to the smart dashboard
-     */
-    @Override
-    public <V> void addChooser(String name, ISendableChooser<V> chooser)
-    {
-        SendableChooserWrapper<V> wrappedChooser = (SendableChooserWrapper<V>)chooser;
-        SmartDashboard.putData(name, wrappedChooser.wrappedObject);
-    }
 }
