@@ -16,6 +16,7 @@ public enum MacroOperation implements IOperation
     AlignShotVision,
     SpinUpVisionDistance,
     SpinUpPointBlank,
+    SpinUpMedium,
     TracerShot,
     FullHopperShot,
     TurretMoveLeft,

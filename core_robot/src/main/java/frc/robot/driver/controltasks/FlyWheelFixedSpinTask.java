@@ -4,7 +4,7 @@ import frc.robot.driver.AnalogOperation;
 import frc.robot.driver.common.IControlTask;
 import frc.robot.TuningConstants;
 
-public class FlyWheelSpinTask extends ControlTaskBase implements IControlTask
+public class FlyWheelFixedSpinTask extends ControlTaskBase implements IControlTask
 {
     private final double speed;
 
@@ -12,7 +12,7 @@ public class FlyWheelSpinTask extends ControlTaskBase implements IControlTask
      * Initializes a new FlyWheelSpinTask
      * @param speed to spin the flywheel
      */
-    public FlyWheelSpinTask(double speed)
+    public FlyWheelFixedSpinTask(double speed)
     {
         this.speed = speed;
     }

@@ -270,7 +270,7 @@ public class ButtonMap implements IButtonMap
             Shift.OperatorDebug,
             Shift.None,
             ButtonType.Toggle,
-            () -> new FlyWheelVelocityTask(),
+            () -> new FlyWheelVisionSpinTask(),
             new IOperation[]
             {
                 DigitalOperation.PowerCellHoodPointBlank,
@@ -287,7 +287,41 @@ public class ButtonMap implements IButtonMap
             Shift.OperatorDebug,
             Shift.None,
             ButtonType.Toggle,
-            () -> new FlyWheelPointBlankTask(),
+            () -> ConcurrentTask.AllTasks(
+                new FlyWheelHoodTask(DigitalOperation.PowerCellHoodPointBlank),
+                new FlyWheelFixedSpinTask(TuningConstants.POWERCELL_FLYWHEEL_POINT_BLANK_MOTOR_VELOCITY)),
+            new IOperation[]
+            {
+                DigitalOperation.PowerCellHoodPointBlank,
+                DigitalOperation.PowerCellHoodShort,
+                DigitalOperation.PowerCellHoodMedium,
+                DigitalOperation.PowerCellHoodLong,
+                AnalogOperation.PowerCellFlywheelVelocity,
+                DigitalOperation.VisionEnable,
+            }),
+        new MacroOperationDescription(
+            MacroOperation.AlignShotVision,
+            UserInputDevice.Operator,
+            UserInputDeviceButton.XBONE_A_BUTTON,
+            Shift.OperatorDebug,
+            Shift.None,
+            ButtonType.Toggle,
+            () -> new TurretVisionCenteringTask(),
+            new IOperation[]
+            {
+                AnalogOperation.PowerCellTurretPosition,
+                DigitalOperation.VisionEnable,
+            }),
+        new MacroOperationDescription(
+            MacroOperation.SpinUpMedium,
+            UserInputDevice.Operator,
+            UserInputDeviceButton.XBONE_B_BUTTON,
+            Shift.OperatorDebug,
+            Shift.None,
+            ButtonType.Toggle,
+            () -> ConcurrentTask.AllTasks(
+                new FlyWheelHoodTask(DigitalOperation.PowerCellHoodMedium),
+                new FlyWheelFixedSpinTask(TuningConstants.POWERCELL_FLYWHEEL_MEDIUM_MOTOR_VELOCITY)),
             new IOperation[]
             {
                 DigitalOperation.PowerCellHoodPointBlank,
@@ -344,19 +378,6 @@ public class ButtonMap implements IButtonMap
             new IOperation[]
             {
                 AnalogOperation.PowerCellFlywheelVelocity,
-            }),
-        new MacroOperationDescription(
-            MacroOperation.AlignShotVision,
-            UserInputDevice.Operator,
-            UserInputDeviceButton.XBONE_A_BUTTON,
-            Shift.OperatorDebug,
-            Shift.None,
-            ButtonType.Toggle,
-            () -> new TurretVisionCenteringTask(),
-            new IOperation[]
-            {
-                AnalogOperation.PowerCellTurretPosition,
-                DigitalOperation.VisionEnable,
             }),
         new MacroOperationDescription(
             MacroOperation.StopFlywheelPlease,

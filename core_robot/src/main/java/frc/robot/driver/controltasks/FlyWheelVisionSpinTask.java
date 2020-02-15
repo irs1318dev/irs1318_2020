@@ -9,7 +9,7 @@ import frc.robot.mechanisms.OffboardVisionManager;
 /**
  * Task that turns the turret a certain amount clockwise or counterclockwise based on vision center
  */
-public class FlyWheelVelocityTask extends ControlTaskBase implements IControlTask
+public class FlyWheelVisionSpinTask extends ControlTaskBase implements IControlTask
 {
     private static final int NO_CENTER_THRESHOLD = 40;
     private static final double[][] HOOD_RANGES =
@@ -27,7 +27,7 @@ public class FlyWheelVelocityTask extends ControlTaskBase implements IControlTas
     /**
     * Initializes a new FlyWheelVelocityTask
     */
-    public FlyWheelVelocityTask()
+    public FlyWheelVisionSpinTask()
     {
     }
 
@@ -52,21 +52,30 @@ public class FlyWheelVelocityTask extends ControlTaskBase implements IControlTas
         if (this.distance != null)
         {
             double flywheelSpeed = 0.0;
-            if (this.distance >= FlyWheelVelocityTask.HOOD_RANGES[0][0] &&
-                this.distance < FlyWheelVelocityTask.HOOD_RANGES[0][1])
+            if (this.distance >= FlyWheelVisionSpinTask.HOOD_RANGES[0][0] &&
+                this.distance < FlyWheelVisionSpinTask.HOOD_RANGES[0][1])
             {
+                this.setDigitalOperationState(DigitalOperation.PowerCellHoodPointBlank, false);
                 this.setDigitalOperationState(DigitalOperation.PowerCellHoodShort, true);
+                this.setDigitalOperationState(DigitalOperation.PowerCellHoodMedium, false);
+                this.setDigitalOperationState(DigitalOperation.PowerCellHoodLong, false);
                 flywheelSpeed = 0.0; // do calculations to find speed based off distance
             }
-            else if (this.distance >= FlyWheelVelocityTask.HOOD_RANGES[1][0] &&
-                this.distance < FlyWheelVelocityTask.HOOD_RANGES[1][1])
+            else if (this.distance >= FlyWheelVisionSpinTask.HOOD_RANGES[1][0] &&
+                this.distance < FlyWheelVisionSpinTask.HOOD_RANGES[1][1])
             {
+                this.setDigitalOperationState(DigitalOperation.PowerCellHoodPointBlank, false);
+                this.setDigitalOperationState(DigitalOperation.PowerCellHoodShort, false);
                 this.setDigitalOperationState(DigitalOperation.PowerCellHoodMedium, true);
+                this.setDigitalOperationState(DigitalOperation.PowerCellHoodLong, false);;
                 flywheelSpeed = 0.0; // do calculations to find speed based off distance
             }
-            else if (this.distance >= FlyWheelVelocityTask.HOOD_RANGES[2][0] &&
-                this.distance < FlyWheelVelocityTask.HOOD_RANGES[2][1])
+            else if (this.distance >= FlyWheelVisionSpinTask.HOOD_RANGES[2][0] &&
+                this.distance < FlyWheelVisionSpinTask.HOOD_RANGES[2][1])
             {
+                this.setDigitalOperationState(DigitalOperation.PowerCellHoodPointBlank, false);
+                this.setDigitalOperationState(DigitalOperation.PowerCellHoodShort, false);
+                this.setDigitalOperationState(DigitalOperation.PowerCellHoodMedium, false);
                 this.setDigitalOperationState(DigitalOperation.PowerCellHoodLong, true);
                 flywheelSpeed = 0.0; // do calculations to find speed based off distance
             }
@@ -82,6 +91,11 @@ public class FlyWheelVelocityTask extends ControlTaskBase implements IControlTas
     public void end()
     {
         this.setDigitalOperationState(DigitalOperation.VisionEnable, false);
+
+        this.setDigitalOperationState(DigitalOperation.PowerCellHoodPointBlank, false);
+        this.setDigitalOperationState(DigitalOperation.PowerCellHoodShort, false);
+        this.setDigitalOperationState(DigitalOperation.PowerCellHoodMedium, false);
+        this.setDigitalOperationState(DigitalOperation.PowerCellHoodLong, false);
         this.setAnalogOperationState(AnalogOperation.PowerCellFlywheelVelocity, TuningConstants.STHOPE_BLEASE);
     }
 
@@ -111,6 +125,6 @@ public class FlyWheelVelocityTask extends ControlTaskBase implements IControlTas
             this.noCenterCount = 0;
         }
 
-        return this.noCenterCount >= FlyWheelVelocityTask.NO_CENTER_THRESHOLD;
+        return this.noCenterCount >= FlyWheelVisionSpinTask.NO_CENTER_THRESHOLD;
     }
 }
