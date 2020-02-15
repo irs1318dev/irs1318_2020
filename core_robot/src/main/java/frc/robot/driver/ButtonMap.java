@@ -358,6 +358,18 @@ public class ButtonMap implements IButtonMap
                 AnalogOperation.PowerCellTurretPosition,
                 DigitalOperation.VisionEnable,
             }),
+        new MacroOperationDescription(
+            MacroOperation.StopFlywheelPlease,
+            UserInputDevice.Operator,
+            UserInputDeviceButton.XBONE_LEFT_STICK_BUTTON,
+            ButtonType.Simple,
+            () -> new WaitTask(0.0),
+            new IOperation[]
+            {
+                AnalogOperation.PowerCellFlywheelVelocity,
+                DigitalOperation.PowerCellKick,
+                DigitalOperation.PowerCellMoveOneSlot,
+            }),
  
         // Testing macros:
         new MacroOperationDescription(
