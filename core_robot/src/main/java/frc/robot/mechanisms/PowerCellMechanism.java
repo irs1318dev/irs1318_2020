@@ -45,6 +45,8 @@ public class PowerCellMechanism implements IMechanism
     private double turretError;
     // private int carouselCount;
 
+    private double startingTurretOffsetAngle;
+
     private boolean[] hasPowerCell;
     private int currentCarouselIndex;
 
@@ -172,6 +174,11 @@ public class PowerCellMechanism implements IMechanism
     @Override
     public void update()
     {
+        double offset = this.driver.getAnalog(AnalogOperation.PowerCellTurretOffset);
+        if (offset != 0.0)
+        {
+            this.startingTurretOffsetAngle = offset;
+        }
         // if (this.driver.getDigital(DigitalOperation.PowerCellHoodPointBlank))
         // {
         //     this.innerHood.set(DoubleSolenoidValue.Reverse);
@@ -245,11 +252,11 @@ public class PowerCellMechanism implements IMechanism
 
         this.logger.logNumber(PowerCellMechanism.logName, "flyWheelVelocitySetpoint", flyWheelVelocitySetpoint);
 
-        double turretAnalogPosition = this.driver.getAnalog(AnalogOperation.PowerCellTurretPosition);
-        if (turretAnalogPosition < 0)
+        double turretDesiredPosition = this.driver.getAnalog(AnalogOperation.PowerCellTurretPosition);
+        if (turretDesiredPosition < 0)
         {
-            turretAnalogPosition = Helpers.EnforceRange(turretAnalogPosition, HardwareConstants.POWERCELL_TURRET_MINIMUM_RANGE, HardwareConstants.POWERCELL_TURRET_MAXIMUM_RANGE);
-            this.turret.set(turretAnalogPosition * HardwareConstants.POWERCELL_TURRET_DEGREES_TO_TICKS);
+            turretDesiredPosition = Helpers.EnforceRange(turretDesiredPosition, HardwareConstants.POWERCELL_TURRET_MINIMUM_RANGE, HardwareConstants.POWERCELL_TURRET_MAXIMUM_RANGE);
+            this.turret.set((turretDesiredPosition + startingTurretOffsetAngle) * HardwareConstants.POWERCELL_TURRET_DEGREES_TO_TICKS);
         }
 
         // if (isIntaking && this.state == CarouselState.Stationary)  // if intaking and currently stationary, start indexing
@@ -317,7 +324,7 @@ public class PowerCellMechanism implements IMechanism
 
     public double getTurretPosition()
     {
-        return (this.turretPosition * HardwareConstants.POWERCELL_TURRET_DEGREES_TO_TICKS);
+        return ((this.turretPosition * HardwareConstants.POWERCELL_TURRET_DEGREES_TO_TICKS) + this.startingTurretOffsetAngle);
     }
 
     public double getFlywheelVelocity()

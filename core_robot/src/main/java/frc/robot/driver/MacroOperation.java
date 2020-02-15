@@ -24,6 +24,7 @@ public enum MacroOperation implements IOperation
     IncreaseFlyWheelSpeed,
     DecreaseFlyWheelSpeed,
     StopFlywheelPlease,
+    TurretOffsetTask,
 
     // Testing operations
     FollowSomePath,
