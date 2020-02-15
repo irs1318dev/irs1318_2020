@@ -35,7 +35,7 @@ public class RoadRunnerTankTranslator
             //.splineTo(new Pose2d(120, 60.0, 0), interpolator)
             .build();
 
-        boolean isBackwards = false;
+        boolean isBackwards = true;
 
         PathManager.writePathToFile(
             RoadRunnerTankTranslator.filePath,
