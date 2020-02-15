@@ -5,8 +5,8 @@ public enum DigitalOperation implements IOperation
     // Vision operations:
     VisionForceDisable,
     VisionEnable,
-    VisionEnableOffboardStream,
-    VisionEnableOffboardProcessing,
+    VisionDisableOffboardStream,
+    VisionDisableOffboardProcessing,
 
     // Compressor operations:
     CompressorForceDisable,
