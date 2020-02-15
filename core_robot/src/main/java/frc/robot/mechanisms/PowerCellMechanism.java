@@ -18,8 +18,8 @@ public class PowerCellMechanism implements IMechanism
     private final IDashboardLogger logger;
 
     // private final IDoubleSolenoid intakeSolenoid;
-    // private final ITalonSRX rollerMotorInner;
-    // private final ITalonSRX rollerMotorOuter;
+    // private final ISparkMax rollerMotorInner;
+    // private final ISparkMax rollerMotorOuter;
 
     // private final IDoubleSolenoid outerHood;
     // private final IDoubleSolenoid innerHood;
@@ -63,14 +63,14 @@ public class PowerCellMechanism implements IMechanism
         // this.outerHood = provider.getDoubleSolenoid(ElectronicsConstants.PCM_A_MODULE, ElectronicsConstants.POWERCELL_OUTER_HOOD_FORWARD_PCM, ElectronicsConstants.POWERCELL_OUTER_HOOD_REVERSE_PCM);
         // this.innerHood = provider.getDoubleSolenoid(ElectronicsConstants.PCM_A_MODULE, ElectronicsConstants.POWERCELL_INNER_HOOD_FORWARD_PCM, ElectronicsConstants.POWERCELL_INNER_HOOD_REVERSE_PCM);
 
-        // this.rollerMotorInner = provider.getTalonSRX(ElectronicsConstants.POWERCELL_INNER_ROLLER_MOTOR_CAN_ID);
+        // this.rollerMotorInner = provider.getSparkMax(ElectronicsConstants.POWERCELL_INNER_ROLLER_MOTOR_CAN_ID, SparkMaxMotorType.Brushed);
         // this.rollerMotorInner.setInvertOutput(HardwareConstants.POWERCELL_ROLLER_MOTOR_INNER_INVERT_OUTPUT);
-        // this.rollerMotorInner.setControlMode(TalonSRXControlMode.PercentOutput);
+        // this.rollerMotorInner.setControlMode(SparkMaxControlMode.PercentOutput);
         // this.rollerMotorInner.setNeutralMode(MotorNeutralMode.Brake);
 
-        // this.rollerMotorOuter = provider.getTalonSRX(ElectronicsConstants.POWERCELL_OUTER_ROLLER_MOTOR_CAN_ID);
+        // this.rollerMotorOuter = provider.getSparkMax(ElectronicsConstants.POWERCELL_OUTER_ROLLER_MOTOR_CAN_ID, SparkMaxMotorType.Brushed);
         // this.rollerMotorOuter.setInvertOutput(HardwareConstants.POWERCELL_ROLLER_MOTOR_OUTER_INVERT_OUTPUT);
-        // this.rollerMotorOuter.setControlMode(TalonSRXControlMode.PercentOutput);
+        // this.rollerMotorOuter.setControlMode(SparkMaxControlMode.PercentOutput);
         // this.rollerMotorOuter.setNeutralMode(MotorNeutralMode.Brake);
 
         this.flyWheel = provider.getTalonSRX(ElectronicsConstants.POWERCELL_FLYWHEEL_MASTER_CAN_ID);
@@ -290,9 +290,9 @@ public class PowerCellMechanism implements IMechanism
     @Override
     public void stop()
     {
-        // this.genevaMotor.set(0.0);
-        // this.rollerMotorInner.set(0.0);
-        // this.rollerMotorOuter.set(0.0);
+        // this.genevaMotor.stop();
+        // this.rollerMotorInner.stop();
+        // this.rollerMotorOuter.stop();
         // this.lowerHood.set(DoubleSolenoidValue.Off);
         // this.upperHood.set(DoubleSolenoidValue.Off);
         // this.kickerSolenoid.set(DoubleSolenoidValue.Off);
