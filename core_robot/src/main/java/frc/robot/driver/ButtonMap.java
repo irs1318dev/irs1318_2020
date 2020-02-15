@@ -382,7 +382,7 @@ public class ButtonMap implements IButtonMap
         new MacroOperationDescription(
             MacroOperation.StopFlywheelPlease,
             UserInputDevice.Operator,
-            UserInputDeviceButton.XBONE_LEFT_STICK_BUTTON,
+            UserInputDeviceButton.XBONE_RIGHT_STICK_BUTTON,
             ButtonType.Simple,
             () -> new WaitTask(0.0),
             new IOperation[]
