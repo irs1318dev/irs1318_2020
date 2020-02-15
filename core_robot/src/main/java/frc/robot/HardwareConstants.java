@@ -31,7 +31,8 @@ public class HardwareConstants
 
     public static final double POWERCELL_TURRET_DEGREES_TO_TICKS = 4096.0 / 360.0; // (360 degrees => 4096 ticks)
     public static final double POWERCELL_TURRET_TICKS_TO_DEGREES = 360.0 / 4096.0;
-    public static final double POWERCELL_TURRET_MAXIMUM_RANGE = 135.0; // -135 to 135 degrees
+    public static final double POWERCELL_TURRET_MINIMUM_RANGE = -45.0;
+    public static final double POWERCELL_TURRET_MAXIMUM_RANGE = 360.0;
 
     //================================================== Climber =================================================================
 

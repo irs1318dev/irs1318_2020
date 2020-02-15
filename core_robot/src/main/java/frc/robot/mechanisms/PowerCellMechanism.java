@@ -246,9 +246,9 @@ public class PowerCellMechanism implements IMechanism
         this.logger.logNumber(PowerCellMechanism.logName, "flyWheelVelocitySetpoint", flyWheelVelocitySetpoint);
 
         double turretAnalogPosition = this.driver.getAnalog(AnalogOperation.PowerCellTurretPosition);
-
-        if(turretAnalogPosition < 0){
-            turretAnalogPosition = Helpers.EnforceRange(turretAnalogPosition, 0.0, 360.0);
+        if (turretAnalogPosition < 0)
+        {
+            turretAnalogPosition = Helpers.EnforceRange(turretAnalogPosition, HardwareConstants.POWERCELL_TURRET_MINIMUM_RANGE, HardwareConstants.POWERCELL_TURRET_MAXIMUM_RANGE);
             this.turret.set(turretAnalogPosition * HardwareConstants.POWERCELL_TURRET_DEGREES_TO_TICKS);
         }
 
