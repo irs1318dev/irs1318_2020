@@ -149,10 +149,12 @@ public class PowerCellMechanism implements IMechanism
         // int newCarouselCount = this.carouselCounter.get();
         // if (newCarouselCount > this.carouselCount)
         // {
-        //     currentCarouselIndex = (currentCarouselIndex + 1) % 5;
+        //     this.currentCarouselIndex = (currentCarouselIndex + 1) % 5;
+
+            // only register whether throughbeam is broken when we are switching to a new slot
+        //     this.hasPowerCell[this.currentCarouselIndex] = throughBeamBroken;
         // }
 
-        // this.hasPowerCell[currentCarouselIndex] = throughBeamBroken;
         // this.carouselCount = newCarouselCount;
 
         this.logger.logNumber(PowerCellMechanism.logName, "turretVelocity", this.turretVelocity);
@@ -193,9 +195,10 @@ public class PowerCellMechanism implements IMechanism
 
         // if (this.driver.getDigital(DigitalOperation.PowerCellKick))
         // {
+        //     this.hasPowerCell[this.currentCarouselIndex] = false;
         //     this.kickerSolenoid.set(DoubleSolenoidValue.Forward);
         // }
-        // else if(!(driver.getDigital(DigitalOperation.PowerCellKick)))
+        // else
         // {
         //     this.kickerSolenoid.set(DoubleSolenoidValue.Reverse);
         // }
