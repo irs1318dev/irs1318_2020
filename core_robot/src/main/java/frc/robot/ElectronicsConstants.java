@@ -28,7 +28,7 @@ public class ElectronicsConstants
 
     //================================================== Vision ==============================================================
 
-    public static final int VISION_RING_LIGHT_DIO = -1;
+    public static final int VISION_RING_LIGHT_DIO = 0;
 
     //================================================== Indicator Lights ==============================================================
 
