@@ -220,6 +220,11 @@ public class PowerCellMechanism implements IMechanism
         //     this.rollerMotorInner.set(TuningConstants.POWERCELL_INNER_ROLLER_MOTOR_OUTTAKE_POWER);
         //     this.rollerMotorOuter.set(TuningConstants.POWERCELL_OUTER_ROLLER_MOTOR_OUTTAKE_POWER);
         // }
+        // else
+        // {
+        //     this.rollerMotorInner.set(TuningConstants.STHOPE_BLEASE);
+        //     this.rollerMotorOuter.set(TuningConstants.STHOPE_BLEASE);
+        // }
 
         double flyWheelVelocitySetpoint;
         double flyWheelVelocityPercentage = this.driver.getAnalog(AnalogOperation.PowerCellFlywheelVelocity);
