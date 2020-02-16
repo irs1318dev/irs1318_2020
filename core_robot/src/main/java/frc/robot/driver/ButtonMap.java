@@ -49,36 +49,29 @@ public class ButtonMap implements IButtonMap
             .1),
 
         // PowerCell operations
-        new AnalogOperationDescription( // for testing:
+        new AnalogOperationDescription(
             AnalogOperation.PowerCellTurretPosition,
             UserInputDevice.Operator,
             AnalogAxis.XBONE_RSX,
+            AnalogAxis.XBONE_RSY,
+            Shift.OperatorDebug,
+            Shift.OperatorDebug,
             ElectronicsConstants.INVERT_X_AXIS,
-            .1,
-            -1.0),
-        // new AnalogOperationDescription(
-        //     AnalogOperation.PowerCellTurretPosition,
-        //     UserInputDevice.Operator,
-        //     AnalogAxis.XBONE_RSX,
-        //     AnalogAxis.XBONE_RSY,
-        //     Shift.OperatorDebug,
-        //     Shift.OperatorDebug,
-        //     ElectronicsConstants.INVERT_X_AXIS,
-        //     ElectronicsConstants.INVERT_Y_AXIS,
-        //     0.05,
-        //     1.0,
-        //     HardwareConstants.POWERCELL_TURRET_MAGIC_DONT_MOVE_VALUE,
-        //     (x, y) ->
-        //     {
-        //         double angle = Helpers.convertToPolarAngle(x, y);
-        //         if (angle == -1.0)
-        //         {
-        //             return HardwareConstants.POWERCELL_TURRET_MAGIC_DONT_MOVE_VALUE;
-        //         }
+            ElectronicsConstants.INVERT_Y_AXIS,
+            0.05,
+            1.0,
+            HardwareConstants.POWERCELL_TURRET_MAGIC_DONT_MOVE_VALUE,
+            (x, y) ->
+            {
+                double angle = Helpers.convertToPolarAngle(x, y);
+                if (angle == -1.0)
+                {
+                    return HardwareConstants.POWERCELL_TURRET_MAGIC_DONT_MOVE_VALUE;
+                }
 
-        //         // change to straight forward being 0, left being 90, down being 180, right being 270, opposite of the POV.
-        //         return (angle + 270.0) % 360.0;
-        //     }),
+                // change to straight forward being 0, left being 90, down being 180, right being 270, opposite of the POV.
+                return (angle + 270.0) % 360.0;
+            }),
     };
 
     public static DigitalOperationDescription[] DigitalOperationSchema = new DigitalOperationDescription[]

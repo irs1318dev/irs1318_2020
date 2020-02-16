@@ -80,7 +80,7 @@ public class TurretVisionCenteringTask extends ControlTaskBase implements IContr
         {
             this.setAnalogOperationState(
                 AnalogOperation.PowerCellTurretPosition,
-                turretPosition - this.turnPidHandler.calculatePosition(0.0, currentMeasuredAngle));
+                turretPosition + this.turnPidHandler.calculatePosition(0.0, currentMeasuredAngle));
         }
     }
 
@@ -156,13 +156,13 @@ public class TurretVisionCenteringTask extends ControlTaskBase implements IContr
     private PIDHandler createTurnHandler()
     {
         return new PIDHandler(
-            TuningConstants.VISION_STATIONARY_CENTERING_PID_KP,
-            TuningConstants.VISION_STATIONARY_CENTERING_PID_KI,
-            TuningConstants.VISION_STATIONARY_CENTERING_PID_KD,
-            TuningConstants.VISION_STATIONARY_CENTERING_PID_KF,
-            TuningConstants.VISION_STATIONARY_CENTERING_PID_KS,
-            TuningConstants.VISION_STATIONARY_CENTERING_PID_MIN,
-            TuningConstants.VISION_STATIONARY_CENTERING_PID_MAX,
+            TuningConstants.TURRET_VISION_STATIONARY_CENTERING_PID_KP,
+            TuningConstants.TURRET_VISION_STATIONARY_CENTERING_PID_KI,
+            TuningConstants.TURRET_VISION_STATIONARY_CENTERING_PID_KD,
+            TuningConstants.TURRET_VISION_STATIONARY_CENTERING_PID_KF,
+            TuningConstants.TURRET_VISION_STATIONARY_CENTERING_PID_KS,
+            TuningConstants.TURRET_VISION_STATIONARY_CENTERING_PID_MIN,
+            TuningConstants.TURRET_VISION_STATIONARY_CENTERING_PID_MAX,
             this.getInjector().getInstance(ITimer.class));
     }
 }
