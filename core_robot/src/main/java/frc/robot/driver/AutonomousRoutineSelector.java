@@ -31,6 +31,7 @@ public class AutonomousRoutineSelector
     public enum AutoRoutine
     {
         None,
+        Shoot3Pick3,
     }
 
     /**
@@ -50,7 +51,7 @@ public class AutonomousRoutineSelector
 
         this.routineChooser = networkTableProvider.getSendableChooser();
         this.routineChooser.addDefault("None", AutoRoutine.None);
-        //this.routineChooser.addObject("Routine1", AutoRoutine.Routine1);
+        this.routineChooser.addObject("Shoot3Pick3", AutoRoutine.Shoot3Pick3);
         networkTableProvider.addChooser("Auto Routine", this.routineChooser);
 
         this.positionChooser = networkTableProvider.getSendableChooser();
@@ -98,7 +99,32 @@ public class AutonomousRoutineSelector
                     .lineTo(new Vector2d(120, 0), interpolator)
                     .build(),
                 false));
+
+        this.pathManager.addPath(
+            "shoot 3 pick 3 back", 
+            RoadRunnerTankTranslator.convert(
+                new PathBuilder(new Pose2d(0, 0, 0))
+                    .lineTo(new Vector2d(157.66, 0), interpolator)
+                    .build(),
+                true));
+
+        this.pathManager.addPath(
+            "shoot 3 pick 3 forward", 
+            RoadRunnerTankTranslator.convert(
+                new PathBuilder(new Pose2d(0, 0, 0))
+                    .lineTo(new Vector2d(66.058, 0), interpolator)
+                    .build(),
+                false));
     }
+
+    /*private static IControlTask shootThreePickThree() 
+    {
+        return SequentialTask.Sequence(
+            ConcurrentTask.AllTasks(
+                new IntakePositionTask(true),
+            )
+        )
+    }*/
 }
 
 
