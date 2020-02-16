@@ -307,7 +307,7 @@ public class ButtonMap implements IButtonMap
             Shift.OperatorDebug,
             Shift.None,
             ButtonType.Toggle,
-            () -> new TurretVisionCenteringTask(),
+            () -> new TurretVisionCenteringTask(false, true),
             new IOperation[]
             {
                 AnalogOperation.PowerCellTurretPosition,

@@ -136,13 +136,13 @@ public class TuningConstants
     public static final double VISION_FAST_ADVANCING_PID_MAX = 0.45;
 
     // PID settings for Centering the turret on a vision target from one stationary place
-    public static final double TURRET_VISION_STATIONARY_CENTERING_PID_KP = 5.0;
+    public static final double TURRET_VISION_STATIONARY_CENTERING_PID_KP = 0.35;
     public static final double TURRET_VISION_STATIONARY_CENTERING_PID_KI = 0.0;
-    public static final double TURRET_VISION_STATIONARY_CENTERING_PID_KD = 0.0;
+    public static final double TURRET_VISION_STATIONARY_CENTERING_PID_KD = 0.35;
     public static final double TURRET_VISION_STATIONARY_CENTERING_PID_KF = 0.0;
     public static final double TURRET_VISION_STATIONARY_CENTERING_PID_KS = 30.0;
-    public static final double TURRET_VISION_STATIONARY_CENTERING_PID_MIN = -1.0;
-    public static final double TURRET_VISION_STATIONARY_CENTERING_PID_MAX = 1.0;
+    public static final double TURRET_VISION_STATIONARY_CENTERING_PID_MIN = -30.0;
+    public static final double TURRET_VISION_STATIONARY_CENTERING_PID_MAX = 30.0;
 
     public static final boolean VISION_ENABLE_DURING_TELEOP = true;
 

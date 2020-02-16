@@ -103,7 +103,6 @@ public class PowerCellMechanism implements IMechanism
         this.turret.setNeutralMode(MotorNeutralMode.Brake);
         this.turret.setSensorType(TalonXFeedbackDevice.QuadEncoder);
         this.turret.setPosition(0);
-        // this.turret.setControlMode(TalonSRXControlMode.PercentOutput);
         this.turret.setControlMode(TalonSRXControlMode.Position);
         this.turret.setPIDF(
             TuningConstants.POWERCELL_TURRET_POSITION_PID_KP,
@@ -184,6 +183,7 @@ public class PowerCellMechanism implements IMechanism
         {
             this.startingTurretOffsetAngle = 0.0;
             this.turret.setPosition(0);
+            this.turret.set(0.0);
         }
 
         // if (this.driver.getDigital(DigitalOperation.PowerCellHoodPointBlank))
@@ -261,10 +261,9 @@ public class PowerCellMechanism implements IMechanism
 
         double desiredTurretPosition = this.driver.getAnalog(AnalogOperation.PowerCellTurretPosition);
         this.logger.logNumber(PowerCellMechanism.logName, "desiredTurretPosition", desiredTurretPosition);
-        // this.turret.set(turretDesiredPosition);
         if (desiredTurretPosition != HardwareConstants.POWERCELL_TURRET_MAGIC_DONT_MOVE_VALUE)
         {
-            desiredTurretPosition = Helpers.EnforceRange(desiredTurretPosition, HardwareConstants.POWERCELL_TURRET_MINIMUM_RANGE_VALUE, HardwareConstants.POWERCELL_TURRET_MAXIMUM_RANGE_VALUE);
+            desiredTurretPosition = this.getClosestAngleInRange(desiredTurretPosition, this.getTurretPosition(), HardwareConstants.POWERCELL_TURRET_MINIMUM_RANGE_VALUE, HardwareConstants.POWERCELL_TURRET_MAXIMUM_RANGE_VALUE);
             this.turret.set((desiredTurretPosition + startingTurretOffsetAngle) * HardwareConstants.POWERCELL_TURRET_DEGREES_TO_TICKS);
         }
 
@@ -333,7 +332,7 @@ public class PowerCellMechanism implements IMechanism
 
     public double getTurretPosition()
     {
-        return ((this.turretPosition * HardwareConstants.POWERCELL_TURRET_TICKS_TO_DEGREES) + this.startingTurretOffsetAngle);
+        return ((this.turretPosition * HardwareConstants.POWERCELL_TURRET_TICKS_TO_DEGREES) - this.startingTurretOffsetAngle);
     }
 
     public double getFlywheelVelocity()
@@ -362,6 +361,36 @@ public class PowerCellMechanism implements IMechanism
         }
 
         return false;
+    }
+
+    private double getClosestAngleInRange(double desiredAngle, double currentAngle, double minRangeValue, double maxRangeValue)
+    {
+        double multiplicand = Math.floor(currentAngle / 360.0);
+
+        double[] closeRotations =
+        {
+            (desiredAngle + 360.0 * (multiplicand - 1.0)),
+            (desiredAngle + 360.0 * multiplicand),
+            (desiredAngle + 360.0 * (multiplicand + 1.0)),
+        };
+
+        double best = currentAngle;
+        double bestDistance = Double.POSITIVE_INFINITY;
+        for (int i = 0; i < 3; i++)
+        {
+            double angle = closeRotations[i];
+            if (Helpers.WithinRange(angle, minRangeValue, maxRangeValue))
+            {
+                double angleDistance = Math.abs(currentAngle - angle);
+                if (angleDistance < bestDistance)
+                {
+                    best = angle;
+                    bestDistance = angleDistance;
+                }
+            }
+        }
+
+        return best;
     }
 
     private enum CarouselState
