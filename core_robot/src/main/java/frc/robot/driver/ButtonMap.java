@@ -147,6 +147,13 @@ public class ButtonMap implements IButtonMap
             Shift.OperatorDebug,
             Shift.None,
             ButtonType.Simple),
+        new DigitalOperationDescription(
+            DigitalOperation.PowerCellResetTurretFront,
+            UserInputDevice.Operator,
+            UserInputDeviceButton.XBONE_RIGHT_STICK_BUTTON,
+            Shift.OperatorDebug,
+            Shift.OperatorDebug,
+            ButtonType.Click),
     };
 
     public static MacroOperationDescription[] MacroSchema = new MacroOperationDescription[]
@@ -377,6 +384,8 @@ public class ButtonMap implements IButtonMap
             MacroOperation.StopFlywheelPlease,
             UserInputDevice.Operator,
             UserInputDeviceButton.XBONE_RIGHT_STICK_BUTTON,
+            Shift.OperatorDebug,
+            Shift.None,
             ButtonType.Simple,
             () -> new WaitTask(0.0),
             new IOperation[]

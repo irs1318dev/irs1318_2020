@@ -180,6 +180,12 @@ public class PowerCellMechanism implements IMechanism
             this.startingTurretOffsetAngle = startingTurretOffset;
         }
 
+        if (this.driver.getDigital(DigitalOperation.PowerCellResetTurretFront))
+        {
+            this.startingTurretOffsetAngle = 0.0;
+            this.turret.setPosition(0);
+        }
+
         // if (this.driver.getDigital(DigitalOperation.PowerCellHoodPointBlank))
         // {
         //     this.innerHood.set(DoubleSolenoidValue.Reverse);
