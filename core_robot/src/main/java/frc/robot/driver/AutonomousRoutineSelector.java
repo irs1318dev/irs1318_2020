@@ -172,6 +172,21 @@ public class AutonomousRoutineSelector
                     .lineTo(new Vector2d(132, 0)) 
                     .build(),
                 true));
+            
+        this.pathManager.addPath(
+            "3 plus 2 straight backwards",
+            RoadRunnerTankTranslator.convert(
+                new PathBuilder(new Pose2d(0, 0, 0)) 
+                    .lineTo(new Vector2d(120, 0)) 
+                    .build(),
+                true));
+        this.pathManager.addPath(
+            "3 plus 2 straight forwards",
+            RoadRunnerTankTranslator.convert(
+                new PathBuilder(new Pose2d(0, 0, 0)) 
+                    .lineTo(new Vector2d(36, 0)) 
+                    .build(),
+                false));
     }
 
     private static IControlTask shootDriveShoot(double intakingDuration, String pathName1, String pathName2) // shoots three pc on init. line, then picks three from trench and shoots them
@@ -180,7 +195,7 @@ public class AutonomousRoutineSelector
             ConcurrentTask.AnyTasks(
                 new FlyWheelVisionSpinTask(),
                 SequentialTask.Sequence(
-                    new TurretVisionCenteringTask(false),
+                    new TurretVisionCenteringTask(false, true),
                     new WaitTask(1.0),
                     new FullHopperShotTask())),
             ConcurrentTask.AllTasks(
@@ -192,14 +207,35 @@ public class AutonomousRoutineSelector
             ConcurrentTask.AllTasks(
                 new IntakePositionTask(false),
                 new FollowPathTask(pathName2)),
-            ConcurrentTask.AllTasks(
+            ConcurrentTask.AnyTasks(
                 new FlyWheelVisionSpinTask(),
                 SequentialTask.Sequence(
-                    new TurretVisionCenteringTask(false),
+                    new TurretVisionCenteringTask(false, true),
                     new WaitTask(1.0),
                     new FullHopperShotTask()))
         );
     }
+    private static IControlTask ShootGoBackShoot(double intakingDuration){
+        return SequentialTask.Sequence(
+            ConcurrentTask.AllTasks(
+                SequentialTask.Sequence(
+                    new IntakePositionTask(false),
+                    new IntakeOuttakeTask(intakingDuration, true)),
+                new FollowPathTask("3 plus 2 straight backwards")),
+            new WaitTask(0.15),
+            ConcurrentTask.AllTasks(
+                new IntakePositionTask(true),
+                new FollowPathTask("3 plus 2 straight forwards")),
+            ConcurrentTask.AnyTasks(
+                new FlyWheelVisionSpinTask(),
+                SequentialTask.Sequence(
+                    new TurretVisionCenteringTask(false, true),
+                    new WaitTask(1.0),
+                    new FullHopperShotTask()))
+        );
+
+    }
+
 }
 
 
