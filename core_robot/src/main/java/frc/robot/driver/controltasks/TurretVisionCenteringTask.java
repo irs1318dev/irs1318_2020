@@ -17,6 +17,7 @@ public class TurretVisionCenteringTask extends ControlTaskBase implements IContr
     private static final int NO_CENTER_THRESHOLD = 40;
 
     private final boolean useTime;
+    private final boolean trackingMode;
 
     private OffboardVisionManager visionManager;
     private PowerCellMechanism powerCell;
@@ -32,16 +33,23 @@ public class TurretVisionCenteringTask extends ControlTaskBase implements IContr
     */
     public TurretVisionCenteringTask()
     {
-        this(false);
+        this(false, false);
     }
 
     /**
     * Initializes a new TurretVisionCenteringTask
     * @param useTime whether to make sure we are centered for a second or not
+    * @param trackingMode whether to run forever, as long as it sees a vision target
     */
-    public TurretVisionCenteringTask(boolean useTime)
+    public TurretVisionCenteringTask(boolean useTime, boolean trackingMode)
     {
+        if (useTime && trackingMode)
+        {
+            throw new RuntimeException("Can't use time and run forever");
+        }
+
         this.useTime = useTime;
+        this.trackingMode = trackingMode;
 
         this.turnPidHandler = null;
         this.centeredTime = null;
@@ -80,7 +88,7 @@ public class TurretVisionCenteringTask extends ControlTaskBase implements IContr
         {
             this.setAnalogOperationState(
                 AnalogOperation.PowerCellTurretPosition,
-                turretPosition - this.turnPidHandler.calculatePosition(0.0, currentMeasuredAngle));
+                turretPosition + this.turnPidHandler.calculatePosition(0.0, currentMeasuredAngle));
         }
     }
 
@@ -101,6 +109,11 @@ public class TurretVisionCenteringTask extends ControlTaskBase implements IContr
     @Override
     public boolean hasCompleted()
     {
+        if (this.trackingMode)
+        {
+            return false;
+        }
+
         Double currentMeasuredAngle = this.visionManager.getHorizontalAngle();
         if (currentMeasuredAngle == null)
         {
@@ -156,13 +169,13 @@ public class TurretVisionCenteringTask extends ControlTaskBase implements IContr
     private PIDHandler createTurnHandler()
     {
         return new PIDHandler(
-            TuningConstants.VISION_STATIONARY_CENTERING_PID_KP,
-            TuningConstants.VISION_STATIONARY_CENTERING_PID_KI,
-            TuningConstants.VISION_STATIONARY_CENTERING_PID_KD,
-            TuningConstants.VISION_STATIONARY_CENTERING_PID_KF,
-            TuningConstants.VISION_STATIONARY_CENTERING_PID_KS,
-            TuningConstants.VISION_STATIONARY_CENTERING_PID_MIN,
-            TuningConstants.VISION_STATIONARY_CENTERING_PID_MAX,
+            TuningConstants.TURRET_VISION_STATIONARY_CENTERING_PID_KP,
+            TuningConstants.TURRET_VISION_STATIONARY_CENTERING_PID_KI,
+            TuningConstants.TURRET_VISION_STATIONARY_CENTERING_PID_KD,
+            TuningConstants.TURRET_VISION_STATIONARY_CENTERING_PID_KF,
+            TuningConstants.TURRET_VISION_STATIONARY_CENTERING_PID_KS,
+            TuningConstants.TURRET_VISION_STATIONARY_CENTERING_PID_MIN,
+            TuningConstants.TURRET_VISION_STATIONARY_CENTERING_PID_MAX,
             this.getInjector().getInstance(ITimer.class));
     }
 }

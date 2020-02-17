@@ -126,13 +126,18 @@ public class AnalogOperationState extends OperationState
             AnalogAxis secondaryAxis = description.getUserInputDeviceSecondaryAxis();
             if (secondaryAxis != null && secondaryAxis != AnalogAxis.NONE)
             {
-                double secondaryValue = relevantJoystick.getAxis(relevantAxis.Value);
+                double secondaryValue = relevantJoystick.getAxis(secondaryAxis.Value);
                 if (description.getShouldInvertSecondary())
                 {
                     secondaryValue *= -1.0;
                 }
 
-                secondaryValue = this.adjustForDeadZone(newValue, description.getDeadZone()) * description.getMultiplier();
+                // don't adjust for dead zone, simply check for having both within dead zone
+                if (this.withinDeadZone(newValue, secondaryValue, description.getDeadZone()))
+                {
+                    newValue = 0.0;
+                    secondaryValue = 0.0;
+                }
 
                 AnalogOperationDescription.ResultCalculator calculator = description.getResultCalculator();
                 if (calculator == null)
@@ -147,6 +152,10 @@ public class AnalogOperationState extends OperationState
                 }
 
                 newValue = calculator.calculate(newValue, secondaryValue);
+            }
+            else
+            {
+                newValue = this.adjustForDeadZone(newValue, description.getDeadZone()) * description.getMultiplier();
             }
         }
         else
@@ -204,5 +213,18 @@ public class AnalogOperationState extends OperationState
 
         // scale so that we have the area just outside the deadzone be the starting point
         return (value - sign * deadZone) / (1 - deadZone);
+    }
+
+    /**
+     * Adjust the value as a part of dead zone calculation
+     * @param value1 to check
+     * @param value2 to check
+     * @param deadZone to consider
+     * @return whether both are within the deadzone
+     */
+    private boolean withinDeadZone(double value1, double value2, double deadZone)
+    {
+        return value1 < deadZone && value1 > -deadZone &&
+            value2 < deadZone && value2 > -deadZone;
     }
 }
