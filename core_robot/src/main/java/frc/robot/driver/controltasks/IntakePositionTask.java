@@ -18,11 +18,11 @@ public class IntakePositionTask extends CompositeOperationTask implements IContr
     * Initializes a new IntakePositionTask
     * @param intakeIn in or out
     */
-    public IntakePositionTask(boolean intakeIn)
+    public IntakePositionTask(boolean intakeOut)
     {
         super(
             0.5, 
-            intakeIn ? DigitalOperation.PowerCellIntakeExtend : DigitalOperation.PowerCellIntakeRetract, 
+            intakeOut ? DigitalOperation.PowerCellIntakeExtend : DigitalOperation.PowerCellIntakeRetract, 
             IntakePositionTask.intakePositionOperations);
     }
 }
