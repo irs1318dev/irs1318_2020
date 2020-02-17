@@ -48,6 +48,16 @@ public class ButtonMap implements IButtonMap
             ElectronicsConstants.INVERT_TRIGGER_AXIS,
             .1),
 
+        // Climber operations
+        new AnalogOperationDescription(
+            AnalogOperation.ClimberWinch,
+            UserInputDevice.Driver,
+            AnalogAxis.XBONE_RT,
+            Shift.DriverDebug,
+            Shift.DriverDebug,
+            ElectronicsConstants.INVERT_TRIGGER_AXIS,
+            .1),
+
         // PowerCell operations
         new AnalogOperationDescription(
             AnalogOperation.PowerCellTurretPosition,

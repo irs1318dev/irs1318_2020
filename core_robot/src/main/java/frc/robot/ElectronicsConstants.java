@@ -54,12 +54,12 @@ public class ElectronicsConstants
     public static final int POWERCELL_FLYWHEEL_FOLLOWER_PDP_SLOT = 12; // 3 & 12 ??
     public static final int POWERCELL_TURRET_MOTOR_CAN_ID = 7;
     public static final int POWERCELL_TURRET_MOTOR_PDP_SLOT = 9;
-    public static final int POWERCELL_OUTER_HOOD_FORWARD_PCM = -1; // Module ? 
-    public static final int POWERCELL_OUTER_HOOD_REVERSE_PCM = -1; // Module ?
-    public static final int POWERCELL_INNER_HOOD_FORWARD_PCM = -1; // Module ?
-    public static final int POWERCELL_INNER_HOOD_REVERSE_PCM = -1; // Module ?
-    public static final int POWERCELL_KICKER_FORWARD_PCM = -1; // Module ?
-    public static final int POWERCELL_KICKER_REVERSE_PCM = -1; // Module ?
+    public static final int POWERCELL_OUTER_HOOD_FORWARD_PCM = 2; // Module B 
+    public static final int POWERCELL_OUTER_HOOD_REVERSE_PCM = 3; // Module B
+    public static final int POWERCELL_INNER_HOOD_FORWARD_PCM = 0; // Module B
+    public static final int POWERCELL_INNER_HOOD_REVERSE_PCM = 1; // Module B
+    public static final int POWERCELL_KICKER_FORWARD_PCM = -1; // Module B
+    public static final int POWERCELL_KICKER_REVERSE_PCM = -1; // Module B
 
     // hopper
     public static final int POWERCELL_GENEVA_MOTOR_CAN_ID = 8;
@@ -70,8 +70,8 @@ public class ElectronicsConstants
     public static final int POWERCELL_INNER_ROLLER_MOTOR_PDP_SLOT = 4;
     public static final int POWERCELL_OUTER_ROLLER_MOTOR_CAN_ID = 10;
     public static final int POWERCELL_OUTER_ROLLER_MOTOR_PDP_SLOT = 11;
-    public static final int POWERCELL_INTAKE_FORWARD_PCM = -1; // Module ?
-    public static final int POWERCELL_INTAKE_REVERSE_PCM = -1; // Module ?
+    public static final int POWERCELL_INTAKE_FORWARD_PCM = 4; // Module A
+    public static final int POWERCELL_INTAKE_REVERSE_PCM = 5; // Module A
 
     public static final int POWERCELL_CAROUSEL_COUNTER_DIO = -1;
 
@@ -79,11 +79,11 @@ public class ElectronicsConstants
 
     //================================================== Climber =================================================================
 
-    public static final int CLIMBER_EXTEND_FORWARD_PCM = -1; // Module ?
-    public static final int CLIMBER_EXTEND_REVERSE_PCM = -1; // Module ?
+    public static final int CLIMBER_EXTEND_FORWARD_PCM = 1; // Module A
+    public static final int CLIMBER_EXTEND_REVERSE_PCM = 0; // Module A
 
-    public static final int CLIMBER_GRAB_FORWARD_PCM = -1; // Module ?
-    public static final int CLIMBER_GRAB_REVERSE_PCM = -1; // Module ?
+    public static final int CLIMBER_GRAB_FORWARD_PCM = 7; // Module B
+    public static final int CLIMBER_GRAB_REVERSE_PCM = 6; // Module B
 
     public static final int CLIMBER_WINCH_MASTER_CAN_ID = 11;
     public static final int CLIMBER_WINCH_MASTER_PDP_SLOT = 2; // 2 & 13 ??
@@ -95,6 +95,6 @@ public class ElectronicsConstants
     public static final int CONTROLPANEL_SPINNER_CAN_ID = 13;
     public static final int CONTROLPANEL_SPINNER_PDP_SLOT = 5;
 
-    public static final int CONTROLPANEL_EXTENDER_FORWARD_PCM = -1; // Module ?
-    public static final int CONTROLPANEL_EXTENDER_REVERSE_PCM = -1; // Module ?
+    public static final int CONTROLPANEL_EXTENDER_FORWARD_PCM = 7; // Module A
+    public static final int CONTROLPANEL_EXTENDER_REVERSE_PCM = 6; // Module A
 }

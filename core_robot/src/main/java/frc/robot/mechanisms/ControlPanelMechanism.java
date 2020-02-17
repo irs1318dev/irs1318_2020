@@ -16,12 +16,12 @@ public class ControlPanelMechanism implements IMechanism
 
     private final IDashboardLogger logger;
 
-    private final IColorSensorV3 sensor;
-    private final IColorMatch colorMatch;
+    // private final IColorSensorV3 sensor;
+    // private final IColorMatch colorMatch;
     private final IDriverStation ds;
 
-    //private final IDoubleSolenoid extender;
-    //private final IVictorSPX spinnerMotor;
+    private final IDoubleSolenoid extender;
+    private final IVictorSPX spinnerMotor;
 
     private Driver driver;
 
@@ -44,21 +44,21 @@ public class ControlPanelMechanism implements IMechanism
     {
         this.logger = logger;
 
-        this.sensor = provider.getColorSensor();
-        this.colorMatch = provider.getColorMatch();
-        this.colorMatch.addColorMatch("Red", TuningConstants.COLOR_MATCH_RED_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_RED_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_RED_TARGET_BLUE_PERCENTAGE);
-        this.colorMatch.addColorMatch("Green", TuningConstants.COLOR_MATCH_GREEN_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_GREEN_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_GREEN_TARGET_BLUE_PERCENTAGE);
-        this.colorMatch.addColorMatch("Blue",TuningConstants.COLOR_MATCH_BLUE_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_BLUE_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_BLUE_TARGET_BLUE_PERCENTAGE);
-        this.colorMatch.addColorMatch("Yellow", TuningConstants.COLOR_MATCH_YELLOW_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_YELLOW_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_YELLOW_TARGET_BLUE_PERCENTAGE);
+        // this.sensor = provider.getColorSensor();
+        // this.colorMatch = provider.getColorMatch();
+        // this.colorMatch.addColorMatch("Red", TuningConstants.COLOR_MATCH_RED_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_RED_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_RED_TARGET_BLUE_PERCENTAGE);
+        // this.colorMatch.addColorMatch("Green", TuningConstants.COLOR_MATCH_GREEN_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_GREEN_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_GREEN_TARGET_BLUE_PERCENTAGE);
+        // this.colorMatch.addColorMatch("Blue",TuningConstants.COLOR_MATCH_BLUE_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_BLUE_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_BLUE_TARGET_BLUE_PERCENTAGE);
+        // this.colorMatch.addColorMatch("Yellow", TuningConstants.COLOR_MATCH_YELLOW_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_YELLOW_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_YELLOW_TARGET_BLUE_PERCENTAGE);
 
         this.ds = provider.getDriverStation();
 
-        // this.extender = provider.getDoubleSolenoid(ElectronicsConstants.PCM_A_MODULE, ElectronicsConstants.CONTROLPANEL_EXTENDER_FORWARD_PCM, ElectronicsConstants.CONTROLPANEL_EXTENDER_REVERSE_PCM);
+        this.extender = provider.getDoubleSolenoid(ElectronicsConstants.PCM_A_MODULE, ElectronicsConstants.CONTROLPANEL_EXTENDER_FORWARD_PCM, ElectronicsConstants.CONTROLPANEL_EXTENDER_REVERSE_PCM);
 
-        // this.spinnerMotor = provider.getVictorSPX(ElectronicsConstants.CONTROLPANEL_SPINNER_CAN_ID);
-        // this.spinnerMotor.setInvertOutput(HardwareConstants.CONTROLPANEL_SPINNER_INVERT_OUTPUT);
-        // this.spinnerMotor.setControlMode(TalonSRXControlMode.PercentOutput);
-        // this.spinnerMotor.setNeutralMode(MotorNeutralMode.Brake);
+        this.spinnerMotor = provider.getVictorSPX(ElectronicsConstants.CONTROLPANEL_SPINNER_CAN_ID);
+        this.spinnerMotor.setInvertOutput(HardwareConstants.CONTROLPANEL_SPINNER_INVERT_OUTPUT);
+        this.spinnerMotor.setControlMode(TalonSRXControlMode.PercentOutput);
+        this.spinnerMotor.setNeutralMode(MotorNeutralMode.Brake);
 
         this.isExtended = false;
     }
@@ -66,31 +66,31 @@ public class ControlPanelMechanism implements IMechanism
     @Override
     public void readSensors()
     {
-        // if (this.isExtended)
+        if (this.isExtended)
         {
             this.gsm = this.ds.getGameSpecificMessage();
 
-            RawColorRGBIR rawColor = this.sensor.getRawColor();
-            int red = rawColor.getRed();
-            int green = rawColor.getGreen();
-            int blue = rawColor.getBlue();
+            // RawColorRGBIR rawColor = this.sensor.getRawColor();
+            // int red = rawColor.getRed();
+            // int green = rawColor.getGreen();
+            // int blue = rawColor.getBlue();
 
-            this.logger.logNumber(ControlPanelMechanism.logName, "red", red);
-            this.logger.logNumber(ControlPanelMechanism.logName, "green", green);
-            this.logger.logNumber(ControlPanelMechanism.logName, "blue", blue);
-            this.logger.logNumber(ControlPanelMechanism.logName, "IR", rawColor.getIR());
+            // this.logger.logNumber(ControlPanelMechanism.logName, "red", red);
+            // this.logger.logNumber(ControlPanelMechanism.logName, "green", green);
+            // this.logger.logNumber(ControlPanelMechanism.logName, "blue", blue);
+            // this.logger.logNumber(ControlPanelMechanism.logName, "IR", rawColor.getIR());
 
-            double total = red + green + blue;
-            double redPercent = (double)red / total;
-            double greenPercent = (double)green / total;
-            double bluePercent = (double)blue / total;
+            // double total = red + green + blue;
+            // double redPercent = (double)red / total;
+            // double greenPercent = (double)green / total;
+            // double bluePercent = (double)blue / total;
 
-            this.colorResult = this.colorMatch.matchClosestColor(redPercent, greenPercent, bluePercent);
-            this.logger.logString(ControlPanelMechanism.logName, "name", this.colorResult.getName());
-            this.logger.logNumber(ControlPanelMechanism.logName, "confidence", this.colorResult.getConfidence());
+            // this.colorResult = this.colorMatch.matchClosestColor(redPercent, greenPercent, bluePercent);
+            // this.logger.logString(ControlPanelMechanism.logName, "name", this.colorResult.getName());
+            // this.logger.logNumber(ControlPanelMechanism.logName, "confidence", this.colorResult.getConfidence());
 
-            int proximity = this.sensor.getProximity();
-            this.logger.logInteger(ControlPanelMechanism.logName, "proximity", proximity);
+            // int proximity = this.sensor.getProximity();
+            // this.logger.logInteger(ControlPanelMechanism.logName, "proximity", proximity);
 
             // Mapped colors, taking the game specific message and mapping it to the color desired along the front edge
             if (this.gsm != null || this.gsm.equals(""))
@@ -130,26 +130,27 @@ public class ControlPanelMechanism implements IMechanism
         if (this.driver.getDigital(DigitalOperation.ControlPanelExtend))
         {
             this.isExtended = true;
-            // this.extender.set(DoubleSolenoidValue.Forward);
+            this.extender.set(DoubleSolenoidValue.Forward);
         }
-        else if (!this.driver.getDigital(DigitalOperation.ControlPanelRetract))
+        else if (this.driver.getDigital(DigitalOperation.ControlPanelRetract))
         {
             this.isExtended = false;
-            // this.extender.set(DoubleSolenoidValue.Reverse);
+            this.extender.set(DoubleSolenoidValue.Reverse);
         }
 
+        this.logger.logBoolean(ControlPanelMechanism.logName, "extend", this.isExtended);
         if (this.isExtended)
         {
             double speed = this.driver.getAnalog(AnalogOperation.ControlPanelSpinSpeed);
-            // this.spinnerMotor.set(speed);
+            this.spinnerMotor.set(speed);
         }
     }
 
     @Override
     public void stop()
     {
-        // this.extender.set(DoubleSolenoidValue.Off);
-        // this.spinnerMotor.set(0.0);
+        this.extender.set(DoubleSolenoidValue.Off);
+        this.spinnerMotor.set(0.0);
     }
 
     @Override
