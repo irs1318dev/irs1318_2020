@@ -14,6 +14,12 @@ public class SequentialTask extends DecisionSequentialTask implements IControlTa
      */
     public SequentialTask(IControlTask[] tasks)
     {
+        super();
+
+        for (IControlTask task : tasks)
+        {
+            this.AppendTask(task);
+        }
     }
 
     /**
