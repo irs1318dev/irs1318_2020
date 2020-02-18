@@ -60,17 +60,17 @@ public class PowerCellMechanism implements IMechanism
 
         // this.throughBeamSensor = provider.getAnalogInput(ElectronicsConstants.POWERCELL_THROUGHBEAM_CHANNEL);
 
-        this.intakeSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.PCM_B_MODULE, ElectronicsConstants.POWERCELL_INTAKE_FORWARD_PCM, ElectronicsConstants.POWERCELL_INTAKE_REVERSE_PCM);
+        this.intakeSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.PCM_A_MODULE, ElectronicsConstants.POWERCELL_INTAKE_FORWARD_PCM, ElectronicsConstants.POWERCELL_INTAKE_REVERSE_PCM);
         // this.kickerSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.PCM_B_MODULE, ElectronicsConstants.POWERCELL_KICKER_FORWARD_PCM, ElectronicsConstants.POWERCELL_KICKER_REVERSE_PCM);
         // this.outerHood = provider.getDoubleSolenoid(ElectronicsConstants.PCM_B_MODULE, ElectronicsConstants.POWERCELL_OUTER_HOOD_FORWARD_PCM, ElectronicsConstants.POWERCELL_OUTER_HOOD_REVERSE_PCM);
         // this.innerHood = provider.getDoubleSolenoid(ElectronicsConstants.PCM_B_MODULE, ElectronicsConstants.POWERCELL_INNER_HOOD_FORWARD_PCM, ElectronicsConstants.POWERCELL_INNER_HOOD_REVERSE_PCM);
 
-        this.rollerMotorInner = provider.getSparkMax(ElectronicsConstants.POWERCELL_INNER_ROLLER_MOTOR_CAN_ID, SparkMaxMotorType.Brushed);
+        this.rollerMotorInner = provider.getSparkMax(ElectronicsConstants.POWERCELL_INNER_ROLLER_MOTOR_CAN_ID, SparkMaxMotorType.Brushless);
         this.rollerMotorInner.setInvertOutput(HardwareConstants.POWERCELL_ROLLER_MOTOR_INNER_INVERT_OUTPUT);
         this.rollerMotorInner.setControlMode(SparkMaxControlMode.PercentOutput);
         this.rollerMotorInner.setNeutralMode(MotorNeutralMode.Brake);
 
-        this.rollerMotorOuter = provider.getSparkMax(ElectronicsConstants.POWERCELL_OUTER_ROLLER_MOTOR_CAN_ID, SparkMaxMotorType.Brushed);
+        this.rollerMotorOuter = provider.getSparkMax(ElectronicsConstants.POWERCELL_OUTER_ROLLER_MOTOR_CAN_ID, SparkMaxMotorType.Brushless);
         this.rollerMotorOuter.setInvertOutput(HardwareConstants.POWERCELL_ROLLER_MOTOR_OUTER_INVERT_OUTPUT);
         this.rollerMotorOuter.setControlMode(SparkMaxControlMode.PercentOutput);
         this.rollerMotorOuter.setNeutralMode(MotorNeutralMode.Brake);

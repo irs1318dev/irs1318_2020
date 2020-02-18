@@ -70,8 +70,8 @@ public class ElectronicsConstants
     public static final int POWERCELL_INNER_ROLLER_MOTOR_PDP_SLOT = 4;
     public static final int POWERCELL_OUTER_ROLLER_MOTOR_CAN_ID = 10;
     public static final int POWERCELL_OUTER_ROLLER_MOTOR_PDP_SLOT = 11;
-    public static final int POWERCELL_INTAKE_FORWARD_PCM = 4; // Module A
-    public static final int POWERCELL_INTAKE_REVERSE_PCM = 5; // Module A
+    public static final int POWERCELL_INTAKE_FORWARD_PCM = 5; // Module A
+    public static final int POWERCELL_INTAKE_REVERSE_PCM = 4; // Module A
 
     public static final int POWERCELL_CAROUSEL_COUNTER_DIO = -1;
 
