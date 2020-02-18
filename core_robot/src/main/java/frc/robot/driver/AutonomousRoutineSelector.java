@@ -177,7 +177,7 @@ public class AutonomousRoutineSelector
             "poach segment 2",
             RoadRunnerTankTranslator.convert(
                 new PathBuilder(new Pose2d(132, 0, 0)) 
-                    .splineTo(new Pose2d(0, 200, 90)) // tune y value and angle for shooting position (90 might need to be 270) 
+                    .splineTo(new Pose2d(0, 200, 270)) // tune y value and angle for shooting position (90 might need to be 270) 
                     .build(),
                 true));
 

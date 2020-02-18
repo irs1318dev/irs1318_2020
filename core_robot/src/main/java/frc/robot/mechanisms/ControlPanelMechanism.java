@@ -16,8 +16,8 @@ public class ControlPanelMechanism implements IMechanism
 
     private final IDashboardLogger logger;
 
-    // private final IColorSensorV3 sensor;
-    // private final IColorMatch colorMatch;
+    private final IColorSensorV3 sensor;
+    private final IColorMatch colorMatch;
     private final IDriverStation ds;
 
     private final IDoubleSolenoid extender;
@@ -44,12 +44,12 @@ public class ControlPanelMechanism implements IMechanism
     {
         this.logger = logger;
 
-        // this.sensor = provider.getColorSensor();
-        // this.colorMatch = provider.getColorMatch();
-        // this.colorMatch.addColorMatch("Red", TuningConstants.COLOR_MATCH_RED_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_RED_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_RED_TARGET_BLUE_PERCENTAGE);
-        // this.colorMatch.addColorMatch("Green", TuningConstants.COLOR_MATCH_GREEN_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_GREEN_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_GREEN_TARGET_BLUE_PERCENTAGE);
-        // this.colorMatch.addColorMatch("Blue",TuningConstants.COLOR_MATCH_BLUE_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_BLUE_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_BLUE_TARGET_BLUE_PERCENTAGE);
-        // this.colorMatch.addColorMatch("Yellow", TuningConstants.COLOR_MATCH_YELLOW_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_YELLOW_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_YELLOW_TARGET_BLUE_PERCENTAGE);
+        this.sensor = provider.getColorSensor();
+        this.colorMatch = provider.getColorMatch();
+        this.colorMatch.addColorMatch("Red", TuningConstants.COLOR_MATCH_RED_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_RED_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_RED_TARGET_BLUE_PERCENTAGE);
+        this.colorMatch.addColorMatch("Green", TuningConstants.COLOR_MATCH_GREEN_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_GREEN_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_GREEN_TARGET_BLUE_PERCENTAGE);
+        this.colorMatch.addColorMatch("Blue",TuningConstants.COLOR_MATCH_BLUE_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_BLUE_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_BLUE_TARGET_BLUE_PERCENTAGE);
+        this.colorMatch.addColorMatch("Yellow", TuningConstants.COLOR_MATCH_YELLOW_TARGET_RED_PERCENTAGE, TuningConstants.COLOR_MATCH_YELLOW_TARGET_GREEN_PERCENTAGE, TuningConstants.COLOR_MATCH_YELLOW_TARGET_BLUE_PERCENTAGE);
 
         this.ds = provider.getDriverStation();
 
@@ -70,27 +70,27 @@ public class ControlPanelMechanism implements IMechanism
         {
             this.gsm = this.ds.getGameSpecificMessage();
 
-            // RawColorRGBIR rawColor = this.sensor.getRawColor();
-            // int red = rawColor.getRed();
-            // int green = rawColor.getGreen();
-            // int blue = rawColor.getBlue();
+            RawColorRGBIR rawColor = this.sensor.getRawColor();
+            int red = rawColor.getRed();
+            int green = rawColor.getGreen();
+            int blue = rawColor.getBlue();
 
-            // this.logger.logNumber(ControlPanelMechanism.logName, "red", red);
-            // this.logger.logNumber(ControlPanelMechanism.logName, "green", green);
-            // this.logger.logNumber(ControlPanelMechanism.logName, "blue", blue);
-            // this.logger.logNumber(ControlPanelMechanism.logName, "IR", rawColor.getIR());
+            this.logger.logNumber(ControlPanelMechanism.logName, "red", red);
+            this.logger.logNumber(ControlPanelMechanism.logName, "green", green);
+            this.logger.logNumber(ControlPanelMechanism.logName, "blue", blue);
+            this.logger.logNumber(ControlPanelMechanism.logName, "IR", rawColor.getIR());
 
-            // double total = red + green + blue;
-            // double redPercent = (double)red / total;
-            // double greenPercent = (double)green / total;
-            // double bluePercent = (double)blue / total;
+            double total = red + green + blue;
+            double redPercent = (double)red / total;
+            double greenPercent = (double)green / total;
+            double bluePercent = (double)blue / total;
 
-            // this.colorResult = this.colorMatch.matchClosestColor(redPercent, greenPercent, bluePercent);
-            // this.logger.logString(ControlPanelMechanism.logName, "name", this.colorResult.getName());
-            // this.logger.logNumber(ControlPanelMechanism.logName, "confidence", this.colorResult.getConfidence());
+            this.colorResult = this.colorMatch.matchClosestColor(redPercent, greenPercent, bluePercent);
+            this.logger.logString(ControlPanelMechanism.logName, "name", this.colorResult.getName());
+            this.logger.logNumber(ControlPanelMechanism.logName, "confidence", this.colorResult.getConfidence());
 
-            // int proximity = this.sensor.getProximity();
-            // this.logger.logInteger(ControlPanelMechanism.logName, "proximity", proximity);
+            int proximity = this.sensor.getProximity();
+            this.logger.logInteger(ControlPanelMechanism.logName, "proximity", proximity);
 
             // Mapped colors, taking the game specific message and mapping it to the color desired along the front edge
             if (this.gsm != null || this.gsm.equals(""))

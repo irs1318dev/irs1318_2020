@@ -30,10 +30,9 @@ public class RoadRunnerTankTranslator
     {
         // Initialize path and interpolator (check to see if interpolator is needed)
         TangentInterpolator interpolator = new TangentInterpolator();
-        Path path = new PathBuilder(new Pose2d(0, 0, 0))
-                            .splineTo(new Pose2d(80.6, 65.869, 0), interpolator)
-                            .lineTo(new Vector2d(218.413, 65.869))
-                            .build();
+        Path path =  new PathBuilder(new Pose2d(132, 0, 0)) 
+        .splineTo(new Pose2d(0, 200, 90)) // tune y value and angle for shooting position (90 might need to be 270) 
+        .build();
 
         boolean isBackwards = true;
 

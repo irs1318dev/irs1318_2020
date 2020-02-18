@@ -175,11 +175,11 @@ public class TuningConstants
     public static final double POWERCELL_FLYWHEEL_MASTER_VELOCITY_VOLTAGE_COMPENSATION_MAXVOLTAGE = 12.0;
     public static final double POWERCELL_FLYWHEEL_FOLLOWER_VELOCITY_VOLTAGE_COMPENSATION_MAXVOLTAGE = 12.0;
 
-    public static final double POWERCELL_INNER_ROLLER_MOTOR_INTAKE_POWER = 0.5;
-    public static final double POWERCELL_OUTER_ROLLER_MOTOR_INTAKE_POWER = 0.5;
+    public static final double POWERCELL_INNER_ROLLER_MOTOR_INTAKE_POWER = 0.3;
+    public static final double POWERCELL_OUTER_ROLLER_MOTOR_INTAKE_POWER = 0.7;
 
-    public static final double POWERCELL_INNER_ROLLER_MOTOR_OUTTAKE_POWER = -0.5;
-    public static final double POWERCELL_OUTER_ROLLER_MOTOR_OUTTAKE_POWER = -0.5;
+    public static final double POWERCELL_INNER_ROLLER_MOTOR_OUTTAKE_POWER = -0.3;
+    public static final double POWERCELL_OUTER_ROLLER_MOTOR_OUTTAKE_POWER = -0.3;
 
     public static final double POWERCELL_TROUGHBEAM_CUTOFF = 2.7;
 
@@ -281,7 +281,7 @@ public class TuningConstants
     public static final double DRIVETRAIN_SUPPLY_TRIGGER_CURRENT = 100.0;
     public static final double DRIVETRAIN_SUPPLY_TRIGGER_DURATION = 0.25;
     public static final double DRIVETRAIN_X_DEAD_ZONE = .05;
-    public static final double DRIVETRAIN_Y_DEAD_ZONE = .1;
+    public static final double DRIVETRAIN_Y_DEAD_ZONE = .05;
     public static final double DRIVETRAIN_MAX_POWER_LEVEL = 1.0;// max power level (velocity)
     public static final double DRIVETRAIN_LEFT_POSITIONAL_NON_PID_MULTIPLICAND = HardwareConstants.DRIVETRAIN_LEFT_PULSE_DISTANCE / 60.0;
     public static final double DRIVETRAIN_RIGHT_POSITIONAL_NON_PID_MULTIPLICAND = HardwareConstants.DRIVETRAIN_RIGHT_PULSE_DISTANCE / 60.0;
