@@ -70,6 +70,7 @@ public class ControlPanelMechanism implements IMechanism
         {
             this.gsm = this.ds.getGameSpecificMessage();
 
+            this.sensor.start();
             RawColorRGBIR rawColor = this.sensor.getRawColor();
             int red = rawColor.getRed();
             int green = rawColor.getGreen();
@@ -122,6 +123,10 @@ public class ControlPanelMechanism implements IMechanism
             this.logger.logString(ControlPanelMechanism.logName, "targetColorMapped", this.targetColor.toString());
             this.logger.logString(ControlPanelMechanism.logName, "gameMessage", this.gsm);
         }
+        else
+        {
+            this.sensor.stop();
+        }
     }
 
     @Override
@@ -149,6 +154,7 @@ public class ControlPanelMechanism implements IMechanism
     @Override
     public void stop()
     {
+        this.sensor.stop();
         this.extender.set(DoubleSolenoidValue.Off);
         this.spinnerMotor.set(0.0);
     }
