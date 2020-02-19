@@ -257,8 +257,7 @@ public class AutonomousRoutineSelector
                 SequentialTask.Sequence(
                     new TurretVisionCenteringTask(false, true),
                     new WaitTask(1.0),
-                    new FullHopperShotTask()))
-        );
+                    new FullHopperShotTask()))));
 
     }
 
