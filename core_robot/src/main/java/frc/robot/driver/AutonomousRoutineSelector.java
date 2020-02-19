@@ -198,7 +198,7 @@ public class AutonomousRoutineSelector
             "poach segment 3",
             RoadRunnerTankTranslator.convert(
                 new PathBuilder(new Pose2d(0, 0, 0)) 
-                    .splineTo(new Pose2d(112, 50, 157.5)) 
+                    .splineTo(new Pose2d(112, -50, 157.5)) 
                     .build(),
                 false));
 
@@ -206,9 +206,10 @@ public class AutonomousRoutineSelector
             "poach segment 4", 
             RoadRunnerTankTranslator.convert(
                 new PathBuilder(new Pose2d(0, 0, 0)) 
-                    .splineTo(new Pose2d(112, 50, 157.5)) 
+                    .splineTo(new Pose2d(112, 50, 0)) 
                     .build(),
                 true));
+                    
             
         this.pathManager.addPath(
             "straight back",
