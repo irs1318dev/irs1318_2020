@@ -212,19 +212,21 @@ public class AutonomousRoutineSelector
                     
             
         this.pathManager.addPath(
-            "straight back",
+            "simple back",
             RoadRunnerTankTranslator.convert(
                 new PathBuilder(new Pose2d(0, 0, 0)) 
                     .lineTo(new Vector2d(12, 0)) 
                     .build(),
-                true));
+                false));
+
         this.pathManager.addPath(
-            "3 balls backwards line",
+            "eight power cell far forward",
             RoadRunnerTankTranslator.convert(
                 new PathBuilder(new Pose2d(0, 0, 0))
-                    .lineTo(new Vector2d(139.5,0)) //139.5 inches 
+                    .splineTo(new Pose2d(80.6, 65.869, 0), interpolator)
+                    .lineTo(new Vector2d(218.413, 65.869))
                     .build(),
-                true));
+                false));
     }
 
     private static IControlTask shootDriveShoot(double intakingDuration, String pathName1, String pathName2) // shoots three pc on init. line, then picks three from trench and shoots them
