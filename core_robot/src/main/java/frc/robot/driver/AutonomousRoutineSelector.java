@@ -35,6 +35,8 @@ public class AutonomousRoutineSelector
         EightPowerCellClose,
         Poach,
         ThreePlusTwo,
+        ShootGoBack,
+        ShootSplineBackShoot
     }
 
     /**
@@ -58,6 +60,8 @@ public class AutonomousRoutineSelector
         this.routineChooser.addObject("EightPowerCellClose", AutoRoutine.EightPowerCellClose);
         this.routineChooser.addObject("Poach", AutoRoutine.Poach);
         this.routineChooser.addObject("ThreePlusTwo", AutoRoutine.ThreePlusTwo);
+        this.routineChooser.addObject("ShootGoBack", AutoRoutine.ShootGoBack);
+        this.routineChooser.addObject("ShootSplineBackShoot", AutoRoutine.ShootSplineBackShoot);
         networkTableProvider.addChooser("Auto Routine", this.routineChooser);
 
         this.positionChooser = networkTableProvider.getSendableChooser();
@@ -81,6 +85,14 @@ public class AutonomousRoutineSelector
 
         this.logger.logString(AutonomousRoutineSelector.LogName, "selected", startPosition.toString() + "." + routine.toString());
 
+        if(routine == AutoRoutine.ShootGoBack)
+        {
+            return shootGoBack();
+        }
+        if(routine == AutoRoutine.ShootSplineBackShoot)
+        {
+            return shootSplineBackShoot();
+        }
         if (routine == AutoRoutine.Poach) 
         {
             return poachDrive();
@@ -315,7 +327,7 @@ public class AutonomousRoutineSelector
                     new FullHopperShotTask()))
         );
     }
-    private static IControlTask shootGoBack(double intakingDuration)
+    private static IControlTask shootGoBack()
     {
         return SequentialTask.Sequence(
             ConcurrentTask.AnyTasks(
@@ -327,7 +339,7 @@ public class AutonomousRoutineSelector
             new FollowPathTask("simple back")));
     }  
 
-    private static IControlTask shootSplineBackShoot(double intakingDuration) // shoots three pc on init. line, then picks three from trench and shoots them
+    private static IControlTask shootSplineBackShoot() // shoots three pc on init. line, then picks three from trench and shoots them
     {
         return SequentialTask.Sequence(
             ConcurrentTask.AnyTasks(
@@ -337,10 +349,10 @@ public class AutonomousRoutineSelector
                     new WaitTask(1.0),
                     new FullHopperShotTask())),
             new FollowPathTask("eight power cell close forward"),
-            ConcurrentTask.AllTasks(
+            ConcurrentTask.AnyTasks(
                 SequentialTask.Sequence(
                     new IntakePositionTask(true),
-                    new IntakeOuttakeTask(intakingDuration, true)),
+                    new IntakeOuttakeTask(10, true)), //intaking Duration
                 new FollowPathTask("3 balls backwards line")),
             new WaitTask(0.15),
             ConcurrentTask.AnyTasks(
