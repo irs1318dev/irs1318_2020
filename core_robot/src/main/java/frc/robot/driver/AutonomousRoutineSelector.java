@@ -210,7 +210,20 @@ public class AutonomousRoutineSelector
                     .build(),
                 true));
             
-        
+        this.pathManager.addPath(
+            "straight back",
+            RoadRunnerTankTranslator.convert(
+                new PathBuilder(new Pose2d(0, 0, 0)) 
+                    .lineTo(new Vector2d(12, 0)) 
+                    .build(),
+                true));
+        this.pathManager.addPath(
+            "3 balls backwards line",
+            RoadRunnerTankTranslator.convert(
+                new PathBuilder(new Pose2d(0, 0, 0))
+                    .lineTo(new Vector2d(139.5,0)) //139.5 inches 
+                    .build(),
+                true));
     }
 
     private static IControlTask shootDriveShoot(double intakingDuration, String pathName1, String pathName2) // shoots three pc on init. line, then picks three from trench and shoots them
@@ -299,6 +312,40 @@ public class AutonomousRoutineSelector
                     new FullHopperShotTask()))
         );
     }
+    private static IControlTask shootGoBack(double intakingDuration)
+    {
+        return SequentialTask.Sequence(
+            ConcurrentTask.AnyTasks(
+                new FlyWheelVisionSpinTask(),
+                SequentialTask.Sequence(
+                    new TurretVisionCenteringTask(false, true),
+                    new WaitTask(1.0),
+                    new FullHopperShotTask()),
+            new FollowPathTask("straight back")));
+    }  
+    private static IControlTask shootSplineBackShoot(double intakingDuration) // shoots three pc on init. line, then picks three from trench and shoots them
+    {
+        return SequentialTask.Sequence(
+            ConcurrentTask.AnyTasks(
+                new FlyWheelVisionSpinTask(),
+                SequentialTask.Sequence(
+                    new TurretVisionCenteringTask(false, true),
+                    new WaitTask(1.0),
+                    new FullHopperShotTask())),
+            new FollowPathTask("eight power cell close forward"),
+            ConcurrentTask.AllTasks(
+                SequentialTask.Sequence(
+                    new IntakePositionTask(true),
+                    new IntakeOuttakeTask(intakingDuration, true)),
+                new FollowPathTask("3 balls backwards line")),
+            new WaitTask(0.15),
+            ConcurrentTask.AnyTasks(
+                new FlyWheelVisionSpinTask(),
+                SequentialTask.Sequence(
+                    new TurretVisionCenteringTask(false, true),
+                    new WaitTask(1.0),
+                    new FullHopperShotTask())));
+    }
 
     private static IControlTask poachDrive() 
     {
@@ -306,8 +353,7 @@ public class AutonomousRoutineSelector
             new FollowPathTask("poach segment 1"),
             new FollowPathTask("poach segment 2"),
             new FollowPathTask("poach segment 3"),
-            new FollowPathTask("poach segment 4")
-        );
+            new FollowPathTask("poach segment 4"));
     }
 
 }
