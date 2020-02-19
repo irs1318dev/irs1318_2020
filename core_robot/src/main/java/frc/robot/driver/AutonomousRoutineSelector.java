@@ -324,8 +324,9 @@ public class AutonomousRoutineSelector
                     new TurretVisionCenteringTask(false, true),
                     new WaitTask(1.0),
                     new FullHopperShotTask()),
-            new FollowPathTask("straight back")));
+            new FollowPathTask("simple back")));
     }  
+
     private static IControlTask shootSplineBackShoot(double intakingDuration) // shoots three pc on init. line, then picks three from trench and shoots them
     {
         return SequentialTask.Sequence(
