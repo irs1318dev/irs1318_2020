@@ -50,7 +50,7 @@ public class PowerCellMechanism implements IMechanism
     private boolean[] hasPowerCell;
     private int currentCarouselIndex;
 
-    private CarouselState state;
+    private CarouselState carouselState;
     private int previousIndex;
 
     @Inject
@@ -124,7 +124,7 @@ public class PowerCellMechanism implements IMechanism
 
         this.carouselCounter = provider.getCounter(ElectronicsConstants.POWERCELL_CAROUSEL_COUNTER_DIO);
 
-        this.state = CarouselState.Stationary;
+        this.carouselState = CarouselState.Stationary;
         this.previousIndex = 0;
 
         this.hasPowerCell = new boolean[5];
@@ -269,47 +269,70 @@ public class PowerCellMechanism implements IMechanism
         }*/
         this.turret.set(desiredTurretPosition);
 
-        if (isIntaking && this.state == CarouselState.Stationary)  // if intaking and currently stationary, start indexing
+        // determine if we should make any transition from our current carousel state:
+        switch (this.carouselState)
         {
-            this.state = CarouselState.Indexing;
+            case Stationary:
+                if (this.driver.getDigital(DigitalOperation.PowerCellMoveOneSlot))
+                {
+                    this.previousIndex = this.currentCarouselIndex;
+                    this.carouselState = CarouselState.MovingToNext;
+                }
+                else if (isIntaking)
+                {
+                    // if intaking, start indexing
+                    this.carouselState = CarouselState.Indexing;
+                    this.lastIntakeTime = this.timer.get();
+                }
+
+                break;
+
+            case Indexing:
+                if (this.driver.getDigital(DigitalOperation.PowerCellMoveOneSlot))
+                {
+                    this.previousIndex = this.currentCarouselIndex;
+                    this.carouselState = CarouselState.MovingToNext;
+                }
+                else if (isIntaking)
+                {
+                    // if intaking, keep track of time
+                    this.lastIntakeTime = this.timer.get();
+                }
+                else if (this.lastIntakeTime - this.timer.get() > TuningConstants.POWERCELL_GENEVA_MECHANISM_INDEXING_TIMEOUT)
+                {
+                    // become stationary if stopped intaking for more than our timeout
+                    this.carouselState = CarouselState.Stationary;
+                }
+
+                break;
+
+            case MovingToNext:
+                if (this.currentCarouselIndex != this.previousIndex)
+                {
+                    this.carouselState = CarouselState.Stationary;
+                }
+            
+                break;
         }
 
-        if (!isIntaking  && this.state == CarouselState.Indexing && this.lastIntakeTime - this.timer.get() < 2.0) // become stationary if stopped intaking for more than 2 sec and indexing
+        // perform what we should do based on our current hopper state:
+        double desiredGenevaMotorPower = TuningConstants.STHOPE_BLEASE;
+        switch (this.carouselState)
         {
-            this.state = CarouselState.Stationary;
+            case Indexing:
+                desiredGenevaMotorPower = TuningConstants.POWERCELL_GENEVA_MECHANISM_MOTOR_POWER_INDEXING;
+                break;
+
+            case MovingToNext:
+                desiredGenevaMotorPower = TuningConstants.POWERCELL_GENEVA_MECHANISM_MOTOR_POWER_SHOOTING;
+                break;
+
+            case Stationary:
+                desiredGenevaMotorPower = TuningConstants.STHOPE_BLEASE;
+                break;
         }
 
-        if (this.driver.getDigital(DigitalOperation.PowerCellMoveOneSlot))
-        {
-            this.previousIndex = this.getCurrentCarouselIndex();
-            this.state = CarouselState.MovingToNext;
-        }
-
-        if (isIntaking && this.state == CarouselState.Indexing) // if intaking and currently indexing, keep track of time
-        {
-            this.lastIntakeTime = this.timer.get();
-        }
-
-        if (this.getCurrentCarouselIndex() != this.previousIndex && this.state == CarouselState.MovingToNext)
-        {
-            this.genevaMotor.set(TuningConstants.STHOPE_BLEASE);
-            this.state = CarouselState.Stationary;
-        }
-
-        if (this.state == CarouselState.Indexing)
-        {
-            this.genevaMotor.set(TuningConstants.POWERCELL_GENEVA_MECHANISM_MOTOR_POWER_INDEXING);
-        }
-
-        if (this.state == CarouselState.MovingToNext)
-        {
-            this.genevaMotor.set(TuningConstants.POWERCELL_GENEVA_MECHANISM_MOTOR_POWER_SHOOTING);
-        }
-
-        if (this.state == CarouselState.Stationary)
-        {
-            this.genevaMotor.set(TuningConstants.STHOPE_BLEASE);
-        }
+        this.genevaMotor.set(desiredGenevaMotorPower);
     }
 
     @Override

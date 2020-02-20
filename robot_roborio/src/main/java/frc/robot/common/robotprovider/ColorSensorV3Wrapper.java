@@ -5,6 +5,8 @@ import com.revrobotics.ColorSensorV3.RawColor;
 
 import edu.wpi.first.wpilibj.I2C.Port;
 
+import frc.robot.TuningConstants;
+
 public class ColorSensorV3Wrapper implements IColorSensorV3
 {
     private final ColorSensorChecker checker;
@@ -50,6 +52,11 @@ public class ColorSensorV3Wrapper implements IColorSensorV3
             return;
         }
 
+        if (TuningConstants.THROW_EXCEPTIONS)
+        {
+            System.out.println("color checker start");
+        }
+
         this.checkerThread = new Thread(this.checker);
         this.checkerThread.start();
     }
@@ -62,6 +69,11 @@ public class ColorSensorV3Wrapper implements IColorSensorV3
         if (this.checkerThread == null)
         {
             return;
+        }
+
+        if (TuningConstants.THROW_EXCEPTIONS)
+        {
+            System.out.println("color checker stop");
         }
 
         this.checkerThread.interrupt();
@@ -97,6 +109,11 @@ public class ColorSensorV3Wrapper implements IColorSensorV3
                 {
                     this.proximity = newProximity;
                     this.rawColor = newRawColor;
+                }
+
+                if (TuningConstants.THROW_EXCEPTIONS)
+                {
+                    System.out.println("color sensor found: " + newSensorRawColor.red + "," + newSensorRawColor.green + "," + newSensorRawColor.blue);
                 }
 
                 try

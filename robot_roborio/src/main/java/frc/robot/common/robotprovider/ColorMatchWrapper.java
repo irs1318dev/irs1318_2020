@@ -32,10 +32,11 @@ public class ColorMatchWrapper implements IColorMatch
         com.revrobotics.ColorMatchResult result = this.wrappedObject.matchClosestColor(ColorMatch.makeColor(red, green, blue));
 
         String match = "";
-        Color color = ColorMatch.makeColor(result.color.red, result.color.green, result.color.blue);
+        Color color = result.color;
         for (String key : this.map.keySet())
         {
-            if (color.equals(this.map.get(key)))
+            Color other = this.map.get(key);
+            if (color.equals(other))
             {
                 match = key;
                 break;
