@@ -58,8 +58,8 @@ public class ElectronicsConstants
     public static final int POWERCELL_OUTER_HOOD_REVERSE_PCM = 3; // Module B
     public static final int POWERCELL_INNER_HOOD_FORWARD_PCM = 0; // Module B
     public static final int POWERCELL_INNER_HOOD_REVERSE_PCM = 1; // Module B
-    public static final int POWERCELL_KICKER_FORWARD_PCM = 4; // Module B
-    public static final int POWERCELL_KICKER_REVERSE_PCM = 5; // Module B
+    public static final int POWERCELL_KICKER_FORWARD_PCM = 2; // Module A
+    public static final int POWERCELL_KICKER_REVERSE_PCM = 3; // Module A
 
     // hopper
     public static final int POWERCELL_GENEVA_MOTOR_CAN_ID = 8;

@@ -63,25 +63,34 @@ public class ButtonMap implements IButtonMap
             AnalogOperation.PowerCellTurretPosition,
             UserInputDevice.Operator,
             AnalogAxis.XBONE_RSX,
-            AnalogAxis.XBONE_RSY,
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ElectronicsConstants.INVERT_X_AXIS,
-            ElectronicsConstants.INVERT_Y_AXIS,
             0.05,
-            1.0,
-            HardwareConstants.POWERCELL_TURRET_MAGIC_DONT_MOVE_VALUE,
-            (x, y) ->
-            {
-                double angle = Helpers.convertToPolarAngle(x, y);
-                if (angle == -1.0)
-                {
-                    return HardwareConstants.POWERCELL_TURRET_MAGIC_DONT_MOVE_VALUE;
-                }
+            -1.0),
+        // new AnalogOperationDescription(
+        //     AnalogOperation.PowerCellTurretPosition,
+        //     UserInputDevice.Operator,
+        //     AnalogAxis.XBONE_RSX,
+        //     AnalogAxis.XBONE_RSY,
+        //     Shift.OperatorDebug,
+        //     Shift.OperatorDebug,
+        //     ElectronicsConstants.INVERT_X_AXIS,
+        //     ElectronicsConstants.INVERT_Y_AXIS,
+        //     0.05,
+        //     1.0,
+        //     HardwareConstants.POWERCELL_TURRET_MAGIC_DONT_MOVE_VALUE,
+        //     (x, y) ->
+        //     {
+        //         double angle = Helpers.convertToPolarAngle(x, y);
+        //         if (angle == -1.0)
+        //         {
+        //             return HardwareConstants.POWERCELL_TURRET_MAGIC_DONT_MOVE_VALUE;
+        //         }
 
-                // change to straight forward being 0, left being 90, down being 180, right being 270, opposite of the POV.
-                return (angle + 270.0) % 360.0;
-            }),
+        //         // change to straight forward being 0, left being 90, down being 180, right being 270, opposite of the POV.
+        //         return (angle + 270.0) % 360.0;
+        //     }),
     };
 
     public static DigitalOperationDescription[] DigitalOperationSchema = new DigitalOperationDescription[]
@@ -164,6 +173,12 @@ public class ButtonMap implements IButtonMap
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ButtonType.Click),
+
+        new DigitalOperationDescription(
+            DigitalOperation.PowerCellKick,
+            UserInputDevice.Operator,
+            UserInputDeviceButton.XBONE_RIGHT_BUTTON,
+            ButtonType.Simple),
     };
 
     public static MacroOperationDescription[] MacroSchema = new MacroOperationDescription[]
@@ -263,17 +278,17 @@ public class ButtonMap implements IButtonMap
                 DigitalOperation.PowerCellKick,
                 DigitalOperation.PowerCellMoveOneSlot,
             }),
-        new MacroOperationDescription(
-            MacroOperation.TracerShot,
-            UserInputDevice.Operator,
-            UserInputDeviceButton.XBONE_RIGHT_BUTTON,
-            ButtonType.Toggle,
-            () -> new TracerShotTask(),
-            new IOperation[]
-            {
-                DigitalOperation.PowerCellKick,
-                DigitalOperation.PowerCellMoveOneSlot,
-            }),
+        // new MacroOperationDescription(
+        //     MacroOperation.TracerShot,
+        //     UserInputDevice.Operator,
+        //     UserInputDeviceButton.XBONE_RIGHT_BUTTON,
+        //     ButtonType.Toggle,
+        //     () -> new TracerShotTask(),
+        //     new IOperation[]
+        //     {
+        //         DigitalOperation.PowerCellKick,
+        //         DigitalOperation.PowerCellMoveOneSlot,
+        //     }),
         new MacroOperationDescription(
             MacroOperation.SpinUpVisionDistance,
             UserInputDevice.Operator,
@@ -404,96 +419,7 @@ public class ButtonMap implements IButtonMap
                 DigitalOperation.PowerCellKick,
                 DigitalOperation.PowerCellMoveOneSlot,
             }),
- 
-        // Testing macros:
-        new MacroOperationDescription(
-            MacroOperation.FollowSomePath,
-            UserInputDevice.Driver,
-            UserInputDeviceButton.XBONE_A_BUTTON,
-            Shift.DriverDebug,
-            Shift.None,
-            ButtonType.Toggle,
-            () -> new FollowPathTask("/Paths/straight_path.csv"),
-            new IOperation[]
-            {
-                DigitalOperation.DriveTrainUsePositionalMode,
-                DigitalOperation.DriveTrainUseBrakeMode,
-                AnalogOperation.DriveTrainLeftPosition,
-                AnalogOperation.DriveTrainRightPosition,
-                AnalogOperation.DriveTrainLeftVelocity,
-                AnalogOperation.DriveTrainRightVelocity,
-                AnalogOperation.DriveTrainHeadingCorrection,
-                DigitalOperation.DriveTrainUsePathMode,
-                AnalogOperation.DriveTrainTurn,
-                AnalogOperation.DriveTrainMoveForward,
-                DigitalOperation.DriveTrainSimpleMode,
-            },
-            new IOperation[]
-            {
-                DigitalOperation.DriveTrainUsePositionalMode,
-                DigitalOperation.DriveTrainUseBrakeMode,
-                AnalogOperation.DriveTrainLeftPosition,
-                AnalogOperation.DriveTrainRightPosition,
-            }),
-        new MacroOperationDescription(
-            MacroOperation.FollowAnotherPath,
-            UserInputDevice.Driver,
-            UserInputDeviceButton.XBONE_B_BUTTON,
-            Shift.DriverDebug,
-            Shift.None,
-            ButtonType.Toggle,
-            () -> new FollowPathTask("/Paths/curved_path.csv"),
-            new IOperation[]
-            {
-                DigitalOperation.DriveTrainUsePositionalMode,
-                DigitalOperation.DriveTrainUseBrakeMode,
-                AnalogOperation.DriveTrainLeftPosition,
-                AnalogOperation.DriveTrainRightPosition,
-                AnalogOperation.DriveTrainLeftVelocity,
-                AnalogOperation.DriveTrainRightVelocity,
-                AnalogOperation.DriveTrainHeadingCorrection,
-                DigitalOperation.DriveTrainUsePathMode,
-                AnalogOperation.DriveTrainTurn,
-                AnalogOperation.DriveTrainMoveForward,
-                DigitalOperation.DriveTrainSimpleMode,
-            },
-            new IOperation[]
-            {
-                DigitalOperation.DriveTrainUsePositionalMode,
-                DigitalOperation.DriveTrainUseBrakeMode,
-                AnalogOperation.DriveTrainLeftPosition,
-                AnalogOperation.DriveTrainRightPosition,
-            }),
-        new MacroOperationDescription(
-            MacroOperation.FollowADifferentPath,
-            UserInputDevice.Driver,
-            UserInputDeviceButton.XBONE_Y_BUTTON,
-            Shift.DriverDebug,
-            Shift.None,
-            ButtonType.Toggle,
-            () -> new FollowPathTask("/Paths/backwards_path.csv"),
-            new IOperation[]
-            {
-                DigitalOperation.DriveTrainUsePositionalMode,
-                DigitalOperation.DriveTrainUseBrakeMode,
-                AnalogOperation.DriveTrainLeftPosition,
-                AnalogOperation.DriveTrainRightPosition,
-                AnalogOperation.DriveTrainLeftVelocity,
-                AnalogOperation.DriveTrainRightVelocity,
-                AnalogOperation.DriveTrainHeadingCorrection,
-                DigitalOperation.DriveTrainUsePathMode,
-                AnalogOperation.DriveTrainTurn,
-                AnalogOperation.DriveTrainMoveForward,
-                DigitalOperation.DriveTrainSimpleMode,
-            },
-            new IOperation[]
-            {
-                DigitalOperation.DriveTrainUsePositionalMode,
-                DigitalOperation.DriveTrainUseBrakeMode,
-                AnalogOperation.DriveTrainLeftPosition,
-                AnalogOperation.DriveTrainRightPosition,
-            }),
-    };
+   };
 
     @Override
     public ShiftDescription[] getShiftSchema()

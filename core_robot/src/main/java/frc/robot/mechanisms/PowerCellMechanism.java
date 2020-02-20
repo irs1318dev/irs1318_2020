@@ -61,7 +61,7 @@ public class PowerCellMechanism implements IMechanism
         this.throughBeamSensor = provider.getAnalogInput(ElectronicsConstants.POWERCELL_THROUGHBEAM_ANALOG_INPUT);
 
         this.intakeSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.PCM_A_MODULE, ElectronicsConstants.POWERCELL_INTAKE_FORWARD_PCM, ElectronicsConstants.POWERCELL_INTAKE_REVERSE_PCM);
-        this.kickerSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.PCM_B_MODULE, ElectronicsConstants.POWERCELL_KICKER_FORWARD_PCM, ElectronicsConstants.POWERCELL_KICKER_REVERSE_PCM);
+        this.kickerSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.PCM_A_MODULE, ElectronicsConstants.POWERCELL_KICKER_FORWARD_PCM, ElectronicsConstants.POWERCELL_KICKER_REVERSE_PCM);
         this.outerHood = provider.getDoubleSolenoid(ElectronicsConstants.PCM_B_MODULE, ElectronicsConstants.POWERCELL_OUTER_HOOD_FORWARD_PCM, ElectronicsConstants.POWERCELL_OUTER_HOOD_REVERSE_PCM);
         this.innerHood = provider.getDoubleSolenoid(ElectronicsConstants.PCM_B_MODULE, ElectronicsConstants.POWERCELL_INNER_HOOD_FORWARD_PCM, ElectronicsConstants.POWERCELL_INNER_HOOD_REVERSE_PCM);
 
@@ -101,17 +101,18 @@ public class PowerCellMechanism implements IMechanism
         this.turret.setInvertOutput(HardwareConstants.POWERCELL_TURRET_INVERT_OUTPUT);
         this.turret.setInvertSensor(HardwareConstants.POWERCELL_TURRET_INVERT_SENSOR);
         this.turret.setNeutralMode(MotorNeutralMode.Brake);
-        this.turret.setSensorType(TalonXFeedbackDevice.QuadEncoder);
-        this.turret.setPosition(0);
-        this.turret.setControlMode(TalonSRXControlMode.Position);
-        this.turret.setPIDF(
-            TuningConstants.POWERCELL_TURRET_POSITION_PID_KP,
-            TuningConstants.POWERCELL_TURRET_POSITION_PID_KI,
-            TuningConstants.POWERCELL_TURRET_POSITION_PID_KD,
-            TuningConstants.POWERCELL_TURRET_POSITION_PID_KF,
-            PowerCellMechanism.slotId);
-        this.turret.setForwardLimitSwitch(TuningConstants.POWERCELL_TURRET_FORWARD_LIMIT_SWITCH_ENABLED, TuningConstants.POWERCELL_TURRET_FORWARD_LIMIT_SWITCH_NORMALLY_OPEN);
-        this.turret.setReverseLimitSwitch(TuningConstants.POWERCELL_TURRET_REVERSE_LIMIT_SWITCH_ENABLED, TuningConstants.POWERCELL_TURRET_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN);
+        this.turret.setControlMode(TalonSRXControlMode.PercentOutput);
+        // this.turret.setSensorType(TalonXFeedbackDevice.QuadEncoder);
+        // this.turret.setPosition(0);
+        // this.turret.setControlMode(TalonSRXControlMode.Position);
+        // this.turret.setPIDF(
+        //     TuningConstants.POWERCELL_TURRET_POSITION_PID_KP,
+        //     TuningConstants.POWERCELL_TURRET_POSITION_PID_KI,
+        //     TuningConstants.POWERCELL_TURRET_POSITION_PID_KD,
+        //     TuningConstants.POWERCELL_TURRET_POSITION_PID_KF,
+        //     PowerCellMechanism.slotId);
+        // this.turret.setForwardLimitSwitch(TuningConstants.POWERCELL_TURRET_FORWARD_LIMIT_SWITCH_ENABLED, TuningConstants.POWERCELL_TURRET_FORWARD_LIMIT_SWITCH_NORMALLY_OPEN);
+        // this.turret.setReverseLimitSwitch(TuningConstants.POWERCELL_TURRET_REVERSE_LIMIT_SWITCH_ENABLED, TuningConstants.POWERCELL_TURRET_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN);
 
         this.genevaMotor = provider.getVictorSPX(ElectronicsConstants.POWERCELL_GENEVA_MOTOR_CAN_ID);
         this.genevaMotor.setInvertOutput(HardwareConstants.POWERCELL_GENEVA_MOTOR_INVERT_OUTPUT);
@@ -139,9 +140,9 @@ public class PowerCellMechanism implements IMechanism
             throughBeamBroken = true;
         }
 
-        this.turretPosition = this.turret.getPosition();
-        this.turretVelocity = this.turret.getVelocity();
-        this.turretError = this.turret.getError();
+        // this.turretPosition = this.turret.getPosition();
+        // this.turretVelocity = this.turret.getVelocity();
+        // this.turretError = this.turret.getError();
 
         this.flywheelPosition = this.flyWheel.getPosition();
         this.flywheelVelocity = this.flyWheel.getVelocity();
@@ -173,18 +174,18 @@ public class PowerCellMechanism implements IMechanism
     @Override
     public void update()
     {
-        double startingTurretOffset = this.driver.getAnalog(AnalogOperation.PowerCellTurretOffset);
-        if (startingTurretOffset != 0.0)
-        {
-            this.startingTurretOffsetAngle = startingTurretOffset;
-        }
+        // double startingTurretOffset = this.driver.getAnalog(AnalogOperation.PowerCellTurretOffset);
+        // if (startingTurretOffset != 0.0)
+        // {
+        //     this.startingTurretOffsetAngle = startingTurretOffset;
+        // }
 
-        if (this.driver.getDigital(DigitalOperation.PowerCellResetTurretFront))
-        {
-            this.startingTurretOffsetAngle = 0.0;
-            this.turret.setPosition(0);
-            this.turret.set(0.0);
-        }
+        // if (this.driver.getDigital(DigitalOperation.PowerCellResetTurretFront))
+        // {
+        //     this.startingTurretOffsetAngle = 0.0;
+        //     this.turret.setPosition(0);
+        //     this.turret.set(0.0);
+        // }
 
         if (this.driver.getDigital(DigitalOperation.PowerCellHoodPointBlank))
         {
@@ -260,12 +261,13 @@ public class PowerCellMechanism implements IMechanism
         this.logger.logNumber(PowerCellMechanism.logName, "flyWheelVelocitySetpoint", flyWheelVelocitySetpoint);
 
         double desiredTurretPosition = this.driver.getAnalog(AnalogOperation.PowerCellTurretPosition);
-        this.logger.logNumber(PowerCellMechanism.logName, "desiredTurretPosition", desiredTurretPosition);
+/*        this.logger.logNumber(PowerCellMechanism.logName, "desiredTurretPosition", desiredTurretPosition);
         if (desiredTurretPosition != HardwareConstants.POWERCELL_TURRET_MAGIC_DONT_MOVE_VALUE)
         {
             desiredTurretPosition = this.getClosestAngleInRange(desiredTurretPosition, this.getTurretPosition(), HardwareConstants.POWERCELL_TURRET_MINIMUM_RANGE_VALUE, HardwareConstants.POWERCELL_TURRET_MAXIMUM_RANGE_VALUE);
             this.turret.set((desiredTurretPosition + startingTurretOffsetAngle) * HardwareConstants.POWERCELL_TURRET_DEGREES_TO_TICKS);
-        }
+        }*/
+        this.turret.set(desiredTurretPosition);
 
         if (isIntaking && this.state == CarouselState.Stationary)  // if intaking and currently stationary, start indexing
         {
@@ -332,7 +334,7 @@ public class PowerCellMechanism implements IMechanism
 
     public double getTurretPosition()
     {
-        return (this.turretPosition * HardwareConstants.POWERCELL_TURRET_TICKS_TO_DEGREES) - this.startingTurretOffsetAngle;
+        return 0.0; //(this.turretPosition * HardwareConstants.POWERCELL_TURRET_TICKS_TO_DEGREES) - this.startingTurretOffsetAngle;
     }
 
     public double getFlywheelVelocity()

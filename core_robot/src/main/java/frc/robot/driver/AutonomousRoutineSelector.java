@@ -36,7 +36,7 @@ public class AutonomousRoutineSelector
         Poach,
         ThreePlusTwo,
         ShootGoBack,
-        ShootSplineBackShoot
+        ShootSplineBackShoot,
     }
 
     /**
@@ -218,9 +218,9 @@ public class AutonomousRoutineSelector
             "poach segment 4", 
             RoadRunnerTankTranslator.convert(
                 new PathBuilder(new Pose2d(0, 0, 0)) 
-                    .splineTo(new Pose2d(112, 50, 0)) 
+                    .splineTo(new Pose2d(112, 50, 180), interpolator) 
                     .build(),
-                true));
+                false));
                     
             
         this.pathManager.addPath(
@@ -368,8 +368,8 @@ public class AutonomousRoutineSelector
         return SequentialTask.Sequence(
             new FollowPathTask("poach segment 1"),
             new FollowPathTask("poach segment 2"),
-            new FollowPathTask("poach segment 3"),
-            new FollowPathTask("poach segment 4"));
+            new FollowPathTask("poach segment 3"));//,
+            //new FollowPathTask("poach segment 4"));
     }
 
 }
