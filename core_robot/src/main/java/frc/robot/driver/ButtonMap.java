@@ -360,7 +360,7 @@ public class ButtonMap implements IButtonMap
         new MacroOperationDescription(
             MacroOperation.TurretMoveLeft,
             UserInputDevice.Operator,
-            UserInputDeviceButton.PS4_SHARE_BUTTON,
+            UserInputDeviceButton.PS4_SQUARE_BUTTON,
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ButtonType.Toggle,
