@@ -21,7 +21,7 @@ public class ButtonMap implements IButtonMap
         new ShiftDescription(
             Shift.OperatorDebug,
             UserInputDevice.Operator,
-            UserInputDeviceButton.XBONE_LEFT_BUTTON),
+            UserInputDeviceButton.PS4_LEFT_BUTTON),
     };
 
     public static AnalogOperationDescription[] AnalogOperationSchema = new AnalogOperationDescription[]
@@ -44,7 +44,7 @@ public class ButtonMap implements IButtonMap
         new AnalogOperationDescription(
             AnalogOperation.ControlPanelSpinSpeed,
             UserInputDevice.Operator,
-            AnalogAxis.XBONE_LT,
+            AnalogAxis.PS4_LT,
             ElectronicsConstants.INVERT_TRIGGER_AXIS,
             .1),
 
@@ -62,7 +62,7 @@ public class ButtonMap implements IButtonMap
         new AnalogOperationDescription(
             AnalogOperation.PowerCellTurretPosition,
             UserInputDevice.Operator,
-            AnalogAxis.XBONE_RSX,
+            AnalogAxis.PS4_RSX,
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ElectronicsConstants.INVERT_X_AXIS,
@@ -71,8 +71,8 @@ public class ButtonMap implements IButtonMap
         // new AnalogOperationDescription(
         //     AnalogOperation.PowerCellTurretPosition,
         //     UserInputDevice.Operator,
-        //     AnalogAxis.XBONE_RSX,
-        //     AnalogAxis.XBONE_RSY,
+        //     AnalogAxis.PS4_RSX,
+        //     AnalogAxis.PS4_RSY,
         //     Shift.OperatorDebug,
         //     Shift.OperatorDebug,
         //     ElectronicsConstants.INVERT_X_AXIS,
@@ -129,12 +129,12 @@ public class ButtonMap implements IButtonMap
         new DigitalOperationDescription(
             DigitalOperation.ControlPanelExtend,
             UserInputDevice.Operator,
-            UserInputDeviceButton.XBONE_SELECT_BUTTON,
+            UserInputDeviceButton.PS4_SHARE_BUTTON,
             ButtonType.Click),
         new DigitalOperationDescription(
             DigitalOperation.ControlPanelRetract,
             UserInputDevice.Operator,
-            UserInputDeviceButton.XBONE_START_BUTTON,
+            UserInputDeviceButton.PS4_OPTIONS_BUTTON,
             ButtonType.Click),
 
         // PowerCell operations
@@ -169,7 +169,7 @@ public class ButtonMap implements IButtonMap
         new DigitalOperationDescription(
             DigitalOperation.PowerCellResetTurretFront,
             UserInputDevice.Operator,
-            UserInputDeviceButton.XBONE_RIGHT_STICK_BUTTON,
+            UserInputDeviceButton.PS4_RIGHT_STICK_BUTTON,
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ButtonType.Click),
@@ -177,7 +177,7 @@ public class ButtonMap implements IButtonMap
         new DigitalOperationDescription(
             DigitalOperation.PowerCellKick,
             UserInputDevice.Operator,
-            UserInputDeviceButton.XBONE_RIGHT_BUTTON,
+            UserInputDeviceButton.PS4_RIGHT_BUTTON,
             ButtonType.Simple),
     };
 
@@ -256,7 +256,7 @@ public class ButtonMap implements IButtonMap
         new MacroOperationDescription(
             MacroOperation.ControlPanelSpin,
             UserInputDevice.Operator,
-            UserInputDeviceButton.XBONE_LEFT_STICK_BUTTON,
+            UserInputDeviceButton.PS4_LEFT_STICK_BUTTON,
             ButtonType.Toggle,
             () -> new ColorSpinTask(),
             new IOperation[]
@@ -268,7 +268,7 @@ public class ButtonMap implements IButtonMap
         new MacroOperationDescription(
             MacroOperation.FullHopperShot,
             UserInputDevice.Operator,
-            AnalogAxis.XBONE_RT,
+            AnalogAxis.PS4_RT,
             0.5,
             1.0,
             ButtonType.Toggle,
@@ -281,7 +281,7 @@ public class ButtonMap implements IButtonMap
         // new MacroOperationDescription(
         //     MacroOperation.TracerShot,
         //     UserInputDevice.Operator,
-        //     UserInputDeviceButton.XBONE_RIGHT_BUTTON,
+        //     UserInputDeviceButton.PS4_RIGHT_BUTTON,
         //     ButtonType.Toggle,
         //     () -> new TracerShotTask(),
         //     new IOperation[]
@@ -292,7 +292,7 @@ public class ButtonMap implements IButtonMap
         new MacroOperationDescription(
             MacroOperation.SpinUpVisionDistance,
             UserInputDevice.Operator,
-            UserInputDeviceButton.XBONE_X_BUTTON,
+            UserInputDeviceButton.PS4_SQUARE_BUTTON,
             Shift.OperatorDebug,
             Shift.None,
             ButtonType.Toggle,
@@ -309,7 +309,7 @@ public class ButtonMap implements IButtonMap
         new MacroOperationDescription(
             MacroOperation.SpinUpPointBlank,
             UserInputDevice.Operator,
-            UserInputDeviceButton.XBONE_Y_BUTTON,
+            UserInputDeviceButton.PS4_TRIANGLE_BUTTON,
             Shift.OperatorDebug,
             Shift.None,
             ButtonType.Toggle,
@@ -328,7 +328,7 @@ public class ButtonMap implements IButtonMap
         new MacroOperationDescription(
             MacroOperation.AlignShotVision,
             UserInputDevice.Operator,
-            UserInputDeviceButton.XBONE_A_BUTTON,
+            UserInputDeviceButton.PS4_X_BUTTON,
             Shift.OperatorDebug,
             Shift.None,
             ButtonType.Toggle,
@@ -341,7 +341,7 @@ public class ButtonMap implements IButtonMap
         new MacroOperationDescription(
             MacroOperation.SpinUpMedium,
             UserInputDevice.Operator,
-            UserInputDeviceButton.XBONE_B_BUTTON,
+            UserInputDeviceButton.PS4_CIRCLE_BUTTON,
             Shift.OperatorDebug,
             Shift.None,
             ButtonType.Toggle,
@@ -360,7 +360,7 @@ public class ButtonMap implements IButtonMap
         new MacroOperationDescription(
             MacroOperation.TurretMoveLeft,
             UserInputDevice.Operator,
-            UserInputDeviceButton.XBONE_X_BUTTON,
+            UserInputDeviceButton.PS4_SHARE_BUTTON,
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ButtonType.Toggle,
@@ -372,7 +372,7 @@ public class ButtonMap implements IButtonMap
         new MacroOperationDescription(
             MacroOperation.TurretMoveRight,
             UserInputDevice.Operator,
-            UserInputDeviceButton.XBONE_B_BUTTON,
+            UserInputDeviceButton.PS4_CIRCLE_BUTTON,
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ButtonType.Toggle,
@@ -384,7 +384,7 @@ public class ButtonMap implements IButtonMap
         new MacroOperationDescription(
             MacroOperation.IncreaseFlyWheelSpeed,
             UserInputDevice.Operator,
-            UserInputDeviceButton.XBONE_Y_BUTTON,
+            UserInputDeviceButton.PS4_TRIANGLE_BUTTON,
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ButtonType.Toggle,
@@ -396,7 +396,7 @@ public class ButtonMap implements IButtonMap
         new MacroOperationDescription(
             MacroOperation.DecreaseFlyWheelSpeed,
             UserInputDevice.Operator,
-            UserInputDeviceButton.XBONE_A_BUTTON,
+            UserInputDeviceButton.PS4_X_BUTTON,
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ButtonType.Toggle,
@@ -408,7 +408,7 @@ public class ButtonMap implements IButtonMap
         new MacroOperationDescription(
             MacroOperation.StopFlywheelPlease,
             UserInputDevice.Operator,
-            UserInputDeviceButton.XBONE_RIGHT_STICK_BUTTON,
+            UserInputDeviceButton.PS4_RIGHT_STICK_BUTTON,
             Shift.OperatorDebug,
             Shift.None,
             ButtonType.Simple,
