@@ -181,7 +181,7 @@ public class ControlPanelMechanism implements IMechanism
     {
         this.sensor.stop();
         this.extender.set(DoubleSolenoidValue.Off);
-        this.spinnerMotor.set(0.0);
+        this.spinnerMotor.stop();
     }
 
     @Override

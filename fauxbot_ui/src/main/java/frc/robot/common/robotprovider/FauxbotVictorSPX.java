@@ -30,4 +30,8 @@ public class FauxbotVictorSPX extends FauxbotAdvancedMotorBase implements IVicto
     public void setInvertOutput(boolean invert)
     {
     }
+
+    public void stop()
+    {
+    }
 }

@@ -77,4 +77,9 @@ public class VictorSPXWrapper implements IVictorSPX
 
         this.wrappedObject.setNeutralMode(mode);
     }
+
+    public void stop()
+    {
+        this.wrappedObject.set(ControlMode.Disabled, 0.0);
+    }
 }

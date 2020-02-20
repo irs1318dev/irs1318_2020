@@ -8,4 +8,5 @@ public interface IVictorSPX extends IMotor
     void setInvertOutput(boolean flip);
     void setNeutralMode(MotorNeutralMode neutralMode);
     void setControlMode(TalonSRXControlMode mode);
+    void stop();
 }

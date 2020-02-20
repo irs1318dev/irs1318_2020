@@ -28,7 +28,7 @@ public class ElectronicsConstants
 
     //================================================== Vision ==============================================================
 
-    public static final int VISION_RING_LIGHT_DIO = 0;
+    public static final int VISION_RING_LIGHT_DIO = 1;
 
     //================================================== Indicator Lights ==============================================================
 
@@ -58,8 +58,8 @@ public class ElectronicsConstants
     public static final int POWERCELL_OUTER_HOOD_REVERSE_PCM = 3; // Module B
     public static final int POWERCELL_INNER_HOOD_FORWARD_PCM = 0; // Module B
     public static final int POWERCELL_INNER_HOOD_REVERSE_PCM = 1; // Module B
-    public static final int POWERCELL_KICKER_FORWARD_PCM = -1; // Module B
-    public static final int POWERCELL_KICKER_REVERSE_PCM = -1; // Module B
+    public static final int POWERCELL_KICKER_FORWARD_PCM = 4; // Module B
+    public static final int POWERCELL_KICKER_REVERSE_PCM = 5; // Module B
 
     // hopper
     public static final int POWERCELL_GENEVA_MOTOR_CAN_ID = 8;
@@ -73,9 +73,9 @@ public class ElectronicsConstants
     public static final int POWERCELL_INTAKE_FORWARD_PCM = 5; // Module A
     public static final int POWERCELL_INTAKE_REVERSE_PCM = 4; // Module A
 
-    public static final int POWERCELL_CAROUSEL_COUNTER_DIO = -1;
+    public static final int POWERCELL_CAROUSEL_COUNTER_DIO = 0;
 
-    public static final int POWERCELL_THROUGHBEAM_CHANNEL = -1;
+    public static final int POWERCELL_THROUGHBEAM_ANALOG_INPUT = 0;
 
     //================================================== Climber =================================================================
 

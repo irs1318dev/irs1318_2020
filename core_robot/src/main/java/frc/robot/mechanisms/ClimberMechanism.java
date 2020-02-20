@@ -80,7 +80,7 @@ public class ClimberMechanism implements IMechanism
     {
         this.climberExtendSolenoid.set(DoubleSolenoidValue.Off);
         this.climberGrabSolenoid.set(DoubleSolenoidValue.Off);
-        this.winchMotorMaster.set(0.0);
+        this.winchMotorMaster.stop();
     }
 
     @Override
