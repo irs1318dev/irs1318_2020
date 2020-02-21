@@ -298,7 +298,7 @@ public class PowerCellMechanism implements IMechanism
                     // if intaking, keep track of time
                     this.lastIntakeTime = this.timer.get();
                 }
-                else if (this.lastIntakeTime - this.timer.get() > TuningConstants.POWERCELL_GENEVA_MECHANISM_INDEXING_TIMEOUT)
+                else if (this.timer.get() - this.lastIntakeTime > TuningConstants.POWERCELL_GENEVA_MECHANISM_INDEXING_TIMEOUT)
                 {
                     // become stationary if stopped intaking for more than our timeout
                     this.carouselState = CarouselState.Stationary;

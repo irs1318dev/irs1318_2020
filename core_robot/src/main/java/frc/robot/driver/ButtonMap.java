@@ -46,6 +46,7 @@ public class ButtonMap implements IButtonMap
             UserInputDevice.Operator,
             AnalogAxis.PS4_LT,
             ElectronicsConstants.INVERT_TRIGGER_AXIS,
+            -1.0,
             .1),
 
         // Climber operations
