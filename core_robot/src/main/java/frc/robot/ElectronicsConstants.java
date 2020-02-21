@@ -79,11 +79,11 @@ public class ElectronicsConstants
 
     //================================================== Climber =================================================================
 
-    public static final int CLIMBER_EXTEND_FORWARD_PCM = 1; // Module A
-    public static final int CLIMBER_EXTEND_REVERSE_PCM = 0; // Module A
+    public static final int CLIMBER_EXTEND_FORWARD_PCM = 7; // Module B
+    public static final int CLIMBER_EXTEND_REVERSE_PCM = 6; // Module B
 
-    public static final int CLIMBER_GRAB_FORWARD_PCM = 7; // Module B
-    public static final int CLIMBER_GRAB_REVERSE_PCM = 6; // Module B
+    public static final int CLIMBER_GRAB_FORWARD_PCM = 0; // Module A
+    public static final int CLIMBER_GRAB_REVERSE_PCM = 1; // Module A
 
     public static final int CLIMBER_WINCH_MASTER_CAN_ID = 11;
     public static final int CLIMBER_WINCH_MASTER_PDP_SLOT = 2; // 2 & 13 ??

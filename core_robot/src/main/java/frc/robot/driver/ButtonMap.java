@@ -56,6 +56,7 @@ public class ButtonMap implements IButtonMap
             Shift.DriverDebug,
             Shift.DriverDebug,
             ElectronicsConstants.INVERT_TRIGGER_AXIS,
+            -1.0,
             .1),
 
         // PowerCell operations
@@ -66,6 +67,7 @@ public class ButtonMap implements IButtonMap
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ElectronicsConstants.INVERT_X_AXIS,
+            -0.05,
             0.05,
             -1.0),
         // new AnalogOperationDescription(
@@ -77,6 +79,7 @@ public class ButtonMap implements IButtonMap
         //     Shift.OperatorDebug,
         //     ElectronicsConstants.INVERT_X_AXIS,
         //     ElectronicsConstants.INVERT_Y_AXIS,
+        //     -0.05,
         //     0.05,
         //     1.0,
         //     HardwareConstants.POWERCELL_TURRET_MAGIC_DONT_MOVE_VALUE,

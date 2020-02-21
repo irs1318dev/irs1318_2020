@@ -174,6 +174,10 @@ public class ControlPanelMechanism implements IMechanism
             double speed = this.driver.getAnalog(AnalogOperation.ControlPanelSpinSpeed);
             this.spinnerMotor.set(speed);
         }
+        else
+        {
+            this.spinnerMotor.stop();
+        }
     }
 
     @Override
