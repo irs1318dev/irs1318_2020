@@ -135,7 +135,8 @@ public class PowerCellMechanism implements IMechanism
     public void readSensors()
     {
         boolean throughBeamBroken = false;
-        if (this.throughBeamSensor.getVoltage() < TuningConstants.POWERCELL_TROUGHBEAM_CUTOFF)
+        double throughBeamVoltage = this.throughBeamSensor.getVoltage();
+        if (throughBeamVoltage < TuningConstants.POWERCELL_TROUGHBEAM_CUTOFF)
         {
             throughBeamBroken = true;
         }
@@ -167,6 +168,7 @@ public class PowerCellMechanism implements IMechanism
         this.logger.logNumber(PowerCellMechanism.logName, "flywheelError", this.flywheelError);
         this.logger.logInteger(PowerCellMechanism.logName, "carouselCount", this.carouselCount);
         this.logger.logInteger(PowerCellMechanism.logName, "currentCarouselIndex", this.currentCarouselIndex);
+        this.logger.logNumber(PowerCellMechanism.logName, "throughBeamVoltage", throughBeamVoltage);
         this.logger.logBoolean(PowerCellMechanism.logName, "throughBeamBroken", throughBeamBroken);
         this.logger.logBooleanArray(PowerCellMechanism.logName, "hasPowerCell", this.hasPowerCell);
     }
