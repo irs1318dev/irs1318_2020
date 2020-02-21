@@ -416,14 +416,18 @@ public class ButtonMap implements IButtonMap
             Shift.OperatorDebug,
             Shift.None,
             ButtonType.Simple,
-            () -> new WaitTask(0.0),
+            () -> new FlyWheelHoodTask(DigitalOperation.PowerCellHoodPointBlank),
             new IOperation[]
             {
                 AnalogOperation.PowerCellFlywheelVelocity,
                 DigitalOperation.PowerCellKick,
                 DigitalOperation.PowerCellMoveOneSlot,
+                DigitalOperation.PowerCellHoodPointBlank,
+                DigitalOperation.PowerCellHoodShort,
+                DigitalOperation.PowerCellHoodMedium,
+                DigitalOperation.PowerCellHoodLong,
             }),
-   };
+    };
 
     @Override
     public ShiftDescription[] getShiftSchema()

@@ -135,7 +135,7 @@ public class PowerCellMechanism implements IMechanism
     public void readSensors()
     {
         boolean throughBeamBroken = false;
-        if (this.throughBeamSensor.getVoltage() > TuningConstants.POWERCELL_TROUGHBEAM_CUTOFF)
+        if (this.throughBeamSensor.getVoltage() < TuningConstants.POWERCELL_TROUGHBEAM_CUTOFF)
         {
             throughBeamBroken = true;
         }
@@ -315,10 +315,6 @@ public class PowerCellMechanism implements IMechanism
                 break;
         }
 
-        this.logger.logBoolean(PowerCellMechanism.logName, "isIntaking", isIntaking);
-        this.logger.logString(PowerCellMechanism.logName, "carouselState", this.carouselState.toString());
-        this.logger.logNumber(PowerCellMechanism.logName, "lastIntakeTime", this.lastIntakeTime);
-
         // perform what we should do based on our current hopper state:
         double desiredGenevaMotorPower = TuningConstants.STHOPE_BLEASE;
         switch (this.carouselState)
@@ -337,6 +333,11 @@ public class PowerCellMechanism implements IMechanism
         }
 
         this.genevaMotor.set(desiredGenevaMotorPower);
+
+        this.logger.logBoolean(PowerCellMechanism.logName, "isIntaking", isIntaking);
+        this.logger.logString(PowerCellMechanism.logName, "carouselState", this.carouselState.toString());
+        this.logger.logNumber(PowerCellMechanism.logName, "lastIntakeTime", this.lastIntakeTime);
+        this.logger.logNumber(PowerCellMechanism.logName, "genevaPower", desiredGenevaMotorPower);
     }
 
     @Override
