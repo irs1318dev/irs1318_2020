@@ -315,8 +315,9 @@ public class PowerCellMechanism implements IMechanism
                 break;
         }
 
-        this.logger.logString(PowerCellMechanism.logName, "carouselstate", this.carouselState.toString());
-        this.logger.logNumber(PowerCellMechanism.logName, "lastintaketime", this.lastIntakeTime);
+        this.logger.logBoolean(PowerCellMechanism.logName, "isIntaking", isIntaking);
+        this.logger.logString(PowerCellMechanism.logName, "carouselState", this.carouselState.toString());
+        this.logger.logNumber(PowerCellMechanism.logName, "lastIntakeTime", this.lastIntakeTime);
 
         // perform what we should do based on our current hopper state:
         double desiredGenevaMotorPower = TuningConstants.STHOPE_BLEASE;
