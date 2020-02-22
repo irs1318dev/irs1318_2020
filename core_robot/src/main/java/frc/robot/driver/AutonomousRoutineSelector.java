@@ -283,6 +283,7 @@ public class AutonomousRoutineSelector
             ConcurrentTask.AnyTasks(
                 new FlyWheelVisionSpinTask(),
                 SequentialTask.Sequence(
+                    new IntakePositionTask(true),
                     new TurretVisionCenteringTask(false, true),
                     new WaitTask(1.0),
                     new FullHopperShotTask()))));
@@ -303,6 +304,7 @@ public class AutonomousRoutineSelector
             ConcurrentTask.AnyTasks(
                 new FlyWheelVisionSpinTask(),
                 SequentialTask.Sequence(
+                    new IntakePositionTask(true),
                     new TurretVisionCenteringTask(false, true),
                     new WaitTask(1.0),
                     new FullHopperShotTask())));
@@ -320,6 +322,7 @@ public class AutonomousRoutineSelector
             ConcurrentTask.AnyTasks(
                 new FlyWheelVisionSpinTask(),
                 SequentialTask.Sequence(
+                    new IntakePositionTask(true),
                     new TurretVisionCenteringTask(false, true),
                     new WaitTask(1.0),
                     new FullHopperShotTask()))
@@ -332,6 +335,7 @@ public class AutonomousRoutineSelector
             ConcurrentTask.AnyTasks(
                 new FlyWheelVisionSpinTask(),
                 SequentialTask.Sequence(
+                    new IntakePositionTask(true),
                     new TurretVisionCenteringTask(false, true),
                     new WaitTask(1.0),
                     new FullHopperShotTask()),
@@ -357,6 +361,7 @@ public class AutonomousRoutineSelector
             ConcurrentTask.AnyTasks(
                 new FlyWheelVisionSpinTask(),
                 SequentialTask.Sequence(
+                    new IntakePositionTask(true),
                     new TurretVisionCenteringTask(false, true),
                     new WaitTask(1.0),
                     new FullHopperShotTask())));
