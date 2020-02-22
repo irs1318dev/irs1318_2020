@@ -47,6 +47,7 @@ public class PowerCellMechanism implements IMechanism
 
     private boolean[] hasPowerCell;
     private int currentCarouselIndex;
+    private double lastCarouselCountTime;
 
     private boolean intakeExtended;
 
@@ -126,7 +127,8 @@ public class PowerCellMechanism implements IMechanism
 
         this.carouselState = CarouselState.Stationary;
         this.previousIndex = 0;
-        this.lastIntakeTime = this.timer.get();
+        this.lastIntakeTime = 0.0;
+        this.lastCarouselCountTime = 0.0;
 
         this.hasPowerCell = new boolean[5];
         this.currentCarouselIndex = 0;
@@ -137,6 +139,8 @@ public class PowerCellMechanism implements IMechanism
     @Override
     public void readSensors()
     {
+        double currentTime = this.timer.get();
+
         boolean throughBeamBroken = false;
         double throughBeamVoltage = this.throughBeamSensor.getVoltage();
         if (throughBeamVoltage < TuningConstants.POWERCELL_TROUGHBEAM_CUTOFF)
@@ -153,9 +157,11 @@ public class PowerCellMechanism implements IMechanism
         this.flywheelError = this.flyWheel.getError();
 
         int newCarouselCount = this.carouselCounter.get();
-        if (newCarouselCount > this.carouselCount)
+        if (newCarouselCount > this.carouselCount &&
+            currentTime - this.lastCarouselCountTime > TuningConstants.POWERCELL_GENEVA_COUNT_THRESHOLD)
         {
             this.currentCarouselIndex = (currentCarouselIndex + 1) % 5;
+            this.lastCarouselCountTime = currentTime;
 
             // only register whether throughbeam is broken when we are switching to a new slot
             this.hasPowerCell[this.currentCarouselIndex] = throughBeamBroken;
@@ -179,6 +185,8 @@ public class PowerCellMechanism implements IMechanism
     @Override
     public void update()
     {
+        double currentTime = this.timer.get();
+
         double startingTurretOffset = this.driver.getAnalog(AnalogOperation.PowerCellTurretOffset);
         if (startingTurretOffset != 0.0)
         {
@@ -288,14 +296,16 @@ public class PowerCellMechanism implements IMechanism
                 }
                 else if (this.driver.getDigital(DigitalOperation.PowerCellMoveOneSlot))
                 {
+                    this.lastCarouselCountTime = currentTime;
                     this.previousIndex = this.currentCarouselIndex;
                     this.carouselState = CarouselState.MovingToNext;
                 }
                 else if (isIntaking)
                 {
                     // if intaking, start indexing
+                    this.lastCarouselCountTime = currentTime;
                     this.carouselState = CarouselState.Indexing;
-                    this.lastIntakeTime = this.timer.get();
+                    this.lastIntakeTime = currentTime;
                 }
 
                 break;
@@ -314,16 +324,13 @@ public class PowerCellMechanism implements IMechanism
                 else if (isIntaking)
                 {
                     // if intaking, keep track of time
-                    this.lastIntakeTime = this.timer.get();
+                    this.lastIntakeTime = currentTime;
                 }
-                else if (this.timer.get() - this.lastIntakeTime > TuningConstants.POWERCELL_GENEVA_MECHANISM_INDEXING_TIMEOUT)
+                else if (currentTime - this.lastIntakeTime > TuningConstants.POWERCELL_GENEVA_MECHANISM_INDEXING_TIMEOUT)
                 {
-                    // // switch to move-to-next to avoid stopping when we are not fully turned
-                    // this.previousIndex = this.currentCarouselIndex;
-                    // this.carouselState = CarouselState.MovingToNext;
-
-                    // become stationary if stopped intaking for more than our timeout
-                    this.carouselState = CarouselState.Stationary;
+                    // switch to move-to-next to avoid stopping when we are not fully turned
+                    this.previousIndex = this.currentCarouselIndex;
+                    this.carouselState = CarouselState.MovingToNext;
                 }
 
                 break;
@@ -368,6 +375,11 @@ public class PowerCellMechanism implements IMechanism
         }
 
         this.genevaMotor.set(desiredGenevaMotorPower);
+
+        this.logger.logBoolean(PowerCellMechanism.logName, "isIntaking", isIntaking);
+        this.logger.logString(PowerCellMechanism.logName, "genevaMode", this.carouselState.toString());
+        this.logger.logNumber(PowerCellMechanism.logName, "genevaPower", desiredGenevaMotorPower);
+        this.logger.logBoolean(PowerCellMechanism.logName, "intakeExtended", this.intakeExtended);
     }
 
     @Override

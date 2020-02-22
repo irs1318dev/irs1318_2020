@@ -27,7 +27,7 @@ public class HardwareConstants
     public static final boolean POWERCELL_FLYWHEEL_FOLLOWER_INVERT_OUTPUT = true;
     public static final boolean POWERCELL_ROLLER_MOTOR_OUTER_INVERT_OUTPUT = false;
     public static final boolean POWERCELL_ROLLER_MOTOR_INNER_INVERT_OUTPUT = false;
-    public static final boolean POWERCELL_GENEVA_MOTOR_INVERT_OUTPUT = false;
+    public static final boolean POWERCELL_GENEVA_MOTOR_INVERT_OUTPUT = true;
 
     public static final double POWERCELL_TURRET_DEGREES_TO_TICKS = 4096.0 / 360.0; // (360 degrees => 4096 ticks)
     public static final double POWERCELL_TURRET_TICKS_TO_DEGREES = 360.0 / 4096.0;
