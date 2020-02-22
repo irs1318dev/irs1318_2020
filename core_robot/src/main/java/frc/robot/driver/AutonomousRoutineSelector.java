@@ -85,15 +85,17 @@ public class AutonomousRoutineSelector
 
         this.logger.logString(AutonomousRoutineSelector.LogName, "selected", startPosition.toString() + "." + routine.toString());
 
-        if(routine == AutoRoutine.ShootGoBack)
+        if (routine == AutoRoutine.ShootGoBack)
         {
             return shootGoBack();
         }
-        if(routine == AutoRoutine.ShootSplineBackShoot)
+
+        if (routine == AutoRoutine.ShootSplineBackShoot)
         {
             return shootSplineBackShoot();
         }
-        if (routine == AutoRoutine.Poach) 
+
+        if (routine == AutoRoutine.Poach)
         {
             return poachDrive();
         }
@@ -112,8 +114,7 @@ public class AutonomousRoutineSelector
         {
             return driveShoot(1.5,"3 plus 2 straight forwards", "3 plus 2 straight backwards");
         }
-        
-                
+
         return AutonomousRoutineSelector.GetFillerRoutine();
     }
 
@@ -141,7 +142,7 @@ public class AutonomousRoutineSelector
                 false));
 
         this.pathManager.addPath(
-            "shoot 3 pick 3 forward", 
+            "shoot 3 pick 3 forward",
             RoadRunnerTankTranslator.convert(
                 new PathBuilder(new Pose2d(0, 0, 0))
                     .lineTo(new Vector2d(157.66, 0), interpolator)
@@ -149,7 +150,7 @@ public class AutonomousRoutineSelector
                 false));
 
         this.pathManager.addPath(
-            "shoot 3 pick 3 back", 
+            "shoot 3 pick 3 back",
             RoadRunnerTankTranslator.convert(
                 new PathBuilder(new Pose2d(0, 0, 0))
                     .lineTo(new Vector2d(66.058, 0), interpolator) // tune x value for final shooting position
@@ -168,7 +169,7 @@ public class AutonomousRoutineSelector
         this.pathManager.addPath(
             "eight power cell close back",
             RoadRunnerTankTranslator.convert(
-                new PathBuilder(new Pose2d(218.413, 65.869, 0)) 
+                new PathBuilder(new Pose2d(218.413, 65.869, 0))
                     .lineTo(new Vector2d(80.6, 65.869)) // tune x value for final shooting position
                     .build(),
                 true));
@@ -176,32 +177,32 @@ public class AutonomousRoutineSelector
         this.pathManager.addPath(
             "3 plus 2 straight forward",
             RoadRunnerTankTranslator.convert(
-                new PathBuilder(new Pose2d(0, 0, 0)) 
-                    .lineTo(new Vector2d(120, 0)) 
+                new PathBuilder(new Pose2d(0, 0, 0))
+                    .lineTo(new Vector2d(120, 0))
                     .build(),
                 false));
 
         this.pathManager.addPath(
             "3 plus 2 straight back",
             RoadRunnerTankTranslator.convert(
-                new PathBuilder(new Pose2d(0, 0, 0)) 
-                    .lineTo(new Vector2d(36, 0)) 
+                new PathBuilder(new Pose2d(0, 0, 0))
+                    .lineTo(new Vector2d(36, 0))
                     .build(),
                 true));
 
         this.pathManager.addPath(
             "poach segment 1",
             RoadRunnerTankTranslator.convert(
-                new PathBuilder(new Pose2d(0, 0, 0)) 
-                    .lineTo(new Vector2d(132, 0)) 
+                new PathBuilder(new Pose2d(0, 0, 0))
+                    .lineTo(new Vector2d(132, 0))
                     .build(),
                 false));
-                
+
         this.pathManager.addPath(
             "poach segment 2",
             RoadRunnerTankTranslator.convert(
-                new PathBuilder(new Pose2d(0, 0, 0)) 
-                    .splineTo(new Pose2d(128, 200, 0), interpolator) // y value and angle for shooting position (90 might need to be 270) 
+                new PathBuilder(new Pose2d(0, 0, 0))
+                    .splineTo(new Pose2d(128, 200, 0), interpolator) // y value and angle for shooting position (90 might need to be 270)
                     //.lineTo(new Vector2d(128, 200))
                     .build(),
                 true));
@@ -209,25 +210,24 @@ public class AutonomousRoutineSelector
         this.pathManager.addPath(
             "poach segment 3",
             RoadRunnerTankTranslator.convert(
-                new PathBuilder(new Pose2d(0, 0, 0)) 
-                    .splineTo(new Pose2d(112, -50, 157.5)) 
+                new PathBuilder(new Pose2d(0, 0, 0))
+                    .splineTo(new Pose2d(112, -50, 157.5))
                     .build(),
                 false));
 
         this.pathManager.addPath(
-            "poach segment 4", 
+            "poach segment 4",
             RoadRunnerTankTranslator.convert(
-                new PathBuilder(new Pose2d(0, 0, 0)) 
-                    .splineTo(new Pose2d(112, 50, 180), interpolator) 
+                new PathBuilder(new Pose2d(0, 0, 0))
+                    .splineTo(new Pose2d(112, 50, 180), interpolator)
                     .build(),
                 false));
-                    
-            
+
         this.pathManager.addPath(
             "simple back",
             RoadRunnerTankTranslator.convert(
-                new PathBuilder(new Pose2d(0, 0, 0)) 
-                    .lineTo(new Vector2d(12, 0)) 
+                new PathBuilder(new Pose2d(0, 0, 0))
+                    .lineTo(new Vector2d(12, 0))
                     .build(),
                 false));
 
@@ -278,7 +278,7 @@ public class AutonomousRoutineSelector
                 new FollowPathTask(forward),
             new WaitTask(0.15),
             ConcurrentTask.AllTasks(
-                new IntakePositionTask(true),
+                new IntakePositionTask(false),
                 new FollowPathTask(back)),
             ConcurrentTask.AnyTasks(
                 new FlyWheelVisionSpinTask(),
@@ -286,10 +286,9 @@ public class AutonomousRoutineSelector
                     new TurretVisionCenteringTask(false, true),
                     new WaitTask(1.0),
                     new FullHopperShotTask()))));
-
     }
 
-    private static IControlTask poachOnlyTwo() 
+    private static IControlTask poachOnlyTwo()
     {
         return SequentialTask.Sequence(
             ConcurrentTask.AllTasks(
@@ -306,10 +305,9 @@ public class AutonomousRoutineSelector
                 SequentialTask.Sequence(
                     new TurretVisionCenteringTask(false, true),
                     new WaitTask(1.0),
-                    new FullHopperShotTask()))
-        );
+                    new FullHopperShotTask())));
     }
-    
+
     private static IControlTask poachTwoAndMore()
     {
         return SequentialTask.Sequence(
@@ -327,6 +325,7 @@ public class AutonomousRoutineSelector
                     new FullHopperShotTask()))
         );
     }
+
     private static IControlTask shootGoBack()
     {
         return SequentialTask.Sequence(
@@ -337,7 +336,7 @@ public class AutonomousRoutineSelector
                     new WaitTask(1.0),
                     new FullHopperShotTask()),
             new FollowPathTask("simple back")));
-    }  
+    }
 
     private static IControlTask shootSplineBackShoot() // shoots three pc on init. line, then picks three from trench and shoots them
     {
@@ -363,7 +362,7 @@ public class AutonomousRoutineSelector
                     new FullHopperShotTask())));
     }
 
-    private static IControlTask poachDrive() 
+    private static IControlTask poachDrive()
     {
         return SequentialTask.Sequence(
             new FollowPathTask("poach segment 1"),

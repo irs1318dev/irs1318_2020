@@ -30,8 +30,6 @@ public class PowerCellMechanism implements IMechanism
     private final IVictorSPX genevaMotor;
     private final ITimer timer;
 
-    private double lastIntakeTime;
-
     private final ICounter carouselCounter;
     private final IAnalogInput throughBeamSensor;
 
@@ -50,8 +48,11 @@ public class PowerCellMechanism implements IMechanism
     private boolean[] hasPowerCell;
     private int currentCarouselIndex;
 
+    private boolean intakeExtended;
+
     private CarouselState carouselState;
     private int previousIndex;
+    private double lastIntakeTime;
 
     @Inject
     public PowerCellMechanism(IRobotProvider provider, IDashboardLogger logger, ITimer timer)
@@ -120,15 +121,17 @@ public class PowerCellMechanism implements IMechanism
         this.genevaMotor.setNeutralMode(MotorNeutralMode.Brake);
 
         this.timer = timer;
-        this.lastIntakeTime = this.timer.get();
 
         this.carouselCounter = provider.getCounter(ElectronicsConstants.POWERCELL_CAROUSEL_COUNTER_DIO);
 
         this.carouselState = CarouselState.Stationary;
         this.previousIndex = 0;
+        this.lastIntakeTime = this.timer.get();
 
         this.hasPowerCell = new boolean[5];
         this.currentCarouselIndex = 0;
+
+        this.intakeExtended = false;
     }
 
     @Override
@@ -176,11 +179,11 @@ public class PowerCellMechanism implements IMechanism
     @Override
     public void update()
     {
-        // double startingTurretOffset = this.driver.getAnalog(AnalogOperation.PowerCellTurretOffset);
-        // if (startingTurretOffset != 0.0)
-        // {
-        //     this.startingTurretOffsetAngle = startingTurretOffset;
-        // }
+        double startingTurretOffset = this.driver.getAnalog(AnalogOperation.PowerCellTurretOffset);
+        if (startingTurretOffset != 0.0)
+        {
+            this.startingTurretOffsetAngle = startingTurretOffset;
+        }
 
         // if (this.driver.getDigital(DigitalOperation.PowerCellResetTurretFront))
         // {
@@ -220,12 +223,16 @@ public class PowerCellMechanism implements IMechanism
             this.kickerSolenoid.set(DoubleSolenoidValue.Reverse);
         }
 
-        if (this.driver.getDigital(DigitalOperation.PowerCellIntakeExtend))
+        boolean intakeExtend = this.driver.getDigital(DigitalOperation.PowerCellIntakeExtend);
+        boolean intakeRetract = !intakeExtend && this.driver.getDigital(DigitalOperation.PowerCellIntakeRetract);
+        if (intakeExtend)
         {
+            this.intakeExtended = true;
             this.intakeSolenoid.set(DoubleSolenoidValue.Forward);
         }
-        else if (this.driver.getDigital(DigitalOperation.PowerCellIntakeRetract))
+        else if (intakeRetract)
         {
+            this.intakeExtended = false;
             this.intakeSolenoid.set(DoubleSolenoidValue.Reverse);
         }
 
@@ -263,19 +270,23 @@ public class PowerCellMechanism implements IMechanism
         this.logger.logNumber(PowerCellMechanism.logName, "flyWheelVelocitySetpoint", flyWheelVelocitySetpoint);
 
         double desiredTurretPosition = this.driver.getAnalog(AnalogOperation.PowerCellTurretPosition);
-/*        this.logger.logNumber(PowerCellMechanism.logName, "desiredTurretPosition", desiredTurretPosition);
-        if (desiredTurretPosition != HardwareConstants.POWERCELL_TURRET_MAGIC_DONT_MOVE_VALUE)
-        {
-            desiredTurretPosition = this.getClosestAngleInRange(desiredTurretPosition, this.getTurretPosition(), HardwareConstants.POWERCELL_TURRET_MINIMUM_RANGE_VALUE, HardwareConstants.POWERCELL_TURRET_MAXIMUM_RANGE_VALUE);
-            this.turret.set((desiredTurretPosition + startingTurretOffsetAngle) * HardwareConstants.POWERCELL_TURRET_DEGREES_TO_TICKS);
-        }*/
         this.turret.set(desiredTurretPosition);
+        // this.logger.logNumber(PowerCellMechanism.logName, "desiredTurretPosition", desiredTurretPosition);
+        // if (desiredTurretPosition != HardwareConstants.POWERCELL_TURRET_MAGIC_DONT_MOVE_VALUE)
+        // {
+        //     desiredTurretPosition = this.getClosestAngleInRange(desiredTurretPosition, this.getTurretPosition(), HardwareConstants.POWERCELL_TURRET_MINIMUM_RANGE_VALUE, HardwareConstants.POWERCELL_TURRET_MAXIMUM_RANGE_VALUE);
+        //     this.turret.set((desiredTurretPosition + startingTurretOffsetAngle) * HardwareConstants.POWERCELL_TURRET_DEGREES_TO_TICKS);
+        // }
 
         // determine if we should make any transition from our current carousel state:
         switch (this.carouselState)
         {
             case Stationary:
-                if (this.driver.getDigital(DigitalOperation.PowerCellMoveOneSlot))
+                if (!this.intakeExtended)
+                {
+                    // don't change state if the intake is retracted
+                }
+                else if (this.driver.getDigital(DigitalOperation.PowerCellMoveOneSlot))
                 {
                     this.previousIndex = this.currentCarouselIndex;
                     this.carouselState = CarouselState.MovingToNext;
@@ -290,7 +301,12 @@ public class PowerCellMechanism implements IMechanism
                 break;
 
             case Indexing:
-                if (this.driver.getDigital(DigitalOperation.PowerCellMoveOneSlot))
+                if (!this.intakeExtended)
+                {
+                    // become stationary if intake is retracted
+                    this.carouselState = CarouselState.Stationary;
+                }
+                else if (this.driver.getDigital(DigitalOperation.PowerCellMoveOneSlot))
                 {
                     this.previousIndex = this.currentCarouselIndex;
                     this.carouselState = CarouselState.MovingToNext;
@@ -302,6 +318,10 @@ public class PowerCellMechanism implements IMechanism
                 }
                 else if (this.timer.get() - this.lastIntakeTime > TuningConstants.POWERCELL_GENEVA_MECHANISM_INDEXING_TIMEOUT)
                 {
+                    // // switch to move-to-next to avoid stopping when we are not fully turned
+                    // this.previousIndex = this.currentCarouselIndex;
+                    // this.carouselState = CarouselState.MovingToNext;
+
                     // become stationary if stopped intaking for more than our timeout
                     this.carouselState = CarouselState.Stationary;
                 }
@@ -309,7 +329,12 @@ public class PowerCellMechanism implements IMechanism
                 break;
 
             case MovingToNext:
-                if (this.currentCarouselIndex != this.previousIndex)
+                if (!this.intakeExtended)
+                {
+                    // become stationary if intake is retracted
+                    this.carouselState = CarouselState.Stationary;
+                }
+                else if (this.currentCarouselIndex != this.previousIndex)
                 {
                     this.carouselState = CarouselState.Stationary;
                 }
@@ -326,7 +351,15 @@ public class PowerCellMechanism implements IMechanism
                 break;
 
             case MovingToNext:
-                desiredGenevaMotorPower = TuningConstants.POWERCELL_GENEVA_MECHANISM_MOTOR_POWER_SHOOTING;
+                if (flyWheelVelocitySetpoint != 0.0)
+                {
+                    desiredGenevaMotorPower = TuningConstants.POWERCELL_GENEVA_MECHANISM_MOTOR_POWER_SHOOTING;
+                }
+                else
+                {
+                    desiredGenevaMotorPower = TuningConstants.POWERCELL_GENEVA_MECHANISM_MOTOR_POWER_INDEXING;
+                }
+
                 break;
 
             case Stationary:
@@ -335,11 +368,6 @@ public class PowerCellMechanism implements IMechanism
         }
 
         this.genevaMotor.set(desiredGenevaMotorPower);
-
-        this.logger.logBoolean(PowerCellMechanism.logName, "isIntaking", isIntaking);
-        this.logger.logString(PowerCellMechanism.logName, "carouselState", this.carouselState.toString());
-        this.logger.logNumber(PowerCellMechanism.logName, "lastIntakeTime", this.lastIntakeTime);
-        this.logger.logNumber(PowerCellMechanism.logName, "genevaPower", desiredGenevaMotorPower);
     }
 
     @Override

@@ -300,7 +300,9 @@ public class ButtonMap implements IButtonMap
             Shift.OperatorDebug,
             Shift.None,
             ButtonType.Toggle,
-            () -> new FlyWheelVisionSpinTask(),
+            () -> SequentialTask.Sequence(
+                new IntakePositionTask(true),
+                new FlyWheelVisionSpinTask()),
             new IOperation[]
             {
                 DigitalOperation.PowerCellHoodPointBlank,
@@ -317,9 +319,11 @@ public class ButtonMap implements IButtonMap
             Shift.OperatorDebug,
             Shift.None,
             ButtonType.Toggle,
-            () -> ConcurrentTask.AllTasks(
-                new FlyWheelHoodTask(DigitalOperation.PowerCellHoodPointBlank),
-                new FlyWheelFixedSpinTask(TuningConstants.POWERCELL_FLYWHEEL_POINT_BLANK_MOTOR_VELOCITY)),
+            () -> SequentialTask.Sequence(
+                new IntakePositionTask(true),
+                ConcurrentTask.AllTasks(
+                    new FlyWheelHoodTask(DigitalOperation.PowerCellHoodPointBlank),
+                    new FlyWheelFixedSpinTask(TuningConstants.POWERCELL_FLYWHEEL_POINT_BLANK_MOTOR_VELOCITY))),
             new IOperation[]
             {
                 DigitalOperation.PowerCellHoodPointBlank,
@@ -349,9 +353,11 @@ public class ButtonMap implements IButtonMap
             Shift.OperatorDebug,
             Shift.None,
             ButtonType.Toggle,
-            () -> ConcurrentTask.AllTasks(
-                new FlyWheelHoodTask(DigitalOperation.PowerCellHoodMedium),
-                new FlyWheelFixedSpinTask(TuningConstants.POWERCELL_FLYWHEEL_MEDIUM_MOTOR_VELOCITY)),
+            () -> SequentialTask.Sequence(
+                new IntakePositionTask(true),
+                ConcurrentTask.AllTasks(
+                    new FlyWheelHoodTask(DigitalOperation.PowerCellHoodMedium),
+                    new FlyWheelFixedSpinTask(TuningConstants.POWERCELL_FLYWHEEL_MEDIUM_MOTOR_VELOCITY))),
             new IOperation[]
             {
                 DigitalOperation.PowerCellHoodPointBlank,
@@ -368,7 +374,7 @@ public class ButtonMap implements IButtonMap
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ButtonType.Toggle,
-            () -> new TurretMoveTask(0.1, 5.0),
+            () -> new TurretMoveTask(0.1, 1.0),
             new IOperation[]
             {
                 AnalogOperation.PowerCellTurretPosition,
@@ -380,7 +386,7 @@ public class ButtonMap implements IButtonMap
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ButtonType.Toggle,
-            () -> new TurretMoveTask(0.1, -5.0),
+            () -> new TurretMoveTask(0.1, -1.0),
             new IOperation[]
             {
                 AnalogOperation.PowerCellTurretPosition,
@@ -392,7 +398,7 @@ public class ButtonMap implements IButtonMap
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ButtonType.Toggle,
-            () -> new ChangeFlyWheelSpeedTask(0.1, 5.0),
+            () -> new ChangeFlyWheelSpeedTask(0.1, 500.0),
             new IOperation[]
             {
                 AnalogOperation.PowerCellFlywheelVelocity,
@@ -404,7 +410,7 @@ public class ButtonMap implements IButtonMap
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ButtonType.Toggle,
-            () -> new ChangeFlyWheelSpeedTask(0.1, -5.0),
+            () -> new ChangeFlyWheelSpeedTask(0.1, -500.0),
             new IOperation[]
             {
                 AnalogOperation.PowerCellFlywheelVelocity,
