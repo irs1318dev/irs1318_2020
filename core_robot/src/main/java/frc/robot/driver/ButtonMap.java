@@ -138,6 +138,13 @@ public class ButtonMap implements IButtonMap
 
         // PowerCell operations
         new DigitalOperationDescription(
+            DigitalOperation.PowerCellKick,
+            UserInputDevice.Operator,
+            UserInputDeviceButton.PS4_RIGHT_BUTTON,
+            Shift.OperatorDebug,
+            Shift.OperatorDebug,
+            ButtonType.Simple),
+        new DigitalOperationDescription(
             DigitalOperation.PowerCellIntakeExtend,
             UserInputDevice.Operator,
             0,
@@ -303,6 +310,8 @@ public class ButtonMap implements IButtonMap
             MacroOperation.TracerShot,
             UserInputDevice.Operator,
             UserInputDeviceButton.PS4_RIGHT_BUTTON,
+            Shift.OperatorDebug,
+            Shift.None,
             ButtonType.Toggle,
             () -> new TracerShotTask(),
             new IOperation[]
