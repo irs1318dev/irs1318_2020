@@ -20,6 +20,7 @@ public class ClimberMechanism implements IMechanism
     private Driver driver;
 
     private boolean isExtended;
+    private boolean hasReleased;
 
     @Inject
     public ClimberMechanism(IRobotProvider provider)
@@ -38,6 +39,7 @@ public class ClimberMechanism implements IMechanism
         winchMotorFollower.follow(this.winchMotorMaster);
 
         this.isExtended = false;
+        this.hasReleased = false;
     }
 
     @Override
@@ -65,10 +67,11 @@ public class ClimberMechanism implements IMechanism
         }
         else if (this.isExtended && this.driver.getDigital(DigitalOperation.ClimberHookRelease))
         {
+            this.hasReleased = true;
             this.climberGrabSolenoid.set(DoubleSolenoidValue.Forward);
         }
 
-        if (this.isExtended)
+        if (this.hasReleased)
         {
             double speed = this.driver.getAnalog(AnalogOperation.ClimberWinch);
             this.winchMotorMaster.set(speed);

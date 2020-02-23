@@ -28,7 +28,7 @@ public class TuningConstants
         mechanismList.add(injector.getInstance(PowerManager.class));
         mechanismList.add(injector.getInstance(PositionManager.class));
         mechanismList.add(injector.getInstance(CompressorMechanism.class));
-        // mechanismList.add(injector.getInstance(OffboardVisionManager.class));
+        mechanismList.add(injector.getInstance(OffboardVisionManager.class));
         // mechanismList.add(injector.getInstance(IndicatorLightManager.class));
         return mechanismList;
     }
