@@ -200,12 +200,6 @@ public class ButtonMap implements IButtonMap
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ButtonType.Click),
-
-        new DigitalOperationDescription(
-            DigitalOperation.PowerCellKick,
-            UserInputDevice.Operator,
-            UserInputDeviceButton.PS4_RIGHT_BUTTON,
-            ButtonType.Simple),
     };
 
     public static MacroOperationDescription[] MacroSchema = new MacroOperationDescription[]
@@ -305,17 +299,17 @@ public class ButtonMap implements IButtonMap
                 DigitalOperation.PowerCellKick,
                 DigitalOperation.PowerCellMoveOneSlot,
             }),
-        // new MacroOperationDescription(
-        //     MacroOperation.TracerShot,
-        //     UserInputDevice.Operator,
-        //     UserInputDeviceButton.PS4_RIGHT_BUTTON,
-        //     ButtonType.Toggle,
-        //     () -> new TracerShotTask(),
-        //     new IOperation[]
-        //     {
-        //         DigitalOperation.PowerCellKick,
-        //         DigitalOperation.PowerCellMoveOneSlot,
-        //     }),
+        new MacroOperationDescription(
+            MacroOperation.TracerShot,
+            UserInputDevice.Operator,
+            UserInputDeviceButton.PS4_RIGHT_BUTTON,
+            ButtonType.Toggle,
+            () -> new TracerShotTask(),
+            new IOperation[]
+            {
+                DigitalOperation.PowerCellKick,
+                DigitalOperation.PowerCellMoveOneSlot,
+            }),
         new MacroOperationDescription(
             MacroOperation.SpinUpVisionDistance,
             UserInputDevice.Operator,

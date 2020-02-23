@@ -227,7 +227,8 @@ public class PowerCellMechanism implements IMechanism
             this.outerHood.set(DoubleSolenoidValue.Forward);
         }
 
-        if (this.driver.getDigital(DigitalOperation.PowerCellKick))
+        boolean kick = this.driver.getDigital(DigitalOperation.PowerCellKick);
+        if (kick)
         {
             this.hasPowerCell[this.currentCarouselIndex] = false;
             this.kickerSolenoid.set(DoubleSolenoidValue.Forward);
@@ -302,7 +303,7 @@ public class PowerCellMechanism implements IMechanism
         switch (this.carouselState)
         {
             case Stationary:
-                if (!this.intakeExtended)
+                if (!this.intakeExtended || kick)
                 {
                     // don't change state if the intake is retracted
                 }
@@ -323,9 +324,9 @@ public class PowerCellMechanism implements IMechanism
                 break;
 
             case Indexing:
-                if (!this.intakeExtended)
+                if (!this.intakeExtended || kick)
                 {
-                    // become stationary if intake is retracted
+                    // become stationary if intake is retracted, or we're kicking
                     this.carouselState = CarouselState.Stationary;
                 }
                 else if (this.driver.getDigital(DigitalOperation.PowerCellMoveOneSlot))
@@ -348,9 +349,9 @@ public class PowerCellMechanism implements IMechanism
                 break;
 
             case MovingToNext:
-                if (!this.intakeExtended)
+                if (!this.intakeExtended || kick)
                 {
-                    // become stationary if intake is retracted
+                    // become stationary if intake is retracted, or we're kicking
                     this.carouselState = CarouselState.Stationary;
                 }
                 else if (this.currentCarouselIndex != this.previousIndex)
