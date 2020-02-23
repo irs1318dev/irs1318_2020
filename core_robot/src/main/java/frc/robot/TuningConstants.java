@@ -135,14 +135,23 @@ public class TuningConstants
     public static final double VISION_FAST_ADVANCING_PID_MIN = -0.45;
     public static final double VISION_FAST_ADVANCING_PID_MAX = 0.45;
 
-    // PID settings for Centering the turret on a vision target from one stationary place
-    public static final double TURRET_VISION_STATIONARY_CENTERING_PID_KP = 0.35;
-    public static final double TURRET_VISION_STATIONARY_CENTERING_PID_KI = 0.0;
-    public static final double TURRET_VISION_STATIONARY_CENTERING_PID_KD = 0.35;
-    public static final double TURRET_VISION_STATIONARY_CENTERING_PID_KF = 0.0;
-    public static final double TURRET_VISION_STATIONARY_CENTERING_PID_KS = 30.0;
-    public static final double TURRET_VISION_STATIONARY_CENTERING_PID_MIN = -30.0;
-    public static final double TURRET_VISION_STATIONARY_CENTERING_PID_MAX = 30.0;
+    // PID settings for Centering the turret on a vision target when the turret is controlled using Positional PID
+    public static final double TURRET_VISION_POSITIONAL_CENTERING_PID_KP = 0.35;
+    public static final double TURRET_VISION_POSITIONAL_CENTERING_PID_KI = 0.0;
+    public static final double TURRET_VISION_POSITIONAL_CENTERING_PID_KD = 0.35;
+    public static final double TURRET_VISION_POSITIONAL_CENTERING_PID_KF = 0.0;
+    public static final double TURRET_VISION_POSITIONAL_CENTERING_PID_KS = 30.0;
+    public static final double TURRET_VISION_POSITIONAL_CENTERING_PID_MIN = -30.0;
+    public static final double TURRET_VISION_POSITIONAL_CENTERING_PID_MAX = 30.0;
+
+    // PID settings for Centering the turret on a vision target when the turret is controlled using open loop
+    public static final double TURRET_VISION_PERCENTAGE_CENTERING_PID_KP = 0.35;
+    public static final double TURRET_VISION_PERCENTAGE_CENTERING_PID_KI = 0.0;
+    public static final double TURRET_VISION_PERCENTAGE_CENTERING_PID_KD = 0.35;
+    public static final double TURRET_VISION_PERCENTAGE_CENTERING_PID_KF = 0.0;
+    public static final double TURRET_VISION_PERCENTAGE_CENTERING_PID_KS = 30.0;
+    public static final double TURRET_VISION_PERCENTAGE_CENTERING_PID_MIN = -1.0;
+    public static final double TURRET_VISION_PERCENTAGE_CENTERING_PID_MAX = 1.0;
 
     public static final boolean VISION_ENABLE_DURING_TELEOP = true;
 
@@ -167,6 +176,9 @@ public class TuningConstants
     public static final boolean POWERCELL_TURRET_FORWARD_LIMIT_SWITCH_NORMALLY_OPEN = false;
     public static final boolean POWERCELL_TURRET_REVERSE_LIMIT_SWITCH_ENABLED = false;
     public static final boolean POWERCELL_TURRET_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN = false;
+
+    public static final boolean POWERCELL_TURRET_USE_PID = false;
+    public static final double POWERCELL_TURRET_VISION_CENTERING_TIMEOUT = 0.75;
 
     public static final int POWERCELL_FLYWHEEL_VELOCITY_PERIOD = 10;
     public static final int POWERCELL_FLYWHEEL_VELOCITY_WINDOWSIZE = 32;

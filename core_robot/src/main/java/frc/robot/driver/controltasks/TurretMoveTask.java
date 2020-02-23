@@ -1,5 +1,6 @@
 package frc.robot.driver.controltasks;
 
+import frc.robot.TuningConstants;
 import frc.robot.driver.AnalogOperation;
 import frc.robot.driver.common.IControlTask;
 import frc.robot.mechanisms.PowerCellMechanism;
@@ -56,5 +57,16 @@ public class TurretMoveTask extends TimedTask implements IControlTask
         super.end();
 
         this.setAnalogOperationState(AnalogOperation.PowerCellTurretPosition, -1.0);
+    }
+
+    @Override
+    public boolean hasCompleted()
+    {
+        if (TuningConstants.POWERCELL_TURRET_USE_PID)
+        {
+            return true;
+        }
+
+        return super.hasCompleted();
     }
 }

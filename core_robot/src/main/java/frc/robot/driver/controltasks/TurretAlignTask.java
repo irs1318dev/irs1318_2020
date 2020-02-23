@@ -35,13 +35,11 @@ public class TurretAlignTask extends ControlTaskBase implements IControlTask
     @Override
     public boolean hasCompleted()
     {
-        if (Math.abs(this.powerCell.getTurretPosition() - this.angle) <= TuningConstants.POWERCELL_MIN_TURRET_OFFSET)
+        if (TuningConstants.POWERCELL_TURRET_USE_PID)
         {
             return true;
         }
-        else
-        {
-            return false;
-        }
+
+        return Math.abs(this.powerCell.getTurretPosition() - this.angle) <= TuningConstants.POWERCELL_MIN_TURRET_OFFSET;
     }
 }

@@ -103,18 +103,24 @@ public class PowerCellMechanism implements IMechanism
         this.turret.setInvertOutput(HardwareConstants.POWERCELL_TURRET_INVERT_OUTPUT);
         this.turret.setInvertSensor(HardwareConstants.POWERCELL_TURRET_INVERT_SENSOR);
         this.turret.setNeutralMode(MotorNeutralMode.Brake);
-        this.turret.setControlMode(TalonSRXControlMode.PercentOutput);
         this.turret.setSensorType(TalonXFeedbackDevice.QuadEncoder);
         this.turret.setPosition(0);
-        // this.turret.setControlMode(TalonSRXControlMode.Position);
-        // this.turret.setPIDF(
-        //     TuningConstants.POWERCELL_TURRET_POSITION_PID_KP,
-        //     TuningConstants.POWERCELL_TURRET_POSITION_PID_KI,
-        //     TuningConstants.POWERCELL_TURRET_POSITION_PID_KD,
-        //     TuningConstants.POWERCELL_TURRET_POSITION_PID_KF,
-        //     PowerCellMechanism.slotId);
-        // this.turret.setForwardLimitSwitch(TuningConstants.POWERCELL_TURRET_FORWARD_LIMIT_SWITCH_ENABLED, TuningConstants.POWERCELL_TURRET_FORWARD_LIMIT_SWITCH_NORMALLY_OPEN);
-        // this.turret.setReverseLimitSwitch(TuningConstants.POWERCELL_TURRET_REVERSE_LIMIT_SWITCH_ENABLED, TuningConstants.POWERCELL_TURRET_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN);
+        this.turret.setForwardLimitSwitch(TuningConstants.POWERCELL_TURRET_FORWARD_LIMIT_SWITCH_ENABLED, TuningConstants.POWERCELL_TURRET_FORWARD_LIMIT_SWITCH_NORMALLY_OPEN);
+        this.turret.setReverseLimitSwitch(TuningConstants.POWERCELL_TURRET_REVERSE_LIMIT_SWITCH_ENABLED, TuningConstants.POWERCELL_TURRET_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN);
+        if (TuningConstants.POWERCELL_TURRET_USE_PID)
+        {
+            this.turret.setControlMode(TalonSRXControlMode.Position);
+            this.turret.setPIDF(
+                TuningConstants.POWERCELL_TURRET_POSITION_PID_KP,
+                TuningConstants.POWERCELL_TURRET_POSITION_PID_KI,
+                TuningConstants.POWERCELL_TURRET_POSITION_PID_KD,
+                TuningConstants.POWERCELL_TURRET_POSITION_PID_KF,
+                PowerCellMechanism.slotId);
+        }
+        else
+        {
+            this.turret.setControlMode(TalonSRXControlMode.PercentOutput);
+        }
 
         this.genevaMotor = provider.getVictorSPX(ElectronicsConstants.POWERCELL_GENEVA_MOTOR_CAN_ID);
         this.genevaMotor.setInvertOutput(HardwareConstants.POWERCELL_GENEVA_MOTOR_INVERT_OUTPUT);
@@ -278,13 +284,19 @@ public class PowerCellMechanism implements IMechanism
         this.logger.logNumber(PowerCellMechanism.logName, "flyWheelVelocitySetpoint", flyWheelVelocitySetpoint);
 
         double desiredTurretPosition = this.driver.getAnalog(AnalogOperation.PowerCellTurretPosition);
-        this.turret.set(desiredTurretPosition);
-        // this.logger.logNumber(PowerCellMechanism.logName, "desiredTurretPosition", desiredTurretPosition);
-        // if (desiredTurretPosition != HardwareConstants.POWERCELL_TURRET_MAGIC_DONT_MOVE_VALUE)
-        // {
-        //     desiredTurretPosition = this.getClosestAngleInRange(desiredTurretPosition, this.getTurretPosition(), HardwareConstants.POWERCELL_TURRET_MINIMUM_RANGE_VALUE, HardwareConstants.POWERCELL_TURRET_MAXIMUM_RANGE_VALUE);
-        //     this.turret.set((desiredTurretPosition + startingTurretOffsetAngle) * HardwareConstants.POWERCELL_TURRET_DEGREES_TO_TICKS);
-        // }
+        this.logger.logNumber(PowerCellMechanism.logName, "desiredTurretPosition", desiredTurretPosition);
+        if (TuningConstants.POWERCELL_TURRET_USE_PID)
+        {
+            if (desiredTurretPosition != HardwareConstants.POWERCELL_TURRET_MAGIC_DONT_MOVE_VALUE)
+            {
+                desiredTurretPosition = this.getClosestAngleInRange(desiredTurretPosition, this.getTurretPosition(), HardwareConstants.POWERCELL_TURRET_MINIMUM_RANGE_VALUE, HardwareConstants.POWERCELL_TURRET_MAXIMUM_RANGE_VALUE);
+                this.turret.set((desiredTurretPosition + startingTurretOffsetAngle) * HardwareConstants.POWERCELL_TURRET_DEGREES_TO_TICKS);
+            }
+        }
+        else
+        {
+            this.turret.set(desiredTurretPosition);
+        }
 
         // determine if we should make any transition from our current carousel state:
         switch (this.carouselState)

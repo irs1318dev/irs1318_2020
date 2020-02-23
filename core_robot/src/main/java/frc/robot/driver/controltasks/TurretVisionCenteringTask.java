@@ -1,5 +1,6 @@
 package frc.robot.driver.controltasks;
 
+import frc.robot.HardwareConstants;
 import frc.robot.TuningConstants;
 import frc.robot.common.PIDHandler;
 import frc.robot.common.robotprovider.ITimer;
@@ -81,7 +82,7 @@ public class TurretVisionCenteringTask extends ControlTaskBase implements IContr
     @Override
     public void update()
     {
-        double turretPosition = this.powerCell.getTurretPosition();
+        double turretPosition = TuningConstants.POWERCELL_TURRET_USE_PID ? this.powerCell.getTurretPosition() : 0.0;
 
         Double currentMeasuredAngle = this.visionManager.getHorizontalAngle();
         if (currentMeasuredAngle != null)
@@ -98,7 +99,7 @@ public class TurretVisionCenteringTask extends ControlTaskBase implements IContr
     @Override
     public void end()
     {
-        this.setAnalogOperationState(AnalogOperation.PowerCellTurretPosition, -1);
+        this.setAnalogOperationState(AnalogOperation.PowerCellTurretPosition, HardwareConstants.POWERCELL_TURRET_MAGIC_DONT_MOVE_VALUE);
         this.setDigitalOperationState(DigitalOperation.VisionEnable, false);
     }
 
@@ -137,7 +138,7 @@ public class TurretVisionCenteringTask extends ControlTaskBase implements IContr
             this.centeredTime = this.timer.get();
             return false;
         }
-        else if (this.timer.get() - this.centeredTime < 0.75)
+        else if (this.timer.get() - this.centeredTime < TuningConstants.POWERCELL_TURRET_VISION_CENTERING_TIMEOUT)
         {
             return false;
         }
@@ -168,14 +169,27 @@ public class TurretVisionCenteringTask extends ControlTaskBase implements IContr
 
     private PIDHandler createTurnHandler()
     {
+        if (TuningConstants.POWERCELL_TURRET_USE_PID)
+        {
+            return new PIDHandler(
+                TuningConstants.TURRET_VISION_POSITIONAL_CENTERING_PID_KP,
+                TuningConstants.TURRET_VISION_POSITIONAL_CENTERING_PID_KI,
+                TuningConstants.TURRET_VISION_POSITIONAL_CENTERING_PID_KD,
+                TuningConstants.TURRET_VISION_POSITIONAL_CENTERING_PID_KF,
+                TuningConstants.TURRET_VISION_POSITIONAL_CENTERING_PID_KS,
+                TuningConstants.TURRET_VISION_POSITIONAL_CENTERING_PID_MIN,
+                TuningConstants.TURRET_VISION_POSITIONAL_CENTERING_PID_MAX,
+                this.getInjector().getInstance(ITimer.class));
+        }
+
         return new PIDHandler(
-            TuningConstants.TURRET_VISION_STATIONARY_CENTERING_PID_KP,
-            TuningConstants.TURRET_VISION_STATIONARY_CENTERING_PID_KI,
-            TuningConstants.TURRET_VISION_STATIONARY_CENTERING_PID_KD,
-            TuningConstants.TURRET_VISION_STATIONARY_CENTERING_PID_KF,
-            TuningConstants.TURRET_VISION_STATIONARY_CENTERING_PID_KS,
-            TuningConstants.TURRET_VISION_STATIONARY_CENTERING_PID_MIN,
-            TuningConstants.TURRET_VISION_STATIONARY_CENTERING_PID_MAX,
+            TuningConstants.TURRET_VISION_PERCENTAGE_CENTERING_PID_KP,
+            TuningConstants.TURRET_VISION_PERCENTAGE_CENTERING_PID_KI,
+            TuningConstants.TURRET_VISION_PERCENTAGE_CENTERING_PID_KD,
+            TuningConstants.TURRET_VISION_PERCENTAGE_CENTERING_PID_KF,
+            TuningConstants.TURRET_VISION_PERCENTAGE_CENTERING_PID_KS,
+            TuningConstants.TURRET_VISION_PERCENTAGE_CENTERING_PID_MIN,
+            TuningConstants.TURRET_VISION_PERCENTAGE_CENTERING_PID_MAX,
             this.getInjector().getInstance(ITimer.class));
-    }
+}
 }
