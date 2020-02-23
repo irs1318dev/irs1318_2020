@@ -76,7 +76,7 @@ public class ButtonMap implements IButtonMap
             HardwareConstants.POWERCELL_TURRET_MAGIC_DONT_MOVE_VALUE,
             (x, y) ->
             {
-                if (TuningConstants.POWERCELL_TURRET_USE_PID)
+                if (!TuningConstants.POWERCELL_TURRET_USE_PID)
                 {
                     return -1.0 * x;
                 }
