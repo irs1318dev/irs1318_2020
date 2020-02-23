@@ -20,8 +20,8 @@ public class HardwareConstants
 
     //================================================== PowerCell ===============================================================
 
-    public static final boolean POWERCELL_TURRET_INVERT_OUTPUT = true;
-    public static final boolean POWERCELL_TURRET_INVERT_SENSOR = false;
+    public static final boolean POWERCELL_TURRET_INVERT_OUTPUT = false;
+    public static final boolean POWERCELL_TURRET_INVERT_SENSOR = true;
     public static final boolean POWERCELL_FLYWHEEL_MASTER_INVERT_OUTPUT = true;
     public static final boolean POWERCELL_FLYWHEEL_MASTER_INVERT_SENSOR = true;
     public static final boolean POWERCELL_FLYWHEEL_FOLLOWER_INVERT_OUTPUT = true;

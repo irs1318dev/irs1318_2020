@@ -183,14 +183,14 @@ public class TuningConstants
 
     public static final double POWERCELL_TROUGHBEAM_CUTOFF = 2.7;
 
-    public static final double POWERCELL_GENEVA_MECHANISM_MOTOR_POWER_INDEXING = 0.25;
-    public static final double POWERCELL_GENEVA_MECHANISM_MOTOR_POWER_SHOOTING = 0.25;
+    public static final double POWERCELL_GENEVA_MECHANISM_MOTOR_POWER_INDEXING = 0.30;
+    public static final double POWERCELL_GENEVA_MECHANISM_MOTOR_POWER_SHOOTING = 0.30;
 
     public static final double POWERCELL_GENEVA_MECHANISM_INDEXING_TIMEOUT = 2.0;
     public static final double POWERCELL_GENEVA_COUNT_THRESHOLD = 0.15;
 
-    public static final double POWERCELL_FLYWHEEL_POINT_BLANK_MOTOR_VELOCITY = 0.4;
-    public static final double POWERCELL_FLYWHEEL_MEDIUM_MOTOR_VELOCITY = 1.0;
+    public static final double POWERCELL_FLYWHEEL_POINT_BLANK_MOTOR_VELOCITY = 0.1;
+    public static final double POWERCELL_FLYWHEEL_MEDIUM_MOTOR_VELOCITY = 0.2;
 
     public static final double POWERCELL_LEFT_TURN_TURRET = -5.0;
     public static final double POWERCELL_MIN_TURRET_OFFSET= 1.0;

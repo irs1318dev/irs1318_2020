@@ -171,6 +171,34 @@ public class ButtonMap implements IButtonMap
             Shift.None,
             ButtonType.Simple),
         new DigitalOperationDescription(
+            DigitalOperation.PowerCellHoodPointBlank,
+            UserInputDevice.Operator,
+            0,
+            Shift.OperatorDebug,
+            Shift.OperatorDebug,
+            ButtonType.Click),
+        new DigitalOperationDescription(
+            DigitalOperation.PowerCellHoodShort,
+            UserInputDevice.Operator,
+            90,
+            Shift.OperatorDebug,
+            Shift.OperatorDebug,
+            ButtonType.Simple),
+        new DigitalOperationDescription(
+            DigitalOperation.PowerCellHoodMedium,
+            UserInputDevice.Operator,
+            180,
+            Shift.OperatorDebug,
+            Shift.OperatorDebug,
+            ButtonType.Click),
+        new DigitalOperationDescription(
+            DigitalOperation.PowerCellHoodLong,
+            UserInputDevice.Operator,
+            270,
+            Shift.OperatorDebug,
+            Shift.OperatorDebug,
+            ButtonType.Simple),
+        new DigitalOperationDescription(
             DigitalOperation.PowerCellResetTurretFront,
             UserInputDevice.Operator,
             UserInputDeviceButton.PS4_RIGHT_STICK_BUTTON,
@@ -305,6 +333,8 @@ public class ButtonMap implements IButtonMap
                 new FlyWheelVisionSpinTask()),
             new IOperation[]
             {
+                DigitalOperation.PowerCellIntakeExtend,
+                DigitalOperation.PowerCellIntakeRetract,
                 DigitalOperation.PowerCellHoodPointBlank,
                 DigitalOperation.PowerCellHoodShort,
                 DigitalOperation.PowerCellHoodMedium,
@@ -326,6 +356,8 @@ public class ButtonMap implements IButtonMap
                     new FlyWheelFixedSpinTask(TuningConstants.POWERCELL_FLYWHEEL_POINT_BLANK_MOTOR_VELOCITY))),
             new IOperation[]
             {
+                DigitalOperation.PowerCellIntakeExtend,
+                DigitalOperation.PowerCellIntakeRetract,
                 DigitalOperation.PowerCellHoodPointBlank,
                 DigitalOperation.PowerCellHoodShort,
                 DigitalOperation.PowerCellHoodMedium,
@@ -356,10 +388,12 @@ public class ButtonMap implements IButtonMap
             () -> SequentialTask.Sequence(
                 new IntakePositionTask(true),
                 ConcurrentTask.AllTasks(
-                    new FlyWheelHoodTask(DigitalOperation.PowerCellHoodMedium),
+                    new FlyWheelHoodTask(DigitalOperation.PowerCellHoodLong),
                     new FlyWheelFixedSpinTask(TuningConstants.POWERCELL_FLYWHEEL_MEDIUM_MOTOR_VELOCITY))),
             new IOperation[]
             {
+                DigitalOperation.PowerCellIntakeExtend,
+                DigitalOperation.PowerCellIntakeRetract,
                 DigitalOperation.PowerCellHoodPointBlank,
                 DigitalOperation.PowerCellHoodShort,
                 DigitalOperation.PowerCellHoodMedium,

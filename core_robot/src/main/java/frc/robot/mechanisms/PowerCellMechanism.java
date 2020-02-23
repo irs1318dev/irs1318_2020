@@ -104,8 +104,8 @@ public class PowerCellMechanism implements IMechanism
         this.turret.setInvertSensor(HardwareConstants.POWERCELL_TURRET_INVERT_SENSOR);
         this.turret.setNeutralMode(MotorNeutralMode.Brake);
         this.turret.setControlMode(TalonSRXControlMode.PercentOutput);
-        // this.turret.setSensorType(TalonXFeedbackDevice.QuadEncoder);
-        // this.turret.setPosition(0);
+        this.turret.setSensorType(TalonXFeedbackDevice.QuadEncoder);
+        this.turret.setPosition(0);
         // this.turret.setControlMode(TalonSRXControlMode.Position);
         // this.turret.setPIDF(
         //     TuningConstants.POWERCELL_TURRET_POSITION_PID_KP,
@@ -127,8 +127,8 @@ public class PowerCellMechanism implements IMechanism
 
         this.carouselState = CarouselState.Stationary;
         this.previousIndex = 0;
-        this.lastIntakeTime = 0.0;
-        this.lastCarouselCountTime = 0.0;
+        this.lastIntakeTime = -2.0;
+        this.lastCarouselCountTime = -2.0;
 
         this.hasPowerCell = new boolean[5];
         this.currentCarouselIndex = 0;
@@ -148,9 +148,9 @@ public class PowerCellMechanism implements IMechanism
             throughBeamBroken = true;
         }
 
-        // this.turretPosition = this.turret.getPosition();
-        // this.turretVelocity = this.turret.getVelocity();
-        // this.turretError = this.turret.getError();
+        this.turretPosition = this.turret.getPosition();
+        this.turretVelocity = this.turret.getVelocity();
+        this.turretError = this.turret.getError();
 
         this.flywheelPosition = this.flyWheel.getPosition();
         this.flywheelVelocity = this.flyWheel.getVelocity();
@@ -193,12 +193,12 @@ public class PowerCellMechanism implements IMechanism
             this.startingTurretOffsetAngle = startingTurretOffset;
         }
 
-        // if (this.driver.getDigital(DigitalOperation.PowerCellResetTurretFront))
-        // {
-        //     this.startingTurretOffsetAngle = 0.0;
-        //     this.turret.setPosition(0);
-        //     this.turret.set(0.0);
-        // }
+        if (this.driver.getDigital(DigitalOperation.PowerCellResetTurretFront))
+        {
+            this.startingTurretOffsetAngle = 0.0;
+            this.turret.setPosition(0);
+            this.turret.set(0.0);
+        }
 
         if (this.driver.getDigital(DigitalOperation.PowerCellHoodPointBlank))
         {
@@ -404,7 +404,7 @@ public class PowerCellMechanism implements IMechanism
 
     public double getTurretPosition()
     {
-        return 0.0; //(this.turretPosition * HardwareConstants.POWERCELL_TURRET_TICKS_TO_DEGREES) - this.startingTurretOffsetAngle;
+        return (this.turretPosition * HardwareConstants.POWERCELL_TURRET_TICKS_TO_DEGREES) - this.startingTurretOffsetAngle;
     }
 
     public double getFlywheelVelocity()

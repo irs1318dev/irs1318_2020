@@ -56,8 +56,8 @@ public class ElectronicsConstants
     public static final int POWERCELL_TURRET_MOTOR_PDP_SLOT = 9;
     public static final int POWERCELL_OUTER_HOOD_FORWARD_PCM = 2; // Module B 
     public static final int POWERCELL_OUTER_HOOD_REVERSE_PCM = 3; // Module B
-    public static final int POWERCELL_INNER_HOOD_FORWARD_PCM = 0; // Module B
-    public static final int POWERCELL_INNER_HOOD_REVERSE_PCM = 1; // Module B
+    public static final int POWERCELL_INNER_HOOD_FORWARD_PCM = 1; // Module B
+    public static final int POWERCELL_INNER_HOOD_REVERSE_PCM = 0; // Module B
     public static final int POWERCELL_KICKER_FORWARD_PCM = 2; // Module A
     public static final int POWERCELL_KICKER_REVERSE_PCM = 3; // Module A
 
