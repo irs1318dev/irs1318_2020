@@ -175,7 +175,7 @@ public class ButtonMap implements IButtonMap
         new DigitalOperationDescription(
             DigitalOperation.PowerCellHoodPointBlank,
             UserInputDevice.Operator,
-            0,
+            180,
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ButtonType.Click),
@@ -189,14 +189,14 @@ public class ButtonMap implements IButtonMap
         new DigitalOperationDescription(
             DigitalOperation.PowerCellHoodMedium,
             UserInputDevice.Operator,
-            180,
+            270,
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ButtonType.Click),
         new DigitalOperationDescription(
             DigitalOperation.PowerCellHoodLong,
             UserInputDevice.Operator,
-            270,
+            0,
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ButtonType.Simple),
@@ -430,7 +430,7 @@ public class ButtonMap implements IButtonMap
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ButtonType.Toggle,
-            () -> new ChangeFlyWheelSpeedTask(0.1, 500.0),
+            () -> new ChangeFlyWheelSpeedTask(0.1, 0.05),
             new IOperation[]
             {
                 AnalogOperation.PowerCellFlywheelVelocity,
@@ -442,7 +442,7 @@ public class ButtonMap implements IButtonMap
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ButtonType.Toggle,
-            () -> new ChangeFlyWheelSpeedTask(0.1, -500.0),
+            () -> new ChangeFlyWheelSpeedTask(0.1, -0.05),
             new IOperation[]
             {
                 AnalogOperation.PowerCellFlywheelVelocity,
