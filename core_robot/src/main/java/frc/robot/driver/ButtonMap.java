@@ -45,6 +45,8 @@ public class ButtonMap implements IButtonMap
             AnalogOperation.ControlPanelSpinSpeed,
             UserInputDevice.Operator,
             AnalogAxis.PS4_LT,
+            Shift.OperatorDebug,
+            Shift.OperatorDebug,
             ElectronicsConstants.INVERT_TRIGGER_AXIS,
             -1.0,
             .1),
@@ -219,6 +221,24 @@ public class ButtonMap implements IButtonMap
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ButtonType.Click),
+        new DigitalOperationDescription(
+            DigitalOperation.PowerCellMoveToPreviousSlot,
+            UserInputDevice.Operator,
+            AnalogAxis.PS4_LSX,
+            -1.0,
+            -0.25,
+            Shift.OperatorDebug,
+            Shift.None,
+            ButtonType.Click),
+        new DigitalOperationDescription(
+            DigitalOperation.PowerCellMoveToNextSlot,
+            UserInputDevice.Operator,
+            AnalogAxis.PS4_LSX,
+            0.25,
+            1.0,
+            Shift.OperatorDebug,
+            Shift.None,
+            ButtonType.Click),
     };
 
     public static MacroOperationDescription[] MacroSchema = new MacroOperationDescription[]
@@ -296,7 +316,11 @@ public class ButtonMap implements IButtonMap
         new MacroOperationDescription(
             MacroOperation.ControlPanelSpin,
             UserInputDevice.Operator,
-            UserInputDeviceButton.PS4_LEFT_STICK_BUTTON,
+            AnalogAxis.PS4_LT,
+            0.0,
+            1.0,
+            Shift.OperatorDebug,
+            Shift.None,
             ButtonType.Toggle,
             () -> new ColorSpinTask(),
             new IOperation[]
@@ -309,14 +333,15 @@ public class ButtonMap implements IButtonMap
             MacroOperation.FullHopperShot,
             UserInputDevice.Operator,
             AnalogAxis.PS4_RT,
-            0.5,
+            0.0,
             1.0,
             ButtonType.Toggle,
             () -> new FullHopperShotTask(),
             new IOperation[]
             {
                 DigitalOperation.PowerCellKick,
-                DigitalOperation.PowerCellMoveOneSlot,
+                DigitalOperation.PowerCellMoveToNextSlot,
+                DigitalOperation.PowerCellMoveToPreviousSlot,
             }),
         new MacroOperationDescription(
             MacroOperation.TracerShot,
@@ -329,7 +354,8 @@ public class ButtonMap implements IButtonMap
             new IOperation[]
             {
                 DigitalOperation.PowerCellKick,
-                DigitalOperation.PowerCellMoveOneSlot,
+                DigitalOperation.PowerCellMoveToNextSlot,
+                DigitalOperation.PowerCellMoveToPreviousSlot,
             }),
         new MacroOperationDescription(
             MacroOperation.SpinUpVisionDistance,
@@ -351,6 +377,16 @@ public class ButtonMap implements IButtonMap
                 DigitalOperation.PowerCellHoodLong,
                 AnalogOperation.PowerCellFlywheelVelocity,
                 DigitalOperation.VisionEnable
+            },
+            new IOperation[]
+            {
+                DigitalOperation.PowerCellIntakeExtend,
+                DigitalOperation.PowerCellIntakeRetract,
+                DigitalOperation.PowerCellHoodPointBlank,
+                DigitalOperation.PowerCellHoodShort,
+                DigitalOperation.PowerCellHoodMedium,
+                DigitalOperation.PowerCellHoodLong,
+                AnalogOperation.PowerCellFlywheelVelocity,
             }),
         new MacroOperationDescription(
             MacroOperation.SpinUpPointBlank,
@@ -386,6 +422,10 @@ public class ButtonMap implements IButtonMap
             {
                 AnalogOperation.PowerCellTurretPosition,
                 DigitalOperation.VisionEnable,
+            },
+            new IOperation[]
+            {
+                AnalogOperation.PowerCellTurretPosition,
             }),
         new MacroOperationDescription(
             MacroOperation.SpinUpMedium,
@@ -469,7 +509,8 @@ public class ButtonMap implements IButtonMap
             {
                 AnalogOperation.PowerCellFlywheelVelocity,
                 DigitalOperation.PowerCellKick,
-                DigitalOperation.PowerCellMoveOneSlot,
+                DigitalOperation.PowerCellMoveToNextSlot,
+                DigitalOperation.PowerCellMoveToPreviousSlot,
                 DigitalOperation.PowerCellHoodPointBlank,
                 DigitalOperation.PowerCellHoodShort,
                 DigitalOperation.PowerCellHoodMedium,

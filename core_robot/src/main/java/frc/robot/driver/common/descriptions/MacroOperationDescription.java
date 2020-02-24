@@ -16,8 +16,6 @@ public class MacroOperationDescription extends OperationDescription
     private final UserInputDeviceButton userInputDeviceButton;
     private final int userInputDevicePovValue;
     private final AnalogAxis userInputDeviceAxis;
-    private final double userInputDeviceAxisRangeMin;
-    private final double userInputDeviceAxisRangeMax;
     private final DigitalSensor sensor;
     private final ButtonType buttonType;
     private final Supplier<IControlTask> taskSupplier;
@@ -524,14 +522,12 @@ public class MacroOperationDescription extends OperationDescription
         IOperation[] affectedOperations,
         IOperation[] macroCancelOperations)
     {
-        super(operation, OperationType.None, userInputDevice, relevantShifts, requiredShifts);
+        super(operation, OperationType.None, userInputDevice, axisRangeMinValue, axisRangeMaxValue, relevantShifts, requiredShifts);
 
         this.clearInterrupt = clearInterrupt;
         this.userInputDeviceButton = userInputDeviceButton;
         this.userInputDevicePovValue = povValue;
         this.userInputDeviceAxis = analogAxis;
-        this.userInputDeviceAxisRangeMin = axisRangeMinValue;
-        this.userInputDeviceAxisRangeMax = axisRangeMaxValue;
         this.sensor = sensor;
         this.buttonType = buttonType;
         this.taskSupplier = taskSupplier;
@@ -557,16 +553,6 @@ public class MacroOperationDescription extends OperationDescription
     public AnalogAxis getUserInputDeviceAxis()
     {
         return this.userInputDeviceAxis;
-    }
-
-    public double getUserInputDeviceRangeMin()
-    {
-        return this.userInputDeviceAxisRangeMin;
-    }
-
-    public double getUserInputDeviceRangeMax()
-    {
-        return this.userInputDeviceAxisRangeMax;
     }
 
     public DigitalSensor getSensor()

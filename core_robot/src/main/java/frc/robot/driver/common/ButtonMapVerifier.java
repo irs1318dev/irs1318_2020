@@ -1,6 +1,8 @@
 package frc.robot.driver.common;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import frc.robot.*;
 import frc.robot.driver.*;
@@ -21,7 +23,7 @@ public class ButtonMapVerifier
         if (TuningConstants.THROW_EXCEPTIONS)
         {
             // verify that there isn't overlap between buttons
-            HashMap<ButtonCombination, HashMap<Shift, OperationDescription>> mapping = new HashMap<ButtonCombination, HashMap<Shift, OperationDescription>>();
+            HashMap<ButtonCombination, HashMap<Shift, List<OperationDescription>>> mapping = new HashMap<ButtonCombination, HashMap<Shift, List<OperationDescription>>>();
             for (DigitalOperationDescription description : buttonMap.getDigitalOperationSchema())
             {
                 ButtonCombination button = new ButtonCombination(
@@ -30,10 +32,10 @@ public class ButtonMapVerifier
                     description.getUserInputDevicePovValue(),
                     description.getUserInputDeviceAxis());
 
-                HashMap<Shift, OperationDescription> shiftMap;
+                HashMap<Shift, List<OperationDescription>> shiftMap;
                 if (!mapping.containsKey(button))
                 {
-                    shiftMap = new HashMap<Shift, OperationDescription>();
+                    shiftMap = new HashMap<Shift, List<OperationDescription>>();
                     mapping.put(button, shiftMap);
                 }
                 else
@@ -48,22 +50,46 @@ public class ButtonMapVerifier
                     {
                         if (shiftMap.containsKey(shift))
                         {
-                            OperationDescription otherDescription = shiftMap.get(shift);
-                            throw new RuntimeException("Disagreement between " + description.getOperation().toString() + " and " + otherDescription.getOperation().toString());
-                        }
+                            List<OperationDescription> otherDescriptions = shiftMap.get(shift);
+                            for (OperationDescription otherDescription : otherDescriptions)
+                            {
+                                if (this.isOverlappingRange(description, otherDescription))
+                                {
+                                    throw new RuntimeException("Disagreement between " + description.getOperation().toString() + " and " + otherDescription.getOperation().toString());
+                                }
+                            }
 
-                        shiftMap.put(shift, description);
+                            otherDescriptions.add(description);
+                        }
+                        else
+                        {
+                            List<OperationDescription> otherDescriptions = new ArrayList<OperationDescription>();
+                            otherDescriptions.add(description);
+                            shiftMap.put(shift, otherDescriptions);
+                        }
                     }
                 }
                 else
                 {
                     if (shiftMap.containsKey(requiredShifts))
                     {
-                        OperationDescription otherDescription = shiftMap.get(requiredShifts);
-                        throw new RuntimeException("Disagreement between " + description.getOperation().toString() + " and " + otherDescription.getOperation().toString());
-                    }
+                        List<OperationDescription> otherDescriptions = shiftMap.get(requiredShifts);
+                        for (OperationDescription otherDescription : otherDescriptions)
+                        {
+                            if (this.isOverlappingRange(description, otherDescription))
+                            {
+                                throw new RuntimeException("Disagreement between " + description.getOperation().toString() + " and " + otherDescription.getOperation().toString());
+                            }
+                        }
 
-                    shiftMap.put(requiredShifts, description);
+                        otherDescriptions.add(description);
+                    }
+                    else
+                    {
+                        List<OperationDescription> otherDescriptions = new ArrayList<OperationDescription>();
+                        otherDescriptions.add(description);
+                        shiftMap.put(requiredShifts, otherDescriptions);
+                    }
                 }
             }
 
@@ -75,10 +101,10 @@ public class ButtonMapVerifier
                     -1,
                     description.getUserInputDeviceAxis());
 
-                HashMap<Shift, OperationDescription> shiftMap;
+                HashMap<Shift, List<OperationDescription>> shiftMap;
                 if (!mapping.containsKey(button))
                 {
-                    shiftMap = new HashMap<Shift, OperationDescription>();
+                    shiftMap = new HashMap<Shift, List<OperationDescription>>();
                     mapping.put(button, shiftMap);
                 }
                 else
@@ -93,22 +119,46 @@ public class ButtonMapVerifier
                     {
                         if (shiftMap.containsKey(shift))
                         {
-                            OperationDescription otherDescription = shiftMap.get(shift);
-                            throw new RuntimeException("Disagreement between " + description.getOperation().toString() + " and " + otherDescription.getOperation().toString());
-                        }
+                            List<OperationDescription> otherDescriptions = shiftMap.get(shift);
+                            for (OperationDescription otherDescription : otherDescriptions)
+                            {
+                                if (this.isOverlappingRange(description, otherDescription))
+                                {
+                                    throw new RuntimeException("Disagreement between " + description.getOperation().toString() + " and " + otherDescription.getOperation().toString());
+                                }
+                            }
 
-                        shiftMap.put(shift, description);
+                            otherDescriptions.add(description);
+                        }
+                        else
+                        {
+                            List<OperationDescription> otherDescriptions = new ArrayList<OperationDescription>();
+                            otherDescriptions.add(description);
+                            shiftMap.put(shift, otherDescriptions);
+                        }
                     }
                 }
                 else
                 {
                     if (shiftMap.containsKey(requiredShifts))
                     {
-                        OperationDescription otherDescription = shiftMap.get(requiredShifts);
-                        throw new RuntimeException("Disagreement between " + description.getOperation().toString() + " and " + otherDescription.getOperation().toString());
-                    }
+                        List<OperationDescription> otherDescriptions = shiftMap.get(requiredShifts);
+                        for (OperationDescription otherDescription : otherDescriptions)
+                        {
+                            if (this.isOverlappingRange(description, otherDescription))
+                            {
+                                throw new RuntimeException("Disagreement between " + description.getOperation().toString() + " and " + otherDescription.getOperation().toString());
+                            }
+                        }
 
-                    shiftMap.put(requiredShifts, description);
+                        otherDescriptions.add(description);
+                    }
+                    else
+                    {
+                        List<OperationDescription> otherDescriptions = new ArrayList<OperationDescription>();
+                        otherDescriptions.add(description);
+                        shiftMap.put(requiredShifts, otherDescriptions);
+                    }
                 }
             }
 
@@ -120,10 +170,10 @@ public class ButtonMapVerifier
                     description.getUserInputDevicePovValue(),
                     description.getUserInputDeviceAxis());
 
-                HashMap<Shift, OperationDescription> shiftMap;
+                HashMap<Shift, List<OperationDescription>> shiftMap;
                 if (!mapping.containsKey(button))
                 {
-                    shiftMap = new HashMap<Shift, OperationDescription>();
+                    shiftMap = new HashMap<Shift, List<OperationDescription>>();
                     mapping.put(button, shiftMap);
                 }
                 else
@@ -138,22 +188,46 @@ public class ButtonMapVerifier
                     {
                         if (shiftMap.containsKey(shift))
                         {
-                            OperationDescription otherDescription = shiftMap.get(shift);
-                            throw new RuntimeException("Disagreement between " + description.getOperation().toString() + " and " + otherDescription.getOperation().toString());
-                        }
+                            List<OperationDescription> otherDescriptions = shiftMap.get(shift);
+                            for (OperationDescription otherDescription : otherDescriptions)
+                            {
+                                if (this.isOverlappingRange(description, otherDescription))
+                                {
+                                    throw new RuntimeException("Disagreement between " + description.getOperation().toString() + " and " + otherDescription.getOperation().toString());
+                                }
+                            }
 
-                        shiftMap.put(shift, description);
+                            otherDescriptions.add(description);
+                        }
+                        else
+                        {
+                            List<OperationDescription> otherDescriptions = new ArrayList<OperationDescription>();
+                            otherDescriptions.add(description);
+                            shiftMap.put(shift, otherDescriptions);
+                        }
                     }
                 }
                 else
                 {
                     if (shiftMap.containsKey(requiredShifts))
                     {
-                        OperationDescription otherDescription = shiftMap.get(requiredShifts);
-                        throw new RuntimeException("Disagreement between " + description.getOperation().toString() + " and " + otherDescription.getOperation().toString());
-                    }
+                        List<OperationDescription> otherDescriptions = shiftMap.get(requiredShifts);
+                        for (OperationDescription otherDescription : otherDescriptions)
+                        {
+                            if (this.isOverlappingRange(description, otherDescription))
+                            {
+                                throw new RuntimeException("Disagreement between " + description.getOperation().toString() + " and " + otherDescription.getOperation().toString());
+                            }
+                        }
 
-                    shiftMap.put(requiredShifts, description);
+                        otherDescriptions.add(description);
+                    }
+                    else
+                    {
+                        List<OperationDescription> otherDescriptions = new ArrayList<OperationDescription>();
+                        otherDescriptions.add(description);
+                        shiftMap.put(requiredShifts, otherDescriptions);
+                    }
                 }
             }
 
@@ -165,10 +239,10 @@ public class ButtonMapVerifier
                     description.getUserInputDevicePovValue(),
                     AnalogAxis.NONE);
 
-                HashMap<Shift, OperationDescription> shiftMap;
+                HashMap<Shift, List<OperationDescription>> shiftMap;
                 if (!mapping.containsKey(button))
                 {
-                    shiftMap = new HashMap<Shift, OperationDescription>();
+                    shiftMap = new HashMap<Shift, List<OperationDescription>>();
                     mapping.put(button, shiftMap);
                     shiftMap.put(description.getShift(), null);
                 }
@@ -177,13 +251,13 @@ public class ButtonMapVerifier
                     shiftMap = mapping.get(button);
                     for (Shift key : shiftMap.keySet())
                     {
-                        OperationDescription value = shiftMap.get(key);
-                        if (value == null)
+                        List<OperationDescription> value = shiftMap.get(key);
+                        if (value == null || value.size() == 0)
                         {
                             throw new RuntimeException("conflcit between shift " + description.getShift().toString() + " and " + key.toString());
                         }
 
-                        throw new RuntimeException("conflict between shift " + description.getShift().toString() + " and operation " + value.getOperation().toString());
+                        throw new RuntimeException("conflict between shift " + description.getShift().toString() + " and operation " + value.get(0).getOperation().toString());
                     }
                 }
             }
@@ -220,10 +294,24 @@ public class ButtonMapVerifier
             }
 
             ButtonCombination other = (ButtonCombination)obj;
-            return this.device == other.device &&
+            return (this.device == other.device &&
                 this.button == other.button &&
                 this.pov == other.pov &&
-                this.axis == other.axis;
+                this.axis == other.axis);
         }
+    }
+
+    private boolean isOverlappingRange(OperationDescription one, OperationDescription two)
+    {
+        return this.isOverlappingRange(one.getUserInputDeviceRangeMin(), one.getUserInputDeviceRangeMax(), two.getUserInputDeviceRangeMin(), two.getUserInputDeviceRangeMax());
+    }
+
+    private boolean isOverlappingRange(double oneMin, double oneMax, double twoMin, double twoMax)
+    {
+            // verify range overlap (either at one end, the other end, or all-encompasing):
+            return (twoMin >= oneMin && twoMin <= oneMax) ||
+                (twoMax >= oneMin && twoMax <= oneMax) ||
+                (oneMin >= twoMin && oneMin <= twoMax) ||
+                (oneMax >= twoMin && oneMax <= twoMax);
     }
 }

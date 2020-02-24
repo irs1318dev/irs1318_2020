@@ -30,12 +30,12 @@ public class FullHopperShotTask extends ControlTaskBase implements IControlTask
             if (this.powerCellMechanism.hasPowerCell(this.powerCellMechanism.getCurrentCarouselIndex()))
             {
                 this.setDigitalOperationState(DigitalOperation.PowerCellKick, true);
-                this.setDigitalOperationState(DigitalOperation.PowerCellMoveOneSlot, false);
+                this.setDigitalOperationState(DigitalOperation.PowerCellMoveToNextSlot, false);
                 this.kickTime = this.timer.get();
             }
             else
             {
-                this.setDigitalOperationState(DigitalOperation.PowerCellMoveOneSlot, true);
+                this.setDigitalOperationState(DigitalOperation.PowerCellMoveToNextSlot, true);
             }
         }
         else
@@ -43,13 +43,13 @@ public class FullHopperShotTask extends ControlTaskBase implements IControlTask
             if (this.kickTime != null && this.timer.get() - this.kickTime >= .25)
             {
                 this.setDigitalOperationState(DigitalOperation.PowerCellKick, false);
-                this.setDigitalOperationState(DigitalOperation.PowerCellMoveOneSlot, true);
+                this.setDigitalOperationState(DigitalOperation.PowerCellMoveToNextSlot, true);
                 this.kickTime = null;
             }
             else
             {
                 this.setDigitalOperationState(DigitalOperation.PowerCellKick, true);
-                this.setDigitalOperationState(DigitalOperation.PowerCellMoveOneSlot, false);
+                this.setDigitalOperationState(DigitalOperation.PowerCellMoveToNextSlot, false);
             }
         }
     }
@@ -57,7 +57,7 @@ public class FullHopperShotTask extends ControlTaskBase implements IControlTask
     @Override
     public void end()
     {
-        this.setDigitalOperationState(DigitalOperation.PowerCellMoveOneSlot, false);
+        this.setDigitalOperationState(DigitalOperation.PowerCellMoveToNextSlot, false);
         this.setDigitalOperationState(DigitalOperation.PowerCellKick, false);
     }
 

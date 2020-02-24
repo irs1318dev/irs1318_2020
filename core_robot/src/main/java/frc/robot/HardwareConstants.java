@@ -34,6 +34,8 @@ public class HardwareConstants
     public static final double POWERCELL_TURRET_MINIMUM_RANGE_VALUE = -120.0;
     public static final double POWERCELL_TURRET_MAXIMUM_RANGE_VALUE = 120.0;
 
+    public static final int POWERCELL_CAROUSEL_SLOT_COUNT = 5;
+
     //================================================== Climber =================================================================
 
     public static final boolean CLIMBER_WINCH_MASTER_INVERT_OUTPUT = true;

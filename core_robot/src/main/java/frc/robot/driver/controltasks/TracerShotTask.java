@@ -35,14 +35,14 @@ public class TracerShotTask extends ControlTaskBase implements IControlTask
         }
         else
         {
-            this.setDigitalOperationState(DigitalOperation.PowerCellMoveOneSlot, true);
+            this.setDigitalOperationState(DigitalOperation.PowerCellMoveToNextSlot, true);
         }
     }
 
     @Override
     public void end()
     {
-        this.setDigitalOperationState(DigitalOperation.PowerCellMoveOneSlot, false);
+        this.setDigitalOperationState(DigitalOperation.PowerCellMoveToNextSlot, false);
         this.setDigitalOperationState(DigitalOperation.PowerCellKick, false);
     }
 

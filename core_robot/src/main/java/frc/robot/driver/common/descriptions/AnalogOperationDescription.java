@@ -202,7 +202,7 @@ public class AnalogOperationDescription extends OperationDescription
         double defaultValue,
         ResultCalculator resultCalculator)
     {
-        super(operation, OperationType.Analog, userInputDevice, relevantShifts, requiredShifts);
+        super(operation, OperationType.Analog, userInputDevice, -1.0, 1.0, relevantShifts, requiredShifts);
 
         this.userInputDeviceAxis = userInputDeviceAxis;
         this.userInputDeviceSecondaryAxis = userInputDeviceSecondaryAxis;
@@ -226,7 +226,7 @@ public class AnalogOperationDescription extends OperationDescription
         AnalogOperation operation,
         AnalogSensor sensor)
     {
-        super(operation, OperationType.Analog, UserInputDevice.Sensor, null, null);
+        super(operation, OperationType.Analog, UserInputDevice.Sensor, -1.0, 1.0, null, null);
 
         this.userInputDeviceAxis = AnalogAxis.NONE;
         this.userInputDeviceSecondaryAxis = AnalogAxis.NONE;

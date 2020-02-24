@@ -166,7 +166,14 @@ public class PowerCellMechanism implements IMechanism
         if (newCarouselCount > this.carouselCount &&
             currentTime - this.lastCarouselCountTime > TuningConstants.POWERCELL_GENEVA_COUNT_THRESHOLD)
         {
-            this.currentCarouselIndex = (currentCarouselIndex + 1) % 5;
+            int slotsToAdvance = 1;
+            if (this.carouselState == CarouselState.MovingToPrevious)
+            {
+                // use (#slots - 1) instead of just (-1) to keep the modulo positive
+                slotsToAdvance = HardwareConstants.POWERCELL_CAROUSEL_SLOT_COUNT - 1;
+            }
+
+            this.currentCarouselIndex = (currentCarouselIndex + slotsToAdvance) % HardwareConstants.POWERCELL_CAROUSEL_SLOT_COUNT;
             this.lastCarouselCountTime = currentTime;
 
             // only register whether throughbeam is broken when we are switching to a new slot
@@ -307,11 +314,17 @@ public class PowerCellMechanism implements IMechanism
                 {
                     // don't change state if the intake is retracted
                 }
-                else if (this.driver.getDigital(DigitalOperation.PowerCellMoveOneSlot))
+                else if (this.driver.getDigital(DigitalOperation.PowerCellMoveToNextSlot))
                 {
                     this.lastCarouselCountTime = currentTime;
                     this.previousIndex = this.currentCarouselIndex;
                     this.carouselState = CarouselState.MovingToNext;
+                }
+                else if (this.driver.getDigital(DigitalOperation.PowerCellMoveToPreviousSlot))
+                {
+                    this.lastCarouselCountTime = currentTime;
+                    this.previousIndex = this.currentCarouselIndex;
+                    this.carouselState = CarouselState.MovingToPrevious;
                 }
                 else if (isIntaking)
                 {
@@ -329,10 +342,15 @@ public class PowerCellMechanism implements IMechanism
                     // become stationary if intake is retracted, or we're kicking
                     this.carouselState = CarouselState.Stationary;
                 }
-                else if (this.driver.getDigital(DigitalOperation.PowerCellMoveOneSlot))
+                else if (this.driver.getDigital(DigitalOperation.PowerCellMoveToNextSlot))
                 {
                     this.previousIndex = this.currentCarouselIndex;
                     this.carouselState = CarouselState.MovingToNext;
+                }
+                else if (this.driver.getDigital(DigitalOperation.PowerCellMoveToPreviousSlot))
+                {
+                    this.previousIndex = this.currentCarouselIndex;
+                    this.carouselState = CarouselState.MovingToPrevious;
                 }
                 else if (isIntaking)
                 {
@@ -349,6 +367,7 @@ public class PowerCellMechanism implements IMechanism
                 break;
 
             case MovingToNext:
+            case MovingToPrevious:
                 if (!this.intakeExtended || kick)
                 {
                     // become stationary if intake is retracted, or we're kicking
@@ -388,6 +407,10 @@ public class PowerCellMechanism implements IMechanism
                         desiredGenevaMotorPower = TuningConstants.POWERCELL_GENEVA_MECHANISM_MOTOR_POWER_INDEXING;
                     }
 
+                    break;
+
+                case MovingToPrevious:
+                    desiredGenevaMotorPower = -TuningConstants.POWERCELL_GENEVA_MECHANISM_MOTOR_POWER_INDEXING;
                     break;
 
                 case Stationary:
@@ -492,5 +515,6 @@ public class PowerCellMechanism implements IMechanism
         Indexing,
         Stationary,
         MovingToNext,
+        MovingToPrevious,
     }
 }
