@@ -288,7 +288,7 @@ public class PowerCellMechanism implements IMechanism
         this.logger.logNumber(PowerCellMechanism.logName, "desiredTurretPosition", desiredTurretPosition);
         if (TuningConstants.POWERCELL_TURRET_USE_PID)
         {
-            if (desiredTurretPosition != HardwareConstants.POWERCELL_TURRET_MAGIC_DONT_MOVE_VALUE)
+            if (desiredTurretPosition != TuningConstants.POWERCELL_TURRET_MAGIC_DONT_MOVE_VALUE)
             {
                 desiredTurretPosition = this.getClosestAngleInRange(desiredTurretPosition, this.getTurretPosition(), HardwareConstants.POWERCELL_TURRET_MINIMUM_RANGE_VALUE, HardwareConstants.POWERCELL_TURRET_MAXIMUM_RANGE_VALUE);
                 this.turret.set((desiredTurretPosition + startingTurretOffsetAngle) * HardwareConstants.POWERCELL_TURRET_DEGREES_TO_TICKS);
@@ -362,29 +362,38 @@ public class PowerCellMechanism implements IMechanism
                 break;
         }
 
-        // perform what we should do based on our current hopper state:
+        // perform what we should do based on our current hopper state, or debug override:
         double desiredGenevaMotorPower = TuningConstants.STHOPE_BLEASE;
-        switch (this.carouselState)
+        double debugGenevaMotorPower = this.driver.getAnalog(AnalogOperation.PowerCellGenevaPower);
+        if (debugGenevaMotorPower != TuningConstants.MAGIC_NULL_VALUE)
         {
-            case Indexing:
-                desiredGenevaMotorPower = TuningConstants.POWERCELL_GENEVA_MECHANISM_MOTOR_POWER_INDEXING;
-                break;
-
-            case MovingToNext:
-                if (flyWheelVelocitySetpoint != 0.0)
-                {
-                    desiredGenevaMotorPower = TuningConstants.POWERCELL_GENEVA_MECHANISM_MOTOR_POWER_SHOOTING;
-                }
-                else
-                {
+            this.carouselState = CarouselState.Stationary;
+            desiredGenevaMotorPower = debugGenevaMotorPower;
+        }
+        else
+        {
+            switch (this.carouselState)
+            {
+                case Indexing:
                     desiredGenevaMotorPower = TuningConstants.POWERCELL_GENEVA_MECHANISM_MOTOR_POWER_INDEXING;
-                }
+                    break;
 
-                break;
+                case MovingToNext:
+                    if (flyWheelVelocitySetpoint != 0.0)
+                    {
+                        desiredGenevaMotorPower = TuningConstants.POWERCELL_GENEVA_MECHANISM_MOTOR_POWER_SHOOTING;
+                    }
+                    else
+                    {
+                        desiredGenevaMotorPower = TuningConstants.POWERCELL_GENEVA_MECHANISM_MOTOR_POWER_INDEXING;
+                    }
 
-            case Stationary:
-                desiredGenevaMotorPower = TuningConstants.STHOPE_BLEASE;
-                break;
+                    break;
+
+                case Stationary:
+                    desiredGenevaMotorPower = TuningConstants.STHOPE_BLEASE;
+                    break;
+            }
         }
 
         this.genevaMotor.set(desiredGenevaMotorPower);

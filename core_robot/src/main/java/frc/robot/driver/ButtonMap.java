@@ -73,7 +73,7 @@ public class ButtonMap implements IButtonMap
             -0.05,
             0.05,
             1.0,
-            HardwareConstants.POWERCELL_TURRET_MAGIC_DONT_MOVE_VALUE,
+            TuningConstants.POWERCELL_TURRET_MAGIC_DONT_MOVE_VALUE,
             (x, y) ->
             {
                 if (!TuningConstants.POWERCELL_TURRET_USE_PID)
@@ -84,12 +84,24 @@ public class ButtonMap implements IButtonMap
                 double angle = Helpers.convertToPolarAngle(x, y);
                 if (angle == -1.0)
                 {
-                    return HardwareConstants.POWERCELL_TURRET_MAGIC_DONT_MOVE_VALUE;
+                    return TuningConstants.POWERCELL_TURRET_MAGIC_DONT_MOVE_VALUE;
                 }
 
                 // change to straight forward being 0, left being 90, down being 180, right being 270, opposite of the POV.
                 return (angle + 270.0) % 360.0;
             }),
+
+        new AnalogOperationDescription(
+            AnalogOperation.PowerCellGenevaPower,
+            UserInputDevice.Operator,
+            AnalogAxis.PS4_LSX,
+            Shift.OperatorDebug,
+            Shift.OperatorDebug,
+            ElectronicsConstants.INVERT_X_AXIS,
+            -0.05,
+            0.05,
+            1.0,
+            TuningConstants.MAGIC_NULL_VALUE),    
     };
 
     public static DigitalOperationDescription[] DigitalOperationSchema = new DigitalOperationDescription[]

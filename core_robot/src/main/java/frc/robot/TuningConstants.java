@@ -17,6 +17,7 @@ public class TuningConstants
 {
     public static final boolean COMPETITION_ROBOT = false;
     public static boolean THROW_EXCEPTIONS = !TuningConstants.COMPETITION_ROBOT;
+    public static final double MAGIC_NULL_VALUE = -1318.0;
 
     public static List<IMechanism> GetActiveMechanisms(Injector injector)
     {
@@ -179,6 +180,7 @@ public class TuningConstants
 
     public static final boolean POWERCELL_TURRET_USE_PID = true;
     public static final double POWERCELL_TURRET_VISION_CENTERING_TIMEOUT = 0.75;
+    public static final double POWERCELL_TURRET_MAGIC_DONT_MOVE_VALUE = TuningConstants.POWERCELL_TURRET_USE_PID ? TuningConstants.MAGIC_NULL_VALUE : 0.0;
 
     public static final int POWERCELL_FLYWHEEL_VELOCITY_PERIOD = 10;
     public static final int POWERCELL_FLYWHEEL_VELOCITY_WINDOWSIZE = 32;

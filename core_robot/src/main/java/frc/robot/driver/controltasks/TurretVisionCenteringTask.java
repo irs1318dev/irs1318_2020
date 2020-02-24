@@ -99,7 +99,7 @@ public class TurretVisionCenteringTask extends ControlTaskBase implements IContr
     @Override
     public void end()
     {
-        this.setAnalogOperationState(AnalogOperation.PowerCellTurretPosition, HardwareConstants.POWERCELL_TURRET_MAGIC_DONT_MOVE_VALUE);
+        this.setAnalogOperationState(AnalogOperation.PowerCellTurretPosition, TuningConstants.POWERCELL_TURRET_MAGIC_DONT_MOVE_VALUE);
         this.setDigitalOperationState(DigitalOperation.VisionEnable, false);
     }
 
