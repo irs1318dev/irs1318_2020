@@ -161,13 +161,13 @@ public class TuningConstants
 
     //================================================== PowerCell ===============================================================
 
-    public static final double POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KP = 0.725;
+    public static final double POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KP = 0.55;
     public static final double POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KI = 0.0;
-    public static final double POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KD = 1.0;
+    public static final double POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KD = 0.75;
     public static final double POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KF = 0.0113666; // 90000 / 1023
     public static final double POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KS = 85000.0;
 
-    public static final double POWERCELL_TURRET_POSITION_PID_KP = 8.0;
+    public static final double POWERCELL_TURRET_POSITION_PID_KP = 4.0;
     public static final double POWERCELL_TURRET_POSITION_PID_KI = 0.0;
     public static final double POWERCELL_TURRET_POSITION_PID_KD = 0.0;
     public static final double POWERCELL_TURRET_POSITION_PID_KF = 0.0;
@@ -177,7 +177,7 @@ public class TuningConstants
     public static final boolean POWERCELL_TURRET_REVERSE_LIMIT_SWITCH_ENABLED = false;
     public static final boolean POWERCELL_TURRET_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN = false;
 
-    public static final boolean POWERCELL_TURRET_USE_PID = false;
+    public static final boolean POWERCELL_TURRET_USE_PID = true;
     public static final double POWERCELL_TURRET_VISION_CENTERING_TIMEOUT = 0.75;
 
     public static final int POWERCELL_FLYWHEEL_VELOCITY_PERIOD = 10;
@@ -201,8 +201,8 @@ public class TuningConstants
     public static final double POWERCELL_GENEVA_MECHANISM_INDEXING_TIMEOUT = 2.0;
     public static final double POWERCELL_GENEVA_COUNT_THRESHOLD = 0.15;
 
-    public static final double POWERCELL_FLYWHEEL_POINT_BLANK_MOTOR_VELOCITY = 0.1;
-    public static final double POWERCELL_FLYWHEEL_MEDIUM_MOTOR_VELOCITY = 0.2;
+    public static final double POWERCELL_FLYWHEEL_POINT_BLANK_MOTOR_VELOCITY = 0.4;
+    public static final double POWERCELL_FLYWHEEL_MEDIUM_MOTOR_VELOCITY = 0.5;
 
     public static final double POWERCELL_LEFT_TURN_TURRET = -5.0;
     public static final double POWERCELL_MIN_TURRET_OFFSET= 1.0;

@@ -361,7 +361,6 @@ public class ButtonMap implements IButtonMap
                 DigitalOperation.PowerCellHoodMedium,
                 DigitalOperation.PowerCellHoodLong,
                 AnalogOperation.PowerCellFlywheelVelocity,
-                DigitalOperation.VisionEnable,
             }),
         new MacroOperationDescription(
             MacroOperation.AlignShotVision,
@@ -397,7 +396,6 @@ public class ButtonMap implements IButtonMap
                 DigitalOperation.PowerCellHoodMedium,
                 DigitalOperation.PowerCellHoodLong,
                 AnalogOperation.PowerCellFlywheelVelocity,
-                DigitalOperation.VisionEnable,
             }),
         new MacroOperationDescription(
             MacroOperation.TurretMoveLeft,
