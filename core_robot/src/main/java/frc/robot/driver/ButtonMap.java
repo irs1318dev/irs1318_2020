@@ -385,7 +385,7 @@ public class ButtonMap implements IButtonMap
             () -> SequentialTask.Sequence(
                 new IntakePositionTask(true),
                 ConcurrentTask.AllTasks(
-                    new FlyWheelHoodTask(DigitalOperation.PowerCellHoodLong),
+                    new FlyWheelHoodTask(DigitalOperation.PowerCellHoodShort),
                     new FlyWheelFixedSpinTask(TuningConstants.POWERCELL_FLYWHEEL_MEDIUM_MOTOR_VELOCITY))),
             new IOperation[]
             {
