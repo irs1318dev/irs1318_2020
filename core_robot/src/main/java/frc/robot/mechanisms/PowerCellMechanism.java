@@ -193,7 +193,6 @@ public class PowerCellMechanism implements IMechanism
         this.logger.logNumber(PowerCellMechanism.logName, "throughBeamVoltage", throughBeamVoltage);
         this.logger.logBoolean(PowerCellMechanism.logName, "throughBeamBroken", throughBeamBroken);
         this.logger.logBooleanArray(PowerCellMechanism.logName, "hasPowerCell", this.hasPowerCell);
-        this.logger.logString(PowerCellMechanism.logName, "carouselState", (this.carouselState).toString());
         
     }
 
@@ -344,8 +343,6 @@ public class PowerCellMechanism implements IMechanism
                     // become stationary if intake is retracted, or we're kicking
                     this.carouselState = CarouselState.Stationary;
                 }
-
-
                 else if (this.driver.getDigital(DigitalOperation.PowerCellMoveToNextSlot))
                 {
                     this.previousIndex = this.currentCarouselIndex;
@@ -371,9 +368,6 @@ public class PowerCellMechanism implements IMechanism
                 break;
 
             case MovingToNext:
-
-                break;
-
             case MovingToPrevious:
                 if (!this.intakeExtended || kick)
                 {

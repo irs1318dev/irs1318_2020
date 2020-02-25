@@ -83,8 +83,9 @@ public class ButtonMap implements IButtonMap
                     return -1.0 * x;
                 }
 
+                // angle should always be a non-negative numnber
                 double angle = Helpers.convertToPolarAngle(x, y);
-                if (angle == -1.0)
+                if (angle < 0.0)
                 {
                     return TuningConstants.POWERCELL_TURRET_MAGIC_DONT_MOVE_VALUE;
                 }
@@ -103,7 +104,7 @@ public class ButtonMap implements IButtonMap
             -0.05,
             0.05,
             1.0,
-            TuningConstants.MAGIC_NULL_VALUE),    
+            TuningConstants.MAGIC_NULL_VALUE),
     };
 
     public static DigitalOperationDescription[] DigitalOperationSchema = new DigitalOperationDescription[]

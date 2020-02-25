@@ -121,8 +121,6 @@ public class AnalogOperationState extends OperationState
                 newValue *= -1.0;
             }
 
-            newValue = this.adjustForDeadZone(newValue, description.getDeadZoneMin(), description.getDeadZoneMax()) * description.getMultiplier();
-
             AnalogAxis secondaryAxis = description.getUserInputDeviceSecondaryAxis();
             if (secondaryAxis != null && secondaryAxis != AnalogAxis.NONE)
             {
@@ -135,8 +133,8 @@ public class AnalogOperationState extends OperationState
                 // don't adjust for dead zone, simply check for having both within dead zone
                 if (this.withinDeadZone(newValue, secondaryValue, description.getDeadZoneMin(), description.getDeadZoneMax()))
                 {
-                    newValue = 0.0;
-                    secondaryValue = 0.0;
+                    this.currentValue = description.getDefaultValue();
+                    return false;
                 }
 
                 AnalogOperationDescription.ResultCalculator calculator = description.getResultCalculator();
@@ -155,7 +153,7 @@ public class AnalogOperationState extends OperationState
             }
             else
             {
-                newValue = this.adjustForDeadZone(newValue, description.getDeadZoneMin(), description.getDeadZoneMax()) * description.getMultiplier();
+                newValue = this.adjustForDeadZone(newValue, description.getDeadZoneMin(), description.getDeadZoneMax(), description.getDefaultValue(), description.getMultiplier());
             }
         }
         else
@@ -198,11 +196,11 @@ public class AnalogOperationState extends OperationState
      * @param deadZone to consider
      * @return adjusted value for deadZone
      */
-    private double adjustForDeadZone(double value, double deadZoneMin, double deadZoneMax)
+    private double adjustForDeadZone(double value, double deadZoneMin, double deadZoneMax, double defaultValue, double multiplier)
     {
         if (value < deadZoneMax && value > deadZoneMin)
         {
-            return 0.0;
+            return defaultValue;
         }
 
         // scale so that we have the area just outside the deadzone be the starting point
@@ -212,7 +210,7 @@ public class AnalogOperationState extends OperationState
             deadZone = deadZoneMin;
         }
 
-        return (value - deadZone) / (1.0 - deadZone);
+        return multiplier * (value - deadZone) / (1.0 - deadZone);
     }
 
     /**
