@@ -423,7 +423,7 @@ public class PowerCellMechanism implements IMechanism
         this.genevaMotor.set(desiredGenevaMotorPower);
 
         this.logger.logBoolean(PowerCellMechanism.logName, "isIntaking", isIntaking);
-        this.logger.logString(PowerCellMechanism.logName, "genevaMode", this.carouselState.toString());
+        this.logger.logString(PowerCellMechanism.logName, "carouselState", this.carouselState.toString());
         this.logger.logNumber(PowerCellMechanism.logName, "genevaPower", desiredGenevaMotorPower);
         this.logger.logBoolean(PowerCellMechanism.logName, "intakeExtended", this.intakeExtended);
     }

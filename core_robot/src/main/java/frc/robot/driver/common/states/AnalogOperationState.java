@@ -102,6 +102,7 @@ public class AnalogOperationState extends OperationState
                     throw new RuntimeException("Unexpected user input device " + description.getUserInputDevice().toString());
                 }
 
+                this.currentValue = description.getDefaultValue();
                 return false;
         }
 
