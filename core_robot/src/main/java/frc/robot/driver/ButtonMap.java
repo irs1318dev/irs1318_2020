@@ -308,25 +308,29 @@ public class ButtonMap implements IButtonMap
 
         // Climber Macros
         new MacroOperationDescription(
-            MacroOperation.ControlPanelSpin,
+            MacroOperation.ClimberExtend,
             UserInputDevice.Driver,
             UserInputDeviceButton.XBONE_Y_BUTTON,
             Shift.DriverDebug,
             Shift.DriverDebug,
             ButtonType.Toggle,
             () -> SequentialTask.Sequence(
-                ConcurrentTask.AnyTasks(
+                ConcurrentTask.AllTasks(
+                    new IntakePositionTask(false),
                     new FlyWheelHoodTask(DigitalOperation.PowerCellHoodPointBlank),
                     new TurretAlignTask(-90.0)),
                 new ClimberPositionTask(0.5, true)),
             new IOperation[]
             {
-                AnalogOperation.PowerCellTurretPosition,
+                DigitalOperation.PowerCellIntakeExtend,
+                DigitalOperation.PowerCellIntakeRetract,
                 DigitalOperation.ClimberExtend,
+                DigitalOperation.ClimberRetract,
                 DigitalOperation.PowerCellHoodPointBlank,
                 DigitalOperation.PowerCellHoodShort,
                 DigitalOperation.PowerCellHoodMedium,
                 DigitalOperation.PowerCellHoodLong,
+                AnalogOperation.PowerCellTurretPosition,
             }),
 
         // ControlPanel Macros
@@ -334,7 +338,7 @@ public class ButtonMap implements IButtonMap
             MacroOperation.ControlPanelSpin,
             UserInputDevice.Operator,
             AnalogAxis.PS4_LT,
-            0.0,
+            0.5,
             1.0,
             Shift.OperatorDebug,
             Shift.None,

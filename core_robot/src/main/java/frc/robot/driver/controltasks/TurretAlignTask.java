@@ -19,6 +19,7 @@ public class TurretAlignTask extends ControlTaskBase implements IControlTask
     public void begin()
     {
         this.powerCell = this.getInjector().getInstance(PowerCellMechanism.class);
+        this.setAnalogOperationState(AnalogOperation.PowerCellTurretPosition, this.angle);
     }
 
     @Override
