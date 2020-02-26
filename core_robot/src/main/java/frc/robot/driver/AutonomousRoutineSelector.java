@@ -35,8 +35,9 @@ public class AutonomousRoutineSelector
         EightPowerCellClose,
         Poach,
         ThreePlusTwo,
-        ShootGoBack,
+        SimpleShootDriveBack,
         ShootSplineBackShoot,
+        Shoot3Pick2NoShoot,
     }
 
     /**
@@ -60,8 +61,9 @@ public class AutonomousRoutineSelector
         this.routineChooser.addObject("EightPowerCellClose", AutoRoutine.EightPowerCellClose);
         this.routineChooser.addObject("Poach", AutoRoutine.Poach);
         this.routineChooser.addObject("ThreePlusTwo", AutoRoutine.ThreePlusTwo);
-        this.routineChooser.addObject("ShootGoBack", AutoRoutine.ShootGoBack);
+        this.routineChooser.addObject("SimpleShootDriveBack", AutoRoutine.SimpleShootDriveBack);
         this.routineChooser.addObject("ShootSplineBackShoot", AutoRoutine.ShootSplineBackShoot);
+        this.routineChooser.addObject("Shoot3Pick2NoShoot", AutoRoutine.Shoot3Pick2NoShoot);
         networkTableProvider.addChooser("Auto Routine", this.routineChooser);
 
         this.positionChooser = networkTableProvider.getSendableChooser();
@@ -85,11 +87,16 @@ public class AutonomousRoutineSelector
 
         this.logger.logString(AutonomousRoutineSelector.LogName, "selected", startPosition.toString() + "." + routine.toString());
 
-        if (routine == AutoRoutine.ShootGoBack)
+        if (routine == AutoRoutine.SimpleShootDriveBack)
         {
-            return shootGoBack();
+            return simpleShootDriveBack();
         }
 
+        if (routine == AutoRoutine.Shoot3Pick2NoShoot) 
+        {
+            return shootDrive(3.0, "3 plus 2 spline");
+        }
+        
         if (routine == AutoRoutine.ShootSplineBackShoot)
         {
             return shootSplineBackShoot();
@@ -227,7 +234,7 @@ public class AutonomousRoutineSelector
             "simple back",
             RoadRunnerTankTranslator.convert(
                 new PathBuilder(new Pose2d(0, 0, 0))
-                    .lineTo(new Vector2d(12, 0))
+                    .lineTo(new Vector2d(24, 0))
                     .build(),
                 false));
 
@@ -239,12 +246,21 @@ public class AutonomousRoutineSelector
                     .lineTo(new Vector2d(218.413, 65.869))
                     .build(),
                 false));
+
+        this.pathManager.addPath(
+            "3 plus 2 spline",
+            RoadRunnerTankTranslator.convert(
+                new PathBuilder(new Pose2d(0, 0, 0))
+                    .splineTo(new Pose2d(80.6, 65.869, 0), interpolator)
+                    .lineTo(new Vector2d(100, 65.869))
+                    .build(),
+                false));
     }
 
     private static IControlTask shootDriveShoot(double intakingDuration, String pathName1, String pathName2) // shoots three pc on init. line, then picks three from trench and shoots them
     {
         return SequentialTask.Sequence(
-            /*ConcurrentTask.AnyTasks(
+            ConcurrentTask.AnyTasks(
                 new FlyWheelVisionSpinTask(),
                 SequentialTask.Sequence(
                     new TurretVisionCenteringTask(false, true),
@@ -253,19 +269,19 @@ public class AutonomousRoutineSelector
             ConcurrentTask.AllTasks(
                 SequentialTask.Sequence(
                     new IntakePositionTask(true),
-                    new IntakeOuttakeTask(intakingDuration, true)),*/
-                new FollowPathTask(pathName1),
-            /*new WaitTask(0.15),
+                    new IntakeOuttakeTask(intakingDuration, true)),
+                new FollowPathTask(pathName1)),
+            new WaitTask(0.15),
             ConcurrentTask.AllTasks(
-                new IntakePositionTask(false),*/
-                new FollowPathTask(pathName2)
-            /*ConcurrentTask.AnyTasks(
+                new IntakePositionTask(false),
+                new FollowPathTask(pathName2)),
+            ConcurrentTask.AnyTasks(
                 new FlyWheelVisionSpinTask(),
                 SequentialTask.Sequence(
                     new TurretVisionCenteringTask(false, true),
                     new WaitTask(1.0),
-                    new FullHopperShotTask()))*/
-        );
+                    new FullHopperShotTask()))
+            );
     }
 
     private static IControlTask driveShoot(double intakingDuration, String forward, String back)
@@ -329,7 +345,7 @@ public class AutonomousRoutineSelector
         );
     }
 
-    private static IControlTask shootGoBack()
+    private static IControlTask simpleShootDriveBack()
     {
         return SequentialTask.Sequence(
             ConcurrentTask.AnyTasks(
@@ -374,6 +390,23 @@ public class AutonomousRoutineSelector
             new FollowPathTask("poach segment 2"),
             new FollowPathTask("poach segment 3"));//,
             //new FollowPathTask("poach segment 4"));
+    }
+
+    private static IControlTask shootDrive(double intakingDuration, String pathName) // shoots three pc on init. line, then picks two from trench   
+    {
+        return SequentialTask.Sequence(
+            ConcurrentTask.AnyTasks(
+                new FlyWheelVisionSpinTask(),
+                SequentialTask.Sequence(
+                    new TurretVisionCenteringTask(false, true),
+                    new WaitTask(1.0),
+                    new FullHopperShotTask())),
+            ConcurrentTask.AllTasks(
+                SequentialTask.Sequence(
+                    new IntakePositionTask(true),
+                    new IntakeOuttakeTask(intakingDuration, true)),
+                new FollowPathTask(pathName))
+            );
     }
 
 }
