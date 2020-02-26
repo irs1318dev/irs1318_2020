@@ -316,7 +316,7 @@ public class AutonomousRoutineSelector
             ConcurrentTask.AllTasks(
                 new IntakePositionTask(false),
                 new FollowPathTask("poach segment 2"),
-                new TurretAlignTask(270.0)),
+                new TurretMoveTask(true, 270.0)),
             ConcurrentTask.AnyTasks(
                 new FlyWheelVisionSpinTask(),
                 SequentialTask.Sequence(

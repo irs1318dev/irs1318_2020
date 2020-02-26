@@ -149,8 +149,8 @@ public class ButtonMap implements IButtonMap
             DigitalOperation.PowerCellKick,
             UserInputDevice.Operator,
             UserInputDeviceButton.PS4_RIGHT_BUTTON,
-            Shift.OperatorDebug,
-            Shift.OperatorDebug,
+            // Shift.OperatorDebug,
+            // Shift.OperatorDebug,
             ButtonType.Simple),
         new DigitalOperationDescription(
             DigitalOperation.PowerCellIntakeExtend,
@@ -318,7 +318,7 @@ public class ButtonMap implements IButtonMap
                 ConcurrentTask.AllTasks(
                     new IntakePositionTask(false),
                     new FlyWheelHoodTask(DigitalOperation.PowerCellHoodPointBlank),
-                    new TurretAlignTask(-90.0)),
+                    new TurretMoveTask(1.0, true, -90.0)),
                 new ClimberPositionTask(0.5, true)),
             new IOperation[]
             {
@@ -350,34 +350,34 @@ public class ButtonMap implements IButtonMap
             }),
 
         // PowerCell Macros
-        new MacroOperationDescription(
-            MacroOperation.FullHopperShot,
-            UserInputDevice.Operator,
-            AnalogAxis.PS4_RT,
-            0.0,
-            1.0,
-            ButtonType.Toggle,
-            () -> new FullHopperShotTask(),
-            new IOperation[]
-            {
-                DigitalOperation.PowerCellKick,
-                DigitalOperation.PowerCellMoveToNextSlot,
-                DigitalOperation.PowerCellMoveToPreviousSlot,
-            }),
-        new MacroOperationDescription(
-            MacroOperation.TracerShot,
-            UserInputDevice.Operator,
-            UserInputDeviceButton.PS4_RIGHT_BUTTON,
-            Shift.OperatorDebug,
-            Shift.None,
-            ButtonType.Toggle,
-            () -> new TracerShotTask(),
-            new IOperation[]
-            {
-                DigitalOperation.PowerCellKick,
-                DigitalOperation.PowerCellMoveToNextSlot,
-                DigitalOperation.PowerCellMoveToPreviousSlot,
-            }),
+        // new MacroOperationDescription(
+        //     MacroOperation.FullHopperShot,
+        //     UserInputDevice.Operator,
+        //     AnalogAxis.PS4_RT,
+        //     0.0,
+        //     1.0,
+        //     ButtonType.Toggle,
+        //     () -> new FullHopperShotTask(),
+        //     new IOperation[]
+        //     {
+        //         DigitalOperation.PowerCellKick,
+        //         DigitalOperation.PowerCellMoveToNextSlot,
+        //         DigitalOperation.PowerCellMoveToPreviousSlot,
+        //     }),
+        // new MacroOperationDescription(
+        //     MacroOperation.TracerShot,
+        //     UserInputDevice.Operator,
+        //     UserInputDeviceButton.PS4_RIGHT_BUTTON,
+        //     Shift.OperatorDebug,
+        //     Shift.None,
+        //     ButtonType.Toggle,
+        //     () -> new TracerShotTask(),
+        //     new IOperation[]
+        //     {
+        //         DigitalOperation.PowerCellKick,
+        //         DigitalOperation.PowerCellMoveToNextSlot,
+        //         DigitalOperation.PowerCellMoveToPreviousSlot,
+        //     }),
         new MacroOperationDescription(
             MacroOperation.SpinUpVisionDistance,
             UserInputDevice.Operator,
@@ -477,7 +477,7 @@ public class ButtonMap implements IButtonMap
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ButtonType.Toggle,
-            () -> new TurretMoveTask(0.1, 1.0),
+            () -> new TurretMoveTask(0.1, false, 1.0),
             new IOperation[]
             {
                 AnalogOperation.PowerCellTurretPosition,
@@ -489,7 +489,7 @@ public class ButtonMap implements IButtonMap
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ButtonType.Toggle,
-            () -> new TurretMoveTask(0.1, -1.0),
+            () -> new TurretMoveTask(0.1, false, -1.0),
             new IOperation[]
             {
                 AnalogOperation.PowerCellTurretPosition,
