@@ -9,6 +9,9 @@ public enum MacroOperation implements IOperation
     TurnInPlaceLeft,
     TurnInPlaceRight,
 
+    // Climber operations
+    ClimberExtend,
+
     // ColorSpinner operations
     ControlPanelSpin,
 

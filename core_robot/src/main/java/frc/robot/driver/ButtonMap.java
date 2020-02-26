@@ -131,13 +131,6 @@ public class ButtonMap implements IButtonMap
             Shift.DriverDebug,
             Shift.DriverDebug,
             ButtonType.Click),
-        new DigitalOperationDescription(
-            DigitalOperation.ClimberExtend,
-            UserInputDevice.Driver,
-            UserInputDeviceButton.XBONE_Y_BUTTON,
-            Shift.DriverDebug,
-            Shift.DriverDebug,
-            ButtonType.Click),
 
         // ControlPanel operations
         new DigitalOperationDescription(
@@ -311,6 +304,29 @@ public class ButtonMap implements IButtonMap
                 DigitalOperation.DriveTrainUseBrakeMode,
                 AnalogOperation.DriveTrainLeftPosition,
                 AnalogOperation.DriveTrainRightPosition,
+            }),
+
+        // Climber Macros
+        new MacroOperationDescription(
+            MacroOperation.ControlPanelSpin,
+            UserInputDevice.Driver,
+            UserInputDeviceButton.XBONE_Y_BUTTON,
+            Shift.DriverDebug,
+            Shift.DriverDebug,
+            ButtonType.Toggle,
+            () -> SequentialTask.Sequence(
+                ConcurrentTask.AnyTasks(
+                    new FlyWheelHoodTask(DigitalOperation.PowerCellHoodPointBlank),
+                    new TurretAlignTask(-90.0)),
+                new ClimberPositionTask(0.5, true)),
+            new IOperation[]
+            {
+                AnalogOperation.PowerCellTurretPosition,
+                DigitalOperation.ClimberExtend,
+                DigitalOperation.PowerCellHoodPointBlank,
+                DigitalOperation.PowerCellHoodShort,
+                DigitalOperation.PowerCellHoodMedium,
+                DigitalOperation.PowerCellHoodLong,
             }),
 
         // ControlPanel Macros
