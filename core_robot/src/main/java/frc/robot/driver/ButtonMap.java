@@ -66,14 +66,14 @@ public class ButtonMap implements IButtonMap
         new AnalogOperationDescription(
             AnalogOperation.PowerCellTurretPosition,
             UserInputDevice.Operator,
-            AnalogAxis.PS4_RSX,
-            AnalogAxis.PS4_RSY,
+            AnalogAxis.PS4_LSX,
+            AnalogAxis.PS4_LSY,
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ElectronicsConstants.INVERT_X_AXIS,
             ElectronicsConstants.INVERT_Y_AXIS,
-            -0.05,
-            0.05,
+            -0.25,
+            0.25,
             1.0,
             TuningConstants.POWERCELL_TURRET_MAGIC_DONT_MOVE_VALUE,
             (x, y) ->
@@ -97,7 +97,7 @@ public class ButtonMap implements IButtonMap
         new AnalogOperationDescription(
             AnalogOperation.PowerCellGenevaPower,
             UserInputDevice.Operator,
-            AnalogAxis.PS4_LSX,
+            AnalogAxis.PS4_RSX,
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ElectronicsConstants.INVERT_X_AXIS,
@@ -218,14 +218,14 @@ public class ButtonMap implements IButtonMap
         new DigitalOperationDescription(
             DigitalOperation.PowerCellResetTurretFront,
             UserInputDevice.Operator,
-            UserInputDeviceButton.PS4_RIGHT_STICK_BUTTON,
+            UserInputDeviceButton.PS4_LEFT_STICK_BUTTON,
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ButtonType.Click),
         new DigitalOperationDescription(
             DigitalOperation.PowerCellMoveToPreviousSlot,
             UserInputDevice.Operator,
-            AnalogAxis.PS4_LSX,
+            AnalogAxis.PS4_RSX,
             -1.0,
             -0.25,
             Shift.OperatorDebug,
@@ -234,7 +234,7 @@ public class ButtonMap implements IButtonMap
         new DigitalOperationDescription(
             DigitalOperation.PowerCellMoveToNextSlot,
             UserInputDevice.Operator,
-            AnalogAxis.PS4_LSX,
+            AnalogAxis.PS4_RSX,
             0.25,
             1.0,
             Shift.OperatorDebug,
@@ -501,7 +501,7 @@ public class ButtonMap implements IButtonMap
         new MacroOperationDescription(
             MacroOperation.StopFlywheelPlease,
             UserInputDevice.Operator,
-            UserInputDeviceButton.PS4_RIGHT_STICK_BUTTON,
+            UserInputDeviceButton.PS4_LEFT_STICK_BUTTON,
             Shift.OperatorDebug,
             Shift.None,
             ButtonType.Simple,

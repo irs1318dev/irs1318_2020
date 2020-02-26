@@ -327,13 +327,13 @@ public class PowerCellMechanism implements IMechanism
                     this.previousIndex = this.currentCarouselIndex;
                     this.carouselState = CarouselState.MovingToPrevious;
                 }
-                else if (isIntaking)
-                {
-                    // if intaking, start indexing
-                    this.lastCarouselCountTime = currentTime;
-                    this.carouselState = CarouselState.Indexing;
-                    this.lastIntakeTime = currentTime;
-                }
+                // else if (isIntaking)
+                // {
+                //     // if intaking, start automatically indexing
+                //     this.lastCarouselCountTime = currentTime;
+                //     this.carouselState = CarouselState.Indexing;
+                //     this.lastIntakeTime = currentTime;
+                // }
 
                 break;
 
