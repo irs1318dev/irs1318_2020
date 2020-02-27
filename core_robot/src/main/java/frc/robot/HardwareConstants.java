@@ -38,8 +38,8 @@ public class HardwareConstants
 
     //================================================== Climber =================================================================
 
-    public static final boolean CLIMBER_WINCH_MASTER_INVERT_OUTPUT = true;
-    public static final boolean CLIMBER_WINCH_FOLLOWER_INVERT_OUTPUT = true;
+    public static final boolean CLIMBER_WINCH_MASTER_INVERT_OUTPUT = false;
+    public static final boolean CLIMBER_WINCH_FOLLOWER_INVERT_OUTPUT = false;
 
     //================================================== ControlPanel ============================================================
 
