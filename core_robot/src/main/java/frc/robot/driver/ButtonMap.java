@@ -318,7 +318,7 @@ public class ButtonMap implements IButtonMap
                 ConcurrentTask.AllTasks(
                     new IntakePositionTask(false),
                     new FlyWheelHoodTask(DigitalOperation.PowerCellHoodPointBlank),
-                    new TurretMoveTask(1.0, true, -90.0)),
+                    new TurretMoveTask(1.0, true, 90.0)),
                 new ClimberPositionTask(0.5, true)),
             new IOperation[]
             {
