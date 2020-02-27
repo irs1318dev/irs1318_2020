@@ -368,11 +368,33 @@ public class PowerCellMechanism implements IMechanism
                 break;
 
             case MovingToNext:
+                if (!this.intakeExtended || kick)
+                {
+                    // become stationary if intake is retracted, or we're kicking
+                    this.carouselState = CarouselState.Stationary;
+                }
+                else if (this.driver.getDigital(DigitalOperation.PowerCellMoveToPreviousSlot))
+                {
+                    this.previousIndex = this.currentCarouselIndex;
+                    this.carouselState = CarouselState.MovingToPrevious;
+                }
+                else if (this.currentCarouselIndex != this.previousIndex)
+                {
+                    this.carouselState = CarouselState.Stationary;
+                }
+            
+                break;
+
             case MovingToPrevious:
                 if (!this.intakeExtended || kick)
                 {
                     // become stationary if intake is retracted, or we're kicking
                     this.carouselState = CarouselState.Stationary;
+                }
+                else if (this.driver.getDigital(DigitalOperation.PowerCellMoveToNextSlot))
+                {
+                    this.previousIndex = this.currentCarouselIndex;
+                    this.carouselState = CarouselState.MovingToNext;
                 }
                 else if (this.currentCarouselIndex != this.previousIndex)
                 {
