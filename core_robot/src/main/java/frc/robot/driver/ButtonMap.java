@@ -387,17 +387,18 @@ public class ButtonMap implements IButtonMap
             ButtonType.Toggle,
             () -> SequentialTask.Sequence(
                 new IntakePositionTask(true),
-                new FlyWheelVisionSpinTask()),
+                // new FlyWheelVisionSpinTask()),
+                new FlyWheelFixedSpinTask(TuningConstants.POWERCELL_FLYWHEEL_INITIATIONLINE_MOTOR_VELOCITY)),
             new IOperation[]
             {
                 DigitalOperation.PowerCellIntakeExtend,
                 DigitalOperation.PowerCellIntakeRetract,
-                DigitalOperation.PowerCellHoodPointBlank,
-                DigitalOperation.PowerCellHoodShort,
-                DigitalOperation.PowerCellHoodMedium,
-                DigitalOperation.PowerCellHoodLong,
+                // DigitalOperation.PowerCellHoodPointBlank,
+                // DigitalOperation.PowerCellHoodShort,
+                // DigitalOperation.PowerCellHoodMedium,
+                // DigitalOperation.PowerCellHoodLong,
                 AnalogOperation.PowerCellFlywheelVelocity,
-                DigitalOperation.VisionEnable
+                // DigitalOperation.VisionEnable,
             },
             new IOperation[]
             {
@@ -419,16 +420,16 @@ public class ButtonMap implements IButtonMap
             () -> SequentialTask.Sequence(
                 new IntakePositionTask(true),
                 ConcurrentTask.AllTasks(
-                    new FlyWheelHoodTask(DigitalOperation.PowerCellHoodPointBlank),
+                    //new FlyWheelHoodTask(DigitalOperation.PowerCellHoodPointBlank),
                     new FlyWheelFixedSpinTask(TuningConstants.POWERCELL_FLYWHEEL_POINT_BLANK_MOTOR_VELOCITY))),
             new IOperation[]
             {
                 DigitalOperation.PowerCellIntakeExtend,
                 DigitalOperation.PowerCellIntakeRetract,
-                DigitalOperation.PowerCellHoodPointBlank,
-                DigitalOperation.PowerCellHoodShort,
-                DigitalOperation.PowerCellHoodMedium,
-                DigitalOperation.PowerCellHoodLong,
+                // DigitalOperation.PowerCellHoodPointBlank,
+                // DigitalOperation.PowerCellHoodShort,
+                // DigitalOperation.PowerCellHoodMedium,
+                // DigitalOperation.PowerCellHoodLong,
                 AnalogOperation.PowerCellFlywheelVelocity,
             }),
         new MacroOperationDescription(
@@ -458,16 +459,16 @@ public class ButtonMap implements IButtonMap
             () -> SequentialTask.Sequence(
                 new IntakePositionTask(true),
                 ConcurrentTask.AllTasks(
-                    new FlyWheelHoodTask(DigitalOperation.PowerCellHoodShort),
+                    //new FlyWheelHoodTask(DigitalOperation.PowerCellHoodShort),
                     new FlyWheelFixedSpinTask(TuningConstants.POWERCELL_FLYWHEEL_MEDIUM_MOTOR_VELOCITY))),
             new IOperation[]
             {
                 DigitalOperation.PowerCellIntakeExtend,
                 DigitalOperation.PowerCellIntakeRetract,
-                DigitalOperation.PowerCellHoodPointBlank,
-                DigitalOperation.PowerCellHoodShort,
-                DigitalOperation.PowerCellHoodMedium,
-                DigitalOperation.PowerCellHoodLong,
+                // DigitalOperation.PowerCellHoodPointBlank,
+                // DigitalOperation.PowerCellHoodShort,
+                // DigitalOperation.PowerCellHoodMedium,
+                // DigitalOperation.PowerCellHoodLong,
                 AnalogOperation.PowerCellFlywheelVelocity,
             }),
         new MacroOperationDescription(

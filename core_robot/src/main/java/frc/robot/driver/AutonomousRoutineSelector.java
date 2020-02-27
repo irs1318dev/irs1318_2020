@@ -6,6 +6,7 @@ import com.acmerobotics.roadrunner.path.heading.*;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import frc.robot.TuningConstants;
 import frc.robot.common.robotprovider.*;
 import frc.robot.driver.common.*;
 import frc.robot.driver.controltasks.*;
@@ -349,12 +350,14 @@ public class AutonomousRoutineSelector
     {
         return SequentialTask.Sequence(
             ConcurrentTask.AnyTasks(
-                new FlyWheelVisionSpinTask(),
+                //new FlyWheelVisionSpinTask(),
+                new FlyWheelFixedSpinTask(TuningConstants.POWERCELL_FLYWHEEL_INITIATIONLINE_MOTOR_VELOCITY),
+                new FlyWheelHoodTask(DigitalOperation.PowerCellHoodShort),
                 SequentialTask.Sequence(
                     new IntakePositionTask(true),
                     new TurretVisionCenteringTask(false, true),
                     new WaitTask(1.0),
-                    new FullHopperShotTask()),
+                    new ShootHopperSlotsTask(0, 1, 4)), //new FullHopperShotTask()),
             new FollowPathTask("simple back")));
     }
 
