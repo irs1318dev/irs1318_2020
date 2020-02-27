@@ -5,13 +5,12 @@ import frc.robot.common.PIDHandler;
 import frc.robot.common.robotprovider.ITimer;
 import frc.robot.driver.AnalogOperation;
 import frc.robot.driver.DigitalOperation;
-import frc.robot.driver.common.IControlTask;
 import frc.robot.mechanisms.OffboardVisionManager;
 
 /**
  * Task that turns the robot a certain amount clockwise or counterclockwise in-place based on vision center
  */
-public class VisionCenteringTask extends ControlTaskBase implements IControlTask
+public class VisionCenteringTask extends ControlTaskBase
 {
     private static final int NO_CENTER_THRESHOLD = 40;
 

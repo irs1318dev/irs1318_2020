@@ -6,7 +6,7 @@ import frc.robot.driver.common.IControlTask;
  * Task that holds multiple other tasks and executes them sequentially (in order).
  * 
  */
-public class SequentialTask extends DecisionSequentialTask implements IControlTask
+public class SequentialTask extends DecisionSequentialTask
 {
     /**
      * Initializes a new SequentialTask

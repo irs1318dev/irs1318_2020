@@ -15,7 +15,7 @@ import com.google.inject.Injector;
  * Allows more tasks to be appended to the end based on the flow of the current task
  * 
  */
-public abstract class DecisionSequentialTask extends ControlTaskBase implements IControlTask
+public abstract class DecisionSequentialTask extends ControlTaskBase
 {
     private final Queue<IControlTask> orderedTasks;
     private IControlTask currentTask;

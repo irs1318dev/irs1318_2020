@@ -1,14 +1,12 @@
 package frc.robot.driver.controltasks;
 
 import frc.robot.driver.*;
-import frc.robot.driver.common.IControlTask;
-import frc.robot.mechanisms.PowerCellMechanism;
 
 /**
  * Task that applies the starting angle
  * 
  */
-public class TurretOffsetTask extends TimedTask implements IControlTask
+public class TurretOffsetTask extends TimedTask
 {
     private final double angle;
 

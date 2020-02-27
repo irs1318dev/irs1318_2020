@@ -1,12 +1,11 @@
 package frc.robot.driver.controltasks;
 
 import frc.robot.driver.DigitalOperation;
-import frc.robot.driver.common.IControlTask;
 
 /**
  * Task that sets the Hood Position.
  */
-public class FlyWheelHoodTask extends CompositeOperationTask implements IControlTask
+public class FlyWheelHoodTask extends CompositeOperationTask
 {
     private static DigitalOperation[] hoodPositionOperations =
     {

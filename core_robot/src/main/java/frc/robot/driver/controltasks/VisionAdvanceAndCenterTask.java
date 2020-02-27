@@ -4,9 +4,8 @@ import frc.robot.TuningConstants;
 import frc.robot.common.PIDHandler;
 import frc.robot.common.robotprovider.ITimer;
 import frc.robot.driver.*;
-import frc.robot.driver.common.IControlTask;
 
-public class VisionAdvanceAndCenterTask extends VisionCenteringTask implements IControlTask
+public class VisionAdvanceAndCenterTask extends VisionCenteringTask
 {
     private final boolean useFastMode;
 

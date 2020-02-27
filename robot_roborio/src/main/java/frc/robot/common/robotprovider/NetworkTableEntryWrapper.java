@@ -1,8 +1,6 @@
 package frc.robot.common.robotprovider;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableType;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class NetworkTableEntryWrapper implements INetworkTableEntry
 {

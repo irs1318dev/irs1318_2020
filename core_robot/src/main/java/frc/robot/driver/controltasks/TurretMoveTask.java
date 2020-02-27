@@ -2,14 +2,13 @@ package frc.robot.driver.controltasks;
 
 import frc.robot.TuningConstants;
 import frc.robot.driver.AnalogOperation;
-import frc.robot.driver.common.IControlTask;
 import frc.robot.mechanisms.PowerCellMechanism;
 
 /**
  * Task that applies a single operation from a group of related operations for a short period of time.
  * 
  */
-public class TurretMoveTask extends TimedTask implements IControlTask
+public class TurretMoveTask extends TimedTask
 {
     private final boolean useTimeout;
     private final boolean absolute;

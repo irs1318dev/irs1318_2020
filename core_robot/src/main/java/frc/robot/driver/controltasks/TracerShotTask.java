@@ -2,10 +2,9 @@ package frc.robot.driver.controltasks;
 
 import frc.robot.common.robotprovider.ITimer;
 import frc.robot.driver.DigitalOperation;
-import frc.robot.driver.common.IControlTask;
 import frc.robot.mechanisms.PowerCellMechanism;
 
-public class TracerShotTask extends ControlTaskBase implements IControlTask
+public class TracerShotTask extends ControlTaskBase
 {
     private PowerCellMechanism powerCellMechanism;
     private ITimer timer;

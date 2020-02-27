@@ -4,7 +4,7 @@ package frc.robot.common.robotprovider;
  * Logger that logs current values to a dashboard.
  *
  */
-public class ConsoleDashboardLogger extends StringLogger implements IDashboardLogger
+public class ConsoleDashboardLogger extends StringLogger
 {
     /**
      * Write a string to the smart dashboard

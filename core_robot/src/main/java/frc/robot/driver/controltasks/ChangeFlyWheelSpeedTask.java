@@ -1,14 +1,13 @@
 package frc.robot.driver.controltasks;
 
 import frc.robot.driver.AnalogOperation;
-import frc.robot.driver.common.IControlTask;
 import frc.robot.mechanisms.PowerCellMechanism;
 
 /**
  * Task that applies a single operation from a group of related operations for a short period of time.
  * 
  */
-public class ChangeFlyWheelSpeedTask extends TimedTask implements IControlTask
+public class ChangeFlyWheelSpeedTask extends TimedTask
 {
     private final double velocityAmount;
 
@@ -56,6 +55,5 @@ public class ChangeFlyWheelSpeedTask extends TimedTask implements IControlTask
     public void end()
     {
         super.end();
-        this.setAnalogOperationState(AnalogOperation.PowerCellFlywheelVelocity, -1.0);
     }
 }

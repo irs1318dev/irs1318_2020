@@ -3,13 +3,12 @@ package frc.robot.driver.controltasks;
 import frc.robot.TuningConstants;
 import frc.robot.driver.AnalogOperation;
 import frc.robot.driver.DigitalOperation;
-import frc.robot.driver.common.IControlTask;
 import frc.robot.mechanisms.OffboardVisionManager;
 
 /**
  * Task that turns the turret a certain amount clockwise or counterclockwise based on vision center
  */
-public class FlyWheelVisionSpinTask extends ControlTaskBase implements IControlTask
+public class FlyWheelVisionSpinTask extends ControlTaskBase
 {
     private static final int NO_CENTER_THRESHOLD = 40;
     private static final double[][] HOOD_RANGES =

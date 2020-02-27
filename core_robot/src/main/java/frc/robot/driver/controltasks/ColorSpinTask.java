@@ -3,11 +3,10 @@ package frc.robot.driver.controltasks;
 import frc.robot.TuningConstants;
 import frc.robot.common.robotprovider.ColorMatchResult;
 import frc.robot.driver.*;
-import frc.robot.driver.common.IControlTask;
 import frc.robot.mechanisms.ControlPanelMechanism;
 import frc.robot.mechanisms.ControlPanelMechanism.TargetColor;
 
-public class ColorSpinTask extends ControlTaskBase implements IControlTask
+public class ColorSpinTask extends ControlTaskBase
 {
     private ControlPanelMechanism controlPanel;
 

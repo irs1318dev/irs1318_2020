@@ -1,12 +1,11 @@
 package frc.robot.driver.controltasks;
 
 import frc.robot.driver.DigitalOperation;
-import frc.robot.driver.common.IControlTask;
 
 /**
  * Task that sets the Intake to spin
  */
-public class IntakeOuttakeTask extends CompositeOperationTask implements IControlTask
+public class IntakeOuttakeTask extends CompositeOperationTask
 {
     private static DigitalOperation[] intakeOuttakeOperations =
     {

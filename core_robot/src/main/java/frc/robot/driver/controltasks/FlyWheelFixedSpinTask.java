@@ -1,10 +1,9 @@
 package frc.robot.driver.controltasks;
 
 import frc.robot.driver.AnalogOperation;
-import frc.robot.driver.common.IControlTask;
 import frc.robot.TuningConstants;
 
-public class FlyWheelFixedSpinTask extends ControlTaskBase implements IControlTask
+public class FlyWheelFixedSpinTask extends ControlTaskBase
 {
     private final double speed;
 

@@ -4,7 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class CSVLogger extends StringLogger implements IDashboardLogger
+public class CSVLogger extends StringLogger
 {
     private final FileWriter fileWriter;
     private final ArrayList<String> schema;

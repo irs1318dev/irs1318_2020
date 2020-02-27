@@ -6,12 +6,10 @@ import java.util.List;
 import java.io.File;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.kinematics.Kinematics;
 import com.acmerobotics.roadrunner.kinematics.TankKinematics;
 import com.acmerobotics.roadrunner.path.Path;
 import com.acmerobotics.roadrunner.path.PathBuilder;
-import com.acmerobotics.roadrunner.path.heading.TangentInterpolator;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.acmerobotics.roadrunner.trajectory.TrajectoryGenerator;
 import com.acmerobotics.roadrunner.trajectory.constraints.DriveConstraints;
@@ -29,10 +27,9 @@ public class RoadRunnerTankTranslator
     public static void main(String[] args)
     {
         // Initialize path and interpolator (check to see if interpolator is needed)
-        TangentInterpolator interpolator = new TangentInterpolator();
         Path path =  new PathBuilder(new Pose2d(132, 0, 0)) 
-        .splineTo(new Pose2d(0, 200, 90)) // tune y value and angle for shooting position (90 might need to be 270) 
-        .build();
+            .splineTo(new Pose2d(0, 200, 90)) // tune y value and angle for shooting position (90 might need to be 270) 
+            .build();
 
         boolean isBackwards = true;
 

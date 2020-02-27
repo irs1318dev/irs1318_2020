@@ -5,10 +5,9 @@ import java.util.List;
 
 import frc.robot.common.robotprovider.ITimer;
 import frc.robot.driver.DigitalOperation;
-import frc.robot.driver.common.IControlTask;
 import frc.robot.mechanisms.PowerCellMechanism;
 
-public class ShootHopperSlotsTask extends ControlTaskBase implements IControlTask
+public class ShootHopperSlotsTask extends ControlTaskBase
 {
     private static final boolean MOVE_BACKWARDS = true;
     private static final double KICK_TIME = 0.5;

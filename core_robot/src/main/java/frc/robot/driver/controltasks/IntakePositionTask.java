@@ -1,12 +1,11 @@
 package frc.robot.driver.controltasks;
 
 import frc.robot.driver.DigitalOperation;
-import frc.robot.driver.common.IControlTask;
 
 /**
  * Task that sets the Intake Position.
  */
-public class IntakePositionTask extends CompositeOperationTask implements IControlTask
+public class IntakePositionTask extends CompositeOperationTask
 {
     private static DigitalOperation[] intakePositionOperations =
     {

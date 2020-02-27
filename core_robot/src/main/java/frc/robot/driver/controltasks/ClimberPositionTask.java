@@ -1,12 +1,11 @@
 package frc.robot.driver.controltasks;
 
 import frc.robot.driver.DigitalOperation;
-import frc.robot.driver.common.IControlTask;
 
 /**
  * Task that sets the Climber Position.
  */
-public class ClimberPositionTask extends CompositeOperationTask implements IControlTask
+public class ClimberPositionTask extends CompositeOperationTask
 {
     private static DigitalOperation[] climberPositionOperations =
     {

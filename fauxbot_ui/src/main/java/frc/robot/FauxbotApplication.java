@@ -2,9 +2,6 @@ package frc.robot;
 
 import java.io.IOException;
 
-import frc.robot.ElectronicsConstants;
-import frc.robot.FauxbotModule;
-import frc.robot.RobotMode;
 import frc.robot.common.robotprovider.*;
 import frc.robot.driver.common.*;
 import frc.robot.driver.common.buttons.ButtonType;
