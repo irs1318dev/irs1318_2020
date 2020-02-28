@@ -31,8 +31,8 @@ public class HardwareConstants
 
     public static final double POWERCELL_TURRET_DEGREES_TO_TICKS = 4096.0 / 360.0; // (360 degrees => 4096 ticks)
     public static final double POWERCELL_TURRET_TICKS_TO_DEGREES = 360.0 / 4096.0;
-    public static final double POWERCELL_TURRET_MINIMUM_RANGE_VALUE = -135.0;
-    public static final double POWERCELL_TURRET_MAXIMUM_RANGE_VALUE = 135.0;
+    public static final double POWERCELL_TURRET_MINIMUM_RANGE_VALUE = -210.0;
+    public static final double POWERCELL_TURRET_MAXIMUM_RANGE_VALUE = 45.0;
 
     public static final int POWERCELL_CAROUSEL_SLOT_COUNT = 5;
 

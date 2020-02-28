@@ -205,7 +205,7 @@ public class TuningConstants
 
     public static final double POWERCELL_FLYWHEEL_POINT_BLANK_MOTOR_VELOCITY = 0.4;
     public static final double POWERCELL_FLYWHEEL_INITIATIONLINE_MOTOR_VELOCITY = 0.5;
-    public static final double POWERCELL_FLYWHEEL_MEDIUM_MOTOR_VELOCITY = 0.5;
+    public static final double POWERCELL_FLYWHEEL_MEDIUM_MOTOR_VELOCITY = 0.8;
 
     public static final double POWERCELL_LEFT_TURN_TURRET = -5.0;
     public static final double POWERCELL_MIN_TURRET_OFFSET= 1.0;
