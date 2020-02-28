@@ -162,6 +162,8 @@ public class TuningConstants
 
     //================================================== PowerCell ===============================================================
 
+    public static final boolean POWERCELL_HAS_THROUGH_BEAM_SENSOR = false;
+
     public static final double POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KP = 0.55;
     public static final double POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KI = 0.0;
     public static final double POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KD = 0.75;
