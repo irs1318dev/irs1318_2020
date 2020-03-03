@@ -1,12 +1,15 @@
 package frc.robot.common.robotprovider;
 
+import javax.inject.Singleton;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Logger that logs current values to a dashboard.
  *
  */
-public class SmartDashboardLogger implements IDashboardLogger
+@Singleton
+public class SmartDashboardLogger implements ISmartDashboardLogger
 {
     /**
      * Write a boolean to the smart dashboard

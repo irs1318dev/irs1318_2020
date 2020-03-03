@@ -30,13 +30,13 @@ public abstract class FauxbotModule extends AbstractModule
 
     @Singleton
     @Provides
-    public IDashboardLogger getLogger()
+    public ILogger getLogger()
     {
-        IDashboardLogger logger = new ConsoleDashboardLogger();
+        ILogger logger = new ConsoleDashboardLogger();
         //        try
         //        {
         //            String fileName = String.format("/home/lvuser/%1$d.csv", Calendar.getInstance().getTime().getTime());
-        //            IDashboardLogger csvLogger = new CSVLogger(fileName, new String[] { "r.time", "vision.mAngle", "vision.dist" });
+        //            ILogger csvLogger = new CSVLogger(fileName, new String[] { "r.time", "vision.mAngle", "vision.dist" });
         //            logger = new MultiLogger(logger, csvLogger);
         //        }
         //        catch (IOException e)

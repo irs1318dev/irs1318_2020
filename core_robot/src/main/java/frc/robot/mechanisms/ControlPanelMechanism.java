@@ -14,7 +14,7 @@ public class ControlPanelMechanism implements IMechanism
 {
     private static final String logName = "color";
 
-    private final IDashboardLogger logger;
+    private final ILogger logger;
 
     private final IColorSensorV3 sensor;
     private final IColorMatch colorMatch;
@@ -40,7 +40,7 @@ public class ControlPanelMechanism implements IMechanism
     }
 
     @Inject
-    public ControlPanelMechanism(IDashboardLogger logger, IRobotProvider provider)
+    public ControlPanelMechanism(ILogger logger, IRobotProvider provider)
     {
         this.logger = logger;
 

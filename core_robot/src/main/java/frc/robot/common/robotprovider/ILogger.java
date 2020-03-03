@@ -1,9 +1,9 @@
 package frc.robot.common.robotprovider;
 
-public interface IDashboardLogger
+public interface ILogger
 {
     /**
-     * Write a boolean to the smart dashboard
+     * Write a boolean to the log
      * @param component to log for
      * @param key to write to
      * @param value to write
@@ -11,7 +11,7 @@ public interface IDashboardLogger
     void logBoolean(String component, String key, boolean value);
 
     /**
-     * Write a boolean array to the smart dashboard
+     * Write a boolean array to the log
      * @param component to log for
      * @param key to write to
      * @param value to write
@@ -19,7 +19,7 @@ public interface IDashboardLogger
     void logBooleanArray(String component, String key, boolean[] value);
 
     /**
-     * Write a number (double) to the smart dashboard
+     * Write a number (double) to the log
      * @param component to log for
      * @param key to write to
      * @param value to write
@@ -27,7 +27,7 @@ public interface IDashboardLogger
     void logNumber(String component, String key, double value);
 
     /**
-     * Write a number (double) to the smart dashboard
+     * Write a number (double) to the log
      * @param component to log for
      * @param key to write to
      * @param value to write
@@ -35,7 +35,7 @@ public interface IDashboardLogger
     void logNumber(String component, String key, Double value);
 
     /**
-     * Write a number (integer) to the smart dashboard
+     * Write a number (integer) to the log
      * @param component to log for
      * @param key to write to
      * @param value to write
@@ -43,7 +43,7 @@ public interface IDashboardLogger
     void logInteger(String component, String key, int value);
 
     /**
-     * Write a number (integer) to the smart dashboard
+     * Write a number (integer) to the log
      * @param component to log for
      * @param key to write to
      * @param value to write
@@ -52,7 +52,7 @@ public interface IDashboardLogger
     void logInteger(String component, String key, int value, String formatString);
 
     /**
-     * Write a point (x,y or N/A) to the smart dashboard
+     * Write a point (x,y or N/A) to the log
      * @param component to log for
      * @param key to write to
      * @param value to write
@@ -60,7 +60,7 @@ public interface IDashboardLogger
     void logPoint(String component, String key, IPoint value);
 
     /**
-     * Write a string to the smart dashboard
+     * Write a string to the log
      * @param component to log for
      * @param key to write to
      * @param value to write

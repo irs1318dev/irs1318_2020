@@ -1,9 +1,9 @@
 package frc.robot.common.robotprovider;
 
-public abstract class StringLogger implements IDashboardLogger
+public abstract class StringLogger implements ILogger
 {
     /**
-     * Write a string to the smart dashboard
+     * Write a string to the log
      * @param component to log for
      * @param key to write to
      * @param value to write
@@ -11,7 +11,7 @@ public abstract class StringLogger implements IDashboardLogger
     public abstract void logString(String component, String key, String value);
 
     /**
-     * Write a boolean to the smart dashboard
+     * Write a boolean to the log
      * @param component to log for
      * @param key to write to
      * @param value to write
@@ -23,7 +23,7 @@ public abstract class StringLogger implements IDashboardLogger
     }
 
     /**
-     * Write a boolean array to the smart dashboard
+     * Write a boolean array to the log
      * @param component to log for
      * @param key to write to
      * @param value to write
@@ -49,7 +49,7 @@ public abstract class StringLogger implements IDashboardLogger
     }
 
     /**
-     * Write a number (double) to the smart dashboard
+     * Write a number (double) to the log
      * @param component to log for
      * @param key to write to
      * @param value to write
@@ -61,7 +61,7 @@ public abstract class StringLogger implements IDashboardLogger
     }
 
     /**
-     * Write a number (double) to the smart dashboard
+     * Write a number (double) to the log
      * @param component to log for
      * @param key to write to
      * @param value to write
@@ -73,7 +73,7 @@ public abstract class StringLogger implements IDashboardLogger
     }
 
     /**
-     * Write a number (integer) to the smart dashboard
+     * Write a number (integer) to the log
      * @param component to log for
      * @param key to write to
      * @param value to write
@@ -85,7 +85,7 @@ public abstract class StringLogger implements IDashboardLogger
     }
 
     /**
-     * Write a number (integer) to the smart dashboard
+     * Write a number (integer) to the log
      * @param component to log for
      * @param key to write to
      * @param value to write
@@ -98,7 +98,7 @@ public abstract class StringLogger implements IDashboardLogger
     }
 
     /**
-     * Write a point (x,y or N/A) to the smart dashboard
+     * Write a point (x,y or N/A) to the log
      * @param component to log for
      * @param key to write to
      * @param value to write

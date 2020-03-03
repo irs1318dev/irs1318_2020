@@ -24,7 +24,7 @@ public class Driver
 {
     private static final String LogName = "driver";
 
-    private final IDashboardLogger logger;
+    private final ILogger logger;
 
     protected final Injector injector;
     protected final Map<IOperation, OperationState> operationStateMap;
@@ -49,7 +49,7 @@ public class Driver
      */
     @Inject
     public Driver(
-        IDashboardLogger logger,
+        ILogger logger,
         Injector injector,
         IButtonMap buttonMap,
         IRobotProvider provider)

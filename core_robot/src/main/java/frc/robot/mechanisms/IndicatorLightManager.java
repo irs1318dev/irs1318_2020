@@ -27,7 +27,7 @@ public class IndicatorLightManager implements IMechanism
     private static final double FlashingFrequency = 0.5;
     private static final double FlashingComparisonFrequency = IndicatorLightManager.FlashingFrequency / 2.0;
 
-    private final IDashboardLogger logger;
+    private final ILogger logger;
     private final ITimer timer;
 
     private final IDigitalOutput indicator;
@@ -40,7 +40,7 @@ public class IndicatorLightManager implements IMechanism
     @Inject
     public IndicatorLightManager(
         IRobotProvider provider,
-        IDashboardLogger logger,
+        ILogger logger,
         ITimer timer)
     {
         this.logger = logger;

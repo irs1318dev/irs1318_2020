@@ -21,7 +21,7 @@ public class OffboardVisionManager implements IMechanism
     private static final String logName = "rpi";
 
     private final INetworkTableProvider networkTable;
-    private final IDashboardLogger logger;
+    private final ILogger logger;
 
     private final IDigitalOutput ringLight;
 
@@ -39,7 +39,7 @@ public class OffboardVisionManager implements IMechanism
      * @param logger for logging to smart dashboard
      */
     @Inject
-    public OffboardVisionManager(IRobotProvider provider, IDashboardLogger logger)
+    public OffboardVisionManager(IRobotProvider provider, ILogger logger)
     {
         this.logger = logger;
 

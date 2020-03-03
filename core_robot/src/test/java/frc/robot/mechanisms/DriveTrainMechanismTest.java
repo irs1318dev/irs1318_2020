@@ -18,7 +18,7 @@ public class DriveTrainMechanismTest
     @Test
     public void testSetPower_Zero()
     {
-        IDashboardLogger logger = mock(IDashboardLogger.class);
+        ILogger logger = mock(ILogger.class);
         ITimer timer = mock(ITimer.class);
         TestProvider testProvider = new TestProvider();
         ITalonFX leftMotor = testProvider.getTalonFX(ElectronicsConstants.DRIVETRAIN_LEFT_MASTER_CAN_ID);
@@ -118,7 +118,7 @@ public class DriveTrainMechanismTest
     @Test
     public void testStop()
     {
-        IDashboardLogger logger = mock(IDashboardLogger.class);
+        ILogger logger = mock(ILogger.class);
         ITimer timer = mock(ITimer.class);
         TestProvider testProvider = new TestProvider();
         ITalonFX leftMotor = testProvider.getTalonFX(ElectronicsConstants.DRIVETRAIN_LEFT_MASTER_CAN_ID);

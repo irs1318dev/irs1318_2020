@@ -27,7 +27,7 @@ public class DriveTrainMechanism implements IMechanism
     private static final double POWERLEVEL_MIN = -1.0;
     private static final double POWERLEVEL_MAX = 1.0;
 
-    private final IDashboardLogger logger;
+    private final ILogger logger;
     private final ITimer timer;
 
     private final ITalonFX leftMotor;
@@ -59,7 +59,7 @@ public class DriveTrainMechanism implements IMechanism
      */
     @Inject
     public DriveTrainMechanism(
-        IDashboardLogger logger,
+        ILogger logger,
         IRobotProvider provider,
         ITimer timer)
     {

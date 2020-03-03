@@ -15,7 +15,7 @@ import frc.robot.driver.controltasks.*;
 public class AutonomousRoutineSelector
 {
     private static final String LogName = "auto";
-    private final IDashboardLogger logger;
+    private final ILogger logger;
 
     private final PathManager pathManager;
 
@@ -46,7 +46,7 @@ public class AutonomousRoutineSelector
      */
     @Inject
     public AutonomousRoutineSelector(
-        IDashboardLogger logger,
+        ILogger logger,
         PathManager pathManager,
         IRobotProvider provider)
     {

@@ -1,7 +1,7 @@
 package frc.robot;
 
 import frc.robot.common.MechanismManager;
-import frc.robot.common.robotprovider.IDashboardLogger;
+import frc.robot.common.robotprovider.ILogger;
 import frc.robot.common.robotprovider.ITimer;
 import frc.robot.driver.common.Driver;
 
@@ -33,7 +33,7 @@ public class CoreRobot<T extends AbstractModule>
 
     // Mechanisms and injector
     private MechanismManager mechanisms;
-    private IDashboardLogger logger;
+    private ILogger logger;
     private Injector injector;
 
     private ITimer timer;
@@ -53,7 +53,7 @@ public class CoreRobot<T extends AbstractModule>
     {
         // create mechanisms
         this.mechanisms = this.getInjector().getInstance(MechanismManager.class);
-        this.logger = this.getInjector().getInstance(IDashboardLogger.class);
+        this.logger = this.getInjector().getInstance(ILogger.class);
         this.logger.logString(CoreRobot.LogName, "state", "Init");
 
         this.timer = this.getInjector().getInstance(ITimer.class);

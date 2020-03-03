@@ -33,7 +33,7 @@ public class CSVLogger extends StringLogger
     }
 
     /**
-     * Write a string to the smart dashboard
+     * Write a string to the log
      * @param component to log for
      * @param key to write to
      * @param value to write

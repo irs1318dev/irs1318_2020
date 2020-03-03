@@ -15,7 +15,7 @@ public class PowerCellMechanism implements IMechanism
     private static final String logName = "pc";
     private static final int slotId = 0;
 
-    private final IDashboardLogger logger;
+    private final ILogger logger;
 
     private final IDoubleSolenoid intakeSolenoid;
     private final ISparkMax rollerMotorInner;
@@ -56,7 +56,7 @@ public class PowerCellMechanism implements IMechanism
     private double lastIntakeTime;
 
     @Inject
-    public PowerCellMechanism(IRobotProvider provider, IDashboardLogger logger, ITimer timer)
+    public PowerCellMechanism(IRobotProvider provider, ILogger logger, ITimer timer)
     {
         this.logger = logger;
 

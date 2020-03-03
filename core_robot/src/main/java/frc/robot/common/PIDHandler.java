@@ -1,6 +1,6 @@
 package frc.robot.common;
 
-import frc.robot.common.robotprovider.IDashboardLogger;
+import frc.robot.common.robotprovider.ILogger;
 import frc.robot.common.robotprovider.ITimer;
 
 /**
@@ -42,7 +42,7 @@ public class PIDHandler
 
     // other vars
     private final ITimer timer;
-    private final IDashboardLogger logger;
+    private final ILogger logger;
     private final String logName;
 
     /**
@@ -93,7 +93,7 @@ public class PIDHandler
         Double minOutput,
         Double maxOutput,
         String logName,
-        IDashboardLogger logger,
+        ILogger logger,
         ITimer timer)
     {
         this(kp, ki, kd, kf, ks, 0.0, 1.0, 0.0, 1.0, minOutput, maxOutput, logName, logger, timer);
@@ -130,7 +130,7 @@ public class PIDHandler
         Double minOutput,
         Double maxOutput,
         String logName,
-        IDashboardLogger logger,
+        ILogger logger,
         ITimer timer)
     {
         this.ki = ki;

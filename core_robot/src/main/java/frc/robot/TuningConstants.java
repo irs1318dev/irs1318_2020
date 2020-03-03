@@ -17,6 +17,9 @@ public class TuningConstants
 {
     public static final boolean COMPETITION_ROBOT = false;
     public static boolean THROW_EXCEPTIONS = !TuningConstants.COMPETITION_ROBOT;
+
+    public static final boolean LOG_TO_FILE = TuningConstants.COMPETITION_ROBOT;
+    public static final boolean LOG_ONLY_COMPETITION_MATCHES = true;
     public static final double MAGIC_NULL_VALUE = -1318.0;
 
     public static List<IMechanism> GetActiveMechanisms(Injector injector)

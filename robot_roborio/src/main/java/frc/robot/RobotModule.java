@@ -1,11 +1,13 @@
 package frc.robot;
 
+import java.io.*;
+
 import javax.inject.Singleton;
 
-import frc.robot.common.MechanismManager;
+import frc.robot.common.*;
 import frc.robot.common.robotprovider.*;
 import frc.robot.driver.*;
-import frc.robot.driver.common.IButtonMap;
+import frc.robot.driver.common.*;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Injector;
@@ -33,16 +35,20 @@ public class RobotModule extends AbstractModule
     public IDashboardLogger getLogger()
     {
         IDashboardLogger logger = new SmartDashboardLogger();
-        //        try
-        //        {
-        //            String fileName = String.format("/home/lvuser/%1$d.csv", Calendar.getInstance().getTime().getTime());
-        //            IDashboardLogger csvLogger = new CSVLogger(fileName, new String[] { "r.time", "vision.mAngle", "vision.dist" });
-        //            logger = new MultiLogger(logger, csvLogger);
-        //        }
-        //        catch (IOException e)
-        //        {
-        //            e.printStackTrace();
-        //        }
+        try
+        {
+            File rootDirectory = new File("/U/");
+            if (rootDirectory.exists() && rootDirectory.getFreeSpace() > )
+            {
+                String fileName = String.format("/home/lvuser/%1$d.csv", Calendar.getInstance().getTime().getTime());
+                IDashboardLogger csvLogger = new CSVLogger(fileName, new String[] { "r.time", "vision.mAngle", "vision.dist" });
+                logger = new MultiLogger(logger, csvLogger);
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
 
         return logger;
     }

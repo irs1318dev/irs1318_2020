@@ -21,7 +21,7 @@ public class PositionManager implements IMechanism
 {
     private final static String LogName = "pos";
 
-    private final IDashboardLogger logger;
+    private final ILogger logger;
     private final DriveTrainMechanism driveTrainMechanism;
     private final INavx navx;
 
@@ -53,7 +53,7 @@ public class PositionManager implements IMechanism
      */
     @Inject
     public PositionManager(
-        IDashboardLogger logger,
+        ILogger logger,
         IRobotProvider provider,
         DriveTrainMechanism driveTrainMechanism)
     {
