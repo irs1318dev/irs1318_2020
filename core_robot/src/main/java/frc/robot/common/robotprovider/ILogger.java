@@ -62,6 +62,11 @@ public interface ILogger
     void logString(LoggingKey key, String value);
 
     /**
+     * Update the log, if appropriate..
+     */
+    void update();
+
+    /**
      * Flush the output stream, if appropriate..
      */
     void flush();

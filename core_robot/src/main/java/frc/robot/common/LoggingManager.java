@@ -117,6 +117,15 @@ public class LoggingManager implements ILogger
     }
 
     /**
+     * Update the log, if appropriate..
+     */
+    @Override
+    public void update()
+    {
+        this.currentLogger.update();
+    }
+
+    /**
      * Flush the output stream, if appropriate..
      */
     @Override

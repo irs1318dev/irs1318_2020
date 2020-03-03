@@ -126,6 +126,14 @@ public class SmartDashboardLogger implements ISmartDashboardLogger
     }
 
     /**
+     * Update the log, if appropriate..
+     */
+    @Override
+    public void update()
+    {
+    }
+
+    /**
      * Flush the output stream, if appropriate..
      */
     @Override

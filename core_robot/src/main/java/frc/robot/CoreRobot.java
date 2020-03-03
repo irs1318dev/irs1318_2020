@@ -1,9 +1,14 @@
 package frc.robot;
 
+import frc.robot.common.LoggingManager;
 import frc.robot.common.MechanismManager;
-import frc.robot.common.robotprovider.ILogger;
+import frc.robot.common.robotprovider.Alliance;
+import frc.robot.common.robotprovider.IDriverStation;
 import frc.robot.common.robotprovider.ITimer;
+import frc.robot.common.robotprovider.MatchType;
 import frc.robot.driver.common.Driver;
+
+import java.util.Calendar;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
@@ -23,9 +28,6 @@ import com.google.inject.Injector;
  */
 public class CoreRobot<T extends AbstractModule>
 {
-    // smartdash logging constants
-    private static final String LogName = "r";
-
     private final T module;
 
     // Driver - used both for autonomous and teleop mode.
@@ -33,11 +35,13 @@ public class CoreRobot<T extends AbstractModule>
 
     // Mechanisms and injector
     private MechanismManager mechanisms;
-    private ILogger logger;
+    private LoggingManager logger;
     private Injector injector;
 
     private ITimer timer;
     private boolean timerStarted;
+
+    private int loggerUpdates;
 
     public CoreRobot(T module)
     {
@@ -46,22 +50,28 @@ public class CoreRobot<T extends AbstractModule>
 
     /**
      * Robot-wide initialization code should go here.
-     * This default Robot-wide initialization code will be called when 
+     * This default Robot-wide initialization code will be called when
      * the robot is first powered on.  It will be called exactly 1 time.
      */
     public void robotInit()
     {
         // create mechanisms
-        this.mechanisms = this.getInjector().getInstance(MechanismManager.class);
-        this.logger = this.getInjector().getInstance(ILogger.class);
+        Injector injector = this.getInjector();
+        this.mechanisms = injector.getInstance(MechanismManager.class);
+        this.logger = injector.getInstance(LoggingManager.class);
+        this.logger.refresh(injector);
+
         this.logger.logString(LoggingKey.RobotState, "Init");
 
-        this.timer = this.getInjector().getInstance(ITimer.class);
+        this.timer = injector.getInstance(ITimer.class);
         this.logger.logNumber(LoggingKey.RobotTime, this.timer.get());
         this.timerStarted = false;
 
         // create driver
-        this.driver = this.getInjector().getInstance(Driver.class);
+        this.driver = injector.getInstance(Driver.class);
+
+        // reset number of logger updates
+        this.loggerUpdates = 0;
     }
 
     /**
@@ -85,6 +95,8 @@ public class CoreRobot<T extends AbstractModule>
         }
 
         this.logger.logString(LoggingKey.RobotState, "Disabled");
+        this.logger.update();
+        this.logger.flush();
     }
 
     /**
@@ -158,6 +170,12 @@ public class CoreRobot<T extends AbstractModule>
      */
     private void generalInit()
     {
+        Injector injector = this.getInjector();
+        this.logger.refresh(injector);
+
+        // log match information
+        this.logger.logString(LoggingKey.RobotMatch, this.generateMatchString(injector.getInstance(IDriverStation.class)));
+
         // apply the driver to the mechanisms
         this.mechanisms.setDriver(this.driver);
 
@@ -181,6 +199,41 @@ public class CoreRobot<T extends AbstractModule>
         this.mechanisms.update();
 
         this.logger.logNumber(LoggingKey.RobotTime, this.timer.get());
-        this.logger.flush();
+        this.logger.update();
+
+        if (this.loggerUpdates++ > TuningConstants.LOG_FLUSH_THRESHOLD)
+        {
+            // lazily flush the log, in case of power-off.
+            this.logger.flush();
+        }
+    }
+
+    private String generateMatchString(IDriverStation driverStation)
+    {
+        String eventName = driverStation.getEventName();
+        MatchType matchType = driverStation.getMatchType();
+        int matchNumber = driverStation.getMatchNumber();
+        int replayNumber = driverStation.getReplayNumber();
+        Alliance alliance = driverStation.getAlliance();
+        int location = driverStation.getLocation();
+        boolean isAuto = driverStation.isAutonomous();
+
+        if (eventName != null && matchType != MatchType.None && matchNumber > 0 && alliance != Alliance.Invalid && location >= 1 && location <= 3)
+        {
+            // a la "2020 Glacier Peak - Q03 (R2).auto"
+            return
+                String.format(
+                    "%1$d %2$s - %3$s%4$02d%5$s (%6$s%7$d).%8$s",
+                    TuningConstants.CALENDAR_YEAR,
+                    eventName,
+                    matchType.value,
+                    matchNumber,
+                    replayNumber == 0 ? "" : String.format("R%1$d", replayNumber),
+                    alliance.value,
+                    location,
+                    isAuto ? "auto" : "tele");
+        }
+
+        return String.format("%1$d.csv", Calendar.getInstance().getTime().getTime());
     }
 }

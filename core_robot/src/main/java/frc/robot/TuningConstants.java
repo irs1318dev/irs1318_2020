@@ -28,9 +28,10 @@ public class TuningConstants
     public static boolean THROW_EXCEPTIONS = !TuningConstants.COMPETITION_ROBOT;
 
     public static final int CALENDAR_YEAR = 2020;
-    public static final boolean LOG_TO_FILE = TuningConstants.COMPETITION_ROBOT;
-    public static final boolean LOG_FILE_ONLY_COMPETITION_MATCHES = true;
+    public static final boolean LOG_TO_FILE = true; //TuningConstants.COMPETITION_ROBOT;
+    public static final boolean LOG_FILE_ONLY_COMPETITION_MATCHES = false; // true;
     public static final long LOG_FILE_REQUIRED_FREE_SPACE = 50 * 1024 * 1024; // require at least 50 MB of space
+    public static final int LOG_FLUSH_THRESHOLD = 25;
 
     public static final double MAGIC_NULL_VALUE = -1318.0;
 
@@ -158,7 +159,7 @@ public class TuningConstants
 
         try
         {
-            CSVLogger csvLogger = new CSVLogger(file.openWriter(), new String[] { "" });
+            CSVLogger csvLogger = new CSVLogger(file.openWriter());
             return new MultiLogger(csvLogger, smartDashboardLogger);
         }
         catch (IOException ex)

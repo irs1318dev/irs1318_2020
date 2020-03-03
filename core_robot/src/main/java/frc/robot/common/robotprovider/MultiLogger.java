@@ -137,6 +137,18 @@ public class MultiLogger implements ILogger
     }
 
     /**
+     * Update the log, if appropriate..
+     */
+    @Override
+    public void update()
+    {
+        for (ILogger logger : this.loggers)
+        {
+            logger.update();
+        }
+    }
+
+    /**
      * Flush the output stream, if appropriate..
      */
     @Override

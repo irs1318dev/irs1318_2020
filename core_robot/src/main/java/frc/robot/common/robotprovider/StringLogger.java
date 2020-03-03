@@ -110,6 +110,14 @@ public abstract class StringLogger implements ILogger
     }
 
     /**
+     * Update the log, if appropriate..
+     */
+    @Override
+    public void update()
+    {
+    }
+
+    /**
      * Flush the output stream, if appropriate..
      */
     @Override
