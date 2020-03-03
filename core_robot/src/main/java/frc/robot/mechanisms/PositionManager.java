@@ -19,8 +19,6 @@ import com.google.inject.Singleton;
 @Singleton
 public class PositionManager implements IMechanism
 {
-    private final static String LogName = "pos";
-
     private final ILogger logger;
     private final DriveTrainMechanism driveTrainMechanism;
     private final INavx navx;
@@ -53,7 +51,7 @@ public class PositionManager implements IMechanism
      */
     @Inject
     public PositionManager(
-        ILogger logger,
+        LoggingManager logger,
         IRobotProvider provider,
         DriveTrainMechanism driveTrainMechanism)
     {
@@ -136,15 +134,15 @@ public class PositionManager implements IMechanism
         this.navxZ = this.navx.getDisplacementZ() * 100.0;
 
         // log the current position and orientation
-        this.logger.logNumber(PositionManager.LogName, "odom_angle", this.odometryAngle);
-        this.logger.logNumber(PositionManager.LogName, "odom_x", this.odometryX);
-        this.logger.logNumber(PositionManager.LogName, "odom_y", this.odometryY);
-        this.logger.logBoolean(PositionManager.LogName, "navx_connected", this.navxIsConnected);
-        this.logger.logNumber(PositionManager.LogName, "navx_angle", this.navxAngle);
-        this.logger.logNumber(PositionManager.LogName, "navx_x", this.navxX);
-        this.logger.logNumber(PositionManager.LogName, "navx_y", this.navxY);
-        this.logger.logNumber(PositionManager.LogName, "navx_z", this.navxZ);
-        this.logger.logNumber(PositionManager.LogName, "start_angle", this.startAngle);
+        this.logger.logNumber(LoggingKey.PositionOdometryAngle, this.odometryAngle);
+        this.logger.logNumber(LoggingKey.PositionOdometryX, this.odometryX);
+        this.logger.logNumber(LoggingKey.PositionOdometryY, this.odometryY);
+        this.logger.logBoolean(LoggingKey.PositionNavxConnected, this.navxIsConnected);
+        this.logger.logNumber(LoggingKey.PositionNavxAngle, this.navxAngle);
+        this.logger.logNumber(LoggingKey.PositionNavxX, this.navxX);
+        this.logger.logNumber(LoggingKey.PositionNavxY, this.navxY);
+        this.logger.logNumber(LoggingKey.PositionNavxZ, this.navxZ);
+        this.logger.logNumber(LoggingKey.PositionStartingAngle, this.startAngle);
     }
 
     /**

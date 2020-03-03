@@ -1,98 +1,89 @@
-package frc.robot.common.robotprovider;
+package frc.robot.common;
+
+import java.util.function.Function;
+
+import com.google.inject.Injector;
 
 import frc.robot.LoggingKey;
+import frc.robot.common.robotprovider.ILogger;
+import frc.robot.common.robotprovider.IPoint;
 
-public class MultiLogger implements ILogger
+public class LoggingManager implements ILogger
 {
-    private final ILogger[] loggers;
+    private final Function<Injector, ILogger> loggerCreator;
+
+    private ILogger currentLogger;
+
+    public LoggingManager(Function<Injector, ILogger> loggerCreator)
+    {
+        this.loggerCreator = loggerCreator;
+    }
 
     /**
-     * Initializes a new instance of the MultiLogger class
-     * @param loggers to log to
+     * Refresh the current logger that is being used based on the logger creator function
      */
-    public MultiLogger(ILogger... loggers)
+    public void refresh(Injector injector)
     {
-        this.loggers = loggers;
+        this.currentLogger = this.loggerCreator.apply(injector);
     }
 
     /**
      * Write a boolean to the log
-     * @param component to log for
      * @param key to write to
      * @param value to write
      */
     @Override
     public void logBoolean(LoggingKey key, boolean value)
     {
-        for (ILogger logger : this.loggers)
-        {
-            logger.logBoolean(key, value);
-        }
+        this.currentLogger.logBoolean(key, value);
     }
 
     /**
      * Write a boolean array to the log
-     * @param component to log for
      * @param key to write to
      * @param value to write
      */
     @Override
     public void logBooleanArray(LoggingKey key, boolean[] value)
     {
-        for (ILogger logger : this.loggers)
-        {
-            logger.logBooleanArray(key, value);
-        }
+        this.currentLogger.logBooleanArray(key, value);
     }
 
     /**
      * Write a number (double) to the log
-     * @param component to log for
      * @param key to write to
      * @param value to write
      */
     @Override
     public void logNumber(LoggingKey key, double value)
     {
-        for (ILogger logger : this.loggers)
-        {
-            logger.logNumber(key, value);
-        }
+        this.currentLogger.logNumber(key, value);
     }
 
     /**
      * Write a number (Double) to the log
-     * @param component to log for
      * @param key to write to
      * @param value to write
      */
     @Override
     public void logNumber(LoggingKey key, Double value)
     {
-        for (ILogger logger : this.loggers)
-        {
-            logger.logNumber(key, value);
-        }
+        this.currentLogger.logNumber(key, value);
     }
 
     /**
      * Write a number (integer) to the log
-     * @param component to log for
      * @param key to write to
      * @param value to write
      */
     @Override
     public void logInteger(LoggingKey key, int value)
     {
-        for (ILogger logger : this.loggers)
-        {
-            logger.logInteger(key, value);
-        }
+        this.currentLogger.logInteger(key, value);
     }
 
     /**
      * Write a number (integer) to the log
-     * @param component to log for
      * @param key to write to
      * @param value to write
      * @param formatString to use
@@ -100,40 +91,29 @@ public class MultiLogger implements ILogger
     @Override
     public void logInteger(LoggingKey key, int value, String formatString)
     {
-        for (ILogger logger : this.loggers)
-        {
-            logger.logInteger(key, value, formatString);
-        }
+        this.currentLogger.logInteger(key, value, formatString);
     }
 
     /**
      * Write a point (x,y or N/A) to the log
-     * @param component to log for
      * @param key to write to
      * @param value to write
      */
     @Override
     public void logPoint(LoggingKey key, IPoint value)
     {
-        for (ILogger logger : this.loggers)
-        {
-            logger.logPoint(key, value);
-        }
+        this.currentLogger.logPoint(key, value);
     }
 
     /**
      * Write a string to the log
-     * @param component to log for
      * @param key to write to
      * @param value to write
      */
     @Override
     public void logString(LoggingKey key, String value)
     {
-        for (ILogger logger : this.loggers)
-        {
-            logger.logString(key, value);
-        }
+        this.currentLogger.logString(key, value);
     }
 
     /**
@@ -142,9 +122,6 @@ public class MultiLogger implements ILogger
     @Override
     public void flush()
     {
-        for (ILogger logger : this.loggers)
-        {
-            logger.flush();
-        }
+        this.currentLogger.flush();
     }
 }

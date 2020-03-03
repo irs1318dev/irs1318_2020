@@ -54,10 +54,10 @@ public class CoreRobot<T extends AbstractModule>
         // create mechanisms
         this.mechanisms = this.getInjector().getInstance(MechanismManager.class);
         this.logger = this.getInjector().getInstance(ILogger.class);
-        this.logger.logString(CoreRobot.LogName, "state", "Init");
+        this.logger.logString(LoggingKey.RobotState, "Init");
 
         this.timer = this.getInjector().getInstance(ITimer.class);
-        this.logger.logNumber(CoreRobot.LogName, "time", this.timer.get());
+        this.logger.logNumber(LoggingKey.RobotTime, this.timer.get());
         this.timerStarted = false;
 
         // create driver
@@ -84,7 +84,7 @@ public class CoreRobot<T extends AbstractModule>
             this.mechanisms.stop();
         }
 
-        this.logger.logString(CoreRobot.LogName, "state", "Disabled");
+        this.logger.logString(LoggingKey.RobotState, "Disabled");
     }
 
     /**
@@ -98,7 +98,7 @@ public class CoreRobot<T extends AbstractModule>
         this.generalInit();
 
         // log that we are in autonomous mode
-        this.logger.logString(CoreRobot.LogName, "state", "Autonomous");
+        this.logger.logString(LoggingKey.RobotState, "Autonomous");
     }
 
     /**
@@ -110,7 +110,7 @@ public class CoreRobot<T extends AbstractModule>
         this.generalInit();
 
         // log that we are in teleop mode
-        this.logger.logString(CoreRobot.LogName, "state", "Teleop");
+        this.logger.logString(LoggingKey.RobotState, "Teleop");
     }
 
     /**
@@ -180,7 +180,7 @@ public class CoreRobot<T extends AbstractModule>
         // run each mechanism
         this.mechanisms.update();
 
-        this.logger.logNumber(CoreRobot.LogName, "time", this.timer.get());
+        this.logger.logNumber(LoggingKey.RobotTime, this.timer.get());
         this.logger.flush();
     }
 }

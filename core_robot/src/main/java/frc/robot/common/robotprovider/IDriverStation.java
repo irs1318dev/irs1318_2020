@@ -9,5 +9,6 @@ public interface IDriverStation
     public MatchType getMatchType();
     public int getReplayNumber();
     public double getMatchTime();
+    public boolean isAutonomous();
     public String getGameSpecificMessage();
 }

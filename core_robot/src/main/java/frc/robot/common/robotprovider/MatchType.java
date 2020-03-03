@@ -2,8 +2,15 @@ package frc.robot.common.robotprovider;
 
 public enum MatchType
 {
-    None,
-    Practice,
-    Qualification,
-    Elimination;
+    None("N"),
+    Practice("P"),
+    Qualification("Q"),
+    Elimination("E");
+
+    public final String value;
+
+    MatchType(String value)
+    {
+        this.value = value;
+    }
 }

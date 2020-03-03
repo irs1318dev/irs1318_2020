@@ -6,6 +6,7 @@ import com.acmerobotics.roadrunner.path.heading.*;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import frc.robot.LoggingKey;
 import frc.robot.TuningConstants;
 import frc.robot.common.robotprovider.*;
 import frc.robot.driver.common.*;
@@ -86,7 +87,7 @@ public class AutonomousRoutineSelector
         StartPosition startPosition = this.positionChooser.getSelected();
         AutoRoutine routine = this.routineChooser.getSelected();
 
-        this.logger.logString(AutonomousRoutineSelector.LogName, "selected", startPosition.toString() + "." + routine.toString());
+        this.logger.logString(LoggingKey.AutonomousSelection, startPosition.toString() + "." + routine.toString());
 
         if (routine == AutoRoutine.SimpleShootDriveBack)
         {

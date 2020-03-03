@@ -1,7 +1,10 @@
 package frc.robot.common.robotprovider;
 
+import com.google.inject.Singleton;
+
 import edu.wpi.first.wpilibj.DriverStation;
 
+@Singleton
 public class DriverStationWrapper implements IDriverStation
 {
     private final DriverStation wrappedObject;
@@ -76,6 +79,12 @@ public class DriverStationWrapper implements IDriverStation
     public double getMatchTime()
     {
         return this.wrappedObject.getMatchTime();
+    }
+
+    @Override
+    public boolean isAutonomous()
+    {
+        return this.wrappedObject.isAutonomous();
     }
 
     @Override

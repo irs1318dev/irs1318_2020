@@ -40,7 +40,7 @@ public class IndicatorLightManager implements IMechanism
     @Inject
     public IndicatorLightManager(
         IRobotProvider provider,
-        ILogger logger,
+        LoggingManager logger,
         ITimer timer)
     {
         this.logger = logger;

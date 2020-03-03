@@ -12,7 +12,6 @@ import com.google.inject.Singleton;
 @Singleton
 public class PowerCellMechanism implements IMechanism
 {
-    private static final String logName = "pc";
     private static final int slotId = 0;
 
     private final ILogger logger;
@@ -56,7 +55,7 @@ public class PowerCellMechanism implements IMechanism
     private double lastIntakeTime;
 
     @Inject
-    public PowerCellMechanism(IRobotProvider provider, ILogger logger, ITimer timer)
+    public PowerCellMechanism(LoggingManager logger, IRobotProvider provider, ITimer timer)
     {
         this.logger = logger;
 
@@ -182,17 +181,17 @@ public class PowerCellMechanism implements IMechanism
 
         this.carouselCount = newCarouselCount;
 
-        this.logger.logNumber(PowerCellMechanism.logName, "turretVelocity", this.turretVelocity);
-        this.logger.logNumber(PowerCellMechanism.logName, "turretPosition", this.turretPosition);
-        this.logger.logNumber(PowerCellMechanism.logName, "turretError", this.turretError);
-        this.logger.logNumber(PowerCellMechanism.logName, "flywheelVelocity", this.flywheelVelocity);
-        this.logger.logNumber(PowerCellMechanism.logName, "flywheelPosition", this.flywheelPosition);
-        this.logger.logNumber(PowerCellMechanism.logName, "flywheelError", this.flywheelError);
-        this.logger.logInteger(PowerCellMechanism.logName, "carouselCount", this.carouselCount);
-        this.logger.logInteger(PowerCellMechanism.logName, "currentCarouselIndex", this.currentCarouselIndex);
-        this.logger.logNumber(PowerCellMechanism.logName, "throughBeamVoltage", throughBeamVoltage);
-        this.logger.logBoolean(PowerCellMechanism.logName, "throughBeamBroken", throughBeamBroken);
-        this.logger.logBooleanArray(PowerCellMechanism.logName, "hasPowerCell", this.hasPowerCell);
+        this.logger.logNumber(LoggingKey.PowerCellTurretVelocity, this.turretVelocity);
+        this.logger.logNumber(LoggingKey.PowerCellTurretPosition, this.turretPosition);
+        this.logger.logNumber(LoggingKey.PowerCellTurretError, this.turretError);
+        this.logger.logNumber(LoggingKey.PowerCellFlywheelVelocity, this.flywheelVelocity);
+        this.logger.logNumber(LoggingKey.PowerCellFlywheelPosition, this.flywheelPosition);
+        this.logger.logNumber(LoggingKey.PowerCellFlywheelError, this.flywheelError);
+        this.logger.logInteger(LoggingKey.PowerCellCarouselCount, this.carouselCount);
+        this.logger.logInteger(LoggingKey.PowerCellCarouselCurrentIndex, this.currentCarouselIndex);
+        this.logger.logNumber(LoggingKey.PowerCellThroughBeamVoltage, throughBeamVoltage);
+        this.logger.logBoolean(LoggingKey.PowerCellThroughBeamBroken, throughBeamBroken);
+        this.logger.logBooleanArray(LoggingKey.PowerCellHasPowerCell, this.hasPowerCell);
         
     }
 
@@ -290,10 +289,10 @@ public class PowerCellMechanism implements IMechanism
             this.flyWheel.set(flyWheelVelocitySetpoint);
         }
 
-        this.logger.logNumber(PowerCellMechanism.logName, "flyWheelVelocitySetpoint", flyWheelVelocitySetpoint);
+        this.logger.logNumber(LoggingKey.PowerCellFlywheelVelocitySetpoint, flyWheelVelocitySetpoint);
 
         double desiredTurretPosition = this.driver.getAnalog(AnalogOperation.PowerCellTurretPosition);
-        this.logger.logNumber(PowerCellMechanism.logName, "desiredTurretPosition", desiredTurretPosition);
+        this.logger.logNumber(LoggingKey.PowerCellTurretPositionDesired, desiredTurretPosition);
         if (TuningConstants.POWERCELL_TURRET_USE_PID)
         {
             if (desiredTurretPosition != TuningConstants.POWERCELL_TURRET_MAGIC_DONT_MOVE_VALUE)
@@ -444,10 +443,10 @@ public class PowerCellMechanism implements IMechanism
 
         this.genevaMotor.set(desiredGenevaMotorPower);
 
-        this.logger.logBoolean(PowerCellMechanism.logName, "isIntaking", isIntaking);
-        this.logger.logString(PowerCellMechanism.logName, "carouselState", this.carouselState.toString());
-        this.logger.logNumber(PowerCellMechanism.logName, "genevaPower", desiredGenevaMotorPower);
-        this.logger.logBoolean(PowerCellMechanism.logName, "intakeExtended", this.intakeExtended);
+        this.logger.logString(LoggingKey.PowerCellCarouselState, this.carouselState.toString());
+        this.logger.logNumber(LoggingKey.PowerCellGenevaPower, desiredGenevaMotorPower);
+        this.logger.logBoolean(LoggingKey.PowerCellIsIntaking, isIntaking);
+        this.logger.logBoolean(LoggingKey.PowerCellIntakeExtended, this.intakeExtended);
     }
 
     @Override

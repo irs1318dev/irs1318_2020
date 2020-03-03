@@ -18,8 +18,6 @@ import com.google.inject.Singleton;
 @Singleton
 public class OffboardVisionManager implements IMechanism
 {
-    private static final String logName = "rpi";
-
     private final INetworkTableProvider networkTable;
     private final ILogger logger;
 
@@ -35,11 +33,11 @@ public class OffboardVisionManager implements IMechanism
 
     /**
      * Initializes a new OffboardVisionManager
-     * @param provider for obtaining electronics objects
      * @param logger for logging to smart dashboard
+     * @param provider for obtaining electronics objects
      */
     @Inject
-    public OffboardVisionManager(IRobotProvider provider, ILogger logger)
+    public OffboardVisionManager(LoggingManager logger, IRobotProvider provider)
     {
         this.logger = logger;
 
@@ -59,8 +57,8 @@ public class OffboardVisionManager implements IMechanism
         this.centerX = this.networkTable.getSmartDashboardNumber("v.x");
         this.centerY = this.networkTable.getSmartDashboardNumber("v.y");
 
-        this.logger.logNumber(OffboardVisionManager.logName, "x_read", this.centerX);
-        this.logger.logNumber(OffboardVisionManager.logName, "y_read", this.centerY);
+        this.logger.logNumber(LoggingKey.OffboardVisionX, this.centerX);
+        this.logger.logNumber(LoggingKey.OffboardVisionY, this.centerY);
 
         // return if we couldn't find a vision target
         if (this.centerX < 0.0 || this.centerY < 0)
@@ -79,8 +77,8 @@ public class OffboardVisionManager implements IMechanism
         double xOffset = this.centerX - VisionConstants.LIFECAM_CAMERA_CENTER_WIDTH;
         this.horizontalAngle = Helpers.atand(xOffset / VisionConstants.LIFECAM_CAMERA_FOCAL_LENGTH_X) + HardwareConstants.CAMERA_YAW;
 
-        this.logger.logNumber(OffboardVisionManager.logName, "distance", this.distance);
-        this.logger.logNumber(OffboardVisionManager.logName, "horizontalAngle", this.horizontalAngle);
+        this.logger.logNumber(LoggingKey.OffboardVisionDistance, this.distance);
+        this.logger.logNumber(LoggingKey.OffboardVisionHorizontalAngle, this.horizontalAngle);
     }
 
     @Override
@@ -89,9 +87,9 @@ public class OffboardVisionManager implements IMechanism
         boolean enableVision = this.driver.getDigital(DigitalOperation.VisionEnable) && !this.driver.getDigital(DigitalOperation.VisionForceDisable);
         boolean enableVideoStream = !this.driver.getDigital(DigitalOperation.VisionDisableOffboardStream);
         boolean enableVideoProcessing = !this.driver.getDigital(DigitalOperation.VisionDisableOffboardProcessing);
-        this.logger.logBoolean(OffboardVisionManager.logName, "enableVision", enableVision);
-        this.logger.logBoolean(OffboardVisionManager.logName, "enableStream", enableVideoStream);
-        this.logger.logBoolean(OffboardVisionManager.logName, "enableProcessing", enableVision && enableVideoProcessing);
+        this.logger.logBoolean(LoggingKey.OffboardVisionEnableVision, enableVision);
+        this.logger.logBoolean(LoggingKey.OffboardVisionEnableStream, enableVideoStream);
+        this.logger.logBoolean(LoggingKey.OffboardVisionEnableProcessing, enableVision && enableVideoProcessing);
 
         this.ringLight.set(enableVision);
     }
@@ -101,8 +99,9 @@ public class OffboardVisionManager implements IMechanism
     {
         this.ringLight.set(false);
 
-        this.logger.logBoolean(OffboardVisionManager.logName, "enableStream", false);
-        this.logger.logBoolean(OffboardVisionManager.logName, "enableProcessing", false);
+        this.logger.logBoolean(LoggingKey.OffboardVisionEnableVision, false);
+        this.logger.logBoolean(LoggingKey.OffboardVisionEnableStream, false);
+        this.logger.logBoolean(LoggingKey.OffboardVisionEnableProcessing, false);
     }
 
     @Override

@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import org.junit.jupiter.api.Test;
 import frc.robot.*;
+import frc.robot.common.LoggingManager;
 import frc.robot.common.robotprovider.*;
 import frc.robot.driver.AnalogOperation;
 import frc.robot.driver.DigitalOperation;
@@ -18,7 +19,7 @@ public class DriveTrainMechanismTest
     @Test
     public void testSetPower_Zero()
     {
-        ILogger logger = mock(ILogger.class);
+        LoggingManager logger = mock(LoggingManager.class);
         ITimer timer = mock(ITimer.class);
         TestProvider testProvider = new TestProvider();
         ITalonFX leftMotor = testProvider.getTalonFX(ElectronicsConstants.DRIVETRAIN_LEFT_MASTER_CAN_ID);
@@ -118,7 +119,7 @@ public class DriveTrainMechanismTest
     @Test
     public void testStop()
     {
-        ILogger logger = mock(ILogger.class);
+        LoggingManager logger = mock(LoggingManager.class);
         ITimer timer = mock(ITimer.class);
         TestProvider testProvider = new TestProvider();
         ITalonFX leftMotor = testProvider.getTalonFX(ElectronicsConstants.DRIVETRAIN_LEFT_MASTER_CAN_ID);

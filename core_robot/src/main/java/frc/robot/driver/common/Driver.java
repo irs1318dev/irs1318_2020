@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import frc.robot.ElectronicsConstants;
+import frc.robot.LoggingKey;
 import frc.robot.TuningConstants;
 import frc.robot.common.SetHelper;
 import frc.robot.common.robotprovider.*;
@@ -140,7 +141,7 @@ public class Driver
      */
     public void update()
     {
-        this.logger.logBoolean(Driver.LogName, "isAuto", this.isAutonomous);
+        this.logger.logBoolean(LoggingKey.DriverIsAuto, this.isAutonomous);
 
         // keep track of macros that were running before we checked user input...
         Set<MacroOperation> previouslyActiveMacroOperations = new HashSet<MacroOperation>();
@@ -268,8 +269,8 @@ public class Driver
             this.macroStateMap.get(macroOperation).run();
         }
 
-        this.logger.logString(Driver.LogName, "activeMacros", String.join(", ", macroStrings));
-        this.logger.logString(Driver.LogName, "activeShifts", activeShifts.toString());
+        this.logger.logString(LoggingKey.DriverActiveMacros, String.join(", ", macroStrings));
+        this.logger.logString(LoggingKey.DriverActiveShifts, activeShifts.toString());
     }
 
     /**

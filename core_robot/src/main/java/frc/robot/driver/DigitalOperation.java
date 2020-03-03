@@ -17,7 +17,6 @@ public enum DigitalOperation implements IOperation
     DriveTrainSimpleMode,
     DriveTrainUseBrakeMode,
     DriveTrainUsePositionalMode,
-    DriveTrainUseSimplePathMode,
     DriveTrainUsePathMode,
     DriveTrainSwapFrontOrientation,
 

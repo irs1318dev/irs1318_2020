@@ -19,8 +19,6 @@ import com.google.inject.Inject;
 @Singleton
 public class DriveTrainMechanism implements IMechanism
 {
-    private static final String LogName = "dt";
-
     private static final int pidSlotId = 0;
     private static final int FRAME_PERIOD_MS = 5;
 
@@ -39,7 +37,6 @@ public class DriveTrainMechanism implements IMechanism
     private PIDHandler rightPID;
 
     private boolean usePID;
-    private boolean useSimplePathMode;
     private boolean usePathMode;
     private boolean usePositionalMode;
     private boolean useBrakeMode;
@@ -59,7 +56,7 @@ public class DriveTrainMechanism implements IMechanism
      */
     @Inject
     public DriveTrainMechanism(
-        ILogger logger,
+        LoggingManager logger,
         IRobotProvider provider,
         ITimer timer)
     {
@@ -142,7 +139,6 @@ public class DriveTrainMechanism implements IMechanism
         this.rightPID = null;
 
         this.usePID = TuningConstants.DRIVETRAIN_USE_PID;
-        this.useSimplePathMode = false;
         this.usePathMode = false;
         this.usePositionalMode = false;
         this.useBrakeMode = false;
@@ -219,10 +215,9 @@ public class DriveTrainMechanism implements IMechanism
         this.driver = driver;
 
         // switch to default velocity PID mode whenever we switch drivers (defense-in-depth)
-        if (!this.usePID || this.useSimplePathMode || this.usePathMode || this.usePositionalMode || this.useBrakeMode)
+        if (!this.usePID || this.usePathMode || this.usePositionalMode || this.useBrakeMode)
         {
             this.usePID = TuningConstants.DRIVETRAIN_USE_PID;
-            this.useSimplePathMode = false;
             this.usePathMode = false;
             this.usePositionalMode = false;
             this.useBrakeMode = false;
@@ -246,12 +241,12 @@ public class DriveTrainMechanism implements IMechanism
         this.leftError = this.leftMotor.getError();
         this.rightError = this.rightMotor.getError();
 
-        this.logger.logNumber(DriveTrainMechanism.LogName, "leftVelocity", this.leftVelocity);
-        this.logger.logNumber(DriveTrainMechanism.LogName, "leftError", this.leftError);
-        this.logger.logNumber(DriveTrainMechanism.LogName, "leftTicks", this.leftPosition);
-        this.logger.logNumber(DriveTrainMechanism.LogName, "rightVelocity", this.rightVelocity);
-        this.logger.logNumber(DriveTrainMechanism.LogName, "rightError", this.rightError);
-        this.logger.logNumber(DriveTrainMechanism.LogName, "rightTicks", this.rightPosition);
+        this.logger.logNumber(LoggingKey.DriveTrainLeftVelocity, this.leftVelocity);
+        this.logger.logNumber(LoggingKey.DriveTrainLeftError, this.leftError);
+        this.logger.logNumber(LoggingKey.DriveTrainLeftTicks, this.leftPosition);
+        this.logger.logNumber(LoggingKey.DriveTrainRightVelocity, this.rightVelocity);
+        this.logger.logNumber(LoggingKey.DriveTrainRightError, this.rightError);
+        this.logger.logNumber(LoggingKey.DriveTrainRightTicks, this.rightPosition);
     }
 
     /**
@@ -272,16 +267,13 @@ public class DriveTrainMechanism implements IMechanism
         }
 
         // check our desired PID mode (needed for positional mode or break mode)
-        boolean newUseSimplePathMode = this.driver.getDigital(DigitalOperation.DriveTrainUseSimplePathMode);
         boolean newUsePathMode = this.driver.getDigital(DigitalOperation.DriveTrainUsePathMode);
         boolean newUsePositionalMode = this.driver.getDigital(DigitalOperation.DriveTrainUsePositionalMode);
         boolean newUseBrakeMode = this.driver.getDigital(DigitalOperation.DriveTrainUseBrakeMode);
-        if (newUseSimplePathMode != this.useSimplePathMode ||
-            newUsePathMode != this.usePathMode ||
+        if (newUsePathMode != this.usePathMode ||
             newUsePositionalMode != this.usePositionalMode ||
             newUseBrakeMode != this.useBrakeMode)
         {
-            this.useSimplePathMode = newUseSimplePathMode;
             this.usePathMode = newUsePathMode;
             this.usePositionalMode = newUsePositionalMode;
             this.useBrakeMode = newUseBrakeMode;
@@ -292,11 +284,7 @@ public class DriveTrainMechanism implements IMechanism
 
         // calculate desired setting for the current mode
         Setpoint setpoint;
-        if (this.useSimplePathMode)
-        {
-            setpoint = this.calculateSimplePathModeSetpoint();
-        }
-        else if (this.usePathMode)
+        if (this.usePathMode)
         {
             setpoint = this.calculatePathModeSetpoint();
         }
@@ -312,8 +300,8 @@ public class DriveTrainMechanism implements IMechanism
         double leftSetpoint = setpoint.getLeft();
         double rightSetpoint = setpoint.getRight();
 
-        this.logger.logNumber(DriveTrainMechanism.LogName, "leftVelocityGoal", leftSetpoint);
-        this.logger.logNumber(DriveTrainMechanism.LogName, "rightVelocityGoal", rightSetpoint);
+        this.logger.logNumber(LoggingKey.DriveTrainLeftVelocityGoal, leftSetpoint);
+        this.logger.logNumber(LoggingKey.DriveTrainRightVelocityGoal, rightSetpoint);
 
         // apply the setpoints to the motors
         this.leftMotor.set(leftSetpoint);
@@ -530,43 +518,6 @@ public class DriveTrainMechanism implements IMechanism
     }
 
     /**
-     * Calculate the setting to use based on the inputs when in simple path mode
-     * @return settings for left and right motor
-     */
-    private Setpoint calculateSimplePathModeSetpoint()
-    {
-        // get the desired left and right values from the driver.
-        // note that position goals are in inches and velocity goals are in inches/second
-        double leftVelocityGoal = this.driver.getAnalog(AnalogOperation.DriveTrainLeftVelocity);
-        double rightVelocityGoal = this.driver.getAnalog(AnalogOperation.DriveTrainRightVelocity);
-
-        leftVelocityGoal /= TuningConstants.DRIVETRAIN_PATH_LEFT_MAX_VELOCITY_INCHES_PER_SECOND;
-        rightVelocityGoal /= TuningConstants.DRIVETRAIN_PATH_RIGHT_MAX_VELOCITY_INCHES_PER_SECOND;
-
-        this.logger.logNumber(DriveTrainMechanism.LogName, "leftVelocityPathGoal", leftVelocityGoal);
-        this.logger.logNumber(DriveTrainMechanism.LogName, "rightVelocityPathGoal", rightVelocityGoal);
-
-        // add in velocity as a type of feed-forward
-        double leftGoal = leftVelocityGoal * TuningConstants.DRIVETRAIN_PATH_PID_LEFT_KV;
-        double rightGoal = rightVelocityGoal * TuningConstants.DRIVETRAIN_PATH_PID_RIGHT_KV;
-
-        // velocity being too high could put us over our max or under our min power levels
-        leftGoal = this.applyPowerLevelRange(leftGoal);
-        rightGoal = this.applyPowerLevelRange(rightGoal);
-
-        this.assertPowerLevelRange(leftGoal, "left velocity (goal)");
-        this.assertPowerLevelRange(rightGoal, "right velocity (goal)");
-
-        if (this.usePID)
-        {
-            leftGoal *= TuningConstants.DRIVETRAIN_VELOCITY_PID_LEFT_KS;
-            rightGoal *= TuningConstants.DRIVETRAIN_VELOCITY_PID_RIGHT_KS;
-        }
-
-        return new Setpoint(leftGoal, rightGoal);
-    }
-
-    /**
      * Calculate the setting to use based on the inputs when in path mode
      * @return settings for left and right motor
      */
@@ -583,10 +534,10 @@ public class DriveTrainMechanism implements IMechanism
         leftVelocityGoal /= TuningConstants.DRIVETRAIN_PATH_LEFT_MAX_VELOCITY_INCHES_PER_SECOND;
         rightVelocityGoal /= TuningConstants.DRIVETRAIN_PATH_RIGHT_MAX_VELOCITY_INCHES_PER_SECOND;
 
-        this.logger.logNumber(DriveTrainMechanism.LogName, "leftPositionPathGoal", leftPositionGoal);
-        this.logger.logNumber(DriveTrainMechanism.LogName, "rightPositionPathGoal", rightPositionGoal);
-        this.logger.logNumber(DriveTrainMechanism.LogName, "leftVelocityPathGoal", leftVelocityGoal);
-        this.logger.logNumber(DriveTrainMechanism.LogName, "rightVelocityPathGoal", rightVelocityGoal);
+        this.logger.logNumber(LoggingKey.DriveTrainLeftPositionGoal, leftPositionGoal);
+        this.logger.logNumber(LoggingKey.DriveTrainRightPositionGoal, rightPositionGoal);
+        this.logger.logNumber(LoggingKey.DriveTrainLeftVelocityGoal, leftVelocityGoal);
+        this.logger.logNumber(LoggingKey.DriveTrainRightVelocityGoal, rightVelocityGoal);
 
         // use positional PID to get the relevant value
         double leftGoal = this.leftPID.calculatePosition(leftPositionGoal, this.leftPosition);
@@ -644,8 +595,8 @@ public class DriveTrainMechanism implements IMechanism
         double leftPositionGoal = this.driver.getAnalog(AnalogOperation.DriveTrainLeftPosition);
         double rightPositionGoal = this.driver.getAnalog(AnalogOperation.DriveTrainRightPosition);
 
-        this.logger.logNumber(DriveTrainMechanism.LogName, "leftPositionGoal", leftPositionGoal);
-        this.logger.logNumber(DriveTrainMechanism.LogName, "rightPositionGoal", rightPositionGoal);
+        this.logger.logNumber(LoggingKey.DriveTrainLeftPositionGoal, leftPositionGoal);
+        this.logger.logNumber(LoggingKey.DriveTrainRightPositionGoal, rightPositionGoal);
 
         double leftPower;
         double rightPower;

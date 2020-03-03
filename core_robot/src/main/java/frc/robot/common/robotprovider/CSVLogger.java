@@ -1,25 +1,26 @@
 package frc.robot.common.robotprovider;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import frc.robot.LoggingKey;
+
 public class CSVLogger extends StringLogger
 {
-    private final FileWriter fileWriter;
+    private final IFileWriter fileWriter;
     private final ArrayList<String> schema;
 
     private String[] values;
 
     /**
      * Initializes a new instance of the CSVLogger class.
-     * @param fileName to write to
+     * @param fileWriter to write into
      * @param schema to use for writing
      * @throws IOException 
      */
-    public CSVLogger(String fileName, String[] schema) throws IOException
+    public CSVLogger(IFileWriter fileWriter, String[] schema) throws IOException
     {
-        this.fileWriter = new FileWriter(fileName);
+        this.fileWriter = fileWriter;
         this.schema = new ArrayList<String>();
         for (String schemaEntry : schema)
         {
@@ -34,15 +35,13 @@ public class CSVLogger extends StringLogger
 
     /**
      * Write a string to the log
-     * @param component to log for
      * @param key to write to
      * @param value to write
      */
     @Override
-    public void logString(String component, String key, String value)
+    public void logString(LoggingKey key, String value)
     {
-        String logKey = String.format("%s.%s", component, key);
-        int index = this.schema.indexOf(logKey);
+        int index = this.schema.indexOf(key.value);
         if (index >= 0)
         {
             this.values[index] = value;

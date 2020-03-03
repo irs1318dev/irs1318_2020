@@ -12,8 +12,6 @@ import com.google.inject.Singleton;
 @Singleton
 public class ControlPanelMechanism implements IMechanism
 {
-    private static final String logName = "color";
-
     private final ILogger logger;
 
     private final IColorSensorV3 sensor;
@@ -40,7 +38,7 @@ public class ControlPanelMechanism implements IMechanism
     }
 
     @Inject
-    public ControlPanelMechanism(ILogger logger, IRobotProvider provider)
+    public ControlPanelMechanism(LoggingManager logger, IRobotProvider provider)
     {
         this.logger = logger;
 
@@ -78,10 +76,10 @@ public class ControlPanelMechanism implements IMechanism
                 int green = rawColor.getGreen();
                 int blue = rawColor.getBlue();
 
-                this.logger.logNumber(ControlPanelMechanism.logName, "red", red);
-                this.logger.logNumber(ControlPanelMechanism.logName, "green", green);
-                this.logger.logNumber(ControlPanelMechanism.logName, "blue", blue);
-                this.logger.logNumber(ControlPanelMechanism.logName, "IR", rawColor.getIR());
+                this.logger.logNumber(LoggingKey.ControlPanelRed, red);
+                this.logger.logNumber(LoggingKey.ControlPanelGreen, green);
+                this.logger.logNumber(LoggingKey.ControlPanelBlue, blue);
+                this.logger.logNumber(LoggingKey.ControlPanelIR, rawColor.getIR());
 
                 double total = red + green + blue;
                 double redPercent = (double)red / total;
@@ -89,21 +87,21 @@ public class ControlPanelMechanism implements IMechanism
                 double bluePercent = (double)blue / total;
 
                 this.colorResult = this.colorMatch.matchClosestColor(redPercent, greenPercent, bluePercent);
-                this.logger.logString(ControlPanelMechanism.logName, "name", this.colorResult.getName());
-                this.logger.logNumber(ControlPanelMechanism.logName, "confidence", this.colorResult.getConfidence());
+                this.logger.logString(LoggingKey.ControlPanelName, this.colorResult.getName());
+                this.logger.logNumber(LoggingKey.ControlPanelConfidence, this.colorResult.getConfidence());
 
                 int proximity = this.sensor.getProximity();
-                this.logger.logInteger(ControlPanelMechanism.logName, "proximity", proximity);
+                this.logger.logInteger(LoggingKey.ControlPanelProximity, proximity);
             }
             else
             {
-                this.logger.logNumber(ControlPanelMechanism.logName, "red", -1);
-                this.logger.logNumber(ControlPanelMechanism.logName, "green", -1);
-                this.logger.logNumber(ControlPanelMechanism.logName, "blue", -1);
-                this.logger.logNumber(ControlPanelMechanism.logName, "IR", -1);
-                this.logger.logString(ControlPanelMechanism.logName, "name", "");
-                this.logger.logNumber(ControlPanelMechanism.logName, "confidence", -1);
-                this.logger.logInteger(ControlPanelMechanism.logName, "proximity", -1);
+                this.logger.logNumber(LoggingKey.ControlPanelRed, -1);
+                this.logger.logNumber(LoggingKey.ControlPanelGreen, -1);
+                this.logger.logNumber(LoggingKey.ControlPanelBlue, -1);
+                this.logger.logNumber(LoggingKey.ControlPanelIR, -1);
+                this.logger.logString(LoggingKey.ControlPanelName, "");
+                this.logger.logNumber(LoggingKey.ControlPanelConfidence, -1);
+                this.logger.logInteger(LoggingKey.ControlPanelProximity, -1);
             }
 
             // Mapped colors, taking the game specific message and mapping it to the color desired along the front edge
@@ -133,22 +131,22 @@ public class ControlPanelMechanism implements IMechanism
                 this.targetColor = TargetColor.None;
             }
 
-            this.logger.logString(ControlPanelMechanism.logName, "targetColorMapped", this.targetColor.toString());
-            this.logger.logString(ControlPanelMechanism.logName, "gameMessage", this.gsm);
+            this.logger.logString(LoggingKey.ControlPanelTargetColorMapped, this.targetColor.toString());
+            this.logger.logString(LoggingKey.ControlPanelGameMessage, this.gsm);
         }
         else
         {
             this.sensor.stop();
 
-            this.logger.logNumber(ControlPanelMechanism.logName, "red", -1);
-            this.logger.logNumber(ControlPanelMechanism.logName, "green", -1);
-            this.logger.logNumber(ControlPanelMechanism.logName, "blue", -1);
-            this.logger.logNumber(ControlPanelMechanism.logName, "IR", -1);
-            this.logger.logString(ControlPanelMechanism.logName, "name", "");
-            this.logger.logNumber(ControlPanelMechanism.logName, "confidence", -1);
-            this.logger.logInteger(ControlPanelMechanism.logName, "proximity", -1);
-            this.logger.logString(ControlPanelMechanism.logName, "targetColorMapped", "");
-            this.logger.logString(ControlPanelMechanism.logName, "gameMessage", "");
+            this.logger.logNumber(LoggingKey.ControlPanelRed, -1);
+            this.logger.logNumber(LoggingKey.ControlPanelGreen, -1);
+            this.logger.logNumber(LoggingKey.ControlPanelBlue, -1);
+            this.logger.logNumber(LoggingKey.ControlPanelIR, -1);
+            this.logger.logString(LoggingKey.ControlPanelName, "");
+            this.logger.logNumber(LoggingKey.ControlPanelConfidence, -1);
+            this.logger.logInteger(LoggingKey.ControlPanelProximity, -1);
+            this.logger.logString(LoggingKey.ControlPanelTargetColorMapped, "");
+            this.logger.logString(LoggingKey.ControlPanelGameMessage, "");
             this.targetColor = TargetColor.None;
             this.colorResult = null;
         }
@@ -168,7 +166,7 @@ public class ControlPanelMechanism implements IMechanism
             this.extender.set(DoubleSolenoidValue.Reverse);
         }
 
-        this.logger.logBoolean(ControlPanelMechanism.logName, "extend", this.isExtended);
+        this.logger.logBoolean(LoggingKey.ControlPanelExtend, this.isExtended);
         if (this.isExtended)
         {
             double speed = this.driver.getAnalog(AnalogOperation.ControlPanelSpinSpeed);

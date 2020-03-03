@@ -49,6 +49,12 @@ public class FauxbotDriverStation implements IDriverStation
     }
 
     @Override
+    public boolean isAutonomous()
+    {
+        return false;
+    }
+
+    @Override
     public String getGameSpecificMessage()
     {
         return "LLL";
