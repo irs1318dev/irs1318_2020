@@ -93,25 +93,30 @@ public abstract class DecisionSequentialTask extends ControlTaskBase
             // if there's no current task, find the next one and start it (if any)
             if (this.currentTask == null)
             {
+                // System.out.println("Getting another task");
                 this.currentTask = this.orderedTasks.poll();
 
                 // if there's no next task to run, then we are done
                 if (this.currentTask == null)
                 {
+                    // System.out.println("No more tasks");
                     return;
                 }
 
+                // System.out.println("Beginning task " + this.currentTask);
                 this.currentTask.begin();
             }
 
             if (this.currentTask.hasCompleted())
             {
+                // System.out.println("Completed " + this.currentTask.toString());
                 this.currentTask.end();
                 this.finishedTask();
                 this.currentTask = null;
             }
             else if (this.currentTask.shouldCancel())
             {
+                // System.out.println("Cancelling task " + this.currentTask.toString());
                 this.shouldCancelTask = true;
             }
             else

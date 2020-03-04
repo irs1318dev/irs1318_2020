@@ -15,7 +15,7 @@ public class TurretOffsetTask extends TimedTask
      */
     public TurretOffsetTask(double angle)
     {
-        super(1.0);
+        super(0.05);
 
         this.angle = angle;
     }

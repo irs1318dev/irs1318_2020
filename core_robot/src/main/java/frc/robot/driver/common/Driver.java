@@ -160,7 +160,7 @@ public class Driver
         for (Shift shift : this.shiftMap.keySet())
         {
             ShiftDescription shiftDescription = this.shiftMap.get(shift);
-            if (shiftDescription.checkInput(this.joystickDriver, this.joystickOperator))
+            if (!this.isAutonomous && shiftDescription.checkInput(this.joystickDriver, this.joystickOperator))
             {
                 activeShiftList[shiftIndex++] = shift;
             }
@@ -175,7 +175,7 @@ public class Driver
         for (IOperation operation : this.operationStateMap.keySet())
         {
             OperationState opState = this.operationStateMap.get(operation);
-            boolean receivedInput = opState.checkInput(this.joystickDriver, this.joystickOperator, activeShifts);
+            boolean receivedInput = !this.isAutonomous && opState.checkInput(this.joystickDriver, this.joystickOperator, activeShifts);
             if (receivedInput)
             {
                 modifiedOperations.add(operation);
@@ -194,7 +194,10 @@ public class Driver
         for (MacroOperation macroOperation : this.macroStateMap.keySet())
         {
             IMacroOperationState macroState = this.macroStateMap.get(macroOperation);
-            macroState.checkInput(this.joystickDriver, this.joystickOperator, activeShifts);
+            if (!this.isAutonomous)
+            {
+                macroState.checkInput(this.joystickDriver, this.joystickOperator, activeShifts);
+            }
 
             if (macroState.getIsActive())
             {

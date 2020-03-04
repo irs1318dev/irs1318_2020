@@ -24,7 +24,7 @@ import frc.robot.mechanisms.*;
  */
 public class TuningConstants
 {
-    public static final boolean COMPETITION_ROBOT = false;
+    public static final boolean COMPETITION_ROBOT = true;
     public static boolean THROW_EXCEPTIONS = !TuningConstants.COMPETITION_ROBOT;
 
     public static final int CALENDAR_YEAR = 2020;
@@ -340,8 +340,9 @@ public class TuningConstants
     public static final double POWERCELL_GENEVA_COUNT_THRESHOLD = 0.15;
 
     public static final double POWERCELL_FLYWHEEL_POINT_BLANK_MOTOR_VELOCITY = 0.4;
-    public static final double POWERCELL_FLYWHEEL_INITIATIONLINE_MOTOR_VELOCITY = 0.5;
-    public static final double POWERCELL_FLYWHEEL_MEDIUM_MOTOR_VELOCITY = 0.8;
+    public static final double POWERCELL_FLYWHEEL_INITIATIONLINE_FRONT_MOTOR_VELOCITY = 0.4;
+    public static final double POWERCELL_FLYWHEEL_INITIATIONLINE_BACK_MOTOR_VELOCITY = 0.4;
+    public static final double POWERCELL_FLYWHEEL_MEDIUM_MOTOR_VELOCITY = 0.6;
 
     public static final double POWERCELL_LEFT_TURN_TURRET = -5.0;
     public static final double POWERCELL_MIN_TURRET_OFFSET= 1.0;
@@ -431,8 +432,8 @@ public class TuningConstants
     public static final double DRIVETRAIN_VOLTAGE_COMPENSATION = 12.0;
     public static final boolean DRIVETRAIN_SUPPLY_CURRENT_LIMITING_ENABLED = true;
     public static final double DRIVETRAIN_SUPPLY_CURRENT_MAX = 40.0;
-    public static final double DRIVETRAIN_SUPPLY_TRIGGER_CURRENT = 100.0;
-    public static final double DRIVETRAIN_SUPPLY_TRIGGER_DURATION = 0.25;
+    public static final double DRIVETRAIN_SUPPLY_TRIGGER_CURRENT = 40.0;
+    public static final double DRIVETRAIN_SUPPLY_TRIGGER_DURATION = 0.1;
     public static final double DRIVETRAIN_X_DEAD_ZONE = .05;
     public static final double DRIVETRAIN_Y_DEAD_ZONE = .05;
     public static final double DRIVETRAIN_MAX_POWER_LEVEL = 1.0;// max power level (velocity)

@@ -236,9 +236,9 @@ public class AutonomousRoutineSelector
             "simple back",
             RoadRunnerTankTranslator.convert(
                 new PathBuilder(new Pose2d(0, 0, 0))
-                    .lineTo(new Vector2d(24, 0))
+                    .lineTo(new Vector2d(36, 0))
                     .build(),
-                false));
+                true));
 
         this.pathManager.addPath(
             "eight power cell far forward",
@@ -350,16 +350,19 @@ public class AutonomousRoutineSelector
     private static IControlTask simpleShootDriveBack()
     {
         return SequentialTask.Sequence(
+            // new TurretOffsetTask(180.0),
             ConcurrentTask.AnyTasks(
-                //new FlyWheelVisionSpinTask(),
-                new FlyWheelFixedSpinTask(TuningConstants.POWERCELL_FLYWHEEL_INITIATIONLINE_MOTOR_VELOCITY),
-                new FlyWheelHoodTask(DigitalOperation.PowerCellHoodShort),
+                new FlyWheelFixedSpinTask(TuningConstants.POWERCELL_FLYWHEEL_INITIATIONLINE_FRONT_MOTOR_VELOCITY),
                 SequentialTask.Sequence(
                     new IntakePositionTask(true),
-                    new TurretVisionCenteringTask(false, true),
-                    new WaitTask(1.0),
-                    new ShootHopperSlotsTask(0, 1, 4)), //new FullHopperShotTask()),
-            new FollowPathTask("simple back")));
+                    new FlyWheelHoodTask(DigitalOperation.PowerCellHoodShort),
+                    ConcurrentTask.AnyTasks(
+                        new TurretVisionCenteringTask(false, true),
+                        SequentialTask.Sequence(
+                            new WaitTask(0.5),
+                            new ShootHopperSlotsTask(0, 1, 4),
+                            new WaitTask(0.5))))), //new FullHopperShotTask()),
+            new FollowPathTask("simple back"));
     }
 
     private static IControlTask shootSplineBackShoot() // shoots three pc on init. line, then picks three from trench and shoots them
@@ -399,15 +402,17 @@ public class AutonomousRoutineSelector
     private static IControlTask shootDrive(double intakingDuration, String pathName) // shoots three pc on init. line, then picks two from trench   
     {
         return SequentialTask.Sequence(
+            // new TurretOffsetTask(180.0),
             ConcurrentTask.AnyTasks(
-                new FlyWheelVisionSpinTask(),
+                new FlyWheelFixedSpinTask(TuningConstants.POWERCELL_FLYWHEEL_INITIATIONLINE_FRONT_MOTOR_VELOCITY),
                 SequentialTask.Sequence(
+                    new IntakePositionTask(true),
+                    new FlyWheelHoodTask(DigitalOperation.PowerCellHoodShort),
                     new TurretVisionCenteringTask(false, true),
                     new WaitTask(1.0),
                     new FullHopperShotTask())),
             ConcurrentTask.AllTasks(
                 SequentialTask.Sequence(
-                    new IntakePositionTask(true),
                     new IntakeOuttakeTask(intakingDuration, true)),
                 new FollowPathTask(pathName))
             );
