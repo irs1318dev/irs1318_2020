@@ -9,8 +9,8 @@ import frc.robot.mechanisms.PowerCellMechanism;
 
 public class ShootHopperSlotsTask extends ControlTaskBase
 {
-    private static final boolean MOVE_BACKWARDS = true;
-    private static final double KICK_TIME = 0.5;
+    private static final boolean MOVE_BACKWARDS = false;
+    private static final double KICK_TIME = 0.3;
 
     private final List<Integer> slots;
 
@@ -26,8 +26,6 @@ public class ShootHopperSlotsTask extends ControlTaskBase
         {
             this.slots.add(slot);
         }
-
-        this.index = 0;
     }
 
     @Override
@@ -35,6 +33,9 @@ public class ShootHopperSlotsTask extends ControlTaskBase
     {
         this.powerCellMechanism = this.getInjector().getInstance(PowerCellMechanism.class);
         this.timer = this.getInjector().getInstance(ITimer.class);
+
+        this.index = 0;
+        this.kickTime = null;
     }
 
     @Override
@@ -44,6 +45,7 @@ public class ShootHopperSlotsTask extends ControlTaskBase
         {
             int desiredSlot = this.slots.get(this.index);
             int currentSlot = this.powerCellMechanism.getCurrentCarouselIndex();
+            // System.out.println("desired slot (" + this.index + "): " + desiredSlot + ", current " + currentSlot);
             if (currentSlot == desiredSlot)
             {
                 this.setDigitalOperationState(DigitalOperation.PowerCellKick, true);
@@ -57,6 +59,7 @@ public class ShootHopperSlotsTask extends ControlTaskBase
                 if (!ShootHopperSlotsTask.MOVE_BACKWARDS)
                 {
                     // only move forwards:
+                    this.setDigitalOperationState(DigitalOperation.PowerCellKick, false);
                     this.setDigitalOperationState(DigitalOperation.PowerCellMoveToNextSlot, true);
                     this.setDigitalOperationState(DigitalOperation.PowerCellMoveToPreviousSlot, false);
                 }
@@ -77,11 +80,13 @@ public class ShootHopperSlotsTask extends ControlTaskBase
 
                     if (prevDistance < nextDistance)
                     {
+                        this.setDigitalOperationState(DigitalOperation.PowerCellKick, false);
                         this.setDigitalOperationState(DigitalOperation.PowerCellMoveToNextSlot, false);
                         this.setDigitalOperationState(DigitalOperation.PowerCellMoveToPreviousSlot, true);
                     }
                     else
                     {
+                        this.setDigitalOperationState(DigitalOperation.PowerCellKick, false);
                         this.setDigitalOperationState(DigitalOperation.PowerCellMoveToNextSlot, true);
                         this.setDigitalOperationState(DigitalOperation.PowerCellMoveToPreviousSlot, false);
                     }
@@ -93,6 +98,8 @@ public class ShootHopperSlotsTask extends ControlTaskBase
             if (this.timer.get() - this.kickTime >= ShootHopperSlotsTask.KICK_TIME)
             {
                 this.setDigitalOperationState(DigitalOperation.PowerCellKick, false);
+                this.setDigitalOperationState(DigitalOperation.PowerCellMoveToNextSlot, false);
+                this.setDigitalOperationState(DigitalOperation.PowerCellMoveToPreviousSlot, false);
 
                 this.kickTime = null;
                 this.index++;
