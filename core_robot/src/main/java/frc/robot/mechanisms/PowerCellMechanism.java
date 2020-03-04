@@ -192,7 +192,6 @@ public class PowerCellMechanism implements IMechanism
         this.logger.logNumber(LoggingKey.PowerCellThroughBeamVoltage, throughBeamVoltage);
         this.logger.logBoolean(LoggingKey.PowerCellThroughBeamBroken, throughBeamBroken);
         this.logger.logBooleanArray(LoggingKey.PowerCellHasPowerCell, this.hasPowerCell);
-        
     }
 
     @Override
@@ -374,14 +373,14 @@ public class PowerCellMechanism implements IMechanism
                 }
                 else if (this.driver.getDigital(DigitalOperation.PowerCellMoveToPreviousSlot))
                 {
-                    this.previousIndex = this.currentCarouselIndex;
+                    this.previousIndex = this.currentCarouselIndex + 1;
                     this.carouselState = CarouselState.MovingToPrevious;
                 }
                 else if (this.currentCarouselIndex != this.previousIndex)
                 {
                     this.carouselState = CarouselState.Stationary;
                 }
-            
+
                 break;
 
             case MovingToPrevious:
@@ -392,14 +391,14 @@ public class PowerCellMechanism implements IMechanism
                 }
                 else if (this.driver.getDigital(DigitalOperation.PowerCellMoveToNextSlot))
                 {
-                    this.previousIndex = this.currentCarouselIndex;
+                    this.previousIndex = this.currentCarouselIndex - 1;
                     this.carouselState = CarouselState.MovingToNext;
                 }
                 else if (this.currentCarouselIndex != this.previousIndex)
                 {
                     this.carouselState = CarouselState.Stationary;
                 }
-            
+
                 break;
         }
 

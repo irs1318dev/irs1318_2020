@@ -11,13 +11,15 @@ public class ShootHopperSlotsTask extends ControlTaskBase
 {
     private static final boolean MOVE_BACKWARDS = false;
     private static final double KICK_TIME = 0.3;
+    private static final double SETTLE_TIME = 0.25;
 
     private final List<Integer> slots;
 
     private PowerCellMechanism powerCellMechanism;
     private ITimer timer;
-    private Double kickTime;
+    private Double stateTransitionTime;
     private int index;
+    private ShotState currentState;
 
     public ShootHopperSlotsTask(int... slots)
     {
@@ -34,25 +36,26 @@ public class ShootHopperSlotsTask extends ControlTaskBase
         this.powerCellMechanism = this.getInjector().getInstance(PowerCellMechanism.class);
         this.timer = this.getInjector().getInstance(ITimer.class);
 
+        this.currentState = ShotState.Moving;
         this.index = 0;
-        this.kickTime = null;
+        this.stateTransitionTime = null;
     }
 
     @Override
     public void update()
     {
-        if (this.kickTime == null)
+        if (this.currentState == ShotState.Moving)
         {
             int desiredSlot = this.slots.get(this.index);
             int currentSlot = this.powerCellMechanism.getCurrentCarouselIndex();
-            // System.out.println("desired slot (" + this.index + "): " + desiredSlot + ", current " + currentSlot);
             if (currentSlot == desiredSlot)
             {
-                this.setDigitalOperationState(DigitalOperation.PowerCellKick, true);
+                this.setDigitalOperationState(DigitalOperation.PowerCellKick, false);
                 this.setDigitalOperationState(DigitalOperation.PowerCellMoveToNextSlot, false);
                 this.setDigitalOperationState(DigitalOperation.PowerCellMoveToPreviousSlot, false);
 
-                this.kickTime = this.timer.get();
+                this.currentState = ShotState.Settling;
+                this.stateTransitionTime = this.timer.get();
             }
             else
             {
@@ -93,15 +96,35 @@ public class ShootHopperSlotsTask extends ControlTaskBase
                 }
             }
         }
-        else
+        else if (this.currentState == ShotState.Settling)
         {
-            if (this.timer.get() - this.kickTime >= ShootHopperSlotsTask.KICK_TIME)
+            double currentTime = this.timer.get();
+            if (currentTime - this.stateTransitionTime >= ShootHopperSlotsTask.SETTLE_TIME)
+            {
+                this.setDigitalOperationState(DigitalOperation.PowerCellKick, true);
+                this.setDigitalOperationState(DigitalOperation.PowerCellMoveToNextSlot, false);
+                this.setDigitalOperationState(DigitalOperation.PowerCellMoveToPreviousSlot, false);
+
+                this.stateTransitionTime = currentTime;
+                this.currentState = ShotState.Kicking;
+            }
+            else
+            {
+                this.setDigitalOperationState(DigitalOperation.PowerCellKick, false);
+                this.setDigitalOperationState(DigitalOperation.PowerCellMoveToNextSlot, false);
+                this.setDigitalOperationState(DigitalOperation.PowerCellMoveToPreviousSlot, false);
+            }
+        }
+        else //if (this.currentState == ShotState.Kicking)
+        {
+            if (this.timer.get() - this.stateTransitionTime >= ShootHopperSlotsTask.KICK_TIME)
             {
                 this.setDigitalOperationState(DigitalOperation.PowerCellKick, false);
                 this.setDigitalOperationState(DigitalOperation.PowerCellMoveToNextSlot, false);
                 this.setDigitalOperationState(DigitalOperation.PowerCellMoveToPreviousSlot, false);
 
-                this.kickTime = null;
+                this.currentState = ShotState.Moving;
+                this.stateTransitionTime = null;
                 this.index++;
             }
             else
@@ -130,5 +153,12 @@ public class ShootHopperSlotsTask extends ControlTaskBase
         }
 
         return false;
+    }
+
+    private enum ShotState
+    {
+        Moving,
+        Settling,
+        Kicking,
     }
 }

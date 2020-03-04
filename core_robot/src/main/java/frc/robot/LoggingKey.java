@@ -54,15 +54,15 @@ public enum LoggingKey
     PowerCellFlywheelVelocity("pc.flywheelVelocity", true),
     PowerCellFlywheelPosition("pc.flywheelPosition", true),
     PowerCellFlywheelError("pc.flywheelError", true),
-    PowerCellCarouselCount("pc.carouselCount"),
+    PowerCellCarouselCount("pc.carouselCount", true),
     PowerCellCarouselCurrentIndex("pc.carouselCurrentIndex", true),
     PowerCellThroughBeamVoltage("pc.throughBeamVoltage"),
     PowerCellThroughBeamBroken("pc.throughBeamBroken"),
     PowerCellHasPowerCell("pc.hasPowerCell"),
     PowerCellFlywheelVelocitySetpoint("pc.flyWheelVelocitySetpoint", true),
     PowerCellTurretPositionDesired("pc.turretPositionDesired", true),
-    PowerCellCarouselState("pc.carouselState"),
-    PowerCellGenevaPower("pc.genevaPower"),
+    PowerCellCarouselState("pc.carouselState", true),
+    PowerCellGenevaPower("pc.genevaPower", true),
     PowerCellIsIntaking("pc.isIntaking"),
     PowerCellIntakeExtended("pc.intakeExtended");
 

@@ -13,7 +13,7 @@ import com.google.inject.Singleton;
  * Position manager
  * 
  * This class maintains the approximate current location and orientation of the robot relative to its starting point.
- * This uses Jim's differential odometry algorithm and the NAVX independently. In the future we can consider adding other sensors to help correct for error.
+ * This uses Jim's differential odometry algorithm and the NavX independently. In the future we can consider adding other sensors to help correct for error.
  * 
  */
 @Singleton
