@@ -31,6 +31,16 @@ public class AnalogOperationDescription extends OperationDescription
         this(operation, UserInputDevice.None, AnalogAxis.NONE, null, null, null, false, false, 0.0, 0.0, 1.0, 0.0, null);
     }
 
+    /**
+     * Initializes a new AnalogOperationDescription that works without user interaction
+     * @param operation the analog operation being described
+     * @param defaultValue the default value to use when not interrupted
+     */
+    public AnalogOperationDescription(AnalogOperation operation, double defaultValue)
+    {
+        this(operation, UserInputDevice.None, AnalogAxis.NONE, null, null, null, false, false, 0.0, 0.0, 1.0, defaultValue, null);
+    }
+
 
     /**
      * Initializes a new AnalogOperationDescription based on a user interaction
