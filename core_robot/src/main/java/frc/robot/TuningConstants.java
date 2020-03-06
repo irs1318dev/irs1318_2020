@@ -324,6 +324,7 @@ public class TuningConstants
     public static final boolean POWERCELL_FLYWHEEL_FOLLOWER_VELOCITY_VOLTAGE_COMPENSATION_ENABLED = true;
     public static final double POWERCELL_FLYWHEEL_MASTER_VELOCITY_VOLTAGE_COMPENSATION_MAXVOLTAGE = 12.0;
     public static final double POWERCELL_FLYWHEEL_FOLLOWER_VELOCITY_VOLTAGE_COMPENSATION_MAXVOLTAGE = 12.0;
+    public static final double POWERCELL_FLYWHEEL_ERROR = 500.0;
 
     public static final double POWERCELL_INNER_ROLLER_MOTOR_INTAKE_POWER = 0.3;
     public static final double POWERCELL_OUTER_ROLLER_MOTOR_INTAKE_POWER = 0.7;

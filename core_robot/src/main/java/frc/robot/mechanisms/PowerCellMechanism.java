@@ -53,6 +53,7 @@ public class PowerCellMechanism implements IMechanism
     private CarouselState carouselState;
     private int previousIndex;
     private double lastIntakeTime;
+    private double flyWheelVelocitySetpoint;
 
     @Inject
     public PowerCellMechanism(LoggingManager logger, IRobotProvider provider, ITimer timer)
@@ -274,7 +275,6 @@ public class PowerCellMechanism implements IMechanism
             this.rollerMotorOuter.set(TuningConstants.STHOPE_BLEASE);
         }
 
-        double flyWheelVelocitySetpoint;
         double flyWheelVelocityPercentage = this.driver.getAnalog(AnalogOperation.PowerCellFlywheelVelocity);
         if (Math.abs(flyWheelVelocityPercentage) < 0.01)
         {
@@ -499,6 +499,14 @@ public class PowerCellMechanism implements IMechanism
         }
 
         return false;
+    }
+    
+    public boolean isFlyWheelSpunUp()
+    {
+        if(this.flyWheelVelocitySetpoint != 0.0 && flywheelError <= TuningConstants.POWERCELL_FLYWHEEL_ERROR)
+        {
+            return true;
+        }
     }
 
     private double getClosestAngleInRange(double desiredAngle, double currentAngle, double minRangeValue, double maxRangeValue)
