@@ -64,6 +64,11 @@ public class ButtonMap implements IButtonMap
 
         // PowerCell operations
         new AnalogOperationDescription(
+            AnalogOperation.PowerCellFlywheelVelocity, 
+            TuningConstants.MAGIC_NULL_VALUE,
+        )
+        
+        new AnalogOperationDescription(
             AnalogOperation.PowerCellTurretPosition,
             UserInputDevice.Operator,
             AnalogAxis.PS4_LSX,
