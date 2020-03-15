@@ -4,24 +4,22 @@ import frc.robot.driver.AnalogOperation;
 import frc.robot.mechanisms.PowerCellMechanism;
 
 /**
- * Task that applies a single operation from a group of related operations for a short period of time.
+ * Task that modifies the flywheel speed based on a fixed amount
  * 
  */
-public class ChangeFlyWheelSpeedTask extends TimedTask
+public class FlywheelModifySpeedTask extends TimedTask
 {
     private final double velocityAmount;
 
     private double desiredSpeed;
 
     /**
-     * Initializes a new ChangeFlyWheelSpeedTask
-     * @param duration to wait in seconds
-     * @param toPerform the operation to perform by setting to true for duration
-     * @param possibleOperations to set of linked operations that should be set to false for duration
+     * Initializes a new FlywheelModifySpeedTask
+     * @param velocityAmount the amount to change speed by
      */
-    public ChangeFlyWheelSpeedTask(double duration, double velocityAmount)
+    public FlywheelModifySpeedTask(double velocityAmount)
     {
-        super(duration);
+        super(0.1);
 
         this.velocityAmount = velocityAmount;
     }
@@ -35,7 +33,7 @@ public class ChangeFlyWheelSpeedTask extends TimedTask
         super.begin();
 
         PowerCellMechanism powerCell = this.getInjector().getInstance(PowerCellMechanism.class);
-        this.desiredSpeed = powerCell.getFlywheelVelocity() + this.velocityAmount;
+        this.desiredSpeed = powerCell.getFlywheelVelocitySetpoint() + this.velocityAmount;
         this.setAnalogOperationState(AnalogOperation.PowerCellFlywheelVelocity, this.desiredSpeed);
     }
 

@@ -5,7 +5,7 @@ import frc.robot.driver.DigitalOperation;
 /**
  * Task that sets the Hood Position.
  */
-public class FlyWheelHoodTask extends CompositeOperationTask
+public class FlywheelHoodTask extends CompositeOperationTask
 {
     private static DigitalOperation[] hoodPositionOperations =
     {
@@ -19,8 +19,8 @@ public class FlyWheelHoodTask extends CompositeOperationTask
     * Initializes a new FlyWheelHoodTask
     * @param toPerform the hood position to move to
     */
-    public FlyWheelHoodTask(DigitalOperation toPerform)
+    public FlywheelHoodTask(DigitalOperation toPerform)
     {
-        super(0.5, toPerform, FlyWheelHoodTask.hoodPositionOperations);
+        super(0.5, toPerform, FlywheelHoodTask.hoodPositionOperations);
     }
 }

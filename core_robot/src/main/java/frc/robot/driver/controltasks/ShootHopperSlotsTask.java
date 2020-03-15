@@ -99,7 +99,8 @@ public class ShootHopperSlotsTask extends ControlTaskBase
         else if (this.currentState == ShotState.Settling)
         {
             double currentTime = this.timer.get();
-            if (currentTime - this.stateTransitionTime >= ShootHopperSlotsTask.SETTLE_TIME)
+            if (currentTime - this.stateTransitionTime >= ShootHopperSlotsTask.SETTLE_TIME &&
+                this.powerCellMechanism.isFlywheelSpunUp())
             {
                 this.setDigitalOperationState(DigitalOperation.PowerCellKick, true);
                 this.setDigitalOperationState(DigitalOperation.PowerCellMoveToNextSlot, false);

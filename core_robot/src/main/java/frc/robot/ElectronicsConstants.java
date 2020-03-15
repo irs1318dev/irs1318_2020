@@ -32,7 +32,7 @@ public class ElectronicsConstants
 
     //================================================== Indicator Lights ==============================================================
 
-    public static final int INDICATOR_LIGHT_DIO = -1;
+    public static final int INDICATOR_LIGHT_SPUN_UP_DIO = -1;
 
     //================================================== DriveTrain ==============================================================
 

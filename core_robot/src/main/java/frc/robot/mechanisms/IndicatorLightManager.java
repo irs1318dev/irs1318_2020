@@ -27,26 +27,21 @@ public class IndicatorLightManager implements IMechanism
     private static final double FlashingFrequency = 0.5;
     private static final double FlashingComparisonFrequency = IndicatorLightManager.FlashingFrequency / 2.0;
 
-    private final ILogger logger;
     private final ITimer timer;
 
-    private final IDigitalOutput indicator;
+    private final IDigitalOutput spunUpIndicator;
+    private final PowerCellMechanism powerCellMechanism;
 
-    /**
-     * Initializes a new IndicatorLightManager
-     * @param provider for obtaining electronics objects
-     * @param timer to use
-     */
     @Inject
     public IndicatorLightManager(
         IRobotProvider provider,
-        LoggingManager logger,
-        ITimer timer)
+        ITimer timer,
+        PowerCellMechanism powerCellMechanism)
     {
-        this.logger = logger;
         this.timer = timer;
 
-        this.indicator = provider.getDigitalOutput(ElectronicsConstants.INDICATOR_LIGHT_DIO);
+        this.spunUpIndicator = provider.getDigitalOutput(ElectronicsConstants.INDICATOR_LIGHT_SPUN_UP_DIO);
+        this.powerCellMechanism = powerCellMechanism;
     }
 
     /**
@@ -63,21 +58,22 @@ public class IndicatorLightManager implements IMechanism
     {
     }
 
-    /**
-     * calculate the various outputs to use based on the inputs and apply them to the outputs for the relevant mechanism
-     */
     @Override
     public void update()
     {
+        LightMode spunUpMode = LightMode.Off;
+        if (this.powerCellMechanism.getFlywheelVelocitySetpoint() != 0.0 && this.powerCellMechanism.isFlywheelSpunUp())
+        {
+            spunUpMode = LightMode.On;
+        }
+
+        this.controlLight(this.spunUpIndicator, spunUpMode);
     }
 
-    /**
-     * stop the relevant component
-     */
     @Override
     public void stop()
     {
-        this.indicator.set(false);
+        this.spunUpIndicator.set(false);
     }
 
     private void controlLight(IDigitalOutput indicatorLight, LightMode mode)

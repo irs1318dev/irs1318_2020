@@ -64,10 +64,9 @@ public class ButtonMap implements IButtonMap
 
         // PowerCell operations
         new AnalogOperationDescription(
-            AnalogOperation.PowerCellFlywheelVelocity, 
-            TuningConstants.MAGIC_NULL_VALUE,
-        )
-        
+            AnalogOperation.PowerCellFlywheelVelocity,
+            TuningConstants.MAGIC_NULL_VALUE),
+
         new AnalogOperationDescription(
             AnalogOperation.PowerCellTurretPosition,
             UserInputDevice.Operator,
@@ -322,7 +321,7 @@ public class ButtonMap implements IButtonMap
             () -> SequentialTask.Sequence(
                 ConcurrentTask.AllTasks(
                     new IntakePositionTask(false),
-                    new FlyWheelHoodTask(DigitalOperation.PowerCellHoodPointBlank),
+                    new FlywheelHoodTask(DigitalOperation.PowerCellHoodPointBlank),
                     new TurretMoveTask(1.0, true, 90.0)),
                 new ClimberPositionTask(0.5, true)),
             new IOperation[]
@@ -393,7 +392,7 @@ public class ButtonMap implements IButtonMap
             () -> SequentialTask.Sequence(
                 new IntakePositionTask(true),
                 // new FlyWheelVisionSpinTask()),
-                new FlyWheelFixedSpinTask(TuningConstants.POWERCELL_FLYWHEEL_MEDIUM_MOTOR_VELOCITY)),
+                new FlywheelFixedSpinTask(TuningConstants.POWERCELL_FLYWHEEL_MEDIUM_MOTOR_VELOCITY)),
             new IOperation[]
             {
                 DigitalOperation.PowerCellIntakeExtend,
@@ -421,8 +420,8 @@ public class ButtonMap implements IButtonMap
             () -> SequentialTask.Sequence(
                 new IntakePositionTask(true),
                 ConcurrentTask.AllTasks(
-                    new FlyWheelHoodTask(DigitalOperation.PowerCellHoodMedium),
-                    new FlyWheelFixedSpinTask(TuningConstants.POWERCELL_FLYWHEEL_INITIATIONLINE_BACK_MOTOR_VELOCITY))),
+                    new FlywheelHoodTask(DigitalOperation.PowerCellHoodMedium),
+                    new FlywheelFixedSpinTask(TuningConstants.POWERCELL_FLYWHEEL_INITIATIONLINE_BACK_MOTOR_VELOCITY))),
             new IOperation[]
             {
                 DigitalOperation.PowerCellIntakeExtend,
@@ -466,8 +465,8 @@ public class ButtonMap implements IButtonMap
             () -> SequentialTask.Sequence(
                 new IntakePositionTask(true),
                 ConcurrentTask.AllTasks(
-                    new FlyWheelHoodTask(DigitalOperation.PowerCellHoodShort),
-                    new FlyWheelFixedSpinTask(TuningConstants.POWERCELL_FLYWHEEL_INITIATIONLINE_FRONT_MOTOR_VELOCITY))),
+                    new FlywheelHoodTask(DigitalOperation.PowerCellHoodShort),
+                    new FlywheelFixedSpinTask(TuningConstants.POWERCELL_FLYWHEEL_INITIATIONLINE_FRONT_MOTOR_VELOCITY))),
             new IOperation[]
             {
                 DigitalOperation.PowerCellIntakeExtend,
@@ -515,7 +514,7 @@ public class ButtonMap implements IButtonMap
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ButtonType.Toggle,
-            () -> new ChangeFlyWheelSpeedTask(0.1, 0.05),
+            () -> new FlywheelModifySpeedTask(0.05),
             new IOperation[]
             {
                 AnalogOperation.PowerCellFlywheelVelocity,
@@ -527,7 +526,7 @@ public class ButtonMap implements IButtonMap
             Shift.OperatorDebug,
             Shift.OperatorDebug,
             ButtonType.Toggle,
-            () -> new ChangeFlyWheelSpeedTask(0.1, -0.05),
+            () -> new FlywheelModifySpeedTask(-0.05),
             new IOperation[]
             {
                 AnalogOperation.PowerCellFlywheelVelocity,
@@ -539,7 +538,9 @@ public class ButtonMap implements IButtonMap
             Shift.OperatorDebug,
             Shift.None,
             ButtonType.Simple,
-            () -> new FlyWheelHoodTask(DigitalOperation.PowerCellHoodPointBlank),
+            () -> ConcurrentTask.AllTasks(
+                new FlywheelHoodTask(DigitalOperation.PowerCellHoodPointBlank),
+                new FlywheelFixedSpinTask(0.0)),
             new IOperation[]
             {
                 AnalogOperation.PowerCellFlywheelVelocity,

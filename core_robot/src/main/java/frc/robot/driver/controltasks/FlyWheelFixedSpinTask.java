@@ -1,18 +1,19 @@
 package frc.robot.driver.controltasks;
 
 import frc.robot.driver.AnalogOperation;
-import frc.robot.TuningConstants;
 
-public class FlyWheelFixedSpinTask extends ControlTaskBase
+public class FlywheelFixedSpinTask extends TimedTask
 {
     private final double speed;
 
     /**
-     * Initializes a new FlyWheelSpinTask
+     * Initializes a new FlywheelFixedSpinTask
      * @param speed to spin the flywheel
      */
-    public FlyWheelFixedSpinTask(double speed)
+    public FlywheelFixedSpinTask(double speed)
     {
+        super(0.1);
+
         this.speed = speed;
     }
 
@@ -22,6 +23,8 @@ public class FlyWheelFixedSpinTask extends ControlTaskBase
     @Override
     public void begin()
     {
+        super.begin();
+
         this.setAnalogOperationState(AnalogOperation.PowerCellFlywheelVelocity, this.speed);
     }
 
@@ -31,24 +34,5 @@ public class FlyWheelFixedSpinTask extends ControlTaskBase
     public void update()
     {
         this.setAnalogOperationState(AnalogOperation.PowerCellFlywheelVelocity, this.speed);
-    }
-
-    /**
-     * End the current task and reset control changes appropriately
-     */
-    @Override
-    public void end()
-    {
-        this.setAnalogOperationState(AnalogOperation.PowerCellFlywheelVelocity, TuningConstants.STHOPE_BLEASE);
-    }
-
-    /**
-     * Checks whether this task has completed, or whether it should continue being processed
-     * @return true if we should continue onto the next task, otherwise false (to keep processing this task)
-     */
-    @Override
-    public boolean hasCompleted()
-    {
-        return false;
     }
 }

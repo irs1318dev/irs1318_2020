@@ -263,7 +263,7 @@ public class AutonomousRoutineSelector
     {
         return SequentialTask.Sequence(
             ConcurrentTask.AnyTasks(
-                new FlyWheelVisionSpinTask(),
+                new FlywheelVisionSpinTask(),
                 SequentialTask.Sequence(
                     new TurretVisionCenteringTask(false, true),
                     new WaitTask(1.0),
@@ -278,7 +278,7 @@ public class AutonomousRoutineSelector
                 new IntakePositionTask(false),
                 new FollowPathTask(pathName2)),
             ConcurrentTask.AnyTasks(
-                new FlyWheelVisionSpinTask(),
+                new FlywheelVisionSpinTask(),
                 SequentialTask.Sequence(
                     new TurretVisionCenteringTask(false, true),
                     new WaitTask(1.0),
@@ -299,7 +299,7 @@ public class AutonomousRoutineSelector
                 new IntakePositionTask(false),
                 new FollowPathTask(back)),
             ConcurrentTask.AnyTasks(
-                new FlyWheelVisionSpinTask(),
+                new FlywheelVisionSpinTask(),
                 SequentialTask.Sequence(
                     new IntakePositionTask(true),
                     new TurretVisionCenteringTask(false, true),
@@ -320,7 +320,7 @@ public class AutonomousRoutineSelector
                 new FollowPathTask("poach segment 2"),
                 new TurretMoveTask(true, 270.0)),
             ConcurrentTask.AnyTasks(
-                new FlyWheelVisionSpinTask(),
+                new FlywheelVisionSpinTask(),
                 SequentialTask.Sequence(
                     new IntakePositionTask(true),
                     new TurretVisionCenteringTask(false, true),
@@ -338,7 +338,7 @@ public class AutonomousRoutineSelector
                 new IntakeOuttakeTask(1.0, true)),
             new FollowPathTask("poach segment 4"),
             ConcurrentTask.AnyTasks(
-                new FlyWheelVisionSpinTask(),
+                new FlywheelVisionSpinTask(),
                 SequentialTask.Sequence(
                     new IntakePositionTask(true),
                     new TurretVisionCenteringTask(false, true),
@@ -352,10 +352,10 @@ public class AutonomousRoutineSelector
         return SequentialTask.Sequence(
             // new TurretOffsetTask(180.0),
             ConcurrentTask.AnyTasks(
-                new FlyWheelFixedSpinTask(TuningConstants.POWERCELL_FLYWHEEL_INITIATIONLINE_FRONT_MOTOR_VELOCITY),
+                new FlywheelFixedSpinTask(TuningConstants.POWERCELL_FLYWHEEL_INITIATIONLINE_FRONT_MOTOR_VELOCITY),
                 SequentialTask.Sequence(
                     new IntakePositionTask(true),
-                    new FlyWheelHoodTask(DigitalOperation.PowerCellHoodShort),
+                    new FlywheelHoodTask(DigitalOperation.PowerCellHoodShort),
                     ConcurrentTask.AnyTasks(
                         new TurretVisionCenteringTask(false, true),
                         SequentialTask.Sequence(
@@ -369,7 +369,7 @@ public class AutonomousRoutineSelector
     {
         return SequentialTask.Sequence(
             ConcurrentTask.AnyTasks(
-                new FlyWheelVisionSpinTask(),
+                new FlywheelVisionSpinTask(),
                 SequentialTask.Sequence(
                     new TurretVisionCenteringTask(false, true),
                     new WaitTask(1.0),
@@ -382,7 +382,7 @@ public class AutonomousRoutineSelector
                 new FollowPathTask("3 balls backwards line")),
             new WaitTask(0.15),
             ConcurrentTask.AnyTasks(
-                new FlyWheelVisionSpinTask(),
+                new FlywheelVisionSpinTask(),
                 SequentialTask.Sequence(
                     new IntakePositionTask(true),
                     new TurretVisionCenteringTask(false, true),
@@ -404,10 +404,10 @@ public class AutonomousRoutineSelector
         return SequentialTask.Sequence(
             // new TurretOffsetTask(180.0),
             ConcurrentTask.AnyTasks(
-                new FlyWheelFixedSpinTask(TuningConstants.POWERCELL_FLYWHEEL_INITIATIONLINE_FRONT_MOTOR_VELOCITY),
+                new FlywheelFixedSpinTask(TuningConstants.POWERCELL_FLYWHEEL_INITIATIONLINE_FRONT_MOTOR_VELOCITY),
                 SequentialTask.Sequence(
                     new IntakePositionTask(true),
-                    new FlyWheelHoodTask(DigitalOperation.PowerCellHoodShort),
+                    new FlywheelHoodTask(DigitalOperation.PowerCellHoodShort),
                     new TurretVisionCenteringTask(false, true),
                     new WaitTask(1.0),
                     new FullHopperShotTask())),

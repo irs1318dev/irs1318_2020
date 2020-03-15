@@ -53,7 +53,7 @@ public class PowerCellMechanism implements IMechanism
     private CarouselState carouselState;
     private int previousIndex;
     private double lastIntakeTime;
-    private double flyWheelVelocitySetpoint;
+    private double flywheelVelocitySetpoint;
 
     @Inject
     public PowerCellMechanism(LoggingManager logger, IRobotProvider provider, ITimer timer)
@@ -140,6 +140,7 @@ public class PowerCellMechanism implements IMechanism
         this.currentCarouselIndex = 0;
 
         this.intakeExtended = false;
+        this.flywheelVelocitySetpoint = 0.0;
     }
 
     @Override
@@ -275,20 +276,30 @@ public class PowerCellMechanism implements IMechanism
             this.rollerMotorOuter.set(TuningConstants.STHOPE_BLEASE);
         }
 
-        double flyWheelVelocityPercentage = this.driver.getAnalog(AnalogOperation.PowerCellFlywheelVelocity);
-        if (Math.abs(flyWheelVelocityPercentage) < 0.01)
+        double flywheelVelocityPercentage = this.driver.getAnalog(AnalogOperation.PowerCellFlywheelVelocity);
+        if (flywheelVelocityPercentage != TuningConstants.MAGIC_NULL_VALUE)
         {
-            // instead of trying to ensure the wheel is going at a speed of 0, let's just disable the motor
-            flyWheelVelocitySetpoint = 0.0;
+            if (Math.abs(flywheelVelocityPercentage) < 0.01)
+            {
+                // instead of trying to ensure the wheel is going at a speed of 0, let's just disable the motor
+                this.flywheelVelocitySetpoint = 0.0;
+            }
+            else
+            {
+                this.flywheelVelocitySetpoint = flywheelVelocityPercentage * TuningConstants.POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KS;
+            }
+        }
+
+        if (this.flywheelVelocitySetpoint == 0.0)
+        {
             this.flyWheel.stop();
         }
         else
         {
-            flyWheelVelocitySetpoint = flyWheelVelocityPercentage * TuningConstants.POWERCELL_FLYWHEEL_ONE_VELOCITY_PID_KS;
-            this.flyWheel.set(flyWheelVelocitySetpoint);
+            this.flyWheel.set(this.flywheelVelocitySetpoint);
         }
 
-        this.logger.logNumber(LoggingKey.PowerCellFlywheelVelocitySetpoint, flyWheelVelocitySetpoint);
+        this.logger.logNumber(LoggingKey.PowerCellFlywheelVelocitySetpoint, this.flywheelVelocitySetpoint);
 
         double desiredTurretPosition = this.driver.getAnalog(AnalogOperation.PowerCellTurretPosition);
         this.logger.logNumber(LoggingKey.PowerCellTurretPositionDesired, desiredTurretPosition);
@@ -419,7 +430,7 @@ public class PowerCellMechanism implements IMechanism
                     break;
 
                 case MovingToNext:
-                    if (flyWheelVelocitySetpoint != 0.0)
+                    if (this.flywheelVelocitySetpoint != 0.0)
                     {
                         desiredGenevaMotorPower = TuningConstants.POWERCELL_GENEVA_MECHANISM_MOTOR_POWER_SHOOTING;
                     }
@@ -478,6 +489,11 @@ public class PowerCellMechanism implements IMechanism
         return this.flywheelVelocity;
     }
 
+    public double getFlywheelVelocitySetpoint()
+    {
+        return this.flywheelVelocitySetpoint;
+    }
+
     public int getCurrentCarouselIndex()
     {
         return this.currentCarouselIndex;
@@ -501,12 +517,9 @@ public class PowerCellMechanism implements IMechanism
         return false;
     }
     
-    public boolean isFlyWheelSpunUp()
+    public boolean isFlywheelSpunUp()
     {
-        if(this.flyWheelVelocitySetpoint != 0.0 && flywheelError <= TuningConstants.POWERCELL_FLYWHEEL_ERROR)
-        {
-            return true;
-        }
+        return this.flywheelVelocitySetpoint > 0.0 && Math.abs(this.flywheelError) <= TuningConstants.POWERCELL_FLYWHEEL_ALLOWABLE_ERROR_RANGE;
     }
 
     private double getClosestAngleInRange(double desiredAngle, double currentAngle, double minRangeValue, double maxRangeValue)
