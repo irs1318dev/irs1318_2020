@@ -15,7 +15,7 @@ public class ClimberMechanism implements IMechanism
     private final IDoubleSolenoid climberExtendSolenoid;
     private final IDoubleSolenoid climberGrabSolenoid;
 
-    private final ITalonSRX winchMotorMaster;
+    // private final ITalonSRX winchMotorMaster;
 
     private Driver driver;
 
@@ -28,15 +28,15 @@ public class ClimberMechanism implements IMechanism
         this.climberExtendSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.PCM_B_MODULE, ElectronicsConstants.CLIMBER_EXTEND_FORWARD_PCM, ElectronicsConstants.CLIMBER_EXTEND_REVERSE_PCM);
         this.climberGrabSolenoid = provider.getDoubleSolenoid(ElectronicsConstants.PCM_A_MODULE, ElectronicsConstants.CLIMBER_GRAB_FORWARD_PCM, ElectronicsConstants.CLIMBER_GRAB_REVERSE_PCM);
 
-        this.winchMotorMaster = provider.getTalonSRX(ElectronicsConstants.CLIMBER_WINCH_MASTER_CAN_ID);
-        this.winchMotorMaster.setInvertOutput(HardwareConstants.CLIMBER_WINCH_MASTER_INVERT_OUTPUT);
-        this.winchMotorMaster.setControlMode(TalonSRXControlMode.PercentOutput);
-        this.winchMotorMaster.setNeutralMode(MotorNeutralMode.Brake);
+        // this.winchMotorMaster = provider.getTalonSRX(ElectronicsConstants.CLIMBER_WINCH_MASTER_CAN_ID);
+        // this.winchMotorMaster.setInvertOutput(HardwareConstants.CLIMBER_WINCH_MASTER_INVERT_OUTPUT);
+        // this.winchMotorMaster.setControlMode(TalonSRXControlMode.PercentOutput);
+        // this.winchMotorMaster.setNeutralMode(MotorNeutralMode.Brake);
 
-        ITalonSRX winchMotorFollower = provider.getTalonSRX(ElectronicsConstants.CLIMBER_WINCH_FOLLOWER_CAN_ID);
-        winchMotorFollower.setInvertOutput(HardwareConstants.CLIMBER_WINCH_FOLLOWER_INVERT_OUTPUT);
-        winchMotorFollower.setNeutralMode(MotorNeutralMode.Brake);
-        winchMotorFollower.follow(this.winchMotorMaster);
+        // ITalonSRX winchMotorFollower = provider.getTalonSRX(ElectronicsConstants.CLIMBER_WINCH_FOLLOWER_CAN_ID);
+        // winchMotorFollower.setInvertOutput(HardwareConstants.CLIMBER_WINCH_FOLLOWER_INVERT_OUTPUT);
+        // winchMotorFollower.setNeutralMode(MotorNeutralMode.Brake);
+        // winchMotorFollower.follow(this.winchMotorMaster);
 
         this.isExtended = false;
         this.hasReleased = false;
@@ -74,7 +74,7 @@ public class ClimberMechanism implements IMechanism
         if (this.hasReleased)
         {
             double speed = this.driver.getAnalog(AnalogOperation.ClimberWinch);
-            this.winchMotorMaster.set(speed);
+            // this.winchMotorMaster.set(speed);
         }
     }
 
@@ -83,7 +83,7 @@ public class ClimberMechanism implements IMechanism
     {
         this.climberExtendSolenoid.set(DoubleSolenoidValue.Off);
         this.climberGrabSolenoid.set(DoubleSolenoidValue.Off);
-        this.winchMotorMaster.stop();
+        // this.winchMotorMaster.stop();
     }
 
     @Override

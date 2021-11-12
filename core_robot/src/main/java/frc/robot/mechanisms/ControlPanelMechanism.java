@@ -21,7 +21,7 @@ public class ControlPanelMechanism implements IMechanism
     private final IDriverStation ds;
 
     private final IDoubleSolenoid extender;
-    private final IVictorSPX spinnerMotor;
+    // private final IVictorSPX spinnerMotor;
 
     private Driver driver;
 
@@ -55,10 +55,10 @@ public class ControlPanelMechanism implements IMechanism
 
         this.extender = provider.getDoubleSolenoid(ElectronicsConstants.PCM_A_MODULE, ElectronicsConstants.CONTROLPANEL_EXTENDER_FORWARD_PCM, ElectronicsConstants.CONTROLPANEL_EXTENDER_REVERSE_PCM);
 
-        this.spinnerMotor = provider.getVictorSPX(ElectronicsConstants.CONTROLPANEL_SPINNER_CAN_ID);
-        this.spinnerMotor.setInvertOutput(HardwareConstants.CONTROLPANEL_SPINNER_INVERT_OUTPUT);
-        this.spinnerMotor.setControlMode(TalonSRXControlMode.PercentOutput);
-        this.spinnerMotor.setNeutralMode(MotorNeutralMode.Brake);
+        // this.spinnerMotor = provider.getVictorSPX(ElectronicsConstants.CONTROLPANEL_SPINNER_CAN_ID);
+        // this.spinnerMotor.setInvertOutput(HardwareConstants.CONTROLPANEL_SPINNER_INVERT_OUTPUT);
+        // this.spinnerMotor.setControlMode(TalonSRXControlMode.PercentOutput);
+        // this.spinnerMotor.setNeutralMode(MotorNeutralMode.Brake);
 
         this.isExtended = false;
     }
@@ -172,11 +172,11 @@ public class ControlPanelMechanism implements IMechanism
         if (this.isExtended)
         {
             double speed = this.driver.getAnalog(AnalogOperation.ControlPanelSpinSpeed);
-            this.spinnerMotor.set(speed);
+            // this.spinnerMotor.set(speed);
         }
         else
         {
-            this.spinnerMotor.stop();
+            // this.spinnerMotor.stop();
         }
     }
 
@@ -185,7 +185,7 @@ public class ControlPanelMechanism implements IMechanism
     {
         this.sensor.stop();
         this.extender.set(DoubleSolenoidValue.Off);
-        this.spinnerMotor.stop();
+        // this.spinnerMotor.stop();
     }
 
     @Override
