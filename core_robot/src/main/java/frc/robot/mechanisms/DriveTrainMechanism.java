@@ -86,7 +86,7 @@ public class DriveTrainMechanism implements IMechanism
             TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_CURRENT,
             TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_DURATION);
 
-        ITalonFX leftFollowerMotor1 = provider.getTalonFX(ElectronicsConstants.DRIVETRAIN_LEFT_FOLLOWER_CAN_ID);
+        /*ITalonFX leftFollowerMotor1 = provider.getTalonFX(ElectronicsConstants.DRIVETRAIN_LEFT_FOLLOWER_CAN_ID);
         leftFollowerMotor1.setNeutralMode(MotorNeutralMode.Brake);
         leftFollowerMotor1.setInvertOutput(HardwareConstants.DRIVETRAIN_LEFT_FOLLOWER1_INVERT_OUTPUT);
         leftFollowerMotor1.follow(this.leftMotor);
@@ -97,7 +97,7 @@ public class DriveTrainMechanism implements IMechanism
             TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_LIMITING_ENABLED,
             TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_MAX,
             TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_CURRENT,
-            TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_DURATION);
+            TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_DURATION);*/
 
         this.rightMotor = provider.getTalonFX(ElectronicsConstants.DRIVETRAIN_RIGHT_MASTER_CAN_ID);
         this.rightMotor.setNeutralMode(MotorNeutralMode.Brake);
@@ -122,7 +122,7 @@ public class DriveTrainMechanism implements IMechanism
             TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_CURRENT,
             TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_DURATION);
 
-        ITalonFX rightFollowerMotor1 = provider.getTalonFX(ElectronicsConstants.DRIVETRAIN_RIGHT_FOLLOWER_CAN_ID);
+        /*ITalonFX rightFollowerMotor1 = provider.getTalonFX(ElectronicsConstants.DRIVETRAIN_RIGHT_FOLLOWER_CAN_ID);
         rightFollowerMotor1.setNeutralMode(MotorNeutralMode.Brake);
         rightFollowerMotor1.setInvertOutput(HardwareConstants.DRIVETRAIN_RIGHT_FOLLOWER1_INVERT_OUTPUT);
         rightFollowerMotor1.follow(this.rightMotor);
@@ -133,7 +133,7 @@ public class DriveTrainMechanism implements IMechanism
             TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_LIMITING_ENABLED,
             TuningConstants.DRIVETRAIN_SUPPLY_CURRENT_MAX,
             TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_CURRENT,
-            TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_DURATION);
+            TuningConstants.DRIVETRAIN_SUPPLY_TRIGGER_DURATION);*/
 
         this.leftPID = null;
         this.rightPID = null;

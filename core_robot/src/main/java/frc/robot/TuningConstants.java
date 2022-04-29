@@ -39,13 +39,13 @@ public class TuningConstants
     {
         List<IMechanism> mechanismList = new ArrayList<IMechanism>();
         mechanismList.add(injector.getInstance(DriveTrainMechanism.class));
-        mechanismList.add(injector.getInstance(ControlPanelMechanism.class));
-        mechanismList.add(injector.getInstance(PowerCellMechanism.class));
-        mechanismList.add(injector.getInstance(ClimberMechanism.class));
-        mechanismList.add(injector.getInstance(PowerManager.class));
-        mechanismList.add(injector.getInstance(PositionManager.class));
-        mechanismList.add(injector.getInstance(CompressorMechanism.class));
-        mechanismList.add(injector.getInstance(OffboardVisionManager.class));
+        //mechanismList.add(injector.getInstance(ControlPanelMechanism.class));
+        //mechanismList.add(injector.getInstance(PowerCellMechanism.class));
+        //mechanismList.add(injector.getInstance(ClimberMechanism.class));
+        //mechanismList.add(injector.getInstance(PowerManager.class));
+        //mechanismList.add(injector.getInstance(PositionManager.class));
+        //mechanismList.add(injector.getInstance(CompressorMechanism.class));
+        //mechanismList.add(injector.getInstance(OffboardVisionManager.class));
         // mechanismList.add(injector.getInstance(IndicatorLightManager.class));
         return mechanismList;
     }
