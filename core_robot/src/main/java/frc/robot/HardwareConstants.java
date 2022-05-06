@@ -69,7 +69,7 @@ public class HardwareConstants
     public static final boolean DRIVETRAIN_LEFT_MASTER_INVERT_OUTPUT = false;
     public static final boolean DRIVETRAIN_LEFT_FOLLOWER1_INVERT_OUTPUT = false;
     //public static final boolean DRIVETRAIN_LEFT_FOLLOWER2_INVERT_OUTPUT = false;
-    public static final boolean DRIVETRAIN_LEFT_INVERT_SENSOR = true;
+    public static final boolean DRIVETRAIN_LEFT_INVERT_SENSOR = false;
     public static final boolean DRIVETRAIN_RIGHT_MASTER_INVERT_OUTPUT = true;
     public static final boolean DRIVETRAIN_RIGHT_FOLLOWER1_INVERT_OUTPUT = true;
     //public static final boolean DRIVETRAIN_RIGHT_FOLLOWER2_INVERT_OUTPUT = true;

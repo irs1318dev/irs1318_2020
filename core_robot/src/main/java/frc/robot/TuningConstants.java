@@ -23,12 +23,12 @@ public class TuningConstants
     {
         List<IMechanism> mechanismList = new ArrayList<IMechanism>();
         mechanismList.add(injector.getInstance(DriveTrainMechanism.class));
-        mechanismList.add(injector.getInstance(ControlPanelMechanism.class));
+        //mechanismList.add(injector.getInstance(ControlPanelMechanism.class));
         //mechanismList.add(injector.getInstance(PowerCellMechanism.class));
-        mechanismList.add(injector.getInstance(ClimberMechanism.class));
+        //mechanismList.add(injector.getInstance(ClimberMechanism.class));
         mechanismList.add(injector.getInstance(PowerManager.class));
-        mechanismList.add(injector.getInstance(PositionManager.class));
-        mechanismList.add(injector.getInstance(CompressorMechanism.class));
+        //mechanismList.add(injector.getInstance(PositionManager.class));
+        //mechanismList.add(injector.getInstance(CompressorMechanism.class));
         mechanismList.add(injector.getInstance(OffboardVisionManager.class));
         // mechanismList.add(injector.getInstance(IndicatorLightManager.class));
         return mechanismList;
@@ -300,8 +300,8 @@ public class TuningConstants
     public static final double DRIVETRAIN_SUPPLY_CURRENT_MAX = 40.0;
     public static final double DRIVETRAIN_SUPPLY_TRIGGER_CURRENT = 40.0;
     public static final double DRIVETRAIN_SUPPLY_TRIGGER_DURATION = 0.1;
-    public static final double DRIVETRAIN_X_DEAD_ZONE = .05;
-    public static final double DRIVETRAIN_Y_DEAD_ZONE = .05;
+    public static final double DRIVETRAIN_X_DEAD_ZONE = .075;
+    public static final double DRIVETRAIN_Y_DEAD_ZONE = .075;
     public static final double DRIVETRAIN_MAX_POWER_LEVEL = 1.0;// max power level (velocity)
     public static final double DRIVETRAIN_LEFT_POSITIONAL_NON_PID_MULTIPLICAND = HardwareConstants.DRIVETRAIN_LEFT_PULSE_DISTANCE / 60.0;
     public static final double DRIVETRAIN_RIGHT_POSITIONAL_NON_PID_MULTIPLICAND = HardwareConstants.DRIVETRAIN_RIGHT_PULSE_DISTANCE / 60.0;
