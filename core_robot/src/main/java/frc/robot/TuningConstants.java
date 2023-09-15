@@ -38,6 +38,7 @@ public class TuningConstants
     public static List<IMechanism> GetActiveMechanisms(Injector injector)
     {
         List<IMechanism> mechanismList = new ArrayList<IMechanism>();
+        mechanismList.add(injector.getInstance(DriveTrainMechanismVictor.class));
         mechanismList.add(injector.getInstance(DriveTrainMechanism.class));
         mechanismList.add(injector.getInstance(ControlPanelMechanism.class));
         mechanismList.add(injector.getInstance(PowerCellMechanism.class));
